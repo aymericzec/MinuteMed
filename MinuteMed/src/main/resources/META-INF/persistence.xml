@@ -18,7 +18,7 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
             <!-- Nom de la classe à utiliser pour gérer la connection à la base -->
             <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/APHP;create=true"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/APHP_DB;create=true"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
             <property name="javax.persistence.jdbc.password" value="root"/>
             <property name="eclipselink.logging.level" value="INFO"/>
