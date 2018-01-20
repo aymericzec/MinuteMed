@@ -1,6 +1,7 @@
 package fr.devsquad.minutemed.database;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
@@ -36,6 +37,8 @@ public class JPADoctor implements IDoctor, INurse {
      */
     @Override
     public boolean createMedicalRecord(MedicalRecord medicalRecord) {
+        
+        Objects.requireNonNull(medicalRecord);
         
         try {
             et.begin();

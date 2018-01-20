@@ -1,6 +1,7 @@
 package fr.devsquad.minutemed.database;
 
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -45,6 +46,8 @@ public class JPADataManager implements IDataManager {
      */
     @Override
     public boolean createHospital(NodeHospital hospital) {
+        
+        Objects.requireNonNull(hospital);
         
         try {
             et.begin();
@@ -173,6 +176,8 @@ public class JPADataManager implements IDataManager {
     @Override
     public boolean createDoctor(Doctor doctor) {
         
+        Objects.requireNonNull(doctor);
+        
         try {
             et.begin();
             em.persist(doctor);
@@ -249,6 +254,8 @@ public class JPADataManager implements IDataManager {
      */
     @Override
     public boolean createNurse(Nurse nurse) {
+        
+        Objects.requireNonNull(nurse);
         
         try {
             et.begin();
