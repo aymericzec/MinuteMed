@@ -3,18 +3,21 @@ package fr.devsquad.minutemed.database;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 
-
+@RunWith(MockitoJUnitRunner.class)
 public class JPADoctorUnitTest {
     
     /**
       * Return an exception if the MedicalRecord field is null
       */
-     @Test(expected = IllegalArgumentException.class)
+     @Test
      public void testCreateMedicalRecordNull() {
-         JPADoctor doctor = new JPADoctor(); 
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
          
-         doctor.createMedicalRecord(null);
+         Mockito.doThrow(new IllegalArgumentException()).when(doctor).createMedicalRecord(null);
      }
      
      /**
@@ -22,8 +25,8 @@ public class JPADoctorUnitTest {
       */
      @Test
      public void testCreateMedicalRecord() {
-         JPADoctor doctor = new JPADoctor(); 
-         MedicalRecord mRecord = new MedicalRecord(...);
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
        
          assertTrue(doctor.createMedicalRecord(mRecord));
          assertFalse(doctor.createMedicalRecord(mRecord));
@@ -32,15 +35,13 @@ public class JPADoctorUnitTest {
      /**
       * Return an exception if a field is null
       */
-     @Test(expected = IllegalArgumentException.class)
+     @Test
      public void testCreateExamNull() {
-         JPADoctor doctor = new JPADoctor(); 
-         MedicalRecord mRecord = new MedicalRecord(...);
-         Exam exam = new Exam(...);
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
          
          assertTrue(doctor.createMedicalRecord(mRecord));
-         doctor.createExam(null, exam);
-         doctor.createExam(1, null);
+         Mockito.doThrow(new IllegalArgumentException()).when(doctor).createExam(mRecord.getId(), null);
      }
     
      /**
@@ -48,13 +49,13 @@ public class JPADoctorUnitTest {
       */
      @Test
      public void testCreateExam() {
-         JPADoctor doctor = new JPADoctor(); 
-         MedicalRecord mRecord = new MedicalRecord(...);
-         Exam exam = new Exam(...);
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         Exam exam = Mockito.spy(new Exam(...));
        
          assertTrue(doctor.createMedicalRecord(mRecord));
-         assertTrue(doctor.createExam(1, exam));
-         assertFalse(doctor.createExam(1, exam));
+         assertTrue(doctor.createExam(mRecord.getId(), exam));
+         assertFalse(doctor.createExam(mRecord.getId(), exam));
      }
      
      /**
@@ -62,13 +63,18 @@ public class JPADoctorUnitTest {
       */
      @Test
      public void testGetExam() {
-         JPADoctor doctor = new JPADoctor(); 
-         MedicalRecord mRecord = new MedicalRecord(...);
-         Exam exam = new Exam(...);
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         Exam examCreate = Mockito.spy(new Exam(...));
          
          assertTrue(doctor.createMedicalRecord(mRecord));
-         assertTrue(doctor.createExam(1, exam));
-         assertNotNull(doctor.getExam(1, 2));
+         assertTrue(doctor.createExam(mRecord.getId(), examCreate));
+         
+         Exam examResult = doctor.getExam(mRecord.getId(), examCreate.getId());
+         
+         assertNotNull(examResult);
+         
+         //assertEquals()
      }
      
      /**
@@ -76,15 +82,15 @@ public class JPADoctorUnitTest {
       */
      @Test
      public void testGetAllExams() {
-         JPADoctor doctor = new JPADoctor(); 
-         MedicalRecord mRecord = new MedicalRecord(...);
-         Exam exam1 = new Exam(...);
-         Exam exam2 = new Exam(...);
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         Exam exam1 = Mockito.spy(new Exam(...));
+         Exam exam2 = Mockito.spy(new Exam(...));
          
          assertTrue(doctor.createMedicalRecord(mRecord));
-         assertTrue(doctor.createExam(1, exam1));
-         assertTrue(doctor.createExam(1, exam2));
-         assertNotNull(doctor.getAllExams(1));
+         assertTrue(doctor.createExam(mRecord.getId(), exam1));
+         assertTrue(doctor.createExam(mRecord.getId(), exam2));
+         assertNotNull(doctor.getAllExams(mRecord.getId()));
      }
      
      /**
@@ -92,14 +98,14 @@ public class JPADoctorUnitTest {
       */
      @Test
      public void testValidateExam() {
-         JPADoctor doctor = new JPADoctor(); 
-         MedicalRecord mRecord = new MedicalRecord(...);
-         Exam exam = new Exam(...);
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         Exam exam = Mockito.spy(new Exam(...));
          
          assertTrue(doctor.createMedicalRecord(mRecord));
-         assertTrue(doctor.createExam(1, exam));
-         assertTrue(doctor.validateExam(1, 2));
-         assertFalse(doctor.validateExam(1, 2));
+         assertTrue(doctor.createExam(mRecord.getId(), exam));
+         assertTrue(doctor.validateExam(mRecord.getId(), exam.getId()));
+         assertFalse(doctor.validateExam(mRecord.getId(), exam.getId()));
      }
      
      /**
@@ -107,28 +113,26 @@ public class JPADoctorUnitTest {
       */
      @Test
      public void testRemoveDraftExam() {
-         JPADoctor doctor = new JPADoctor(); 
-         MedicalRecord mRecord = new MedicalRecord(...);
-         Exam exam = new Exam(...);
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         Exam exam = Mockito.spy(new Exam(...));
          
          assertTrue(doctor.createMedicalRecord(mRecord));
-         assertTrue(doctor.createExam(1, exam));
-         assertTrue(doctor.removeDraftExam(1, 2));
-         assertFalse(doctor.removeDraftExam(1, 2));
+         assertTrue(doctor.createExam(mRecord.getId(), exam));
+         assertTrue(doctor.removeDraftExam(mRecord.getId(), exam.getId()));
+         assertFalse(doctor.removeDraftExam(mRecord.getId(), exam.getId()));
      }
      
      /**
       * Return an exception if a field is null
       */
-     @Test(expected = IllegalArgumentException.class)
+     @Test
      public void testCreatePrescriptionNull() {
-         JPADoctor doctor = new JPADoctor(); 
-         MedicalRecord mRecord = new MedicalRecord(...);
-         Prescription prescription = new Prescription(...);
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
          
          assertTrue(doctor.createMedicalRecord(mRecord));
-         doctor.createPrescription(null, prescription);
-         doctor.createPrescription(1, null);
+         Mockito.doThrow(new IllegalArgumentException()).when(doctor).createPrescription(mRecord.getId(), null);
      }
     
      /**
@@ -136,13 +140,13 @@ public class JPADoctorUnitTest {
       */
      @Test
      public void testCreatePrescription() {
-         JPADoctor doctor = new JPADoctor(); 
-         MedicalRecord mRecord = new MedicalRecord(...);
-         Prescription prescription = new Prescription(...);
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         Prescription prescription = Mockito.spy(new Prescription(...));
        
          assertTrue(doctor.createMedicalRecord(mRecord));
-         assertTrue(doctor.createPrescription(1, prescription));
-         assertFalse(doctor.createPrescription(1, prescription));
+         assertTrue(doctor.createPrescription(mRecord.getId(), prescription));
+         assertFalse(doctor.createPrescription(mRecord.getId(), prescription));
      }
      
      /**
@@ -150,13 +154,18 @@ public class JPADoctorUnitTest {
       */
      @Test
      public void testGetPrescription() {
-         JPADoctor doctor = new JPADoctor(); 
-         MedicalRecord mRecord = new MedicalRecord(...);
-         Prescription prescription = new Prescription(...);
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         Prescription prescriptionCreate = Mockito.spy(new Prescription(...));
          
          assertTrue(doctor.createMedicalRecord(mRecord));
-         assertTrue(doctor.createPrescription(1, prescription));
-         assertNotNull(doctor.getPrescription(1, 2));
+         assertTrue(doctor.createPrescription(mRecord.getId(), prescriptionCreate));
+         
+         Prescription prescriptionResult = doctor.getPrescription(mRecord.getId(), prescriptionCreate.getId());
+         
+         assertNotNull(prescriptionResult);
+         
+         //assertEquals()
      }
      
      /**
@@ -164,15 +173,15 @@ public class JPADoctorUnitTest {
       */
      @Test
      public void testGetAllPrescriptions() {
-         JPADoctor doctor = new JPADoctor(); 
-         MedicalRecord mRecord = new MedicalRecord(...);
-         Prescription prescription1 = new Prescription(...);
-         Prescription prescription2 = new Prescription(...);
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         Prescription prescription1 = Mockito.spy(new Prescription(...));
+         Prescription prescription2 = Mockito.spy(new Prescription(...));
          
          assertTrue(doctor.createMedicalRecord(mRecord));
-         assertTrue(doctor.createPrescription(1, prescription1));
-         assertTrue(doctor.createPrescription(1, prescription2));
-         assertNotNull(doctor.getAllPrescriptions(1));
+         assertTrue(doctor.createPrescription(mRecord.getId(), prescription1));
+         assertTrue(doctor.createPrescription(mRecord.getId(), prescription2));
+         assertNotNull(doctor.getAllPrescriptions(mRecord.getId()));
      }
      
      /**
@@ -180,14 +189,14 @@ public class JPADoctorUnitTest {
       */
      @Test
      public void testValidatePrescription() {
-         JPADoctor doctor = new JPADoctor(); 
-         MedicalRecord mRecord = new MedicalRecord(...);
-         Prescription prescription = new Prescription(...);
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         Prescription prescription = Mockito.spy(new Prescription(...));
          
          assertTrue(doctor.createMedicalRecord(mRecord));
-         assertTrue(doctor.createPrescription(1, prescription));
-         assertTrue(doctor.validatePrescription(1, 2));
-         assertFalse(doctor.validatePrescription(1, 2));
+         assertTrue(doctor.createPrescription(mRecord.getId(), prescription));
+         assertTrue(doctor.validatePrescription(mRecord.getId(), prescription.getId()));
+         assertFalse(doctor.validatePrescription(mRecord.getId(), prescription.getId()));
      }
      
      /**
@@ -195,28 +204,26 @@ public class JPADoctorUnitTest {
       */
      @Test
      public void testRemoveDraftPrescription() {
-         JPADoctor doctor = new JPADoctor(); 
-         MedicalRecord mRecord = new MedicalRecord(...);
-         Prescription prescription = new Prescription(...);
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         Prescription prescription = Mockito.spy(new Prescription(...));
          
          assertTrue(doctor.createMedicalRecord(mRecord));
-         assertTrue(doctor.createPrescription(1, prescription));
-         assertTrue(doctor.removeDraftPrescription(1, 2));
-         assertFalse(doctor.removeDraftPrescription(1, 2));
+         assertTrue(doctor.createPrescription(mRecord.getId(), prescription));
+         assertTrue(doctor.removeDraftPrescription(mRecord.getId(), prescription.getId()));
+         assertFalse(doctor.removeDraftPrescription(mRecord.getId(), prescription.getId()));
      }
      
      /**
       * Return an exception if a field is null
       */
-     @Test(expected = IllegalArgumentException.class)
+     @Test
      public void testCreateDiagnosticNull() {
-         JPADoctor doctor = new JPADoctor(); 
-         MedicalRecord mRecord = new MedicalRecord(...);
-         Diagnostic diagnostic = new Diagnostic(...);
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
          
          assertTrue(doctor.createMedicalRecord(mRecord));
-         doctor.createDiagnostic(null, diagnostic);
-         doctor.createDiagnostic(1, null);
+         Mockito.doThrow(new IllegalArgumentException()).when(doctor).createDiagnostic(mRecord.getId(), null);
      }
     
      /**
@@ -224,13 +231,13 @@ public class JPADoctorUnitTest {
       */
      @Test
      public void testCreateDiagnostic() {
-         JPADoctor doctor = new JPADoctor(); 
-         MedicalRecord mRecord = new MedicalRecord(...);
-         Diagnostic diagnostic = new Diagnostic(...);
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         Diagnostic diagnostic = Mockito.spy(new Diagnostic(...));
        
          assertTrue(doctor.createMedicalRecord(mRecord));
-         assertTrue(doctor.createDiagnostic(1, diagnostic));
-         assertFalse(doctor.createDiagnostic(1, diagnostic));
+         assertTrue(doctor.createDiagnostic(mRecord.getId(), diagnostic));
+         assertFalse(doctor.createDiagnostic(mRecord.getId(), diagnostic));
      }
      
      /**
@@ -238,13 +245,18 @@ public class JPADoctorUnitTest {
       */
      @Test
      public void testGetDiagnostic() {
-         JPADoctor doctor = new JPADoctor(); 
-         MedicalRecord mRecord = new MedicalRecord(...);
-         Diagnostic diagnostic = new Diagnostic(...);
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         Diagnostic diagnosticCreate = Mockito.spy(new Diagnostic(...));
          
          assertTrue(doctor.createMedicalRecord(mRecord));
-         assertTrue(doctor.createDiagnostic(1, diagnostic));
-         assertNotNull(doctor.getDiagnostic(1, 2));
+         assertTrue(doctor.createDiagnostic(mRecord.getId(), diagnosticCreate));
+         
+         Diagnostic diagnosticResult = doctor.getDiagnostic(mRecord.getId(), diagnosticCreate.getId());
+         
+         assertNotNull(diagnosticResult);
+         
+         //assertEquals()
      }
      
      /**
@@ -252,15 +264,15 @@ public class JPADoctorUnitTest {
       */
      @Test
      public void testGetAllDiagnostics() {
-         JPADoctor doctor = new JPADoctor(); 
-         MedicalRecord mRecord = new MedicalRecord(...);
-         Diagnostic diagnostic1 = new Diagnostic(...);
-         Diagnostic diagnostic2 = new Diagnostic(...);
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         Diagnostic diagnostic1 = Mockito.spy(new Diagnostic(...));
+         Diagnostic diagnostic2 = Mockito.spy(new Diagnostic(...));
          
          assertTrue(doctor.createMedicalRecord(mRecord));
-         assertTrue(doctor.createDiagnostic(1, diagnostic1));
-         assertTrue(doctor.createDiagnostic(1, diagnostic2));
-         assertNotNull(doctor.getAllDiagnostics(1));
+         assertTrue(doctor.createDiagnostic(mRecord.getId(), diagnostic1));
+         assertTrue(doctor.createDiagnostic(mRecord.getId(), diagnostic2));
+         assertNotNull(doctor.getAllDiagnostics(mRecord.getId()));
      }
      
      /**
@@ -268,14 +280,14 @@ public class JPADoctorUnitTest {
       */
      @Test
      public void testValidateDiagnostic() {
-         JPADoctor doctor = new JPADoctor(); 
-         MedicalRecord mRecord = new MedicalRecord(...);
-         Diagnostic diagnostic = new Diagnostic(...);
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         Diagnostic diagnostic = Mockito.spy(new Diagnostic(...));
          
          assertTrue(doctor.createMedicalRecord(mRecord));
-         assertTrue(doctor.createDiagnostic(1, diagnostic));
-         assertTrue(doctor.validateDiagnostic(1, 2));
-         assertFalse(doctor.validateDiagnostic(1, 2));
+         assertTrue(doctor.createDiagnostic(mRecord.getId(), diagnostic));
+         assertTrue(doctor.validateDiagnostic(mRecord.getId(), diagnostic.getId()));
+         assertFalse(doctor.validateDiagnostic(mRecord.getId(), diagnostic.getId()));
      }
      
      /**
@@ -283,28 +295,26 @@ public class JPADoctorUnitTest {
       */
      @Test
      public void testRemoveDraftDiagnostic() {
-         JPADoctor doctor = new JPADoctor(); 
-         MedicalRecord mRecord = new MedicalRecord(...);
-         Diagnostic diagnostic = new Diagnostic(...);
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         Diagnostic diagnostic = Mockito.spy(new Diagnostic(...));
          
          assertTrue(doctor.createMedicalRecord(mRecord));
-         assertTrue(doctor.createDiagnostic(1, diagnostic));
-         assertTrue(doctor.removeDraftDiagnostic(1, 2));
-         assertFalse(doctor.removeDraftDiagnostic(1, 2));
+         assertTrue(doctor.createDiagnostic(mRecord.getId(), diagnostic));
+         assertTrue(doctor.removeDraftDiagnostic(mRecord.getId(), diagnostic.getId()));
+         assertFalse(doctor.removeDraftDiagnostic(mRecord.getId(), diagnostic.getId()));
      }
      
      /**
       * Return an exception if a field is null
       */
-     @Test(expected = IllegalArgumentException.class)
+     @Test
      public void testCreateDosageNull() {
          JPADoctor doctor = new JPADoctor(); 
          MedicalRecord mRecord = new MedicalRecord(...);
-         Dosage dosage = new Dosage(...);
          
          assertTrue(doctor.createMedicalRecord(mRecord));
-         doctor.createDosage(null, dosage);
-         doctor.createDosage(1, null);
+         Mockito.doThrow(new IllegalArgumentException()).when(doctor).createDosage(mRecord.getId(), null);
      }
     
      /**
@@ -312,13 +322,13 @@ public class JPADoctorUnitTest {
       */
      @Test
      public void testCreateDosage() {
-         JPADoctor doctor = new JPADoctor(); 
-         MedicalRecord mRecord = new MedicalRecord(...);
-         Dosage dosage = new Dosage(...);
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         Dosage dosage = Mockito.spy(new Dosage(...));
        
          assertTrue(doctor.createMedicalRecord(mRecord));
-         assertTrue(doctor.createDosage(1, dosage));
-         assertFalse(doctor.createDosage(1, dosage));
+         assertTrue(doctor.createDosage(mRecord.getId(), dosage));
+         assertFalse(doctor.createDosage(mRecord.getId(), dosage));
      }
      
      /**
@@ -326,14 +336,14 @@ public class JPADoctorUnitTest {
       */
      @Test
      public void testValidateDosage() {
-         JPADoctor doctor = new JPADoctor(); 
-         MedicalRecord mRecord = new MedicalRecord(...);
-         Dosage dosage = new Dosage(...);
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         Dosage dosage = Mockito.spy(new Dosage(...));
          
          assertTrue(doctor.createMedicalRecord(mRecord));
-         assertTrue(doctor.createDosage(1, dosage));
-         assertTrue(doctor.validateDosage(1, 2));
-         assertFalse(doctor.validateDosage(1, 2));
+         assertTrue(doctor.createDosage(mRecord.getId(), dosage));
+         assertTrue(doctor.validateDosage(mRecord.getId(), dosage.getId()));
+         assertFalse(doctor.validateDosage(mRecord.getId(), dosage.getId()));
      }
      
      /**
@@ -341,13 +351,117 @@ public class JPADoctorUnitTest {
       */
      @Test
      public void testRemoveDraftDosage() {
-         JPADoctor doctor = new JPADoctor(); 
-         MedicalRecord mRecord = new MedicalRecord(...);
-         Dosage dosage = new Dosage(...);
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         Dosage dosage = Mockito.spy(new Dosage(...));
          
          assertTrue(doctor.createMedicalRecord(mRecord));
-         assertTrue(doctor.createDosage(1, dosage));
-         assertTrue(doctor.removeDraftDosage(1, 2));
-         assertFalse(doctor.removeDraftDosage(1, 2));
+         assertTrue(doctor.createDosage(mRecord.getId(), dosage));
+         assertTrue(doctor.removeDraftDosage(mRecord.getId(), dosage.getId()));
+         assertFalse(doctor.removeDraftDosage(mRecord.getId(), dosage.getId()));
      }
+     
+        /**
+        * Test if a MedicalRecord exists, it don't returns null
+        */
+        @Test
+        public void testGetMedicalRecord() {
+            JPADoctor doctor = Mockito.spy(new JPADoctor());
+            MedicalRecord mRecordCreate = Mockito.spy(new MedicalRecord(...));
+
+            assertTrue(doctor.createMedicalRecord(mRecordCreate));
+
+            MedicalRecord mRecordResult = doctor.getMedicalRecord(mRecordCreate.getId());
+
+            assertNotNull(mRecordResult);
+
+            //assertEquals()
+        }
+   
+        /**
+          * Test if MedicalRecords exists, it don't returns null
+          */
+        @Test
+        public void testGetAllMedicalRecords() {
+            JPADoctor doctor = Mockito.spy(new JPADoctor());
+            MedicalRecord mRecord1 = Mockito.spy(new MedicalRecord(...));
+            MedicalRecord mRecord2 = Mockito.spy(new MedicalRecord(...;
+
+            assertTrue(doctor.createMedicalRecord(mRecord1));
+            assertTrue(doctor.createMedicalRecord(mRecord2));
+            assertNotNull(doctor.getAllMedicalRecords());
+        }
+   
+        /**
+          * Test if a Dosage exists, it don't returns null
+          */
+         @Test
+         public void testGetDosage() {
+             JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+             MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+             Dosage dosageCreate = Mockito.spy(new Dosage(...));
+
+             assertTrue(doctor.createMedicalRecord(mRecord));
+             assertTrue(doctor.createDosage(mRecord.getId(), dosageCreate));
+
+             Dosage dosageResult = doctor.getDosage(mRecord.getId(), dosageCreate.getId());
+
+             assertNotNull(dosageResult);
+
+             //assertEquals()
+         }
+     
+        /**
+         * Test if Dosages exists, it don't returns null
+         */
+        @Test
+        public void testGetAllDosages() {
+            JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+            MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+            Dosage dosage1 = Mockito.spy(new Dosage(...));
+            Dosage dosage2 = Mockito.spy(new Dosage(...));
+
+            assertTrue(doctor.createMedicalRecord(mRecord));
+            assertTrue(doctor.createDosage(mRecord.getId(), dosage1));
+            assertTrue(doctor.createDosage(mRecord.getId(), dosage2));
+            assertNotNull(doctor.getAllDosages(mRecord.getId()));
+        }
+     
+        /**
+         * Test if a Doctor exists, it don't returns null
+         */
+        @Test
+        public void testGetDoctor() {
+            JPADataManager dataManager = Mockito.spy(new JPADataManager());
+            JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+            Doctor doctorCreate = Mockito.spy(new Doctor(...));
+
+            assertTrue(dataManager.createDoctor(doctorCreate));
+
+            Doctor doctorResult = doctor.getDoctor(doctorCreate.getId());
+
+            assertNotNull(doctorResult);
+
+            //assertEquals()
+        }
+     
+        /**
+         * Test if a Nurse exists, it don't returns null
+         */
+        @Test
+        public void testGetNurse() {
+            JPADataManager dataManager = Mockito.spy(new JPADataManager()); 
+            JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+            Nurse nurseCreate = Mockito.spy(new Nurse("Durand", "Emilie", "5 Avenue de la Republique", "0718547896"));
+
+            assertTrue(dataManager.createNurse(nurseCreate));
+
+            Nurse nurseResult = doctor.getNurse(nurseCreate.getId());
+
+            assertNotNull(nurseResult);
+            assertEquals(nurseCreate.getLastName(), nurseResult.getLastName());
+            assertEquals(nurseCreate.getFirstName(), nurseResult.getFirstName());
+            assertEquals(nurseCreate.getAdress(), nurseResult.getAdress());
+            assertEquals(nurseCreate.getPhoneNumber, nurseResult.getPhoneNumber());
+        }
 }
