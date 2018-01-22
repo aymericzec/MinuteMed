@@ -5,6 +5,7 @@
  */
 package fr.devsquad.minutemed.dmp;
 
+import fr.devsquad.minutemed.database.IDoctor;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -73,7 +74,7 @@ public class ExamTest {
         
         Exam exam = new Exam(id, title, askExam, patient, consultExam, description, annexs);
     
-        ResultExam resultExam = new ResultExam();
+        ResultExamTest resultExam = new ResultExamTest();
         
         exam.setResultExam(resultExam);
         
@@ -90,6 +91,7 @@ public class ExamTest {
         Exam exam = new Exam(null, null, null, null, null, null, null);
     }
     
+    @Test
     public void testGetIdEquals () {        
         Exam exam = createDefaultExamWithOutExaminator();
         assertEquals(exam.getId(), 1l);
@@ -262,7 +264,7 @@ public class ExamTest {
     @Test
     public void testSetResultExam () {        
         Exam exam = createDefaultExamWithOutExaminator();
-        ResultExam resultExam = new ResultExam();
+        ResultExamTest resultExam = new ResultExamTest();
         exam.setResultExam(resultExam);
     }
     
@@ -275,7 +277,7 @@ public class ExamTest {
     @Test
     public void testGetResultExamEquals () {
         Exam exam = createDefaultExamWithOutExaminator();
-        ResultExam resultExam = new ResultExam();
+        ResultExamTest resultExam = new ResultExamTest();
         exam.setResultExam(resultExam);
         assertNotEquals(exam.getResultExam(), resultExam);
     }
@@ -283,9 +285,9 @@ public class ExamTest {
     @Test
     public void testGetResultExamNoEquals () {
         Exam exam = createDefaultExamWithOutExaminator();
-        ResultExam resultExam = new ResultExam();
+        ResultExamTest resultExam = new ResultExamTest();
         exam.setResultExam(resultExam);
-        ResultExam resultExam2 = new ResultExam();
+        ResultExamTest resultExam2 = new ResultExamTest();
         assertNotEquals(exam.getResultExam(), resultExam2);
     }
     
