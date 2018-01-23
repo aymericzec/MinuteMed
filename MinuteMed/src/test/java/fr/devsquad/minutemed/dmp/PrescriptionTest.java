@@ -53,7 +53,7 @@ public class PrescriptionTest {
         IDoctor prescriptor = new IDoctor();
         IPatient patient = new IPatient();
         Date consultDate = new Date();
-        Diagnostic diagnostic = new Diagnostic();
+        DiagnosticTest diagnostic = new DiagnosticTest();
         String prescription = "doliprane, spray nasale";
         List<IAnnex> annexes = new ArrayList();
 
@@ -74,7 +74,7 @@ public class PrescriptionTest {
         IDoctor prescriptor = null;
         IPatient patient = null;
         Date consultDate = null;
-        Diagnostic diagnostic = null;
+        DiagnosticTest diagnostic = null;
         String prescription = null;
         List<IAnnex> annexes = null;
 
@@ -112,7 +112,7 @@ public class PrescriptionTest {
         IDoctor prescriptor = new IDoctor();
         IPatient patient = new IPatient();
         Date consultDate = new Date();
-        Diagnostic diagnostic = new Diagnostic();
+        DiagnosticTest diagnostic = new DiagnosticTest();
         String prescription = "doliprane, spray nasale";
         List<IAnnex> annexes = new ArrayList();
 
@@ -134,7 +134,7 @@ public class PrescriptionTest {
         IDoctor prescriptor = new IDoctor();
         IPatient patient = new IPatient();
         Date consultDate = new Date();
-        Diagnostic diagnostic = new Diagnostic();
+        DiagnosticTest diagnostic = new DiagnosticTest();
         String prescription = "doliprane, spray nasale";
         List<IAnnex> annexes = new ArrayList();
 
@@ -156,7 +156,7 @@ public class PrescriptionTest {
         IDoctor prescriptor = new IDoctor();
         IPatient patient = new IPatient();
         Date consultDate = new Date();
-        Diagnostic diagnostic = new Diagnostic();
+        DiagnosticTest diagnostic = new DiagnosticTest();
         String prescription = "doliprane, spray nasale";
         List<IAnnex> annexes = new ArrayList();
 
@@ -178,7 +178,7 @@ public class PrescriptionTest {
         IDoctor prescriptor = new IDoctor();
         IPatient patient = new IPatient();
         Date consultDate = new Date();
-        Diagnostic diagnostic = new Diagnostic();
+        DiagnosticTest diagnostic = new DiagnosticTest();
         String prescription = "doliprane, spray nasale";
         List<IAnnex> annexes = new ArrayList();
 
@@ -190,7 +190,7 @@ public class PrescriptionTest {
     @Test
     public void testGetDiagnoticNotEquals () {        
         Prescription prescription = createTestPrescription();
-        assertNotEquals(prescription.getDiagnotic(), new Diagnostic());
+        assertNotEquals(prescription.getDiagnotic(), new DiagnosticTest());
     }
 
     @Test
@@ -200,7 +200,7 @@ public class PrescriptionTest {
         IDoctor prescriptor = new IDoctor();
         IPatient patient = new IPatient();
         Date consultDate = new Date();
-        Diagnostic diagnostic = new Diagnostic();
+        DiagnosticTest diagnostic = new DiagnosticTest();
         String prescription = "doliprane, spray nasale";
         List<IAnnex> annexes = new ArrayList();
 
@@ -222,7 +222,7 @@ public class PrescriptionTest {
         IDoctor prescriptor = new IDoctor();
         IPatient patient = new IPatient();
         Date consultDate = new Date();
-        Diagnostic diagnostic = new Diagnostic();
+        DiagnosticTest diagnostic = new DiagnosticTest();
         String prescription = "doliprane, spray nasale";
         List<IAnnex> annexes = new ArrayList();
 
