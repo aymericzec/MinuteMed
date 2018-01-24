@@ -5,7 +5,8 @@
  */
 package fr.devsquad.minutemed.dmp;
 
-import fr.devsquad.minutemed.database.IDoctor;
+import fr.devsquad.minutemed.specialization.Specialization;
+import fr.devsquad.minutemed.staff.Doctor;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,8 +47,9 @@ public class ExamTest {
     private Exam createDefaultExamWithOutExaminator () {
         long id = 1;
         String title = "Radiologie du fémur";
-        IDoctor askExam = new IDoctor();
-        IPatient patient = new IPatient();
+        //Doctor askExam = new Doctor(1L, "Aymeric", "Zecchini", "2 rue", "z@gmail.com", "0770138333", null, Specialization.Allergologie);
+        Doctor askExam = new Doctor();
+        MedicalIRecord patient = new MedicalIRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
         
@@ -63,19 +65,17 @@ public class ExamTest {
     private Exam createDefaultExamWithExaminator () {
         long id = 1;
         String title = "Radiologie du fémur";
-        IDoctor askExam = new IDoctor();
-        IPatient patient = new IPatient();
+        Doctor askExam = new Doctor();
+        MedicalIRecord patient = new MedicalIRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
         
         List<IAnnex> annexs = new ArrayList();
         annexs.add(new IAnnex());
-        
-        
+         
         Exam exam = new Exam(id, title, askExam, patient, consultExam, description, annexs);
     
         ResultExamTest resultExam = new ResultExamTest();
-        
         exam.setResultExam(resultExam);
         
         return exam;
@@ -119,8 +119,8 @@ public class ExamTest {
     public void testGetDoctorAskExaminationEquals () {
         long id = 1;
         String title = "Radiologie du fémur";
-        IDoctor askExam = new IDoctor();
-        IPatient patient = new IPatient();
+        Doctor askExam = new Doctor();
+        MedicalIRecord patient = new MedicalIRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
         
@@ -135,16 +135,16 @@ public class ExamTest {
     @Test
     public void testGetDoctorAskExaminationNoEquals () {
         Exam exam = createDefaultExamWithOutExaminator();
-        assertNotEquals(exam.getDoctorAskExamination(), new IDoctor());
+        assertNotEquals(exam.getDoctorAskExamination(), new Doctor());
     }
     
     @Test
     public void testGetDoctorExaminatorEquals () {
         long id = 1;
         String title = "Radiologie du fémur";
-        IDoctor askExam = new IDoctor();
-        IDoctor examinator = new IDoctor();
-        IPatient patient = new IPatient();
+        Doctor askExam = new Doctor();
+        Doctor examinator = new Doctor();
+        MedicalIRecord patient = new MedicalIRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
         
@@ -160,7 +160,7 @@ public class ExamTest {
     @Test
     public void testGetDoctorExaminatorNoEquals () {
         Exam exam = createDefaultExamWithExaminator();
-        assertNotEquals(exam.getDoctorExaminator(), new IDoctor());
+        assertNotEquals(exam.getDoctorExaminator(), new Doctor());
     }
     
     @Test
@@ -173,8 +173,8 @@ public class ExamTest {
     public void testGetPatientEquals () {
           long id = 1;
         String title = "Radiologie du fémur";
-        IDoctor askExam = new IDoctor();
-        IPatient patient = new IPatient();
+        Doctor askExam = new Doctor();
+        MedicalIRecord patient = new MedicalIRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
         
@@ -189,15 +189,15 @@ public class ExamTest {
     @Test
     public void testGetPatientNoEquals () {
         Exam exam = createDefaultExamWithExaminator();
-        assertNotEquals(exam.getPatient(), new IPatient());
+        assertNotEquals(exam.getPatient(), new MedicalIRecord());
     }
     
     @Test
     public void testGetDateEquals () {
         long id = 1;
         String title = "Radiologie du fémur";
-        IDoctor askExam = new IDoctor();
-        IPatient patient = new IPatient();
+        Doctor askExam = new Doctor();
+        MedicalIRecord patient = new MedicalIRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
         
@@ -219,8 +219,8 @@ public class ExamTest {
     public void testGetDescriptionEquals () {
           long id = 1;
         String title = "Radiologie du fémur";
-        IDoctor askExam = new IDoctor();
-        IPatient patient = new IPatient();
+        Doctor askExam = new Doctor();
+        MedicalIRecord patient = new MedicalIRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
         
@@ -242,8 +242,8 @@ public class ExamTest {
     public void testGetAnnexEquals () {
           long id = 1;
         String title = "Radiologie du fémur";
-        IDoctor askExam = new IDoctor();
-        IPatient patient = new IPatient();
+        Doctor askExam = new Doctor();
+        MedicalIRecord patient = new MedicalIRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
         
