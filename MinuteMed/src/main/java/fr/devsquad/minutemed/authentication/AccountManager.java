@@ -8,6 +8,7 @@ package fr.devsquad.minutemed.authentication;
 import fr.devsquad.minutemed.staff.IHospitalStaff;
 import java.util.*;
 import java.util.stream.*;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -32,7 +33,7 @@ public class AccountManager {
     
     
     public boolean createAccount(String username, String password, IHospitalStaff user){
-        UserAccount userAccount = new UserAccount(username, password, user);
+        UserAccount userAccount = new UserAccount(username, DigestUtils.sha256Hex(password), user);
         if(!accounts.containsKey(userAccount.getUsername())){
             return accounts.put(userAccount.getUsername(), userAccount) != null;
         }
@@ -52,7 +53,7 @@ public class AccountManager {
         
     public boolean modifyPassword(long userid, String username, String newPassword){
         if(accounts.containsKey(Objects.requireNonNull(username))){
-           accounts.get(username).setPassword(Objects.requireNonNull(newPassword));
+           accounts.get(username).setPassword(DigestUtils.sha256Hex(Objects.requireNonNull(newPassword)));
            return true;
         }
         return false;

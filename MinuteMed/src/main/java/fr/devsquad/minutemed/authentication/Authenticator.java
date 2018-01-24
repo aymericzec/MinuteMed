@@ -2,6 +2,7 @@ package fr.devsquad.minutemed.authentication;
 
 import fr.devsquad.minutemed.database.JPAAuthentication;
 import java.util.*;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -25,13 +26,13 @@ public class Authenticator {
     public long login(String username, String password) throws AuthenticationException {
         //UserAccount account = accounts.getAccount(Objects.requireNonNull(username));
         JPAAuthentication auth = new JPAAuthentication();
-        UserAccount account = auth.login(username, password);
+        UserAccount account = auth.login(username, DigestUtils.sha256Hex(password));
         
         if(account == null){ 
             throw new NullPointerException("This username [" + username + "] does not exists in the base !");
         }
         if(account.getUsername().equals(username)
-            && account.getPassword().equals(Objects.requireNonNull(password))){
+            && account.getPassword().equals(DigestUtils.sha256Hex(Objects.requireNonNull(password)))){
             connectedUsers.login(account);
             return account.getIdAccount();
         }
