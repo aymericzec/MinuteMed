@@ -1,5 +1,10 @@
 package fr.devsquad.minutemed.database;
 
+import fr.devsquad.minutemed.authentication.UserAccount;
+import fr.devsquad.minutemed.staff.Doctor;
+import fr.devsquad.minutemed.staff.IHospitalStaff;
+import fr.devsquad.minutemed.staff.Nurse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.EntityExistsException;
@@ -28,14 +33,45 @@ public class JPADataManager implements IDataManager {
         et = em.getTransaction();
     }
 
+    /**
+     * Add an Account in the database
+     * 
+     * @param account The Account to add
+     * @return True if the account don't exists in the database, or false otherwise
+     */
     @Override
-    public boolean createAccount(String login, String password, IHospitalStaff user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean createAccount(UserAccount account) {
+        
+        Objects.requireNonNull(account);
+        
+        try {
+            et.begin();
+            em.persist(account);
+            et.commit();
+        } catch(EntityExistsException e) {
+            return false;
+        }
+        return true;
     }
 
+    /**
+     * Remove an Account from the database
+     * 
+     * @param idAccount Account to remove
+     * @return True if the account don't exists in the database, or false otherwise
+     */
     @Override
-    public boolean removeAccount(String login) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean removeAccount(long idAccount) {
+        
+        try {
+            et.begin();
+            UserAccount account = em.find(UserAccount.class, idAccount);
+            em.remove(account);
+            et.commit();
+        } catch (EntityNotFoundException e) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -89,7 +125,7 @@ public class JPADataManager implements IDataManager {
         List<NodeHospital> hospitals;
         
         try {
-            TypedQuery tq = em.createQuery("SELECT hospital FROM NodeHospital hospital", NodeHospital.class);
+            TypedQuery<NodeHospital> tq = em.createQuery("SELECT hospital FROM NodeHospital hospital", NodeHospital.class);
             hospitals = tq.getResultList();
         } catch(NoResultException e) {
             return null;
@@ -113,12 +149,12 @@ public class JPADataManager implements IDataManager {
     }
 
     @Override
-    public boolean createService(long idHospital, NodeService service) {
+    public boolean createService(long idHospital, long idPole, NodeService service) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public NodeService getService(long idHospital, lond idService) {
+    public NodeService getService(long idHospital, long idPole, long idService) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -128,12 +164,12 @@ public class JPADataManager implements IDataManager {
     }
 
     @Override
-    public boolean createHospitalUnit(long idHospital, NodeHU hu) {
+    public boolean createHospitalUnit(long idHospital, long idPole, long idService, NodeHU hu) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public NodeHU getHospitalUnit(long idHospital, long idHU) {
+    public NodeHU getHospitalUnit(long idHospital, long idPole, long idService, long idHU) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -143,12 +179,12 @@ public class JPADataManager implements IDataManager {
     }
 
     @Override
-    public boolean createCareUnit(long idHospital, NodeCU cu) {
+    public boolean createCareUnit(long idHospital, long idPole, long idService, long idHU, NodeCU cu) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public NodeCU getCareUnit(long idHospital, long idCU) {
+    public NodeCU getCareUnit(long idHospital, long idPole, long idService, long idHU, long idCU) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -218,7 +254,7 @@ public class JPADataManager implements IDataManager {
         List<Doctor> doctors;
         
         try {
-            TypedQuery tq = em.createQuery("SELECT doctor FROM Doctor doctor", Doctor.class);
+            TypedQuery<Doctor> tq = em.createQuery("SELECT doctor FROM Doctor doctor", Doctor.class);
             doctors = tq.getResultList();
         } catch(NoResultException e) {
             return null;
@@ -297,7 +333,7 @@ public class JPADataManager implements IDataManager {
         List<Nurse> nurses;
         
         try {
-            TypedQuery tq = em.createQuery("SELECT nurse FROM Nurse nurse", Nurse.class);
+            TypedQuery<Nurse> tq = em.createQuery("SELECT nurse FROM Nurse nurse", Nurse.class);
             nurses = tq.getResultList();
         } catch(NoResultException e) {
             return null;
@@ -325,9 +361,28 @@ public class JPADataManager implements IDataManager {
         return true;
     }
 
+    /**
+     * Get the all Staff of the APHP
+     * 
+     * @return A List that contains the staff
+     */
     @Override
     public List<IHospitalStaff> getStaff() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
+        List<IHospitalStaff> staff = new ArrayList<>();
+        
+        List<Doctor> doctors = getAllDoctors();
+        List<Nurse> nurses = getAllNurses();
+        
+        for(Doctor d : doctors) {
+            staff.add(d);
+        }
+        
+        for(Nurse n : nurses) {
+            staff.add(n);
+        }
+        
+        return staff;
     }
     
 }
