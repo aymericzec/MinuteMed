@@ -3,21 +3,24 @@ package fr.devsquad.minutemed.database;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 
-
+@RunWith(MockitoJUnitRunner.class)
 public class JPADataManagerUnitTest {
     
      /**
       * Return an exception if a field is null
       */
-     @Test(expected = IllegalArgumentException.class)
+     @Test
      public void testCreateAccountNull() {
-         JPADataManager dataManager = new JPADataManager();    
-         IHospitalStaff user;
-    
-         dataManager.createAccount(null, "password", user);
-         dataManager.createAccount("pseudo", null, user);
-         dataManager.createAccount("pseudo", "password", null);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());    
+         IHospitalStaff user = Mockito.spy(new Doctor(...));
+         
+         Mockito.doThrow(new IllegalArgumentException()).when(dataManager).createAccount(null, "password", user);
+         Mockito.doThrow(new IllegalArgumentException()).when(dataManager).createAccount("pseudo", null, user);
+         Mockito.doThrow(new IllegalArgumentException()).when(dataManager).createAccount("pseudo", "password", null);
      }
      
      /**
@@ -25,9 +28,9 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testCreateAccount() {
-         JPADataManager dataManager = new JPADataManager();    
-         IHospitalStaff doctor = new Doctor(...);
-         IHospitalStaff nurse = new Nurse(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());    
+         IHospitalStaff doctor = Mockito.spy(new Doctor(...));
+         IHospitalStaff nurse = Mockito.spy(new Nurse(...));
     
          assertTrue(dataManager.createAccount("pseudoDoctor", "passwordDoctor", doctor));
          assertTrue(dataManager.createAccount("pseudoNurse", "passwordNurse", nurse));
@@ -37,11 +40,11 @@ public class JPADataManagerUnitTest {
      /**
       * Return an exception if a field is null
       */
-     @Test(expected = IllegalArgumentException.class)
+     @Test
      public void testRemoveAccountNull() {
-         JPADataManager dataManager = new JPADataManager();    
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());    
        
-         dataManager.removeAccount(null);
+         Mockito.doThrow(new IllegalArgumentException()).when(dataManager).removeAccount(null);
      }
      
      /**
@@ -49,8 +52,8 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testRemoveAccount() {
-         JPADataManager dataManager = new JPADataManager();    
-         IHospitalStaff doctor = new Doctor(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());    
+         IHospitalStaff doctor = Mockito.spy(new Doctor(...));
          
          assertTrue(dataManager.createAccount("pseudoDoctor", "passwordDoctor", doctor));
          assertTrue(dataManager.removeAccount("pseudoDoctor"));
@@ -60,11 +63,11 @@ public class JPADataManagerUnitTest {
       /**
       * Return an exception if a field is null
       */
-     @Test(expected = IllegalArgumentException.class)
+     @Test
      public void testCreateHospitalNull() {
-         JPADataManager dataManager = new JPADataManager();    
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());    
        
-         dataManager.createHospital(null);
+         Mockito.doThrow(new IllegalArgumentException()).when(dataManager).createHospital(null);
      }
      
       /**
@@ -72,8 +75,8 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testCreateHospital() {
-         JPADataManager dataManager = new JPADataManager(); 
-         NodeHospital hospital = new NodeHospital(1, "Hopital Paris");
+         JPADataManager dataManager = Mockito.spy(new JPADataManager()); 
+         NodeHospital hospital = Mockito.spy(new NodeHospital(...));
        
          assertTrue(dataManager.createHospital(hospital));
          assertFalse(dataManager.createHospital(hospital));
@@ -84,11 +87,16 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testGetHospital() {
-         JPADataManager dataManager = new JPADataManager();
-         NodeHospital hospital = new NodeHospital(1, "Hopital Paris");
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());
+         NodeHospital hospitalCreate = Mockito.spy(new NodeHospital(...));
          
-         assertTrue(dataManager.createHospital(hospital));
-         assertNotNull(dataManager.getHospital(1));
+         assertTrue(dataManager.createHospital(hospitalCreate));
+         
+         NodeHospital hospitalResult = dataManager.getHospital(hospitalCreate.getId());
+         
+         assertNotNull(hospitalResult);
+         
+         //assertEquals()
      }
      
      /**
@@ -96,9 +104,9 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testGetAllHospitals() {
-         JPADataManager dataManager = new JPADataManager();
-         NodeHospital hospital1 = new NodeHospital(1, "Hopital Paris");
-         NodeHospital hospital2 = new NodeHospital(2, "Hopital Reims");
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());
+         NodeHospital hospital1 = Mockito.spy(new NodeHospital(...));
+         NodeHospital hospital2 = Mockito.spy(new NodeHospital(...));
          
          assertTrue(dataManager.createHospital(hospital1));
          assertTrue(dataManager.createHospital(hospital2));
@@ -108,15 +116,14 @@ public class JPADataManagerUnitTest {
      /**
       * Return an exception if a field is null
       */
-     @Test(expected = IllegalArgumentException.class)
+     @Test
      public void testCreatePoleNull() {
-         JPADataManager dataManager = new JPADataManager();
-         NodeHospital hospital = new NodeHospital(1, "Hopital Paris");
-         NodePole pole = new NodePole(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());
+         NodeHospital hospital = Mockito.spy(new NodeHospital(...));
+         NodePole pole = Mockito.spy(new NodePole(...));
          
          assertTrue(dataManager.createHospital(hospital));
-         dataManager.createPole(null, pole);
-         dataManager.createPole(1, null);
+         Mockito.doThrow(new IllegalArgumentException()).when(dataManager).createPole(hospital.getId(), null);
      }
      
      /**
@@ -124,16 +131,16 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testCreatePole() {
-         JPADataManager dataManager = new JPADataManager(); 
-         NodeHospital hospital1 = new NodeHospital(1, "Hopital Paris");
-         NodeHospital hospital2 = new NodeHospital(2, "Hopital Reims");
-         NodePole pole = new NodePole(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager()); 
+         NodeHospital hospital1 = Mockito.spy(new NodeHospital(...));
+         NodeHospital hospital2 = Mockito.spy(new NodeHospital(...));
+         NodePole pole = Mockito.spy(new NodePole(...));
        
          assertTrue(dataManager.createHospital(hospital1));
          assertTrue(dataManager.createHospital(hospital2));
-         assertTrue(dataManager.createPole(1, pole));
-         assertFalse(dataManager.createPole(1, pole));
-         assertTrue(dataManager.createPole(2, pole));
+         assertTrue(dataManager.createPole(hospital1.getId(), pole));
+         assertFalse(dataManager.createPole(hospital1.getId(), pole));
+         assertTrue(dataManager.createPole(hospital2.getId(), pole));
      }
      
      /**
@@ -141,13 +148,18 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testGetPole() {
-         JPADataManager dataManager = new JPADataManager();
-         NodeHospital hospital = new NodeHospital(1, "Hopital Paris");
-         NodePole pole = new NodePole(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());
+         NodeHospital hospital = Mockito.spy(new NodeHospital(...);
+         NodePole poleCreate = Mockito.spy(new NodePole(...));
          
          assertTrue(dataManager.createHospital(hospital));
-         assertTrue(dataManager.createPole(1, pole));
-         assertNotNull(dataManager.getPole(1, 2));
+         assertTrue(dataManager.createPole(hospital.getId(), poleCreate));
+         
+         NodePole poleResult = dataManager.getPole(hospital.getId(), poleCreate.getId());
+         
+         assertNotNull(poleResult);
+         
+         //assertEquals()
      }
      
      /**
@@ -155,29 +167,28 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testGetAllPoles() {
-         JPADataManager dataManager = new JPADataManager();
-         NodeHospital hospital = new NodeHospital(1, "Hopital Paris");
-         NodePole pole1 = new NodePole(...);
-         NodePole pole2 = new NodePole(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());
+         NodeHospital hospital = Mockito.spy(new NodeHospital(...));
+         NodePole pole1 = Mockito.spy(new NodePole(...));
+         NodePole pole2 = Mockito.spy(new NodePole(...));
          
          assertTrue(dataManager.createHospital(hospital));
-         assertTrue(dataManager.createPole(1, pole1));
-         assertTrue(dataManager.createPole(1, pole2));
-         assertNotNull(dataManager.getAllPoles(1));
+         assertTrue(dataManager.createPole(hospital.getId(), pole1.getId()));
+         assertTrue(dataManager.createPole(hospital.getId(), pole2.getId()));
+         assertNotNull(dataManager.getAllPoles(hospital.getId()));
      }
      
      /**
       * Return an exception if a field is null
       */
-     @Test(expected = IllegalArgumentException.class)
+     @Test
      public void testCreateServiceNull() {
-         JPADataManager dataManager = new JPADataManager();
-         NodeHospital hospital = new NodeHospital(1, "Hopital Paris");
-         NodeService service = new NodeService(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());
+         NodeHospital hospital = Mockito.spy(new NodeHospital(...));
+         NodeService service = Mockito.spy(new NodeService(...));
          
          assertTrue(dataManager.createHospital(hospital));
-         dataManager.createService(null, service);
-         dataManager.createService(1, null);
+         Mockito.doThrow(new IllegalArgumentException()).when(dataManager).createService(hospital.getId(), null);
      }
      
      /**
@@ -185,13 +196,13 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testCreateService() {
-         JPADataManager dataManager = new JPADataManager(); 
-         NodeHospital hospital = new NodeHospital(1, "Hopital Paris");
-         NodeService service = new NodeService(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager()); 
+         NodeHospital hospital = Mockito.spy(new NodeHospital(...));
+         NodeService service = Mockito.spy(new NodeService(...));
        
          assertTrue(dataManager.createHospital(hospital));
-         assertTrue(dataManager.createService(1, service));
-         assertFalse(dataManager.createService(1, service));
+         assertTrue(dataManager.createService(hospital.getId(), service));
+         assertFalse(dataManager.createService(hospital.getId(), service));
      }
      
      /**
@@ -199,13 +210,18 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testGetService() {
-         JPADataManager dataManager = new JPADataManager();
-         NodeHospital hospital = new NodeHospital(1, "Hopital Paris");
-         NodeService service = new NodeService(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());
+         NodeHospital hospital = Mockito.spy(new NodeHospital(...));
+         NodeService serviceCreate = Mockito.spy(new NodeService(...));
          
          assertTrue(dataManager.createHospital(hospital));
-         assertTrue(dataManager.createService(1, service));
-         assertNotNull(dataManager.getService(1, 2));
+         assertTrue(dataManager.createService(hospital.getId(), serviceCreate));
+         
+         NodeService serviceResult = dataManager.getService(hospital.getId(), serviceCreate.getId());
+         
+         assertNotNull(serviceResult);
+         
+         //assertEquals()
      }
      
      /**
@@ -213,29 +229,28 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testGetAllServices() {
-         JPADataManager dataManager = new JPADataManager();
-         NodeHospital hospital = new NodeHospital(1, "Hopital Paris");
-         NodeService service1 = new NodeService(...);
-         NodeService service2 = new NodeService(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());
+         NodeHospital hospital = Mockito.spy(new NodeHospital(...));
+         NodeService service1 = Mockito.spy(new NodeService(...));
+         NodeService service2 = Mockito.spy(new NodeService(...));
          
          assertTrue(dataManager.createHospital(hospital));
-         assertTrue(dataManager.createService(1, service1));
-         assertTrue(dataManager.createService(1, service2));
-         assertNotNull(dataManager.getAllServices(1));
+         assertTrue(dataManager.createService(hospital.getId(), service1));
+         assertTrue(dataManager.createService(hospital.getId(), service2));
+         assertNotNull(dataManager.getAllServices(hospital.getId()));
      }
      
      /**
       * Return an exception if a field is null
       */
-     @Test(expected = IllegalArgumentException.class)
+     @Test
      public void testCreateHospitalUnitNull() {
-         JPADataManager dataManager = new JPADataManager();
-         NodeHospital hospital = new NodeHospital(1, "Hopital Paris");
-         NodeHU hu = new NodeHU(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());
+         NodeHospital hospital = Mockito.spy(new NodeHospital(...));
+         NodeHU hu = Mockito.spy(new NodeHU(...));
          
          assertTrue(dataManager.createHospital(hospital));
-         dataManager.createHospitalUnit(null, hu);
-         dataManager.createHospitalUnit(1, null);
+         Mockito.doThrow(new IllegalArgumentException()).when(dataManager).createHospitalUnit(hospital.getId(), null);
      }
      
      /**
@@ -243,13 +258,13 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testCreateHospitalUnit() {
-         JPADataManager dataManager = new JPADataManager(); 
-         NodeHospital hospital = new NodeHospital(1, "Hopital Paris");
-         NodeHU hu = new NodeHU(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager()); 
+         NodeHospital hospital = Mockito.spy(new NodeHospital(...));
+         NodeHU hu = Mockito.spy(new NodeHU(...));
        
          assertTrue(dataManager.createHospital(hospital));
-         assertTrue(dataManager.createHospitalUnit(1, hu));
-         assertFalse(dataManager.createHospitalUnit(1, hu));
+         assertTrue(dataManager.createHospitalUnit(hospital.getId(), hu));
+         assertFalse(dataManager.createHospitalUnit(hospital.getId(), hu));
      }
      
      /**
@@ -257,13 +272,18 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testGetHospitalUnit() {
-         JPADataManager dataManager = new JPADataManager();
-         NodeHospital hospital = new NodeHospital(1, "Hopital Paris");
-         NodeHU hu = new NodeHU(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());
+         NodeHospital hospital = Mockito.spy(new NodeHospital(...));
+         NodeHU huCreate = Mockito.spy(new NodeHU(...));
          
          assertTrue(dataManager.createHospital(hospital));
-         assertTrue(dataManager.createHospitalUnit(1, hu));
-         assertNotNull(dataManager.getHospitalUnit(1, 2));
+         assertTrue(dataManager.createHospitalUnit(1, huCreate));
+         
+         NodeHU huResult = dataManager.getHospitalUnit(hospital.getId(), huCreate.getId());
+         
+         assertNotNull(huResult);
+         
+         //assertEquals()
      }
      
      /**
@@ -271,29 +291,28 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testGetAllHospitalUnits() {
-         JPADataManager dataManager = new JPADataManager();
-         NodeHospital hospital = new NodeHospital(1, "Hopital Paris");
-         NodeHU hu1 = new NodeHU(...);
-         NodeHU hu2 = new NodeHU(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());
+         NodeHospital hospital = Mockito.spy(new NodeHospital(...));
+         NodeHU hu1 = Mockito.spy(new NodeHU(...));
+         NodeHU hu2 = Mockito.spy(new NodeHU(...));
          
          assertTrue(dataManager.createHospital(hospital));
-         assertTrue(dataManager.createHospitalUnit(1, hu1));
-         assertTrue(dataManager.createHospitalUnit(1, hu2));
-         assertNotNull(dataManager.getAllHospitalUnits(1));
+         assertTrue(dataManager.createHospitalUnit(hospital.getId(), hu1));
+         assertTrue(dataManager.createHospitalUnit(hospital.getId(), hu2));
+         assertNotNull(dataManager.getAllHospitalUnits(hospital.getId()));
      }
      
      /**
       * Return an exception if a field is null
       */
-     @Test(expected = IllegalArgumentException.class)
+     @Test
      public void testCreateCareUnitNull() {
-         JPADataManager dataManager = new JPADataManager();
-         NodeHospital hospital = new NodeHospital(1, "Hopital Paris");
-         NodeCU cu = new NodeCU(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());
+         NodeHospital hospital = Mockito.spy(new NodeHospital(...));
+         NodeCU cu = Mockito.spy(new NodeCU(...));
          
          assertTrue(dataManager.createHospital(hospital));
-         dataManager.createCareUnit(null, cu);
-         dataManager.createCareUnit(1, null);
+         Mockito.doThrow(new IllegalArgumentException()).when(dataManager).createCareUnit(1, null);
      }
      
      /**
@@ -301,13 +320,13 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testCreateCareUnit() {
-         JPADataManager dataManager = new JPADataManager(); 
-         NodeHospital hospital = new NodeHospital(1, "Hopital Paris");
-         NodeCU cu = new NodeCU(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager()); 
+         NodeHospital hospital = Mockito.spy(new NodeHospital(...));
+         NodeCU cu = Mockito.spy(new NodeCU(...));
        
          assertTrue(dataManager.createHospital(hospital));
-         assertTrue(dataManager.createCareUnit(1, cu));
-         assertFalse(dataManager.createCareUnit(1, cu));
+         assertTrue(dataManager.createCareUnit(hospital.getId(), cu));
+         assertFalse(dataManager.createCareUnit(hospital.getId(), cu));
      }
      
      /**
@@ -315,13 +334,18 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testGetCareUnit() {
-         JPADataManager dataManager = new JPADataManager();
-         NodeHospital hospital = new NodeHospital(1, "Hopital Paris");
-         NodeCU cu = new NodeCU(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager()); 
+         NodeHospital hospital = Mockito.spy(new NodeHospital(...));
+         NodeCU cuCreate = Mockito.spy(new NodeCU(...));
          
          assertTrue(dataManager.createHospital(hospital));
-         assertTrue(dataManager.createCareUnit(1, cu));
-         assertNotNull(dataManager.getCareUnit(1, 2));
+         assertTrue(dataManager.createCareUnit(hospital.getId(), cuCreate));
+         
+         NodeCU cuResult = dataManager.getCareUnit(hospital.getId(), cuCreate.getId());
+         
+         assertNotNull(cuResult);
+         
+         //assertEquals()
      }
      
      /**
@@ -329,15 +353,15 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testGetAllCareUnits() {
-         JPADataManager dataManager = new JPADataManager();
-         NodeHospital hospital = new NodeHospital(1, "Hopital Paris");
-         NodeCU cu1 = new NodeCU(...);
-         NodeCU cu2 = new NodeCU(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());
+         NodeHospital hospital = Mockito.spy(new NodeHospital(...));
+         NodeCU cu1 = Mockito.spy(new NodeCU(...));
+         NodeCU cu2 = Mockito.spy(new NodeCU(...));
          
          assertTrue(dataManager.createHospital(hospital));
-         assertTrue(dataManager.createCareUnit(1, cu1));
-         assertTrue(dataManager.createCareUnit(1, cu2));
-         assertNotNull(dataManager.getAllCareUnits(1));
+         assertTrue(dataManager.createCareUnit(hospital.getId(), cu1));
+         assertTrue(dataManager.createCareUnit(hospital.getId(), cu2));
+         assertNotNull(dataManager.getAllCareUnits(hospital.getId()));
      }
      
      /**
@@ -345,23 +369,30 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testGetNode() {
-         JPADataManager dataManager = new JPADataManager();
-         NodeHospital hospital = new NodeHospital(1, "Hopital Paris");
-         NodePole pole = new NodePole(...);
-         NodeService service = new NodeService(...);
-         NodeHU hu = new NodeHU(...);
-         NodeCU cu = new NodeCU(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());
+         NodeHospital hospital = Mockito.spy(new NodeHospital(...));
+         NodePole poleCreate = Mockito.spy(new NodePole(...));
+         NodeService serviceCreate = Mockito.spy(new NodeService(...));
+         NodeHU huCreate = Mockito.spy(new NodeHU(...));
+         NodeCU cuCreate = Mockito.spy(new NodeCU(...));
          
          assertTrue(dataManager.createHospital(hospital));
-         assertTrue(dataManager.createPole(1, pole));
-         assertTrue(dataManager.createService(1, service));
-         assertTrue(dataManager.createHospitalUnit(1, hu));
-         assertTrue(dataManager.createCareUnit(1, cu));
+         assertTrue(dataManager.createPole(hospital.getId(), poleCreate));
+         assertTrue(dataManager.createService(hospital.getId(), serviceCreate));
+         assertTrue(dataManager.createHospitalUnit(hospital.getId(), huCreate));
+         assertTrue(dataManager.createCareUnit(hospital.getId(), cuCreate));
          
-         assertNotNull(dataManager.getNode(1, 2));
-         assertNotNull(dataManager.getNode(1, 3));
-         assertNotNull(dataManager.getNode(1, 4));
-         assertNotNull(dataManager.getNode(1, 5));
+         NodePole poleResult = dataManager.getNode(hospital.getId(), poleCreate.getId());
+         NodeService serviceResult = dataManager.getNode(hospital.getId(), serviceCreate.getId());
+         NodeHU huResult = dataManager.getNode(hospital.getId(), huCreate.getId());
+         NodeCU cuResult = dataManager.getNode(hospital.getId(), cuCreate.getId());
+         
+         assertNotNull(poleResult);
+         assertNotNull(serviceResult);
+         assertNotNull(huResult);
+         assertNotNull(cuResult);
+         
+         //assertEquals()
      }
      
      /**
@@ -369,30 +400,30 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testGetAllNodes() {
-         JPADataManager dataManager = new JPADataManager();
-         NodeHospital hospital = new NodeHospital(1, "Hopital Paris");
-         NodePole pole = new NodePole(...);
-         NodeService service = new NodeService(...);
-         NodeHU hu = new NodeHU(...);
-         NodeCU cu = new NodeCU(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());
+         NodeHospital hospital = Mockito.spy(new NodeHospital(...));
+         NodePole pole = Mockito.spy(new NodePole(...));
+         NodeService service = Mockito.spy(new NodeService(...));
+         NodeHU hu = Mockito.spy(new NodeHU(...));
+         NodeCU cu = Mockito.spy(new NodeCU(...));
          
          assertTrue(dataManager.createHospital(hospital));
-         assertTrue(dataManager.createPole(1, pole));
-         assertTrue(dataManager.createService(1, service));
-         assertTrue(dataManager.createHospitalUnit(1, hu));
-         assertTrue(dataManager.createCareUnit(1, cu));
+         assertTrue(dataManager.createPole(hospital.getId(), pole));
+         assertTrue(dataManager.createService(hospital.getId(), service));
+         assertTrue(dataManager.createHospitalUnit(hospital.getId(), hu));
+         assertTrue(dataManager.createCareUnit(hospital.getId(), cu));
          
-         assertNotNull(dataManager.getAllNodes(1));
+         assertNotNull(dataManager.getAllNodes(hospital.getId()));
      }
      
      /**
       * Return an exception if the doctor field is null
       */
-     @Test(expected = IllegalArgumentException.class)
-     public void testCreateDoctoNull() {
-         JPADataManager dataManager = new JPADataManager();
+     @Test
+     public void testCreateDoctorNull() {
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());
          
-         dataManager.createDoctor(null);
+         Mockito.doThrow(new IllegalArgumentException()).when(dataManager).createDoctor(null);
      }
      
      /**
@@ -400,8 +431,8 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testCreateDoctor() {
-         JPADataManager dataManager = new JPADataManager(); 
-         Doctor doctor = new Doctor(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager()); 
+         Doctor doctor = Mockito.spy(new Doctor(...));
        
          assertTrue(dataManager.createDoctor(doctor));
          assertFalse(dataManager.createDoctor(doctor));
@@ -412,11 +443,16 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testGetDoctor() {
-         JPADataManager dataManager = new JPADataManager();
-         Doctor doctor = new Doctor(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());
+         Doctor doctorCreate = Mockito.spy(new Doctor(...));
          
          assertTrue(dataManager.createDoctor(doctor));
-         assertNotNull(dataManager.getDoctor(1));
+         
+         Doctor doctorResult = dataManager.getDoctor(doctorCreate.getId());
+         
+         assertNotNull(doctorResult);
+         
+         //assertEquals()
      }
      
      /**
@@ -424,9 +460,9 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testGetAllDoctors() {
-         JPADataManager dataManager = new JPADataManager();
-         Doctor doctor1 = new Doctor(...);
-         Doctor doctor2 = new Doctor(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());
+         Doctor doctor1 = Mockito.spy(new Doctor(...));
+         Doctor doctor2 = Mockito.spy(new Doctor(...));
          
          assertTrue(dataManager.createDoctor(doctor1));
          assertTrue(dataManager.createDoctor(doctor2));
@@ -438,22 +474,22 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testRemoveDoctor() {
-         JPADataManager dataManager = new JPADataManager();
-         Doctor doctor = new Doctor(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());
+         Doctor doctor = Mockito.spy(new Doctor(...));
          
          assertTrue(dataManager.createDoctor(doctor));
-         assertTrue(dataManager.removeDoctor(1));
-         assertFalse(dataManager.removeDoctor(1));
+         assertTrue(dataManager.removeDoctor(doctor.getId()));
+         assertFalse(dataManager.removeDoctor(doctor.getId()));
      }
      
       /**
       * Return an exception if the nurse field is null
       */
-     @Test(expected = IllegalArgumentException.class)
+     @Test
      public void testCreateNurseNull() {
-         JPADataManager dataManager = new JPADataManager();
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());
          
-         dataManager.createNurse(null);
+         Mockito.doThrow(new IllegalArgumentException()).when(dataManager).createNurse(null);
      }
      
      /**
@@ -461,8 +497,8 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testCreateNurse() {
-         JPADataManager dataManager = new JPADataManager(); 
-         Nurse nurse = new Nurse(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager()); 
+         Nurse nurse = Mockito.spy(new Nurse(...));
        
          assertTrue(dataManager.createNurse(nurse));
          assertFalse(dataManager.createNurse(nurse));
@@ -473,11 +509,16 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testGetNurse() {
-         JPADataManager dataManager = new JPADataManager();
-         Nurse nurse = new Nurse(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());
+         Nurse nurseCreate = Mockito.spy(new Nurse(...));
          
-         assertTrue(dataManager.createNurse(nurse));
-         assertNotNull(dataManager.getNurse(1));
+         assertTrue(dataManager.createNurse(nurseCreate));
+         
+         Nurse nurseResult = dataManager.getNurse(nurseCreate.getId());
+         
+         assertNotNull(nurseResult);
+         
+         //assertEquals()
      }
      
      /**
@@ -485,9 +526,9 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testGetAllNurses() {
-         JPADataManager dataManager = new JPADataManager();
-         Nurse nurse1 = new Nurse(...);
-         Nurse nurse2 = new Nurse(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());
+         Nurse nurse1 = Mockito.spy(new Nurse(...));
+         Nurse nurse2 = Mockito.spy(new Nurse(...));
          
          assertTrue(dataManager.createNurse(nurse1));
          assertTrue(dataManager.createNurse(nurse2));
@@ -499,12 +540,12 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testRemoveNurse() {
-         JPADataManager dataManager = new JPADataManager();
-         Nurse nurse = new Nurse(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());
+         Nurse nurse = Mockito.spy(new Nurse(...));
          
          assertTrue(dataManager.createNurse(nurse));
-         assertTrue(dataManager.removeNurse(1));
-         assertFalse(dataManager.removeNurse(1));
+         assertTrue(dataManager.removeNurse(nurse.getId()));
+         assertFalse(dataManager.removeNurse(nurse.getId()));
      }
      
      /**
@@ -512,9 +553,9 @@ public class JPADataManagerUnitTest {
       */
      @Test
      public void testGetStaff() {
-         JPADataManager dataManager = new JPADataManager();
-         Doctor doctor = new Doctor(...);
-         Nurse nurse = new Nurse(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager());
+         IHospitalStaff doctor = Mockito.spy(new Doctor(...));
+         IHospitalStaff nurse = Mockito.spy(new Nurse(...));
          
          assertTrue(dataManager.createDoctor(doctor));
          assertTrue(dataManager.createNurse(nurse));

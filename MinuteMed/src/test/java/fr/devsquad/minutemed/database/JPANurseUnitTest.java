@@ -3,8 +3,11 @@ package fr.devsquad.minutemed.database;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 
-
+@RunWith(MockitoJUnitRunner.class)
 public class JPANurseUnitTest {
     
     /**
@@ -12,12 +15,17 @@ public class JPANurseUnitTest {
       */
    @Test
    public void testGetMedicalRecord() {
-       JPADoctor doctor = new JPADoctor();
-       JPANurse nurse = new JPANurse();
-       MedicalRecord mRecord = new MedicalRecord(...);
+       JPADoctor doctor = Mockito.spy(new JPADoctor());
+       JPANurse nurse = Mockito.spy(new JPANurse());
+       MedicalRecord mRecordCreate = Mockito.spy(new MedicalRecord(...));
        
-       assertTrue(doctor.createMedicalRecord(mRecord));
-       assertNotNull(nurse.getMedicalRecord(1));
+       assertTrue(doctor.createMedicalRecord(mRecordCreate));
+       
+       MedicalRecord mRecordResult = nurse.getMedicalRecord(mRecordCreate.getId());
+       
+       assertNotNull(mRecordResult);
+       
+       //assertEquals()
    }
    
     /**
@@ -25,10 +33,10 @@ public class JPANurseUnitTest {
       */
    @Test
    public void testGetAllMedicalRecords() {
-       JPADoctor doctor = new JPADoctor();
-       JPANurse nurse = new JPANurse();
-       MedicalRecord mRecord1 = new MedicalRecord(...);
-       MedicalRecord mRecord2 = new MedicalRecord(...);
+       JPADoctor doctor = Mockito.spy(new JPADoctor());
+       JPANurse nurse = Mockito.spy(new JPANurse());
+       MedicalRecord mRecord1 = Mockito.spy(new MedicalRecord(...));
+       MedicalRecord mRecord2 = Mockito.spy(new MedicalRecord(...;
        
        assertTrue(doctor.createMedicalRecord(mRecord1));
        assertTrue(doctor.createMedicalRecord(mRecord2));
@@ -40,14 +48,19 @@ public class JPANurseUnitTest {
       */
      @Test
      public void testGetDosage() {
-         JPADoctor doctor = new JPADoctor(); 
-         JPANurse nurse = new JPANurse();
-         MedicalRecord mRecord = new MedicalRecord(...);
-         Dosage dosage = new Dosage(...);
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+         JPANurse nurse = Mockito.spy(new JPANurse());
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         Dosage dosageCreate = Mockito.spy(new Dosage(...));
          
          assertTrue(doctor.createMedicalRecord(mRecord));
-         assertTrue(doctor.createDosage(1, dosage));
-         assertNotNull(nurse.getDosage(1, 2));
+         assertTrue(doctor.createDosage(mRecord.getId(), dosageCreate));
+         
+         Dosage dosageResult = nurse.getDosage(mRecord.getId(), dosageCreate.getId());
+         
+         assertNotNull(dosageResult);
+         
+         //assertEquals()
      }
      
      /**
@@ -55,16 +68,16 @@ public class JPANurseUnitTest {
       */
      @Test
      public void testGetAllDosages() {
-         JPADoctor doctor = new JPADoctor(); 
-         JPANurse nurse = new JPANurse();
-         MedicalRecord mRecord = new MedicalRecord(...);
-         Dosage dosage1 = new Dosage(...);
-         Dosage dosage2 = new Dosage(...);
+         JPADoctor doctor = Mockito.spy(new JPADoctor()); 
+         JPANurse nurse = Mockito.spy(new JPANurse());
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         Dosage dosage1 = Mockito.spy(new Dosage(...));
+         Dosage dosage2 = Mockito.spy(new Dosage(...));
          
          assertTrue(doctor.createMedicalRecord(mRecord));
-         assertTrue(doctor.createDosage(1, dosage1));
-         assertTrue(doctor.createDosage(1, dosage2));
-         assertNotNull(nurse.getAllDosages(1));
+         assertTrue(doctor.createDosage(mRecord.getId(), dosage1));
+         assertTrue(doctor.createDosage(mRecord.getId(), dosage2));
+         assertNotNull(nurse.getAllDosages(mRecord.getId()));
      }
      
      /**
@@ -72,14 +85,17 @@ public class JPANurseUnitTest {
       */
      @Test
      public void testGetDoctor() {
-         JPADataManager dataManager = new JPADataManager(); 
-         JPADoctor doctor = new JPADoctor(); 
-         JPANurse nurse = new JPANurse();
-         Doctor doctor1 = new Doctor(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager()); 
+         JPANurse nurse = Mockito.spy(new JPANurse());
+         Doctor doctorCreate = Mockito.spy(new Doctor(...));
          
-         assertTrue(dataManager.createDoctor(doctor1));
-         assertNotNull(doctor.getDoctor(1));
-         assertNotNull(nurse.getDoctor(1));
+         assertTrue(dataManager.createDoctor(doctorCreate));
+     
+         Doctor doctorResult = nurse.getDoctor(doctorCreate.getId());
+         
+         assertNotNull(doctorResult);
+         
+         //assertEquals()
      }
      
      /**
@@ -87,13 +103,18 @@ public class JPANurseUnitTest {
       */
      @Test
      public void testGetNurse() {
-         JPADataManager dataManager = new JPADataManager(); 
-         JPADoctor doctor = new JPADoctor(); 
-         JPANurse nurse = new JPANurse();
-         Nurse nurse1 = new Nurse(...);
+         JPADataManager dataManager = Mockito.spy(new JPADataManager()); 
+         JPANurse nurse = Mockito.spy(new JPANurse());
+         Nurse nurseCreate = Mockito.spy(new Nurse("Durand", "Emilie", "5 Avenue de la Republique", "0718547896"));
          
-         assertTrue(dataManager.createNurse(nurse1));
-         assertNotNull(doctor.getNurse(1));
-         assertNotNull(nurse.getNurse(1));
+         assertTrue(dataManager.createNurse(nurseCreate));
+         
+         Nurse nurseResult = nurse.getNurse(nurseCreate.getId());
+         
+         assertNotNull(nurseResult);
+         assertEquals(nurseCreate.getLastName(), nurseResult.getLastName());
+         assertEquals(nurseCreate.getFirstName(), nurseResult.getFirstName());
+         assertEquals(nurseCreate.getAdress(), nurseResult.getAdress());
+         assertEquals(nurseCreate.getPhoneNumber, nurseResult.getPhoneNumber());
      }
 }
