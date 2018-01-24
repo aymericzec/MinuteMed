@@ -5,6 +5,7 @@
  */
 package fr.devsquad.minutemed.authentication;
 
+import fr.devsquad.minutemed.staff.IHospitalStaff;
 import java.util.*;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -58,12 +59,12 @@ public class AccountManagerTest {
     @Test
     public void testCreateAccount() {
         System.out.println("createAccount");
-        long userid = 0L;
         String username = "";
         String password = "";
         AccountManager instance = null;
         boolean expResult = false;
-        boolean result = instance.createAccount(userid, username, password);
+        IHospitalStaff user = new Doctor(...);
+        boolean result = instance.createAccount(username, password, user);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

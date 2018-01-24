@@ -45,7 +45,7 @@ public class UserAccountTest {
         System.out.println("getUserid");
         UserAccount instance = null;
         long expResult = 0L;
-        long result = instance.getUserid();
+        long result = instance.getIdAccount();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
