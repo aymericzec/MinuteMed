@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import org.apache.commons.codec.digest.DigestUtils;
 
 @Entity
 public class UserAccount implements Serializable {

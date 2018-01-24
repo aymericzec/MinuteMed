@@ -4,7 +4,6 @@ import com.google.common.hash.Hashing;
 import fr.devsquad.minutemed.database.JPAAuthentication;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *

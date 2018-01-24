@@ -10,7 +10,6 @@ import fr.devsquad.minutemed.staff.IHospitalStaff;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.*;
-import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
