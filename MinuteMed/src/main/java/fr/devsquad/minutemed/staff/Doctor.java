@@ -23,6 +23,11 @@ public class Doctor implements IHospitalStaff ,IMedicalStaff {
         super();
     }
 
+    @Override
+    public long getIdStaff() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     //Method with implementation
     
     @Override

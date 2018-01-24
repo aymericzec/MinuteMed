@@ -64,6 +64,11 @@ public class Nurse implements IMedicalStaff, IHospitalStaff{
     public List<String> getAllFeatures() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+    public long getIdStaff() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     @Override
     public String getFirstName() {

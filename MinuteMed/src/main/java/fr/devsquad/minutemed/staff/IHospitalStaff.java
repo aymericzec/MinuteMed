@@ -10,6 +10,7 @@ package fr.devsquad.minutemed.staff;
  * @author jsalmon
  */
 public interface IHospitalStaff {
+    public long getIdStaff();
     public String getFirstName();
     public String getLastName();
     public String getAdress();
