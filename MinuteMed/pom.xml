@@ -37,9 +37,9 @@
         
         <!-- encryption -->
         <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.10</version>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>23.5-jre</version> 
         </dependency>
         
         <dependency>

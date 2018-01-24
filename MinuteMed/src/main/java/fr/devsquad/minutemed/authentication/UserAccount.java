@@ -1,7 +1,9 @@
 package fr.devsquad.minutemed.authentication;
 
+import com.google.common.hash.Hashing;
 import fr.devsquad.minutemed.staff.IHospitalStaff;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +30,7 @@ public class UserAccount implements Serializable {
 
     public UserAccount(String username, String password, IHospitalStaff user) {
         this.username = Objects.requireNonNull(username);
-        this.password = DigestUtils.sha256Hex(Objects.requireNonNull(password));
+        this.password = Hashing.sha256().hashString(Objects.requireNonNull(password), StandardCharsets.UTF_8).toString();
         this.user = Objects.requireNonNull(user);
     }
 

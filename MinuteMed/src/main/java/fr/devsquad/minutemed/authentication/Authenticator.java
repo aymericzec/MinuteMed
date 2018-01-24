@@ -1,6 +1,8 @@
 package fr.devsquad.minutemed.authentication;
 
+import com.google.common.hash.Hashing;
 import fr.devsquad.minutemed.database.JPAAuthentication;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -26,13 +28,13 @@ public class Authenticator {
     public long login(String username, String password) throws AuthenticationException {
         //UserAccount account = accounts.getAccount(Objects.requireNonNull(username));
         JPAAuthentication auth = new JPAAuthentication();
-        UserAccount account = auth.login(username, DigestUtils.sha256Hex(password));
+        UserAccount account = auth.login(username, Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString());
         
         if(account == null){ 
             throw new NullPointerException("This username [" + username + "] does not exists in the base !");
         }
         if(account.getUsername().equals(username)
-            && account.getPassword().equals(DigestUtils.sha256Hex(Objects.requireNonNull(password)))){
+            && account.getPassword().equals(Hashing.sha256().hashString(Objects.requireNonNull(password), StandardCharsets.UTF_8).toString())){
             connectedUsers.login(account);
             return account.getIdAccount();
         }
