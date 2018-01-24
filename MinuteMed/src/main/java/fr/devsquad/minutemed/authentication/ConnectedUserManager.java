@@ -13,28 +13,28 @@ import java.util.*;
  */
 public class ConnectedUserManager {
     
-    private final Map<Long,UserAccount> _connected;
+    private final Map<Long, UserAccount> connected;
 
     
     public ConnectedUserManager() {
-        this._connected = new HashMap<>();
+        this.connected = new HashMap<>();
     }
 
     
     public void login(UserAccount userAccount) throws AuthenticationException {
-        if(_connected.containsKey(Objects.requireNonNull(userAccount).getUserid())){
-            logout(userAccount.getUserid());
+        if(connected.containsKey(Objects.requireNonNull(userAccount).getIdAccount())){
+            logout(userAccount.getIdAccount());
             throw new AuthenticationException("This user is already connected ! Must logout him !");
         }
-        _connected.put(userAccount.getUserid(), userAccount);
+        connected.put(userAccount.getIdAccount(), userAccount);
     }
     
     
-    public boolean logout(long userid) throws AuthenticationException {
-        if(!_connected.containsKey(userid)){
+    public boolean logout(long idAccount) throws AuthenticationException {
+        if(!connected.containsKey(idAccount)){
             throw new AuthenticationException("This user is not even connected !");
         }
-        return _connected.remove(userid) != null;
+        return connected.remove(idAccount) != null;
     }
     
     

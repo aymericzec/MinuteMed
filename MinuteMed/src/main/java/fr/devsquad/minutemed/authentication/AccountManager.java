@@ -5,6 +5,7 @@
  */
 package fr.devsquad.minutemed.authentication;
 
+import fr.devsquad.minutemed.staff.IHospitalStaff;
 import java.util.*;
 import java.util.stream.*;
 
@@ -14,11 +15,11 @@ import java.util.stream.*;
  */
 public class AccountManager {
     
-    private final Map<String,UserAccount> _accounts;
+    private final Map<String, UserAccount> accounts;
     
     
     private AccountManager(Map<String,UserAccount> accounts) {
-        this._accounts = Objects.requireNonNull(accounts);
+        this.accounts = Objects.requireNonNull(accounts);
     }
     
     
@@ -30,28 +31,28 @@ public class AccountManager {
     }
     
     
-    public boolean createAccount(long userid, String username, String password){
-        UserAccount userAccount = new UserAccount(userid, username, password);
-        if(!_accounts.containsKey(userAccount.getUsername())){
-            return _accounts.put(userAccount.getUsername(), userAccount) != null;
+    public boolean createAccount(String username, String password, IHospitalStaff user){
+        UserAccount userAccount = new UserAccount(username, password, user);
+        if(!accounts.containsKey(userAccount.getUsername())){
+            return accounts.put(userAccount.getUsername(), userAccount) != null;
         }
         return false;
     }
     
     
     public boolean removeAccount(String username){
-        return _accounts.remove(Objects.requireNonNull(username)) != null;
+        return accounts.remove(Objects.requireNonNull(username)) != null;
     }
     
     
     public UserAccount getAccount(String username){
-        return _accounts.get(Objects.requireNonNull(username));
+        return accounts.get(Objects.requireNonNull(username));
     }
     
         
     public boolean modifyPassword(long userid, String username, String newPassword){
-        if(_accounts.containsKey(Objects.requireNonNull(username))){
-           _accounts.get(username).setPassword(Objects.requireNonNull(newPassword));
+        if(accounts.containsKey(Objects.requireNonNull(username))){
+           accounts.get(username).setPassword(Objects.requireNonNull(newPassword));
            return true;
         }
         return false;

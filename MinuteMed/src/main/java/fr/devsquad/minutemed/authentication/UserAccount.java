@@ -1,42 +1,54 @@
 package fr.devsquad.minutemed.authentication;
 
+import fr.devsquad.minutemed.staff.IHospitalStaff;
+import java.io.Serializable;
 import java.util.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
-/**
- *
- * @author enzo
- */
-public class UserAccount {
+@Entity
+public class UserAccount implements Serializable {
      
-    private final long _userid;
+    @Id @GeneratedValue
+    private long idAccount;
+    private String username;
+    private String password; //encrypted password
     
-    private final String _username;
-    
-    //encrypted password
-    private String _password;
+    @OneToOne
+    @JoinColumn(name = "idStaff")
+    private IHospitalStaff user;
     
 
-    public UserAccount(long userid, String username, String password) {
-        this._userid = userid;
-        this._username = Objects.requireNonNull(username);
-        this._password = Objects.requireNonNull(password);
+    public UserAccount() {}
+    
+    public UserAccount(String username, String password, IHospitalStaff user) {
+        this.username = Objects.requireNonNull(username);
+        this.password = Objects.requireNonNull(password);
+        this.user = Objects.requireNonNull(user);
     }
 
     
-    public long getUserid(){
-        return _userid;
+    public long getIdAccount(){
+        return idAccount;
     }
 
     public String getUsername(){
-        return _username;
+        return username;
     }
     
     public String getPassword(){
-        return _password;
+        return password;
+    }
+    
+    public IHospitalStaff getUser() {
+        return user;
     }
     
     public void setPassword(String newPassword){
-        _password = Objects.requireNonNull(newPassword);
+        password = Objects.requireNonNull(newPassword);
     }   
     
     
@@ -49,17 +61,17 @@ public class UserAccount {
             return false;
         }
         UserAccount otherAccount = (UserAccount) obj;
-        return (otherAccount.getUserid() == _userid &&
-                otherAccount.getUsername().equals(_username) &&
-                otherAccount.getPassword().equals(_password));            
+        return (otherAccount.getIdAccount() == idAccount &&
+                otherAccount.getUsername().equals(username) &&
+                otherAccount.getPassword().equals(password));            
     }
 
     @Override
     public int hashCode() {
         int hash = 17;
-        hash += _userid * 31;
-        hash += _username.hashCode() * 33;
-        hash += _password.hashCode() * 32;
+        hash += idAccount * 31;
+        hash += username.hashCode() * 33;
+        hash += password.hashCode() * 32;
         return hash;
     }
     
