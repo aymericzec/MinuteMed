@@ -11,7 +11,6 @@ import fr.devsquad.minutemed.dmp.Prescription;
 import fr.devsquad.minutemed.specialization.Specialization;
 import java.io.Serializable;
 import java.util.List;
-import java.util.function.Predicate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -123,112 +122,176 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
         return doctor.createMedicalRecord(medicalRecord);
     }
 
+    /**
+     * Add an Exam in the database
+     *
+     * @param exam The Exam to add
+     * @return True if the exam don't exists in the database, or false
+     * otherwise
+     */
     @Override
-    public boolean createExam(long idMedicalRecord, Exam exam) {
+    public boolean createExam(Exam exam) {
         JPADoctor doctor = new JPADoctor();
-        return doctor.createExam(idMedicalRecord, exam);
+        return doctor.createExam(exam);
+    }
+
+    /**
+     * Get an Exam with its id passed in argument
+     * 
+     * @param idExam The id of the Exam
+     * @return The Exam
+     */
+    @Override
+    public Exam getExam(long idExam) {
+        JPADoctor doctor = new JPADoctor();
+        return doctor.getExam(idExam);
+    }
+
+    /**
+     * Get all exams corresponding to the MedicalRecord passed in parameter
+     * 
+     * @param idMedicalRecord The id of the MedicalRecord
+     * @return A List of Exam
+     */
+    @Override
+    public List<Exam> getAllExams(long idMedicalRecord) {
+        JPADoctor doctor = new JPADoctor();
+        return doctor.getAllExams(idMedicalRecord);
     }
 
     @Override
-    public Exam getExam(long idMedicalRecord, long idExam) {
+    public boolean validateExam(long idExam) {
         JPADoctor doctor = new JPADoctor();
-        return doctor.getExam(idMedicalRecord, idExam);
+        return doctor.validateExam(idExam);
     }
 
     @Override
-    public List<Exam> getAllExams(long idMedicalREcord) {
+    public boolean removeDraftExam(long idExam) {
         JPADoctor doctor = new JPADoctor();
-        return doctor.getAllExams(idMedicalREcord);
+        return doctor.removeDraftExam(idExam);
+    }
+
+    /**
+     * Add a Prescription in the database
+     *
+     * @param prescription The Prescription to add
+     * @return True if the prescription don't exists in the database, or false
+     * otherwise
+     */
+    @Override
+    public boolean createPrescription(Prescription prescription) {
+        JPADoctor doctor = new JPADoctor();
+        return doctor.createPrescription(prescription);
+    }
+
+    /**
+     * Get a Prescription with its id passed in argument
+     * 
+     * @param idPrescription The id of the Prescription
+     * @return The Prescription
+     */
+    @Override
+    public Prescription getPrescription(long idPrescription) {
+        JPADoctor doctor = new JPADoctor();
+        return doctor.getPrescription(idPrescription);
+    }
+
+    /**
+     * Get all prescriptions corresponding to the MedicalRecord passed in parameter
+     * 
+     * @param idMedicalRecord The id of the MedicalRecord
+     * @return A List of Prescription
+     */
+    @Override
+    public List<Prescription> getAllPrescriptions(long idMedicalRecord) {
+        JPADoctor doctor = new JPADoctor();
+        return doctor.getAllPrescriptions(idMedicalRecord);
     }
 
     @Override
-    public boolean validateExam(long idMedicalFolder, long idExam) {
+    public boolean validatePrescription(long idPrescription) {
         JPADoctor doctor = new JPADoctor();
-        return doctor.validateExam(idMedicalFolder, idExam);
+        return doctor.validatePrescription(idPrescription);
     }
 
     @Override
-    public boolean removeDraftExam(long idMedicalFolder, long idExam) {
+    public boolean removeDraftPrescription(long idPrescription) {
         JPADoctor doctor = new JPADoctor();
-        return doctor.removeDraftExam(idMedicalFolder, idExam);
+        return doctor.removeDraftPrescription(idPrescription);
+    }
+
+    /**
+     * Add a Diagnostic in the database
+     *
+     * @param diagnostic The Diagnostic to add
+     * @return True if the diagnostic don't exists in the database, or false
+     * otherwise
+     */
+    @Override
+    public boolean createDiagnostic(Diagnostic diagnostic) {
+        JPADoctor doctor = new JPADoctor();
+        return doctor.createDiagnostic(diagnostic);
+    }
+
+    /**
+     * Get a Diagnostic with its id passed in argument
+     * 
+     * @param idDiagnostic The id of the Diagnostic
+     * @return The Diagnostic
+     */
+    @Override
+    public Diagnostic getDiagnostic(long idDiagnostic) {
+        JPADoctor doctor = new JPADoctor();
+        return doctor.getDiagnostic(idDiagnostic);
+    }
+
+    /**
+     * Get all diagnostics corresponding to the MedicalRecord passed in parameter
+     * 
+     * @param idMedicalRecord The id of the MedicalRecord
+     * @return A List of Diagnostic
+     */
+    @Override
+    public List<Diagnostic> getAllDiagnostics(long idMedicalRecord) {
+        JPADoctor doctor = new JPADoctor();
+        return doctor.getAllDiagnostics(idMedicalRecord);
     }
 
     @Override
-    public boolean createPrescription(long idMedicalRecord, Prescription prescription) {
+    public boolean validateDiagnostic(long idDiagnostic) {
         JPADoctor doctor = new JPADoctor();
-        return doctor.createPrescription(idMedicalRecord, prescription);
+        return doctor.validateDiagnostic(idDiagnostic);
     }
 
     @Override
-    public Prescription getPrescription(long idMedicalRecord, long idPrescription) {
+    public boolean removeDraftDiagnostic(long idDiagnostic) {
         JPADoctor doctor = new JPADoctor();
-        return doctor.getPrescription(idMedicalRecord, idPrescription);
+        return doctor.removeDraftDiagnostic(idDiagnostic);
+    }
+
+    /**
+     * Add a Dosage in the database
+     *
+     * @param dosage The Dosage to add
+     * @return True if the dosage don't exists in the database, or false
+     * otherwise
+     */
+    @Override
+    public boolean createDosage(Dosage dosage) {
+        JPADoctor doctor = new JPADoctor();
+        return doctor.createDosage(dosage);
     }
 
     @Override
-    public List<Prescription> getAllPrescriptions(long idMedicalREcord) {
+    public boolean validateDosage(long idDosage) {
         JPADoctor doctor = new JPADoctor();
-        return doctor.getAllPrescriptions(idMedicalREcord);
+        return doctor.validateDosage(idDosage);
     }
 
     @Override
-    public boolean validatePrescription(long idMedicalFolder, long idPrescription) {
+    public boolean removeDraftDosage(long idDosage) {
         JPADoctor doctor = new JPADoctor();
-        return doctor.validatePrescription(idMedicalFolder, idPrescription);
-    }
-
-    @Override
-    public boolean removeDraftPrescription(long idMedicalFolder, long idPrescription) {
-        JPADoctor doctor = new JPADoctor();
-        return doctor.removeDraftPrescription(idMedicalFolder, idPrescription);
-    }
-
-    @Override
-    public boolean createDiagnostic(long idMedicalRecord, Diagnostic diagnostic) {
-        JPADoctor doctor = new JPADoctor();
-        return doctor.createDiagnostic(idMedicalRecord, diagnostic);
-    }
-
-    @Override
-    public Diagnostic getDiagnostic(long idMedicalRecord, long idDiagnostic) {
-        JPADoctor doctor = new JPADoctor();
-        return doctor.getDiagnostic(idMedicalRecord, idDiagnostic);
-    }
-
-    @Override
-    public List<Diagnostic> getAllDiagnostics(long idMedicalREcord) {
-        JPADoctor doctor = new JPADoctor();
-        return doctor.getAllDiagnostics(idMedicalREcord);
-    }
-
-    @Override
-    public boolean validateDiagnostic(long idMedicalFolder, long idDiagnostic) {
-        JPADoctor doctor = new JPADoctor();
-        return doctor.validateDiagnostic(idMedicalFolder, idDiagnostic);
-    }
-
-    @Override
-    public boolean removeDraftDiagnostic(long idMedicalFolder, long idDiagnostic) {
-        JPADoctor doctor = new JPADoctor();
-        return doctor.removeDraftDiagnostic(idMedicalFolder, idDiagnostic);
-    }
-
-    @Override
-    public boolean createDosage(long idMedicalRecord, Dosage dosage) {
-        JPADoctor doctor = new JPADoctor();
-        return doctor.createDosage(idMedicalRecord, dosage);
-    }
-
-    @Override
-    public boolean validateDosage(long idMedicalFolder, long idDosage) {
-        JPADoctor doctor = new JPADoctor();
-        return doctor.validateDosage(idMedicalFolder, idDosage);
-    }
-
-    @Override
-    public boolean removeDraftDosage(long idMedicalFolder, long idDosage) {
-        JPADoctor doctor = new JPADoctor();
-        return doctor.removeDraftDosage(idMedicalFolder, idDosage);
+        return doctor.removeDraftDosage(idDosage);
     }
 
     /**
@@ -254,18 +317,61 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
         return doctor.getAllMedicalRecords();
     }
 
+    /**
+     * Get a MedicalRecord by its number of social security
+     *
+     * @param ss The number of social security of the patient
+     * @return The MedicalRecord
+     */
     @Override
-    public List<MedicalRecord> searchMedicalRecord(Predicate predicate) {
+    public MedicalRecord searchMedicalRecordBySS(String ss) {
         JPADoctor doctor = new JPADoctor();
-        return doctor.searchMedicalRecord(predicate);
+        return doctor.searchMedicalRecordBySS(ss);
+    }
+    
+    /**
+     * Get a MedicalRecord by its lastName
+     *
+     * @param lastName The lastName of the patient
+     * @return A List of MedicalRecord
+     */
+    @Override
+    public List<MedicalRecord> searchMedicalRecordByName(String lastName) {
+        JPADoctor doctor = new JPADoctor();
+        return doctor.searchMedicalRecordByName(lastName);
+    }
+    
+    /**
+     * Get a MedicalRecord by its number of social security and its lastName
+     *
+     * @param ss The number of social security of the patient
+     * @param lastName The lastName of the patient
+     * @return The MedicalRecord
+     */
+    @Override
+    public MedicalRecord searchMedicalRecord(String ss, String lastName) {
+        JPADoctor doctor = new JPADoctor();
+        return doctor.searchMedicalRecord(ss, lastName);
     }
 
+    /**
+     * Get a Dosage with its id passed in argument
+     *
+     * @param idDosage The id of the Dosage
+     * @return The Dosage
+     */
     @Override
-    public Dosage getDosage(long idMedicalRecord, long idDosage) {
+    public Dosage getDosage(long idDosage) {
         JPADoctor doctor = new JPADoctor();
-        return doctor.getDosage(idMedicalRecord, idDosage);
+        return doctor.getDosage(idDosage);
     }
 
+    /**
+     * Get all dosages corresponding to the MedicalRecord passed in parameter
+     *
+     * @param idMedicalRecord The id of the MedicalRecord
+     * @return A List of Dosage
+     */
     @Override
     public List<Dosage> getAllDosages(long idMedicalRecord) {
         JPADoctor doctor = new JPADoctor();

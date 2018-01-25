@@ -125,18 +125,61 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
         return nurse.getAllMedicalRecords();
     }
 
+    /**
+     * Get a MedicalRecord by its number of social security
+     *
+     * @param ss The number of social security of the patient
+     * @return The MedicalRecord
+     */
     @Override
-    public List<MedicalRecord> searchMedicalRecord(Predicate predicate) {
+    public MedicalRecord searchMedicalRecordBySS(String ss) {
         JPANurse nurse = new JPANurse();
-        return nurse.searchMedicalRecord(predicate);
+        return nurse.searchMedicalRecordBySS(ss);
+    }
+    
+    /**
+     * Get a MedicalRecord by its lastName
+     *
+     * @param lastName The lastName of the patient
+     * @return A List of MedicalRecord
+     */
+    @Override
+    public List<MedicalRecord> searchMedicalRecordByName(String lastName) {
+        JPANurse nurse = new JPANurse();
+        return nurse.searchMedicalRecordByName(lastName);
+    }
+    
+    /**
+     * Get a MedicalRecord by its number of social security and its lastName
+     *
+     * @param ss The number of social security of the patient
+     * @param lastName The lastName of the patient
+     * @return The MedicalRecord
+     */
+    @Override
+    public MedicalRecord searchMedicalRecord(String ss, String lastName) {
+        JPANurse nurse = new JPANurse();
+        return nurse.searchMedicalRecord(ss, lastName);
     }
 
+    /**
+     * Get a Dosage with its id passed in argument
+     * 
+     * @param idDosage The id of the Dosage
+     * @return The Dosage
+     */
     @Override
-    public Dosage getDosage(long idMedicalRecord, long idDosage) {
+    public Dosage getDosage(long idDosage) {
         JPANurse nurse = new JPANurse();
-        return nurse.getDosage(idMedicalRecord, idDosage);
+        return nurse.getDosage(idDosage);
     }
 
+    /**
+     * Get all dosages corresponding to the MedicalRecord passed in parameter
+     * 
+     * @param idMedicalRecord The id of the MedicalRecord
+     * @return A List of Dosage
+     */
     @Override
     public List<Dosage> getAllDosages(long idMedicalRecord) {
         JPANurse nurse = new JPANurse();
