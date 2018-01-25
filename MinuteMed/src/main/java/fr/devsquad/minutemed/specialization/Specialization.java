@@ -5,10 +5,15 @@
  */
 package fr.devsquad.minutemed.specialization;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 /**
  *
  * @author jsalmon
  */
+@Entity
 public enum Specialization {
     
     Allergologie(0,"Allergologue","Allergologie"),
@@ -59,34 +64,69 @@ public enum Specialization {
     Urgence(45,"Urgentiste","Urgence"),
     Urologie(46,"Urologue","Urologie");
     
-    
-    private final long id;
-    private final String staffName;
-    private final String generalName;
+    @Id @GeneratedValue
+    private long id;
+    private String staffName;
+    private String generalName;
     
     //constructor
 
+    /**
+     * This constructor is the default constructor for the JEE
+     */
+    private Specialization() {
+        
+    }
+
+    /**
+     * This constructor is use if the staffName and the generalName is the same
+     * @param id is the id of the specialization
+     * @param name is the name of the specialization
+     */
     private Specialization(long id,String name) {
         this.staffName = name;
         this.generalName = name;
         this.id = id;
     }
 
+    /**
+     * This constructor is the main constructor for the specialization
+     * @param id is the id of the specialisation
+     * @param staffName is the name of the specialization for a staff
+     * @param generalName is the name of the specialization
+     */
     private Specialization(long id, String staffName, String generalName) {
         this.id = id;
         this.staffName = staffName;
         this.generalName = generalName;
     }
     
+    /**
+     * This methode return the id of this specialization
+     * @return the id
+     */
     public long getId(){
         return id;
     }
     
+    /**
+     * return the name of a staff for this specialization
+     * @return the staffName
+     */
     public String getStaffName(){
         return staffName;
     }
     
+    /**
+     * return the general name of this specialization
+     * @return the generalName
+     */
     public String getGeneralName(){
         return generalName;
+    }
+    
+    public static int insertAllSpecialisationInBDD(){
+        int nbInsertion =0;
+        return nbInsertion;
     }
 }
