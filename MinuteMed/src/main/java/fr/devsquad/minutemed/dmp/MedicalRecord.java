@@ -12,7 +12,7 @@ import java.util.Objects;
  *
  * @author myfou
  */
-public class MedicalIRecord {
+public class MedicalRecord {
     private long id;
     private String ss;
     private String firstName;
@@ -23,11 +23,11 @@ public class MedicalIRecord {
     private String phoneNumber;
     private String email;
     
-    public MedicalIRecord() {
+    public MedicalRecord() {
         
     }
 
-    public MedicalIRecord(String ss, String firstName, String lastName, String address, String email, String phoneNumber, Date birthday, String gender) {
+    public MedicalRecord(String ss, String firstName, String lastName, String address, String email, String phoneNumber, Date birthday, String gender) {
         this.ss = Objects.requireNonNull(ss);
         this.firstName = Objects.requireNonNull(firstName);
         this.lastName = Objects.requireNonNull(lastName);

@@ -194,12 +194,12 @@ public class JPADataManager implements IDataManager {
     }
 
     @Override
-    public INode getNode(long idHospital, long idNode) {
+    public Node getNode(long idHospital, long idNode) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<INode> getAllNodes(long idHospital) {
+    public List<Node> getAllNodes(long idHospital) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author myfou
  */
-class Dosage {
+public class Dosage {
 
     public String getTitle() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

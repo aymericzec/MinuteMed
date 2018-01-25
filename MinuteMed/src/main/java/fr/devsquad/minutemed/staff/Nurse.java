@@ -1,133 +1,169 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.devsquad.minutemed.staff;
 
+import fr.devsquad.minutemed.database.INurse;
+import fr.devsquad.minutemed.database.JPANurse;
+import fr.devsquad.minutemed.dmp.MedicalRecord;
+import fr.devsquad.minutemed.dmp.Dosage;
+import java.io.Serializable;
 import java.util.List;
+import java.util.function.Predicate;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
-/**
- *
- * @author jsalmon
- */
-public class Nurse implements IMedicalStaff, IHospitalStaff{
+@Entity
+public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurse {
 
-    //Constuctors
+    @Id @GeneratedValue
+    private long idStaff; 
+    private String firstName;
+    private String lastName;
+    private String adress;
+    private String email;
+    private String phoneNumber;
     
-    public Nurse() { 
-        super();
-    }
+    @OneToOne
+    private Node node;
     
-    public Nurse(long id , String firstName, String lastName, String adress, String email, String phoneNumber, INode node) { 
-        super();
-    }
-
-    //Method with implementation
+    public Nurse() { }
     
-    @Override
-    public INode getService() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Nurse(String firstName, String lastName, String adress, String email, String phoneNumber, Node node) { 
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.adress = adress;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.node = node;
     }
 
-    @Override
-    public INode getAttachedNode() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<IMedicalRecord> getAllMedicalRecords() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public IMedicalRecord getMedicalRecord(long idMedicalRecord) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public INode getHospital() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setAttachedNode(INode node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setService(INode service) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<String> getAllFeatures() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
     @Override
     public long getIdStaff() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return idStaff;
     }
-
+    
     @Override
     public String getFirstName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return firstName;
     }
 
     @Override
     public String getLastName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return lastName;
     }
 
     @Override
     public String getAdress() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return adress;
     }
 
     @Override
     public String getEmail() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return email;
     }
 
     @Override
     public String getPhoneNumber() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return phoneNumber;
+    }
+    
+    @Override
+    public Node getNode() {
+        return node;
     }
 
     @Override
     public void setFirstName(String firstName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.firstName = firstName;
     }
 
     @Override
     public void setLastName(String lastName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.lastName = lastName;
     }
 
     @Override
     public void setAdress(String adress) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.adress = adress;
     }
 
     @Override
     public void setEmail(String email) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.email = email;
     }
 
     @Override
     public void setPhoneNumber(String phoneNumber) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.phoneNumber = phoneNumber;
     }
     
-    //method unique for this class
-    
-    public Patient findPatient(long idPatient){
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    @Override
+    public void setNode(Node node) {
+        this.node = node;
     }
-    
-    public List<Patient> findAllPatient(){
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+    /**
+     * Get a MedicalRecord with its id passed in argument
+     * 
+     * @param idMedicalRecord The id of the MedicalRecord
+     * @return The MedicalRecord
+     */
+    @Override
+    public MedicalRecord getMedicalRecord(long idMedicalRecord) {
+        JPANurse nurse = new JPANurse();
+        return nurse.getMedicalRecord(idMedicalRecord);
     }
-    
+
+    /**
+     * Get all MedicalRecords
+     * 
+     * @return A list of MedicalRecords
+     */
+    @Override
+    public List<MedicalRecord> getAllMedicalRecords() {
+        JPANurse nurse = new JPANurse();
+        return nurse.getAllMedicalRecords();
+    }
+
+    @Override
+    public List<MedicalRecord> searchMedicalRecord(Predicate predicate) {
+        JPANurse nurse = new JPANurse();
+        return nurse.searchMedicalRecord(predicate);
+    }
+
+    @Override
+    public Dosage getDosage(long idMedicalRecord, long idDosage) {
+        JPANurse nurse = new JPANurse();
+        return nurse.getDosage(idMedicalRecord, idDosage);
+    }
+
+    @Override
+    public List<Dosage> getAllDosages(long idMedicalRecord) {
+        JPANurse nurse = new JPANurse();
+        return nurse.getAllDosages(idMedicalRecord);
+    }
+
+    /**
+     * Get a Doctor with its id passed in argument
+     * 
+     * @param idDoctor The id of the Doctor
+     * @return The Doctor
+     */
+    @Override
+    public Doctor getDoctor(long idDoctor) {
+        JPANurse nurse = new JPANurse();
+        return nurse.getDoctor(idDoctor);
+    }
+
+    /**
+     * Get a Nurse with its id passed in argument
+     * 
+     * @param idNurse The id of the Nurse
+     * @return The Nurse
+     */
+    @Override
+    public Nurse getNurse(long idNurse) {
+        JPANurse nurse = new JPANurse();
+        return nurse.getNurse(idNurse);
+    }
 }

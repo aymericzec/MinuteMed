@@ -43,9 +43,9 @@ public interface IDataManager {
     
     public List<NodeCU> getCareUnits(long idHospital);
     
-    public INode getNode(long idHospital, long idNode);
+    public Node getNode(long idHospital, long idNode);
     
-    public List<INode> getAllNodes(long idHospital);
+    public List<Node> getAllNodes(long idHospital);
     
     public boolean createDoctor(Doctor doctor);
     

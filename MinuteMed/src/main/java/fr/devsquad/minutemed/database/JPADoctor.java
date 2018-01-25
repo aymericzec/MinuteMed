@@ -1,5 +1,12 @@
 package fr.devsquad.minutemed.database;
 
+import fr.devsquad.minutemed.dmp.Diagnostic;
+import fr.devsquad.minutemed.dmp.Dosage;
+import fr.devsquad.minutemed.dmp.Exam;
+import fr.devsquad.minutemed.dmp.MedicalRecord;
+import fr.devsquad.minutemed.dmp.Prescription;
+import fr.devsquad.minutemed.staff.Doctor;
+import fr.devsquad.minutemed.staff.Nurse;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;

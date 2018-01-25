@@ -49,7 +49,7 @@ public class ExamTest {
         String title = "Radiologie du fémur";
         //Doctor askExam = new Doctor(1L, "Aymeric", "Zecchini", "2 rue", "z@gmail.com", "0770138333", null, Specialization.Allergologie);
         Doctor askExam = new Doctor();
-        MedicalIRecord patient = new MedicalIRecord();
+        MedicalRecord patient = new MedicalRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
         
@@ -66,7 +66,7 @@ public class ExamTest {
         long id = 1;
         String title = "Radiologie du fémur";
         Doctor askExam = new Doctor();
-        MedicalIRecord patient = new MedicalIRecord();
+        MedicalRecord patient = new MedicalRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
         
@@ -120,7 +120,7 @@ public class ExamTest {
         long id = 1;
         String title = "Radiologie du fémur";
         Doctor askExam = new Doctor();
-        MedicalIRecord patient = new MedicalIRecord();
+        MedicalRecord patient = new MedicalRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
         
@@ -144,7 +144,7 @@ public class ExamTest {
         String title = "Radiologie du fémur";
         Doctor askExam = new Doctor();
         Doctor examinator = new Doctor();
-        MedicalIRecord patient = new MedicalIRecord();
+        MedicalRecord patient = new MedicalRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
         
@@ -174,7 +174,7 @@ public class ExamTest {
           long id = 1;
         String title = "Radiologie du fémur";
         Doctor askExam = new Doctor();
-        MedicalIRecord patient = new MedicalIRecord();
+        MedicalRecord patient = new MedicalRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
         
@@ -189,7 +189,7 @@ public class ExamTest {
     @Test
     public void testGetPatientNoEquals () {
         Exam exam = createDefaultExamWithExaminator();
-        assertNotEquals(exam.getPatient(), new MedicalIRecord());
+        assertNotEquals(exam.getPatient(), new MedicalRecord());
     }
     
     @Test
@@ -197,7 +197,7 @@ public class ExamTest {
         long id = 1;
         String title = "Radiologie du fémur";
         Doctor askExam = new Doctor();
-        MedicalIRecord patient = new MedicalIRecord();
+        MedicalRecord patient = new MedicalRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
         
@@ -220,7 +220,7 @@ public class ExamTest {
           long id = 1;
         String title = "Radiologie du fémur";
         Doctor askExam = new Doctor();
-        MedicalIRecord patient = new MedicalIRecord();
+        MedicalRecord patient = new MedicalRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
         
@@ -243,7 +243,7 @@ public class ExamTest {
           long id = 1;
         String title = "Radiologie du fémur";
         Doctor askExam = new Doctor();
-        MedicalIRecord patient = new MedicalIRecord();
+        MedicalRecord patient = new MedicalRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
         
