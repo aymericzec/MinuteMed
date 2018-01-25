@@ -1,15 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.devsquad.minutemed.specialization;
 
-
-/**
- *
- * @author jsalmon
- */
 
 public enum SpecializationEnum {
     
@@ -61,10 +51,9 @@ public enum SpecializationEnum {
     Urgence("Urgentiste","Urgence"),
     Urologie("Urologue","Urologie");
 
-    private String staffName;
-    private String generalName;
-    
-    //constructor
+    private final String staffName;
+    private final String generalName;
+ 
 
     /**
      * This constructor is use if the staffName and the generalName is the same
@@ -104,5 +93,4 @@ public enum SpecializationEnum {
     public String getGeneralName(){
         return generalName;
     }
-
 }

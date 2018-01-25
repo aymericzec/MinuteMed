@@ -1,23 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.devsquad.minutemed.specialization;
 
+import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-/**
- *
- * @author JSalmon
- */
+
 
 @Entity
-public class Specialization {
+public class Specialization implements Serializable {
     
     @Id @GeneratedValue
+    @Column(name = "idSpecialization")
     private long id;
     private String generalName;
     private String staffName;
@@ -26,8 +21,7 @@ public class Specialization {
     /**
      * This constructor is the default constructor for the JEE
      */
-    public Specialization() {
-    }
+    public Specialization() { }
 
     
     /**
@@ -66,5 +60,4 @@ public class Specialization {
     public String getGeneralName() {
         return generalName;
     }
-    
 }
