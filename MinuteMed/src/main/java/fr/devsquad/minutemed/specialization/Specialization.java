@@ -1,6 +1,7 @@
 package fr.devsquad.minutemed.specialization;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,6 +31,9 @@ public class Specialization implements Serializable {
      * @param specialization the SpecializationEnum of the specialization
      */
     public Specialization(SpecializationEnum specialization) {
+        if(specialization==null){
+            throw new NullPointerException();
+        }
         this.generalName = specialization.getGeneralName();
         this.staffName = specialization.getStaffName();
     }
@@ -60,4 +64,30 @@ public class Specialization implements Serializable {
     public String getGeneralName() {
         return generalName;
     }
+
+    /**
+     * This say if the obj is equals to this
+     * @param obj is the Object to test
+     * @return true if obj==this else false
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if(obj==null){
+            return false;
+        }
+        if(obj.getClass() == this.getClass()){
+            
+            Specialization spe = (Specialization) obj;
+            if(spe.getGeneralName().equals(this.generalName)){
+                if(spe.getStaffName().equals(this.staffName)){
+                    return true;
+                }
+            }
+        }
+        return false; //To change body of generated methods, choose Tools | Templates.
+    }
+
+
+    
+    
 }
