@@ -5,7 +5,6 @@ import fr.devsquad.minutemed.dmp.MedicalRecord;
 import fr.devsquad.minutemed.staff.Doctor;
 import fr.devsquad.minutemed.staff.Nurse;
 import java.util.List;
-import java.util.function.Predicate;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
@@ -58,7 +57,7 @@ public class JPANurse implements INurse {
         List<MedicalRecord> medicalRecords;
         
         try {
-            TypedQuery tq = em.createQuery("SELECT mRecord FROM MedicalRecord hmRecord", MedicalRecord.class);
+            TypedQuery<MedicalRecord> tq = em.createQuery("SELECT mRecord FROM MedicalRecord hmRecord", MedicalRecord.class);
             medicalRecords = tq.getResultList();
         } catch(NoResultException e) {
             return null;
@@ -66,19 +65,104 @@ public class JPANurse implements INurse {
         return medicalRecords;
     }
 
+    /**
+     * Get a MedicalRecord by its number of social security
+     * 
+     * @param ss The number of social security of the patient
+     * @return The MedicalRecord
+     */
     @Override
-    public List<MedicalRecord> searchMedicalRecord(Predicate predicate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public MedicalRecord searchMedicalRecordBySS(String ss) {
+        
+        MedicalRecord medicalRecord;
+        
+        try {
+            TypedQuery<MedicalRecord> tq = em.createQuery("SELECT mRecord FROM MedicalRecord mRecord WHERE mRecord.ss = :ss", MedicalRecord.class);
+            medicalRecord = tq.setParameter("ss", ss).getSingleResult();
+        } catch(NoResultException e) {
+            return null;
+        }
+        return medicalRecord;
     }
 
+    /**
+     * Get a MedicalRecord by its lastName
+     * 
+     * @param lastName The lastName of the patient
+     * @return A List of MedicalRecord
+     */
     @Override
-    public Dosage getDosage(long idMedicalRecord, long idDosage) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<MedicalRecord> searchMedicalRecordByName(String lastName) {
+        
+        List<MedicalRecord> medicalRecords;
+        
+        try {
+            TypedQuery<MedicalRecord> tq = em.createQuery("SELECT mRecord FROM MedicalRecord mRecord WHERE mRecord.lastName = :lastName", MedicalRecord.class);
+            medicalRecords = tq.setParameter("lastName", lastName).getResultList();
+        } catch(NoResultException e) {
+            return null;
+        }
+        return medicalRecords;
+    }
+    
+    /**
+     * Get a MedicalRecord by its number of social security and its lastName
+     * 
+     * @param ss The number of social security of the patient
+     * @param lastName The lastName of the patient
+     * @return The MedicalRecord
+     */
+    @Override
+    public MedicalRecord searchMedicalRecord(String ss, String lastName) {
+        
+        MedicalRecord medicalRecord;
+        
+        try {
+            TypedQuery<MedicalRecord> tq = em.createQuery("SELECT mRecord FROM MedicalRecord mRecord WHERE mRecord.ss = :ss AND mRecord.lastName = :lastName", MedicalRecord.class);
+            medicalRecord = tq.setParameter("ss", ss).setParameter("lastName", lastName).getSingleResult();
+        } catch(NoResultException e) {
+            return null;
+        }
+        return medicalRecord;
+    }
+    
+    /**
+     * Get a Dosage with its id passed in argument
+     * 
+     * @param idDosage The id of the Dosage
+     * @return The Dosage
+     */
+    @Override
+    public Dosage getDosage(long idDosage) {
+        
+        Dosage dosage;
+        
+        try {
+            dosage = em.find(Dosage.class, idDosage);
+        } catch(EntityNotFoundException e) {
+            return null;
+        }
+        return dosage;
     }
 
+    /**
+     * Get all dosages corresponding to the MedicalRecord passed in parameter
+     * 
+     * @param idMedicalRecord The id of the MedicalRecord
+     * @return A List of Dosage
+     */
     @Override
     public List<Dosage> getAllDosages(long idMedicalRecord) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        List<Dosage> dosages;
+        
+        try {
+            TypedQuery<Dosage> tq = em.createQuery("SELECT dosage FROM Dosage dosage WHERE dosage.idMedicalRecord = :idMedicalRecord", Dosage.class);
+            dosages = tq.setParameter("idMedicalRecord", idMedicalRecord).getResultList();
+        } catch(NoResultException e) {
+            return null;
+        }
+        return dosages;
     }
 
     /**
