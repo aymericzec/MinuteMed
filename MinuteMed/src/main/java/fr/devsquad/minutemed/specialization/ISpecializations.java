@@ -13,9 +13,9 @@ import java.util.List;
  */
 public interface ISpecializations {
     
-    List<Specialization> getSpecializations();
-    void putSpecialization(Specialization specialization);
-    void removeSpecialization(Specialization specialization);
+    List<SpecializationEnum> getSpecializations();
+    void putSpecialization(SpecializationEnum specialization);
+    void removeSpecialization(SpecializationEnum specialization);
     
     
 }

@@ -5,7 +5,7 @@
  */
 package fr.devsquad.minutemed.dmp;
 
-import fr.devsquad.minutemed.specialization.Specialization;
+import fr.devsquad.minutemed.specialization.SpecializationEnum;
 import fr.devsquad.minutemed.staff.Doctor;
 import java.util.ArrayList;
 import java.util.Date;

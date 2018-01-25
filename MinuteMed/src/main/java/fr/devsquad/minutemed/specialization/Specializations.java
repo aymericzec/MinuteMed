@@ -14,14 +14,14 @@ import java.util.List;
  */
 public class Specializations implements ISpecializations {
 
-    private ArrayList<Specialization> specializations = new ArrayList<>();
+    private ArrayList<SpecializationEnum> specializations = new ArrayList<>();
     
     /**
      * This methode can get all specializations of this class
      * @return Return the list of all specializations
      */
     @Override
-    public List<Specialization> getSpecializations() {
+    public List<SpecializationEnum> getSpecializations() {
         return specializations;
     }
 
@@ -30,7 +30,7 @@ public class Specializations implements ISpecializations {
      * @param specialization 
      */
     @Override
-    public void putSpecialization(Specialization specialization) {
+    public void putSpecialization(SpecializationEnum specialization) {
         if(specializations.contains(specialization)){
             return ;
         }
@@ -43,7 +43,7 @@ public class Specializations implements ISpecializations {
      * @param specialization 
      */
     @Override
-    public void removeSpecialization(Specialization specialization) {
+    public void removeSpecialization(SpecializationEnum specialization) {
         specializations.remove(specialization);
     }
 
@@ -55,7 +55,7 @@ public class Specializations implements ISpecializations {
     public String toString() {
         StringBuilder stb = new StringBuilder();
         
-        for(Specialization s : specializations){
+        for(SpecializationEnum s : specializations){
             stb.append(s).append(" ");
         }
         

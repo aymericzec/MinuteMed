@@ -35,11 +35,11 @@ public class SpecializationsTest {
     @Test
     public final void testDoublePutSpecialization(){
         Specializations s1 = new Specializations();
-        s1.removeSpecialization(Specialization.Andrologie);
-        s1.removeSpecialization(Specialization.Andrologie);
+        s1.removeSpecialization(SpecializationEnum.Andrologie);
+        s1.removeSpecialization(SpecializationEnum.Andrologie);
         
         Specializations s2 = new Specializations();
-        s2.removeSpecialization(Specialization.Andrologie);
+        s2.removeSpecialization(SpecializationEnum.Andrologie);
         
         Assert.assertEquals( s1 , s2 );
     }

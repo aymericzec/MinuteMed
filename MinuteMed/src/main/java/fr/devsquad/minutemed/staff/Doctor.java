@@ -35,7 +35,7 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
     
     public Doctor() { }
     
-    public Doctor(String firstName, String lastName, String adress, String email, String phoneNumber, Node node , Specialization specialization) { 
+    public Doctor(String firstName, String lastName, String adress, String email, String phoneNumber, Node node , SpecializationEnum specialization) { 
         this.firstName = firstName;
         this.lastName = lastName;
         this.adress = adress;
