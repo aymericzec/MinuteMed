@@ -12,39 +12,39 @@ public interface IDoctor {
     
     public boolean createMedicalRecord(MedicalRecord medicalRecord);
     
-    public boolean createExam(long idMedicalRecord, Exam exam);
+    public boolean createExam(Exam exam);
     
-    public Exam getExam(long idMedicalRecord, long idExam);
+    public Exam getExam(long idExam);
     
-    public List<Exam> getAllExams(long idMedicalREcord);
+    public List<Exam> getAllExams(long idMedicalRecord);
     
-    public boolean validateExam(long idMedicalFolder, long idExam);
+    public boolean validateExam(long idExam);
     
-    public boolean removeDraftExam(long idMedicalFolder, long idExam);
+    public boolean removeDraftExam(long idExam);
     
-    public boolean createPrescription(long idMedicalRecord, Prescription prescription);
+    public boolean createPrescription(Prescription prescription);
     
-    public Prescription getPrescription(long idMedicalRecord, long idPrescription);
+    public Prescription getPrescription(long idPrescription);
     
-    public List<Prescription> getAllPrescriptions(long idMedicalREcord);
+    public List<Prescription> getAllPrescriptions(long idMedicalRecord);
     
-    public boolean validatePrescription(long idMedicalFolder, long idPrescription);
+    public boolean validatePrescription(long idPrescription);
     
-    public boolean removeDraftPrescription(long idMedicalFolder, long idPrescription);
+    public boolean removeDraftPrescription(long idPrescription);
     
-    public boolean createDiagnostic(long idMedicalRecord, Diagnostic diagnostic);
+    public boolean createDiagnostic(Diagnostic diagnostic);
     
-    public Diagnostic getDiagnostic(long idMedicalRecord, long idDiagnostic);
+    public Diagnostic getDiagnostic(long idDiagnostic);
     
-    public List<Diagnostic> getAllDiagnostics(long idMedicalREcord);
+    public List<Diagnostic> getAllDiagnostics(long idMedicalRecord);
     
-    public boolean validateDiagnostic(long idMedicalFolder, long idDiagnostic);
+    public boolean validateDiagnostic(long idDiagnostic);
     
-    public boolean removeDraftDiagnostic(long idMedicalFolder, long idDiagnostic);
+    public boolean removeDraftDiagnostic(long idDiagnostic);
     
-    public boolean createDosage(long idMedicalRecord, Dosage dosage);
+    public boolean createDosage(Dosage dosage);
     
-    public boolean validateDosage(long idMedicalFolder, long idDosage);
+    public boolean validateDosage(long idDosage);
     
-    public boolean removeDraftDosage(long idMedicalFolder, long idDosage);
+    public boolean removeDraftDosage(long idDosage);
 }

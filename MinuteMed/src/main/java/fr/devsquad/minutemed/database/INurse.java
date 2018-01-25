@@ -14,9 +14,13 @@ public interface INurse {
     
     public List<MedicalRecord> getAllMedicalRecords();
     
-    public List<MedicalRecord> searchMedicalRecord(Predicate predicate);
+    public MedicalRecord searchMedicalRecordBySS(String ss);
     
-    public Dosage getDosage(long idMedicalRecord, long idDosage);
+    public List<MedicalRecord> searchMedicalRecordByName(String lastName);
+    
+    public MedicalRecord searchMedicalRecord(String ss, String lastName);
+    
+    public Dosage getDosage(long idDosage);
     
     public List<Dosage> getAllDosages(long idMedicalRecord);
     
