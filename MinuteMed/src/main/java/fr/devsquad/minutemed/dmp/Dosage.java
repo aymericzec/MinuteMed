@@ -5,42 +5,40 @@
  */
 package fr.devsquad.minutemed.dmp;
 
-import fr.devsquad.minutemed.database.IDoctor;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author myfou
  */
-public class Exam {
-    public long getId() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+public class Dosage {
 
     public String getTitle() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    public IDoctor getDoctorAskExamination () {
-         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
- 
-    public IPatient getPatient () {
-         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    public String getDescription () {
+
+    public Date getDateCreate() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    public IAnnex getAnnexes () {
+
+    public Diagnostic getDiagnostic() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    public ResultExam getResultExam () {
+
+    public List<ReportDosage> getRepports() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    public void setResultExam (ResultExam resultExam) {
+
+    public Date getDateBegin() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Date getDateEnd() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public String getDosage() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

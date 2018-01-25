@@ -1,13 +1,17 @@
 package fr.devsquad.minutemed.database;
 
+import fr.devsquad.minutemed.authentication.UserAccount;
+import fr.devsquad.minutemed.staff.Doctor;
+import fr.devsquad.minutemed.staff.IHospitalStaff;
+import fr.devsquad.minutemed.staff.Nurse;
 import java.util.List;
 
 
 public interface IDataManager {
     
-    public boolean createAccount(String login, String password, IHospitalStaff user);
+    public boolean createAccount(UserAccount account);
     
-    public boolean removeAccount(String login);
+    public boolean removeAccount(long idAccount);
     
     public boolean createHospital(NodeHospital hospital);
     
@@ -21,27 +25,27 @@ public interface IDataManager {
     
     public List<NodePole> getAllPoles(long idHospital);
     
-    public boolean createService(long idHospital, NodeService service);
+    public boolean createService(long idHospital, long idPole, NodeService service);
     
-    public NodeService getService(long idHospital, lond idService);
+    public NodeService getService(long idHospital, long idPole, long idService);
     
     public List<NodeService> getAllServices(long idHospital);
     
-    public boolean createHospitalUnit(long idHospital, NodeHU hu);
+    public boolean createHospitalUnit(long idHospital, long idPole, long idService, NodeHU hu);
     
-    public NodeHU getHospitalUnit(long idHospital, long idHU);
+    public NodeHU getHospitalUnit(long idHospital, long idPole, long idService, long idHU);
     
     public List<NodeHU> getAllHospitalUnits(long idHospital);
     
-    public boolean createCareUnit(long idHospital, NodeCU cu);
+    public boolean createCareUnit(long idHospital, long idPole, long idService, long idHU, NodeCU cu);
     
-    public NodeCU getCareUnit(long idHospital, long idCU);
+    public NodeCU getCareUnit(long idHospital, long idPole, long idService, long idHU, long idCU);
     
     public List<NodeCU> getCareUnits(long idHospital);
     
-    public INode getNode(long idHospital, long idNode);
+    public Node getNode(long idHospital, long idNode);
     
-    public List<INode> getAllNodes(long idHospital);
+    public List<Node> getAllNodes(long idHospital);
     
     public boolean createDoctor(Doctor doctor);
     

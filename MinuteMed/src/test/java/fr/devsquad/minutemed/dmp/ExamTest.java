@@ -5,6 +5,8 @@
  */
 package fr.devsquad.minutemed.dmp;
 
+import fr.devsquad.minutemed.specialization.Specialization;
+import fr.devsquad.minutemed.staff.Doctor;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,8 +47,9 @@ public class ExamTest {
     private Exam createDefaultExamWithOutExaminator () {
         long id = 1;
         String title = "Radiologie du fémur";
-        IDoctor askExam = new IDoctor();
-        IPatient patient = new IPatient();
+        //Doctor askExam = new Doctor(1L, "Aymeric", "Zecchini", "2 rue", "z@gmail.com", "0770138333", null, Specialization.Allergologie);
+        Doctor askExam = new Doctor();
+        MedicalRecord patient = new MedicalRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
         
@@ -62,19 +65,17 @@ public class ExamTest {
     private Exam createDefaultExamWithExaminator () {
         long id = 1;
         String title = "Radiologie du fémur";
-        IDoctor askExam = new IDoctor();
-        IPatient patient = new IPatient();
+        Doctor askExam = new Doctor();
+        MedicalRecord patient = new MedicalRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
         
         List<IAnnex> annexs = new ArrayList();
         annexs.add(new IAnnex());
-        
-        
+         
         Exam exam = new Exam(id, title, askExam, patient, consultExam, description, annexs);
     
-        ResultExam resultExam = new ResultExam();
-        
+        ResultExamTest resultExam = new ResultExamTest();
         exam.setResultExam(resultExam);
         
         return exam;
@@ -90,6 +91,7 @@ public class ExamTest {
         Exam exam = new Exam(null, null, null, null, null, null, null);
     }
     
+    @Test
     public void testGetIdEquals () {        
         Exam exam = createDefaultExamWithOutExaminator();
         assertEquals(exam.getId(), 1l);
@@ -117,8 +119,8 @@ public class ExamTest {
     public void testGetDoctorAskExaminationEquals () {
         long id = 1;
         String title = "Radiologie du fémur";
-        IDoctor askExam = new IDoctor();
-        IPatient patient = new IPatient();
+        Doctor askExam = new Doctor();
+        MedicalRecord patient = new MedicalRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
         
@@ -133,16 +135,16 @@ public class ExamTest {
     @Test
     public void testGetDoctorAskExaminationNoEquals () {
         Exam exam = createDefaultExamWithOutExaminator();
-        assertNotEquals(exam.getDoctorAskExamination(), new IDoctor());
+        assertNotEquals(exam.getDoctorAskExamination(), new Doctor());
     }
     
     @Test
     public void testGetDoctorExaminatorEquals () {
         long id = 1;
         String title = "Radiologie du fémur";
-        IDoctor askExam = new IDoctor();
-        IDoctor examinator = new IDoctor();
-        IPatient patient = new IPatient();
+        Doctor askExam = new Doctor();
+        Doctor examinator = new Doctor();
+        MedicalRecord patient = new MedicalRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
         
@@ -158,7 +160,7 @@ public class ExamTest {
     @Test
     public void testGetDoctorExaminatorNoEquals () {
         Exam exam = createDefaultExamWithExaminator();
-        assertNotEquals(exam.getDoctorExaminator(), new IDoctor());
+        assertNotEquals(exam.getDoctorExaminator(), new Doctor());
     }
     
     @Test
@@ -171,8 +173,8 @@ public class ExamTest {
     public void testGetPatientEquals () {
           long id = 1;
         String title = "Radiologie du fémur";
-        IDoctor askExam = new IDoctor();
-        IPatient patient = new IPatient();
+        Doctor askExam = new Doctor();
+        MedicalRecord patient = new MedicalRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
         
@@ -187,15 +189,15 @@ public class ExamTest {
     @Test
     public void testGetPatientNoEquals () {
         Exam exam = createDefaultExamWithExaminator();
-        assertNotEquals(exam.getPatient(), new IPatient());
+        assertNotEquals(exam.getPatient(), new MedicalRecord());
     }
     
     @Test
     public void testGetDateEquals () {
         long id = 1;
         String title = "Radiologie du fémur";
-        IDoctor askExam = new IDoctor();
-        IPatient patient = new IPatient();
+        Doctor askExam = new Doctor();
+        MedicalRecord patient = new MedicalRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
         
@@ -217,8 +219,8 @@ public class ExamTest {
     public void testGetDescriptionEquals () {
           long id = 1;
         String title = "Radiologie du fémur";
-        IDoctor askExam = new IDoctor();
-        IPatient patient = new IPatient();
+        Doctor askExam = new Doctor();
+        MedicalRecord patient = new MedicalRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
         
@@ -240,8 +242,8 @@ public class ExamTest {
     public void testGetAnnexEquals () {
           long id = 1;
         String title = "Radiologie du fémur";
-        IDoctor askExam = new IDoctor();
-        IPatient patient = new IPatient();
+        Doctor askExam = new Doctor();
+        MedicalRecord patient = new MedicalRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
         
@@ -262,7 +264,7 @@ public class ExamTest {
     @Test
     public void testSetResultExam () {        
         Exam exam = createDefaultExamWithOutExaminator();
-        ResultExam resultExam = new ResultExam();
+        ResultExamTest resultExam = new ResultExamTest();
         exam.setResultExam(resultExam);
     }
     
@@ -275,7 +277,7 @@ public class ExamTest {
     @Test
     public void testGetResultExamEquals () {
         Exam exam = createDefaultExamWithOutExaminator();
-        ResultExam resultExam = new ResultExam();
+        ResultExamTest resultExam = new ResultExamTest();
         exam.setResultExam(resultExam);
         assertNotEquals(exam.getResultExam(), resultExam);
     }
@@ -283,9 +285,9 @@ public class ExamTest {
     @Test
     public void testGetResultExamNoEquals () {
         Exam exam = createDefaultExamWithOutExaminator();
-        ResultExam resultExam = new ResultExam();
+        ResultExamTest resultExam = new ResultExamTest();
         exam.setResultExam(resultExam);
-        ResultExam resultExam2 = new ResultExam();
+        ResultExamTest resultExam2 = new ResultExamTest();
         assertNotEquals(exam.getResultExam(), resultExam2);
     }
     

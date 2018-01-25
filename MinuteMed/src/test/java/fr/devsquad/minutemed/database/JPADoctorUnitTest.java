@@ -17,7 +17,7 @@ public class JPADoctorUnitTest {
      public void testCreateMedicalRecordNull() {
          JPADoctor doctor = Mockito.spy(new JPADoctor()); 
          
-         Mockito.doThrow(new IllegalArgumentException()).when(doctor).createMedicalRecord(null);
+         Mockito.doThrow(new NullPointerException()).when(doctor).createMedicalRecord(null);
      }
      
      /**
@@ -41,7 +41,7 @@ public class JPADoctorUnitTest {
          MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
          
          assertTrue(doctor.createMedicalRecord(mRecord));
-         Mockito.doThrow(new IllegalArgumentException()).when(doctor).createExam(mRecord.getId(), null);
+         Mockito.doThrow(new NullPointerException()).when(doctor).createExam(mRecord.getId(), null);
      }
     
      /**
@@ -132,7 +132,7 @@ public class JPADoctorUnitTest {
          MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
          
          assertTrue(doctor.createMedicalRecord(mRecord));
-         Mockito.doThrow(new IllegalArgumentException()).when(doctor).createPrescription(mRecord.getId(), null);
+         Mockito.doThrow(new NullPointerException()).when(doctor).createPrescription(mRecord.getId(), null);
      }
     
      /**
@@ -223,7 +223,7 @@ public class JPADoctorUnitTest {
          MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
          
          assertTrue(doctor.createMedicalRecord(mRecord));
-         Mockito.doThrow(new IllegalArgumentException()).when(doctor).createDiagnostic(mRecord.getId(), null);
+         Mockito.doThrow(new NullPointerException()).when(doctor).createDiagnostic(mRecord.getId(), null);
      }
     
      /**
@@ -314,7 +314,7 @@ public class JPADoctorUnitTest {
          MedicalRecord mRecord = new MedicalRecord(...);
          
          assertTrue(doctor.createMedicalRecord(mRecord));
-         Mockito.doThrow(new IllegalArgumentException()).when(doctor).createDosage(mRecord.getId(), null);
+         Mockito.doThrow(new NullPointerException()).when(doctor).createDosage(mRecord.getId(), null);
      }
     
      /**
