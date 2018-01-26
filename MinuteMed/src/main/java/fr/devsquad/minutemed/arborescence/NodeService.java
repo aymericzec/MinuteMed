@@ -31,12 +31,11 @@ public class NodeService implements Serializable, INode {
      * 
      * @param type Type of the node
      * @param specialization Specialization of the service
-     * @param pole Parent node
      */
-    public NodeService(NodeEnum type, Specialization specialization, NodePole pole) {
+    public NodeService(NodeEnum type, Specialization specialization) {
         this.type = type.SERVICE.name();
         this.specialization = specialization.getGeneralName();
-        this.pole = pole;
+        this.pole = null;
         this.hu = null;
     }
     
@@ -45,13 +44,12 @@ public class NodeService implements Serializable, INode {
      * 
      * @param type Type of the node
      * @param specialization Specialization of the service
-     * @param pole  Parent node
      * @param hu List of hosital units attached to this node
      */
-    public NodeService(NodeEnum type, Specialization specialization, NodePole pole, List<NodeHU> hu) {
+    public NodeService(NodeEnum type, Specialization specialization, List<NodeHU> hu) {
         this.type = type.SERVICE.name();
         this.specialization = specialization.getGeneralName();
-        this.pole = pole;
+        this.pole = null;
         this.hu = hu;
     }
 
@@ -75,5 +73,9 @@ public class NodeService implements Serializable, INode {
     
     public List<NodeHU> getHospitalUnits() {
         return hu;
+    }
+    
+    public void setPole(NodePole pole) {
+        this.pole = pole;
     }
 }

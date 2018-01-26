@@ -31,12 +31,11 @@ public class NodeHU implements Serializable, INode {
      * 
      * @param type Type of the node
      * @param specialization Specialization of the hospital unit
-     * @param service Parent node
      */
-    public NodeHU(NodeEnum type, Specialization specialization, NodeService service) {
+    public NodeHU(NodeEnum type, Specialization specialization) {
         this.type = type.HOSPITAL_UNIT.name();
         this.specialization = specialization.getGeneralName();
-        this.service = service;
+        this.service = null;
         this.cu = null;
     }
     
@@ -45,13 +44,12 @@ public class NodeHU implements Serializable, INode {
      * 
      * @param type Type of the node
      * @param specialization Specialization of the hospital unit
-     * @param service Parent node
      * @param cu List of care units attached to this node
      */
-    public NodeHU(NodeEnum type, Specialization specialization, NodeService service, List<NodeCU> cu) {
+    public NodeHU(NodeEnum type, Specialization specialization, List<NodeCU> cu) {
         this.type = type.HOSPITAL_UNIT.name();
         this.specialization = specialization.getGeneralName();
-        this.service = service;
+        this.service = null;
         this.cu = cu;
     }
     
@@ -75,5 +73,9 @@ public class NodeHU implements Serializable, INode {
     
     public List<NodeCU> getCareUnits() {
         return cu;
+    }
+    
+    public void setService(NodeService service) {
+        this.service = service;
     }
 }

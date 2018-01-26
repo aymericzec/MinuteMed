@@ -30,12 +30,11 @@ public class NodeHospital implements Serializable, INode {
      * 
      * @param type Type of the node
      * @param name Name of the hospital
-     * @param aphp Parent node
      */
-    public NodeHospital(NodeEnum type, String name, NodeAPHP aphp) {
+    public NodeHospital(NodeEnum type, String name) {
         this.type = type.HOSPITAL.name();
         this.name = name;
-        this.aphp = aphp;
+        this.aphp = null;
         this.poles = null;
     }
     
@@ -44,13 +43,12 @@ public class NodeHospital implements Serializable, INode {
      * 
      * @param type Type of the node
      * @param name Name of the hospital
-     * @param aphp Parent node
      * @param poles List of poles attached to this node
      */
-    public NodeHospital(NodeEnum type, String name, NodeAPHP aphp, List<NodePole> poles) {
+    public NodeHospital(NodeEnum type, String name, List<NodePole> poles) {
         this.type = type.HOSPITAL.name();
         this.name = name;
-        this.aphp = aphp;
+        this.aphp = null;
         this.poles = poles;
     }
 
@@ -74,5 +72,9 @@ public class NodeHospital implements Serializable, INode {
     
     public List<NodePole> getPoles() {
         return poles;
+    }
+    
+    public void setAPHP(NodeAPHP aphp) {
+        this.aphp = aphp;
     }
 }

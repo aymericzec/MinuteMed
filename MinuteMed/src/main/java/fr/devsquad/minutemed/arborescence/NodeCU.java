@@ -27,12 +27,11 @@ public class NodeCU implements Serializable, INode {
      * 
      * @param type Type of the node
      * @param specialization Specialization of the care unit
-     * @param hu Parent node
      */
-    public NodeCU(NodeEnum type, Specialization specialization, NodeHU hu) {
+    public NodeCU(NodeEnum type, Specialization specialization) {
         this.type = type.CARE_UNIT.name();
         this.specialization = specialization.getGeneralName();
-        this.hu = hu;
+        this.hu = null;
     }
     
     @Override
@@ -51,5 +50,9 @@ public class NodeCU implements Serializable, INode {
     
     public NodeHU getHospitalUnit() {
         return hu;
+    }
+    
+    public void setHospitalUnit(NodeHU hu) {
+        this.hu = hu;
     }
 }

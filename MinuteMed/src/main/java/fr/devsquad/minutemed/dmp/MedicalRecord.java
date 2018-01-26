@@ -21,8 +21,7 @@ public class MedicalRecord implements Serializable {
     private String firstName;
     private String lastName;
     private String address;
-    @Temporal(TemporalType.DATE)
-    private Date birthday;
+    private String birthday;
     private String gender;
     private String phoneNumber;
     private String email;
@@ -31,7 +30,7 @@ public class MedicalRecord implements Serializable {
 
     }
 
-    public MedicalRecord(String ss, String firstName, String lastName, String address, String email, String phoneNumber, Date birthday, GenderEnum gender) {
+    public MedicalRecord(String ss, String firstName, String lastName, String address, String email, String phoneNumber, String birthday, GenderEnum gender) {
         this.ss = Objects.requireNonNull(ss);
         this.firstName = Objects.requireNonNull(firstName);
         this.lastName = Objects.requireNonNull(lastName);
@@ -62,7 +61,7 @@ public class MedicalRecord implements Serializable {
         return gender;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 

@@ -1,6 +1,10 @@
 package fr.devsquad.minutemed.database;
 
 
+import fr.devsquad.minutemed.dmp.GenderEnum;
+import fr.devsquad.minutemed.dmp.MedicalRecord;
+import fr.devsquad.minutemed.staff.Doctor;
+import fr.devsquad.minutemed.staff.Nurse;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
@@ -26,7 +30,7 @@ public class JPADoctorUnitTest {
      @Test
      public void testCreateMedicalRecord() {
          JPADoctor doctor = Mockito.spy(new JPADoctor()); 
-         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord("1950745656561", "Menez", "Pierre", "5 rue Saint Antoine", "pierrot@gmail.com", "0745898751", "14/08/1964", GenderEnum.M));
        
          assertTrue(doctor.createMedicalRecord(mRecord));
          assertFalse(doctor.createMedicalRecord(mRecord));
@@ -38,10 +42,8 @@ public class JPADoctorUnitTest {
      @Test
      public void testCreateExamNull() {
          JPADoctor doctor = Mockito.spy(new JPADoctor()); 
-         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
          
-         assertTrue(doctor.createMedicalRecord(mRecord));
-         Mockito.doThrow(new NullPointerException()).when(doctor).createExam(mRecord.getId(), null);
+         Mockito.doThrow(new NullPointerException()).when(doctor).createExam(null);
      }
     
      /**
@@ -50,7 +52,7 @@ public class JPADoctorUnitTest {
      @Test
      public void testCreateExam() {
          JPADoctor doctor = Mockito.spy(new JPADoctor()); 
-         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord("1950745656561", "Menez", "Pierre", "5 rue Saint Antoine", "pierrot@gmail.com", "0745898751", "14/08/1964", GenderEnum.M));
          Exam exam = Mockito.spy(new Exam(...));
        
          assertTrue(doctor.createMedicalRecord(mRecord));
@@ -64,7 +66,7 @@ public class JPADoctorUnitTest {
      @Test
      public void testGetExam() {
          JPADoctor doctor = Mockito.spy(new JPADoctor()); 
-         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord("1950745656561", "Menez", "Pierre", "5 rue Saint Antoine", "pierrot@gmail.com", "0745898751", "14/08/1964", GenderEnum.M));
          Exam examCreate = Mockito.spy(new Exam(...));
          
          assertTrue(doctor.createMedicalRecord(mRecord));
@@ -83,7 +85,7 @@ public class JPADoctorUnitTest {
      @Test
      public void testGetAllExams() {
          JPADoctor doctor = Mockito.spy(new JPADoctor()); 
-         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord("1950745656561", "Menez", "Pierre", "5 rue Saint Antoine", "pierrot@gmail.com", "0745898751", "14/08/1964", GenderEnum.M));
          Exam exam1 = Mockito.spy(new Exam(...));
          Exam exam2 = Mockito.spy(new Exam(...));
          
@@ -99,7 +101,7 @@ public class JPADoctorUnitTest {
      @Test
      public void testValidateExam() {
          JPADoctor doctor = Mockito.spy(new JPADoctor()); 
-         MedicalRecord mRecord = Mockito.spy(new MedicalRecord(...));
+         MedicalRecord mRecord = Mockito.spy(new MedicalRecord("1950745656561", "Menez", "Pierre", "5 rue Saint Antoine", "pierrot@gmail.com", "0745898751", "14/08/1964", GenderEnum.M));
          Exam exam = Mockito.spy(new Exam(...));
          
          assertTrue(doctor.createMedicalRecord(mRecord));
