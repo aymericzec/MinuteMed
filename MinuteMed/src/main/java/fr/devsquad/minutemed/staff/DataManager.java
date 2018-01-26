@@ -1,5 +1,6 @@
 package fr.devsquad.minutemed.staff;
 
+import fr.devsquad.minutemed.arborescence.NodeAPHP;
 import fr.devsquad.minutemed.arborescence.NodeCU;
 import fr.devsquad.minutemed.arborescence.NodeHU;
 import fr.devsquad.minutemed.arborescence.NodeHospital;
@@ -145,6 +146,18 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
     public boolean removeSpecialization(long idSpecialization) {
         JPADataManager dataManager = new JPADataManager();
         return dataManager.removeSpecialization(idSpecialization);
+    }
+
+    /**
+     * Add APHP in the database
+     * 
+     * @param aphp The APHP to add
+     * @return True if the APHP don't exists in the database, or false otherwise
+     */
+    @Override
+    public boolean createAPHP(NodeAPHP aphp) {
+        JPADataManager dataManager = new JPADataManager();
+        return dataManager.createAPHP(aphp);
     }
 
     /**

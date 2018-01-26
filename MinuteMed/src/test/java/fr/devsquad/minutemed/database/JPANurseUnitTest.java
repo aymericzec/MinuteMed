@@ -119,14 +119,16 @@ public class JPANurseUnitTest {
          hospitals.add(nodeHospital);
          
          NodeAPHP nodeAPHP = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
-         
-         nodeHospital.setAPHP(nodeAPHP);
          nodePole.setHospital(nodeHospital);
-         
+         nodeHospital.setAPHP(nodeAPHP);
+                  
          INode pole = nodePole;
          
          Doctor doctorCreate = Mockito.spy(new Doctor("Durand", "Emilie", "5 Avenue de la Republique", "emilie.durand@gmail.com", "0718547896", pole, pediatrie));
          
+         assertTrue(dataManager.createAPHP(nodeAPHP));
+         assertTrue(dataManager.createHospital(nodeHospital));
+         assertTrue(dataManager.createPole(nodePole));
          assertTrue(dataManager.createDoctor(doctorCreate));
      
          Doctor doctorResult = nurse.getDoctor(doctorCreate.getId());
@@ -160,14 +162,16 @@ public class JPANurseUnitTest {
          hospitals.add(nodeHospital);
          
          NodeAPHP nodeAPHP = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
-         
-         nodeHospital.setAPHP(nodeAPHP);
          nodePole.setHospital(nodeHospital);
-         
+         nodeHospital.setAPHP(nodeAPHP);
+                  
          INode pole = nodePole;
          
          Nurse nurseCreate = Mockito.spy(new Nurse("Durand", "Emilie", "5 Avenue de la Republique", "emilie.durand@gmail.com", "0718547896", pole));
          
+         assertTrue(dataManager.createAPHP(nodeAPHP));
+         assertTrue(dataManager.createHospital(nodeHospital));
+         assertTrue(dataManager.createPole(nodePole));
          assertTrue(dataManager.createNurse(nurseCreate));
          
          Nurse nurseResult = nurse.getNurse(nurseCreate.getId());

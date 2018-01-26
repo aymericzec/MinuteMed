@@ -1,5 +1,6 @@
 package fr.devsquad.minutemed.database;
 
+import fr.devsquad.minutemed.arborescence.NodeAPHP;
 import fr.devsquad.minutemed.arborescence.NodeCU;
 import fr.devsquad.minutemed.arborescence.NodeHU;
 import fr.devsquad.minutemed.arborescence.NodeHospital;
@@ -116,6 +117,27 @@ public class JPADataManager implements IDataManager {
             em.remove(specialization);
             et.commit();
         } catch (EntityNotFoundException e) {
+            return false;
+        }
+        return true;
+    }
+    
+    /**
+     * Add APHP in the database
+     * 
+     * @param aphp The APHP to add
+     * @return True if the APHP don't exists in the database, or false otherwise
+     */
+    @Override
+    public boolean createAPHP(NodeAPHP aphp) {
+        
+        Objects.requireNonNull(aphp);
+        
+        try {
+            et.begin();
+            em.persist(aphp);
+            et.commit();
+        } catch(EntityExistsException e) {
             return false;
         }
         return true;

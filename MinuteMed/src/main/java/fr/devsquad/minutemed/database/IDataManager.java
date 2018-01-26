@@ -1,6 +1,7 @@
 package fr.devsquad.minutemed.database;
 
 import fr.devsquad.minutemed.arborescence.INode;
+import fr.devsquad.minutemed.arborescence.NodeAPHP;
 import fr.devsquad.minutemed.arborescence.NodeCU;
 import fr.devsquad.minutemed.arborescence.NodeHU;
 import fr.devsquad.minutemed.arborescence.NodeHospital;
@@ -23,6 +24,8 @@ public interface IDataManager {
     public boolean createSpecialization(Specialization specialization);
     
     public boolean removeSpecialization(long idSpecialization);
+    
+    public boolean createAPHP(NodeAPHP aphp);
     
     public boolean createHospital(NodeHospital hospital);
     
