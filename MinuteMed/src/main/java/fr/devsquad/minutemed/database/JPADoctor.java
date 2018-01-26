@@ -110,22 +110,55 @@ public class JPADoctor implements IDoctor, INurse {
         List<Exam> exams;
         
         try {
-            TypedQuery<Exam> tq = em.createQuery("SELECT exam FROM Exam exam WHERE exam.idMedicalRecord = :idMedicalRecord", Exam.class);
-            exams = tq.setParameter("idMedicalRecord", idMedicalRecord).getResultList();
+            TypedQuery<Exam> tq = em.createQuery("SELECT exam FROM Exam exam WHERE exam.medicalRecord = :idMedicalRecord AND exam.draft = :draft", Exam.class);
+            exams = tq.setParameter("idMedicalRecord", idMedicalRecord).setParameter("draft", false).getResultList();
         } catch(NoResultException e) {
             return null;
         }
         return exams;
     }
 
+    /**
+     * Validate a Draft Exam
+     * 
+     * @param idExam The id of the Exam to validate
+     * @return True if the draft Exam don't exists in the database, or false otherwise
+     */
     @Override
     public boolean validateExam(long idExam) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
+        try {
+            et.begin();
+            Exam exam = em.find(Exam.class, idExam);
+            exam.setDraft(false);
+            et.commit();
+        } catch(EntityNotFoundException e) {
+            return false;
+        }
+        return true;
     }
 
+    /**
+     * Remove a Draft Exam from the database
+     * 
+     * @param idExam Draft Exam to remove
+     * @return True if the draft Exam don't exists in the database, or false otherwise
+     */
     @Override
     public boolean removeDraftExam(long idExam) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            et.begin();
+            Exam exam = em.find(Exam.class, idExam);
+            if(!exam.getDraft()) {
+                return false;
+            }
+            em.remove(exam);
+            et.commit();
+        } catch(EntityNotFoundException e) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -181,22 +214,55 @@ public class JPADoctor implements IDoctor, INurse {
         List<Prescription> prescriptions;
         
         try {
-            TypedQuery<Prescription> tq = em.createQuery("SELECT prescription FROM Prescription prescription WHERE prescription.idMedicalRecord = :idMedicalRecord", Prescription.class);
-            prescriptions = tq.setParameter("idMedicalRecord", idMedicalRecord).getResultList();
+            TypedQuery<Prescription> tq = em.createQuery("SELECT prescription FROM Prescription prescription WHERE prescription.medicalRecord = :idMedicalRecord AND prescription.draft = :draft", Prescription.class);
+            prescriptions = tq.setParameter("idMedicalRecord", idMedicalRecord).setParameter("draft", false).getResultList();
         } catch(NoResultException e) {
             return null;
         }
         return prescriptions;
     }
 
+    /**
+     * Validate a Draft Prescription
+     * 
+     * @param idPrescription The id of the Prescription to validate
+     * @return True if the draft prescription don't exists in the database, or false otherwise
+     */
     @Override
     public boolean validatePrescription(long idPrescription) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            et.begin();
+            Prescription prescription = em.find(Prescription.class, idPrescription);
+            prescription.setDraft(false);
+            et.commit();
+        } catch(EntityNotFoundException e) {
+            return false;
+        }
+        return true;
     }
 
+    /**
+     * Remove a Draft Prescription from the database
+     * 
+     * @param idPrescription Draft Prescription to remove
+     * @return True if the draft Prescription don't exists in the database, or false otherwise
+     */
     @Override
     public boolean removeDraftPrescription(long idPrescription) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            et.begin();
+            Prescription prescription = em.find(Prescription.class, idPrescription);
+            if(!prescription.getDraft()) {
+                return false;
+            }
+            em.remove(prescription);
+            et.commit();
+        } catch(EntityNotFoundException e) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -252,22 +318,55 @@ public class JPADoctor implements IDoctor, INurse {
         List<Diagnostic> diagnostics;
         
         try {
-            TypedQuery<Diagnostic> tq = em.createQuery("SELECT diagnostic FROM Diagnostic diagnostic WHERE diagnostic.idMedicalRecord = :idMedicalRecord", Diagnostic.class);
-            diagnostics = tq.setParameter("idMedicalRecord", idMedicalRecord).getResultList();
+            TypedQuery<Diagnostic> tq = em.createQuery("SELECT diagnostic FROM Diagnostic diagnostic WHERE diagnostic.medicalRecord = :idMedicalRecord AND diagnostic.draft = :draft", Diagnostic.class);
+            diagnostics = tq.setParameter("idMedicalRecord", idMedicalRecord).setParameter("draft", false).getResultList();
         } catch(NoResultException e) {
             return null;
         }
         return diagnostics;
     }
 
+    /**
+     * Validate a Draft Diagnostic
+     * 
+     * @param idDiagnostic The id of the Diagnostic to validate
+     * @return True if the draft diagnostic don't exists in the database, or false otherwise
+     */
     @Override
     public boolean validateDiagnostic(long idDiagnostic) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            et.begin();
+            Diagnostic diagnostic = em.find(Diagnostic.class, idDiagnostic);
+            diagnostic.setDraft(false);
+            et.commit();
+        } catch(EntityNotFoundException e) {
+            return false;
+        }
+        return true;
     }
 
+    /**
+     * Remove a Draft Diagnostic from the database
+     * 
+     * @param idDiagnostic Draft Diagnostic to remove
+     * @return True if the draft diagnostic don't exists in the database, or false otherwise
+     */
     @Override
     public boolean removeDraftDiagnostic(long idDiagnostic) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            et.begin();
+            Diagnostic diagnostic = em.find(Diagnostic.class, idDiagnostic);
+            if(!diagnostic.getDraft()) {
+                return false;
+            }
+            em.remove(diagnostic);
+            et.commit();
+        } catch(EntityNotFoundException e) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -292,14 +391,47 @@ public class JPADoctor implements IDoctor, INurse {
         return true;
     }
 
+    /**
+     * Validate a Draft Dosage
+     * 
+     * @param idDosage The id of the Dosage to validate
+     * @return True if the draft dosage don't exists in the database, or false otherwise
+     */
     @Override
     public boolean validateDosage(long idDosage) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            et.begin();
+            Dosage dosage = em.find(Dosage.class, idDosage);
+            dosage.setDraft(false);
+            et.commit();
+        } catch(EntityNotFoundException e) {
+            return false;
+        }
+        return true;
     }
 
+    /**
+     * Remove a Draft Dosage from the database
+     * 
+     * @param idDosage Draft Dosage to remove
+     * @return True if the draft dosage don't exists in the database, or false otherwise
+     */
     @Override
     public boolean removeDraftDosage(long idDosage) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            et.begin();
+            Dosage dosage = em.find(Dosage.class, idDosage);
+            if(!dosage.getDraft()) {
+                return false;
+            }
+            em.remove(dosage);
+            et.commit();
+        } catch(EntityNotFoundException e) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -332,7 +464,7 @@ public class JPADoctor implements IDoctor, INurse {
         List<MedicalRecord> medicalRecords;
 
         try {
-            TypedQuery<MedicalRecord> tq = em.createQuery("SELECT mRecord FROM MedicalRecord hmRecord", MedicalRecord.class);
+            TypedQuery<MedicalRecord> tq = em.createQuery("SELECT mRecord FROM MedicalRecord mRecord", MedicalRecord.class);
             medicalRecords = tq.getResultList();
         } catch (NoResultException e) {
             return null;
@@ -432,8 +564,8 @@ public class JPADoctor implements IDoctor, INurse {
         List<Dosage> dosages;
 
         try {
-            TypedQuery<Dosage> tq = em.createQuery("SELECT dosage FROM Dosage dosage WHERE dosage.idMedicalRecord = :idMedicalRecord", Dosage.class);
-            dosages = tq.getResultList();
+            TypedQuery<Dosage> tq = em.createQuery("SELECT dosage FROM Dosage dosage WHERE dosage.medicalRecord = :idMedicalRecord AND dosage.draft := draft", Dosage.class);
+            dosages = tq.setParameter("idMedicalRecord", idMedicalRecord).setParameter("draft", false).getResultList();
         } catch (NoResultException e) {
             return null;
         }

@@ -1,35 +1,77 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.devsquad.minutemed.dmp;
 
-import fr.devsquad.minutemed.database.IDoctor;
+import fr.devsquad.minutemed.staff.Doctor;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-/**
- *
- * @author myfou
- */
-public class Exam {
+@Entity
+public class Exam implements Serializable {
+    
+    @Id @GeneratedValue
+    @Column(name = "idExam")
+    private long id;
+    private String title;
+    private String description;
+    @Temporal(TemporalType.DATE)
+    private Date dateExam;
+    @OneToOne
+    @JoinColumn(name = "idStaff")
+    private Doctor doctor;
+    @OneToOne
+    @JoinColumn(name = "idMedicalRecord")
+    private MedicalRecord medicalRecord;
+    private boolean draft;
+    
+    public Exam() { }
+    
+    public Exam(String title, String description, Date dateExam, Doctor doctor, MedicalRecord medicalRecord) {
+        this.title = Objects.requireNonNull(title);
+        this.description = Objects.requireNonNull(description);
+        this.dateExam = Objects.requireNonNull(dateExam);
+        this.doctor = Objects.requireNonNull(doctor);
+        this.medicalRecord = Objects.requireNonNull(medicalRecord);
+        this.draft = true;
+    }
+    
     public long getId() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return id;
     }
 
     public String getTitle() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return title;
     }
     
-    public IDoctor getDoctorAskExamination () {
-         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Doctor getDoctorAskExamination () {
+         return doctor;
     }
  
-    public IPatient getPatient () {
-         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public MedicalRecord getPatient () {
+         return medicalRecord;
     }
     
     public String getDescription () {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return description;
+    }
+    
+    public Date getDateExam() {
+        return dateExam;
+    }
+    
+    public boolean getDraft() {
+        return draft;
+    }
+    
+    public void setDraft(boolean draft) {
+        this.draft = draft;
     }
     
     public IAnnex getAnnexes () {

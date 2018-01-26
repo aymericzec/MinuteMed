@@ -57,7 +57,7 @@ public class JPANurse implements INurse {
         List<MedicalRecord> medicalRecords;
         
         try {
-            TypedQuery<MedicalRecord> tq = em.createQuery("SELECT mRecord FROM MedicalRecord hmRecord", MedicalRecord.class);
+            TypedQuery<MedicalRecord> tq = em.createQuery("SELECT mRecord FROM MedicalRecord mRecord", MedicalRecord.class);
             medicalRecords = tq.getResultList();
         } catch(NoResultException e) {
             return null;
@@ -155,11 +155,11 @@ public class JPANurse implements INurse {
     public List<Dosage> getAllDosages(long idMedicalRecord) {
         
         List<Dosage> dosages;
-        
+
         try {
-            TypedQuery<Dosage> tq = em.createQuery("SELECT dosage FROM Dosage dosage WHERE dosage.idMedicalRecord = :idMedicalRecord", Dosage.class);
-            dosages = tq.setParameter("idMedicalRecord", idMedicalRecord).getResultList();
-        } catch(NoResultException e) {
+            TypedQuery<Dosage> tq = em.createQuery("SELECT dosage FROM Dosage dosage WHERE dosage.medicalRecord = :idMedicalRecord AND dosage.draft := draft", Dosage.class);
+            dosages = tq.setParameter("idMedicalRecord", idMedicalRecord).setParameter("draft", false).getResultList();
+        } catch (NoResultException e) {
             return null;
         }
         return dosages;
@@ -202,5 +202,4 @@ public class JPANurse implements INurse {
         }
         return nurse;
     }
-    
 }

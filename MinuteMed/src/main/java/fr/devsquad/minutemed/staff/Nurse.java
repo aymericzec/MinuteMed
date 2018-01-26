@@ -7,6 +7,7 @@ import fr.devsquad.minutemed.dmp.MedicalRecord;
 import fr.devsquad.minutemed.dmp.Dosage;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -16,7 +17,8 @@ import javax.persistence.OneToOne;
 public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurse {
 
     @Id @GeneratedValue
-    private long idStaff; 
+    @Column(name = "idStaff")
+    private long id; 
     private String firstName;
     private String lastName;
     private String adress;
@@ -38,8 +40,8 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
     }
 
     @Override
-    public long getIdStaff() {
-        return idStaff;
+    public long getId() {
+        return id;
     }
     
     @Override

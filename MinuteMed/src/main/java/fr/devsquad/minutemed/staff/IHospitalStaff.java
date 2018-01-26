@@ -3,7 +3,7 @@ package fr.devsquad.minutemed.staff;
 
 public interface IHospitalStaff {
     
-    public long getIdStaff();
+    public long getId();
     
     public String getFirstName();
     

@@ -12,6 +12,7 @@ import fr.devsquad.minutemed.dmp.Prescription;
 import fr.devsquad.minutemed.specialization.Specialization;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -22,7 +23,8 @@ import javax.persistence.OneToOne;
 public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoctor, INurse {
 
     @Id @GeneratedValue
-    private long idStaff; 
+    @Column(name = "idStaff")
+    private long id; 
     private String firstName;
     private String lastName;
     private String adress;
@@ -46,8 +48,8 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
     }
 
     @Override
-    public long getIdStaff() {
-        return idStaff;
+    public long getId() {
+        return id;
     }
     
     @Override
@@ -163,12 +165,24 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
         return doctor.getAllExams(idMedicalRecord);
     }
 
+    /**
+     * Validate a Draft Exam
+     * 
+     * @param idExam The id of the Exam to validate
+     * @return True if the draft Exam don't exists in the database, or false otherwise
+     */
     @Override
     public boolean validateExam(long idExam) {
         JPADoctor doctor = new JPADoctor();
         return doctor.validateExam(idExam);
     }
 
+    /**
+     * Remove a Draft Exam from the database
+     * 
+     * @param idExam Draft Exam to remove
+     * @return True if the draft Exam don't exists in the database, or false otherwise
+     */
     @Override
     public boolean removeDraftExam(long idExam) {
         JPADoctor doctor = new JPADoctor();
@@ -212,12 +226,24 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
         return doctor.getAllPrescriptions(idMedicalRecord);
     }
 
+    /**
+     * Validate a Draft Prescription
+     * 
+     * @param idPrescription The id of the Prescription to validate
+     * @return True if the draft prescription don't exists in the database, or false otherwise
+     */
     @Override
     public boolean validatePrescription(long idPrescription) {
         JPADoctor doctor = new JPADoctor();
         return doctor.validatePrescription(idPrescription);
     }
 
+    /**
+     * Remove a Draft Prescription from the database
+     * 
+     * @param idPrescription Draft Prescription to remove
+     * @return True if the draft Prescription don't exists in the database, or false otherwise
+     */
     @Override
     public boolean removeDraftPrescription(long idPrescription) {
         JPADoctor doctor = new JPADoctor();
@@ -261,12 +287,24 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
         return doctor.getAllDiagnostics(idMedicalRecord);
     }
 
+    /**
+     * Validate a Draft Diagnostic
+     * 
+     * @param idDiagnostic The id of the Diagnostic to validate
+     * @return True if the draft diagnostic don't exists in the database, or false otherwise
+     */
     @Override
     public boolean validateDiagnostic(long idDiagnostic) {
         JPADoctor doctor = new JPADoctor();
         return doctor.validateDiagnostic(idDiagnostic);
     }
 
+    /**
+     * Remove a Draft Diagnostic from the database
+     * 
+     * @param idDiagnostic Draft Diagnostic to remove
+     * @return True if the draft diagnostic don't exists in the database, or false otherwise
+     */
     @Override
     public boolean removeDraftDiagnostic(long idDiagnostic) {
         JPADoctor doctor = new JPADoctor();
@@ -286,12 +324,24 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
         return doctor.createDosage(dosage);
     }
 
+    /**
+     * Validate a Draft Dosage
+     * 
+     * @param idDosage The id of the Dosage to validate
+     * @return True if the draft dosage don't exists in the database, or false otherwise
+     */
     @Override
     public boolean validateDosage(long idDosage) {
         JPADoctor doctor = new JPADoctor();
         return doctor.validateDosage(idDosage);
     }
 
+    /**
+     * Remove a Draft Dosage from the database
+     * 
+     * @param idDosage Draft Dosage to remove
+     * @return True if the draft dosage don't exists in the database, or false otherwise
+     */
     @Override
     public boolean removeDraftDosage(long idDosage) {
         JPADoctor doctor = new JPADoctor();
