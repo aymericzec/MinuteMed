@@ -1,6 +1,12 @@
 package fr.devsquad.minutemed.database;
 
+import fr.devsquad.minutemed.arborescence.NodeCU;
+import fr.devsquad.minutemed.arborescence.NodeHU;
+import fr.devsquad.minutemed.arborescence.NodeHospital;
+import fr.devsquad.minutemed.arborescence.NodePole;
+import fr.devsquad.minutemed.arborescence.NodeService;
 import fr.devsquad.minutemed.authentication.UserAccount;
+import fr.devsquad.minutemed.specialization.Specialization;
 import fr.devsquad.minutemed.staff.Doctor;
 import fr.devsquad.minutemed.staff.IHospitalStaff;
 import fr.devsquad.minutemed.staff.Nurse;
@@ -73,6 +79,47 @@ public class JPADataManager implements IDataManager {
         }
         return true;
     }
+    
+    /**
+     * Add a Specialization in the database
+     * 
+     * @param specialization The Specialization to add
+     * @return True if the specialization don't exists in the database, or false otherwise
+     */
+    @Override
+    public boolean createSpecialization(Specialization specialization) {
+        
+        Objects.requireNonNull(specialization);
+        
+        try {
+            et.begin();
+            em.persist(specialization);
+            et.commit();
+        } catch(EntityExistsException e) {
+            return false;
+        }
+        return true;
+    }
+    
+    /**
+     * Remove a Specialization from the database
+     * 
+     * @param idSpecialization Specialization to remove
+     * @return True if the specialization don't exists in the database, or false otherwise
+     */
+    @Override
+    public boolean removeSpecialization(long idSpecialization) {
+        
+        try {
+            et.begin();
+            Specialization specialization = em.find(Specialization.class, idSpecialization);
+            em.remove(specialization);
+            et.commit();
+        } catch (EntityNotFoundException e) {
+            return false;
+        }
+        return true;
+    }
 
     /**
      * Add a Hospital in the database
@@ -133,74 +180,244 @@ public class JPADataManager implements IDataManager {
         return hospitals;
     }
 
+    /**
+     * Add a Pole in the database
+     * 
+     * @param pole The Pole to add
+     * @return True if the pole don't exists in the database, or false otherwise
+     */
     @Override
-    public boolean createPole(long idHospital, NodePole pole) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean createPole(NodePole pole) {
+        
+        Objects.requireNonNull(pole);
+        
+        try {
+            et.begin();
+            em.persist(pole);
+            et.commit();
+        } catch(EntityExistsException e) {
+            return false;
+        }
+        return true;
     }
 
+    /**
+     * Get a Pole with its id passed in argument
+     * 
+     * @param idPole The id of the Pole
+     * @return The Pole
+     */
     @Override
-    public NodePole getPole(long idHospital, long idPole) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public NodePole getPole(long idPole) {
+        
+        NodePole pole;
+        
+        try {
+            pole = em.find(NodePole.class, idPole);
+        } catch(EntityNotFoundException e) {
+            return null;
+        }
+        return pole;
     }
 
+    /**
+     * Get all Poles attached to an Hospital
+     * 
+     * @param idHospital The id of the Hospital
+     * @return A list of Poles
+     */
     @Override
     public List<NodePole> getAllPoles(long idHospital) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
+        List<NodePole> poles;
+        
+        try {
+            TypedQuery<NodePole> tq = em.createQuery("SELECT pole FROM NodePole pole WHERE pole.hospital = :idHospital", NodePole.class);
+            poles = tq.setParameter("idHospital", idHospital).getResultList();
+        } catch(NoResultException e) {
+            return null;
+        }
+        return poles;
     }
 
+    /**
+     * Add a Service in the database
+     * 
+     * @param service The Service to add
+     * @return True if the service don't exists in the database, or false otherwise
+     */
     @Override
-    public boolean createService(long idHospital, long idPole, NodeService service) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean createService(NodeService service) {
+        
+        Objects.requireNonNull(service);
+        
+        try {
+            et.begin();
+            em.persist(service);
+            et.commit();
+        } catch(EntityExistsException e) {
+            return false;
+        }
+        return true;
     }
 
+    /**
+     * Get a Service with its id passed in argument
+     * 
+     * @param idService The id of the Service
+     * @return The Service
+     */
     @Override
-    public NodeService getService(long idHospital, long idPole, long idService) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public NodeService getService(long idService) {
+        
+        NodeService service;
+        
+        try {
+            service = em.find(NodeService.class, idService);
+        } catch(EntityNotFoundException e) {
+            return null;
+        }
+        return service;
     }
 
+    /**
+     * Get all Services attached to a Pole
+     * 
+     * @param idPole The id of the Pole
+     * @return A list of Services
+     */
     @Override
-    public List<NodeService> getAllServices(long idHospital) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<NodeService> getAllServices(long idPole) {
+        
+        List<NodeService> services;
+        
+        try {
+            TypedQuery<NodeService> tq = em.createQuery("SELECT service FROM NodeService service WHERE service.pole = :idPole", NodeService.class);
+            services = tq.setParameter("idPole", idPole).getResultList();
+        } catch(NoResultException e) {
+            return null;
+        }
+        return services;
     }
 
+    /**
+     * Add a Hospital Unit in the database
+     * 
+     * @param hu The Hospital Unit to add
+     * @return True if the hospital unit don't exists in the database, or false otherwise
+     */
     @Override
-    public boolean createHospitalUnit(long idHospital, long idPole, long idService, NodeHU hu) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean createHospitalUnit(NodeHU hu) {
+        
+        Objects.requireNonNull(hu);
+        
+        try {
+            et.begin();
+            em.persist(hu);
+            et.commit();
+        } catch(EntityExistsException e) {
+            return false;
+        }
+        return true;
     }
 
+    /**
+     * Get a Hospital Unit with its id passed in argument
+     * 
+     * @param idHU The id of the Hospital Unit
+     * @return The Hospital Unit
+     */
     @Override
-    public NodeHU getHospitalUnit(long idHospital, long idPole, long idService, long idHU) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public NodeHU getHospitalUnit(long idHU) {
+        
+        NodeHU hu;
+        
+        try {
+            hu = em.find(NodeHU.class, idHU);
+        } catch(EntityNotFoundException e) {
+            return null;
+        }
+        return hu;
     }
 
+    /**
+     * Get all Hospital Units attached to a Service
+     * 
+     * @param idService The id of the Service
+     * @return A list of Hospital Unit
+     */
     @Override
-    public List<NodeHU> getAllHospitalUnits(long idHospital) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<NodeHU> getAllHospitalUnits(long idService) {
+        
+        List<NodeHU> hu;
+        
+        try {
+            TypedQuery<NodeHU> tq = em.createQuery("SELECT hu FROM NodeHU hu WHERE hu.service = :idService", NodeHU.class);
+            hu = tq.setParameter("idService", idService).getResultList();
+        } catch(NoResultException e) {
+            return null;
+        }
+        return hu;
     }
 
+    /**
+     * Add a Care Unit in the database
+     * 
+     * @param cu The Care Unit to add
+     * @return True if the care unit don't exists in the database, or false otherwise
+     */
     @Override
-    public boolean createCareUnit(long idHospital, long idPole, long idService, long idHU, NodeCU cu) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean createCareUnit(NodeCU cu) {
+        
+        Objects.requireNonNull(cu);
+        
+        try {
+            et.begin();
+            em.persist(cu);
+            et.commit();
+        } catch(EntityExistsException e) {
+            return false;
+        }
+        return true;
     }
 
+    /**
+     * Get a Care Unit with its id passed in argument
+     * 
+     * @param idCU The id of the Care Unit
+     * @return The Care Unit
+     */
     @Override
-    public NodeCU getCareUnit(long idHospital, long idPole, long idService, long idHU, long idCU) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public NodeCU getCareUnit(long idCU) {
+        
+        NodeCU cu;
+        
+        try {
+            cu = em.find(NodeCU.class, idCU);
+        } catch(EntityNotFoundException e) {
+            return null;
+        }
+        return cu;
     }
 
+    /**
+     * Get all Care Units attached to a Hospital Unit
+     * 
+     * @param idHU The id of the Hospital Unit
+     * @return A list of Care Unit
+     */
     @Override
-    public List<NodeCU> getCareUnits(long idHospital) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Node getNode(long idHospital, long idNode) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Node> getAllNodes(long idHospital) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<NodeCU> getAllCareUnits(long idHU) {
+        
+        List<NodeCU> cu;
+        
+        try {
+            TypedQuery<NodeCU> tq = em.createQuery("SELECT cu FROM NodeCU cu WHERE cu.hu = :idHU", NodeCU.class);
+            cu = tq.setParameter("idHU", idHU).getResultList();
+        } catch(NoResultException e) {
+            return null;
+        }
+        return cu;
     }
 
     /**

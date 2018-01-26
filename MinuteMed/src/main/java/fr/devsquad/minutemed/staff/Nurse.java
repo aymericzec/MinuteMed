@@ -1,12 +1,12 @@
 package fr.devsquad.minutemed.staff;
 
+import fr.devsquad.minutemed.arborescence.INode;
 import fr.devsquad.minutemed.database.INurse;
 import fr.devsquad.minutemed.database.JPANurse;
 import fr.devsquad.minutemed.dmp.MedicalRecord;
 import fr.devsquad.minutemed.dmp.Dosage;
 import java.io.Serializable;
 import java.util.List;
-import java.util.function.Predicate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -24,11 +24,11 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
     private String phoneNumber;
     
     @OneToOne
-    private Node node;
+    private INode node;
     
     public Nurse() { }
     
-    public Nurse(String firstName, String lastName, String adress, String email, String phoneNumber, Node node) { 
+    public Nurse(String firstName, String lastName, String adress, String email, String phoneNumber, INode node) { 
         this.firstName = firstName;
         this.lastName = lastName;
         this.adress = adress;
@@ -68,7 +68,7 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
     }
     
     @Override
-    public Node getNode() {
+    public INode getNode() {
         return node;
     }
 
@@ -98,7 +98,7 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
     }
     
     @Override
-    public void setNode(Node node) {
+    public void setNode(INode node) {
         this.node = node;
     }
 

@@ -1,5 +1,6 @@
 package fr.devsquad.minutemed.staff;
 
+import fr.devsquad.minutemed.arborescence.INode;
 import fr.devsquad.minutemed.database.IDoctor;
 import fr.devsquad.minutemed.database.INurse;
 import fr.devsquad.minutemed.database.JPADoctor;
@@ -27,22 +28,21 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
     private String adress;
     private String email;
     private String phoneNumber;
+    private String specialization;
     
     @OneToOne
-    private Node node;
-    @OneToOne
-    private Specialization specialization;
-    
+    private INode node;
+ 
     public Doctor() { }
     
-    public Doctor(String firstName, String lastName, String adress, String email, String phoneNumber, Node node , SpecializationEnum specialization) { 
+    public Doctor(String firstName, String lastName, String adress, String email, String phoneNumber, INode node , Specialization specialization) { 
         this.firstName = firstName;
         this.lastName = lastName;
         this.adress = adress;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.node = node;
-        this.specialization = specialization;
+        this.specialization = specialization.getStaffName();
     }
 
     @Override
@@ -76,10 +76,14 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
     }
     
     @Override
-    public Node getNode() {
+    public INode getNode() {
         return node;
     }
 
+    public String getSpecialization() {
+        return specialization;
+    }
+    
     @Override
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -106,7 +110,7 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
     }
     
     @Override
-    public void setNode(Node node) {
+    public void setNode(INode node) {
         this.node = node;
     }
 

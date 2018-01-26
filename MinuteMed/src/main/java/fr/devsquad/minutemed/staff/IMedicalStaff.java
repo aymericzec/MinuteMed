@@ -1,10 +1,12 @@
 package fr.devsquad.minutemed.staff;
 
+import fr.devsquad.minutemed.arborescence.INode;
+
 
 
 public interface IMedicalStaff {
     
-    public Node getNode();
+    public INode getNode();
     
-    public void setNode(Node node);
+    public void setNode(INode node);
 }

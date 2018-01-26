@@ -1,8 +1,14 @@
 package fr.devsquad.minutemed.staff;
 
+import fr.devsquad.minutemed.arborescence.NodeCU;
+import fr.devsquad.minutemed.arborescence.NodeHU;
+import fr.devsquad.minutemed.arborescence.NodeHospital;
+import fr.devsquad.minutemed.arborescence.NodePole;
+import fr.devsquad.minutemed.arborescence.NodeService;
 import fr.devsquad.minutemed.authentication.UserAccount;
 import fr.devsquad.minutemed.database.IDataManager;
 import fr.devsquad.minutemed.database.JPADataManager;
+import fr.devsquad.minutemed.specialization.Specialization;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
@@ -108,6 +114,18 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
         JPADataManager dataManager = new JPADataManager();
         return dataManager.removeAccount(idAccount);
     }
+    
+    @Override
+    public boolean createSpecialization(Specialization specialization) {
+        JPADataManager dataManager = new JPADataManager();
+        return dataManager.createSpecialization(specialization);
+    }
+    
+    @Override
+    public boolean removeSpecialization(long idSpecialization) {
+        JPADataManager dataManager = new JPADataManager();
+        return dataManager.removeSpecialization(idSpecialization);
+    }
 
     /**
      * Add a Hospital in the database
@@ -145,15 +163,15 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
     }
 
     @Override
-    public boolean createPole(long idHospital, NodePole pole) {
+    public boolean createPole(NodePole pole) {
         JPADataManager dataManager = new JPADataManager();
-        return dataManager.createPole(idHospital, pole);
+        return dataManager.createPole(pole);
     }
 
     @Override
-    public NodePole getPole(long idHospital, long idPole) {
+    public NodePole getPole(long idPole) {
         JPADataManager dataManager = new JPADataManager();
-        return dataManager.getPole(idHospital, idPole);
+        return dataManager.getPole(idPole);
     }
 
     @Override
@@ -163,69 +181,57 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
     }
 
     @Override
-    public boolean createService(long idHospital, long idPole, NodeService service) {
+    public boolean createService(NodeService service) {
         JPADataManager dataManager = new JPADataManager();
-        return dataManager.createService(idHospital, idPole, service);
+        return dataManager.createService(service);
     }
 
     @Override
-    public NodeService getService(long idHospital, long idPole, long idService) {
+    public NodeService getService(long idService) {
         JPADataManager dataManager = new JPADataManager();
-        return dataManager.getService(idHospital, idPole, idService);
+        return dataManager.getService(idService);
     }
 
     @Override
-    public List<NodeService> getAllServices(long idHospital) {
+    public List<NodeService> getAllServices(long idPole) {
         JPADataManager dataManager = new JPADataManager();
-        return dataManager.getAllServices(idHospital);
+        return dataManager.getAllServices(idPole);
     }
 
     @Override
-    public boolean createHospitalUnit(long idHospital, long idPole, long idService, NodeHU hu) {
+    public boolean createHospitalUnit(NodeHU hu) {
         JPADataManager dataManager = new JPADataManager();
-        return dataManager.createHospitalUnit(idHospital, idPole, idService, hu);
+        return dataManager.createHospitalUnit(hu);
     }
 
     @Override
-    public NodeHU getHospitalUnit(long idHospital, long idPole, long idService, long idHU) {
+    public NodeHU getHospitalUnit(long idHU) {
         JPADataManager dataManager = new JPADataManager();
-        return dataManager.getHospitalUnit(idHospital, idPole, idService, idHU);
+        return dataManager.getHospitalUnit(idHU);
     }
 
     @Override
-    public List<NodeHU> getAllHospitalUnits(long idHospital) {
+    public List<NodeHU> getAllHospitalUnits(long idService) {
         JPADataManager dataManager = new JPADataManager();
-        return dataManager.getAllHospitalUnits(idHospital);
+        return dataManager.getAllHospitalUnits(idService);
     }
 
     @Override
-    public boolean createCareUnit(long idHospital, long idPole, long idService, long idHU, NodeCU cu) {
+    public boolean createCareUnit(NodeCU cu) {
         JPADataManager dataManager = new JPADataManager();
-        return dataManager.createCareUnit(idHospital, idPole, idService, idHU, cu);
+        return dataManager.createCareUnit(cu);
     }
 
     @Override
-    public NodeCU getCareUnit(long idHospital, long idPole, long idService, long idHU, long idCU) {
+    public NodeCU getCareUnit(long idCU) {
         JPADataManager dataManager = new JPADataManager();
-        return dataManager.getCareUnit(idHospital, idPole, idService, idHU, idCU);
+        return dataManager.getCareUnit(idCU);
     }
 
     @Override
-    public List<NodeCU> getCareUnits(long idHospital) {
+    public List<NodeCU> getAllCareUnits(long idHU) {
         JPADataManager dataManager = new JPADataManager();
-        return dataManager.getCareUnits(idHospital);
-    }
-
-    @Override
-    public Node getNode(long idHospital, long idNode) {
-        JPADataManager dataManager = new JPADataManager();
-        return dataManager.getNode(idHospital, idNode);
-    }
-
-    @Override
-    public List<Node> getAllNodes(long idHospital) {
-        JPADataManager dataManager = new JPADataManager();
-        return dataManager.getAllNodes(idHospital);
+        return dataManager.getAllCareUnits(idHU);
     }
 
     /**
