@@ -1,7 +1,6 @@
 package fr.devsquad.minutemed.arborescence;
 
 import fr.devsquad.minutemed.specialization.Specialization;
-import fr.devsquad.minutemed.staff.IHospitalStaff;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
