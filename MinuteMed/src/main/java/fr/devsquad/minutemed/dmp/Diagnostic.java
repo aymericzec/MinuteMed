@@ -1,35 +1,45 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.devsquad.minutemed.dmp;
 
 import fr.devsquad.minutemed.staff.Doctor;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-/**
- *
- * @author myfou
- */
-public class Diagnostic {
+@Entity
+public class Diagnostic implements Serializable {
 
+    @Id @GeneratedValue
+    @Column(name = "idDiagnostic")
     private long id;
     private String title;
-    private Doctor diagnostic;
+    @OneToOne
+    @JoinColumn(name = "idStaff")
+    private Doctor diagnosticDoctor;
+    @OneToOne
+    @JoinColumn(name = "idMedicalRecord")
     private MedicalRecord medicalRecord;
+    @Temporal(TemporalType.DATE)
     private Date consultDiagnostic;
     private String description;
+    private boolean draft;
     
     public Diagnostic() { }
     
-    public Diagnostic(String title, Doctor diagnostic, MedicalRecord medicalRecord, Date consultDiagnostic, String description) {
+    public Diagnostic(String title, Doctor diagnosticDoctor, MedicalRecord medicalRecord, Date consultDiagnostic, String description) {
         this.title = Objects.requireNonNull(title);
         this.description = Objects.requireNonNull(description);
-        this.diagnostic = Objects.requireNonNull(diagnostic);
+        this.diagnosticDoctor = Objects.requireNonNull(diagnosticDoctor);
         this.medicalRecord = Objects.requireNonNull(medicalRecord);
         this.medicalRecord = Objects.requireNonNull(medicalRecord);
+        this.draft = true;
     }
     
     public long getId() {
@@ -45,7 +55,7 @@ public class Diagnostic {
     }
 
     public Doctor getDiagnostic() {
-        return diagnostic;
+        return diagnosticDoctor;
     }
 
     public MedicalRecord getMedicalRecord() {
@@ -55,4 +65,12 @@ public class Diagnostic {
     public String getDescription() {
         return description;
     }  
+    
+    public boolean getDraft() {
+        return draft;
+    }
+    
+    public void setDraft(boolean draft) {
+        this.draft = draft;
+    }
 }

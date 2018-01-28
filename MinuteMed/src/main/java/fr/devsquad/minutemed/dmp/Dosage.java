@@ -1,32 +1,47 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.devsquad.minutemed.dmp;
 
 import fr.devsquad.minutemed.staff.Doctor;
 import fr.devsquad.minutemed.staff.IHospitalStaff;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-/**
- *
- * @author myfou
- */
-public class Dosage {
+@Entity
+public class Dosage implements Serializable {
     
+    @Id @GeneratedValue
+    @Column(name = "idDosage")
     private long id;
     private String title;
+    @OneToOne
+    @JoinColumn(name = "idStaff")
     private Doctor doctorConsulting;
+    @OneToOne
+    @JoinColumn(name = "idMedicalRecord")
     private MedicalRecord medicalRecord;
+    @Temporal(TemporalType.DATE)
     private Date dateDosage;
+    @OneToOne
+    @JoinColumn(name = "idDiagnostic")
     private Diagnostic diagnostic;
     private String dosagePrescription;
-    private List<ReportDosage> repport;
+    @OneToMany(mappedBy = "dosage")
+    private List<ReportDosage> report;
+    @Temporal(TemporalType.DATE)
     private Date beginDosage;
+    @Temporal(TemporalType.DATE)
     private Date endDosage;
+    private boolean draft;
     
     public Dosage () {
         
@@ -38,9 +53,10 @@ public class Dosage {
         this.dateDosage = dateDosage;
         this.diagnostic = diagnostic;
         this.dosagePrescription = dosagePrescription;
-        this.repport =new ArrayList();
+        this.report = new ArrayList();
         this.beginDosage = beginDosage;
         this.endDosage = endDosage;
+        this.draft = true;
     }
 
     public String getTitle() {
@@ -72,7 +88,7 @@ public class Dosage {
     }
 
     public List<ReportDosage> getRepport() {
-        return repport;
+        return report;
     }
 
     public Date getBeginDosage() {
@@ -83,9 +99,17 @@ public class Dosage {
         return endDosage;
     }
     
+    public boolean getDraft() {
+        return draft;
+    }
+    
+    public void setDraft(boolean draft) {
+        this.draft = draft;
+    }
+    
     public ReportDosage getLastReport () {
-        if (repport.size() > 0) {
-            return repport.get(0);
+        if (report.size() > 0) {
+            return report.get(0);
         }
         
         return null;
@@ -93,7 +117,7 @@ public class Dosage {
     
     public void addReport (IHospitalStaff staff, Date dateDosage, String repport) {
         ReportDosage reportDosage = new ReportDosage(staff, dateDosage, repport);
-        this.repport.add(reportDosage);
+        this.report.add(reportDosage);
     }
 
     

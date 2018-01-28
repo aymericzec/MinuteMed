@@ -1,28 +1,40 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.devsquad.minutemed.dmp;
 
+import fr.devsquad.minutemed.staff.Doctor;
 import fr.devsquad.minutemed.staff.IHospitalStaff;
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-/**
- *
- * @author myfou
- */
-public class ReportDosage {
+@Entity
+public class ReportDosage implements Serializable {
 
-    private long id = 1;
+    @Id @GeneratedValue
+    @Column(name = "idReportDosage")
+    private long id;
+    @OneToOne
+    @JoinColumn(name = "idStaff")
     private IHospitalStaff supervisor;
+    @Temporal(TemporalType.DATE)
     private Date createDate;
-    private String rapport;
+    private String report;
+    @ManyToOne
+    private Dosage dosage;
+    
+    public ReportDosage () { }
 
-    public ReportDosage(IHospitalStaff supervisor, Date createDate, String rapport) {
+    public ReportDosage(IHospitalStaff supervisor, Date createDate, String report) {
         this.supervisor = supervisor;
         this.createDate = createDate;
-        this.rapport = rapport;
+        this.report = report;
     }
 
     public long getId() {
@@ -38,7 +50,15 @@ public class ReportDosage {
     }
 
     public String getRapport() {
-        return rapport;
+        return report;
+    }
+    
+    public Dosage getDosage() {
+        return dosage;
+    }
+    
+    public void setDosage(Dosage dosage) {
+        this.dosage = dosage;
     }
     
     

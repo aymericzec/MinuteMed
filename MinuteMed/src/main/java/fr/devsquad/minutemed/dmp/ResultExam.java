@@ -1,31 +1,39 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.devsquad.minutemed.dmp;
 
 import fr.devsquad.minutemed.staff.Doctor;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-/**
- *
- * @author myfou
- */
-public class ResultExam {
+@Entity
+public class ResultExam implements Serializable {
 
+    @Id @GeneratedValue
+    @Column(name = "idResultExam")
     private long id;
+    @OneToOne
+    @JoinColumn(name = "idStaff")
     private Doctor examinator;
+    @Temporal(TemporalType.DATE)
     private Date examDate;
-    private String result;
-    private List<String> files = new ArrayList<>();
+    private String results;
+    private final List<String> files = new ArrayList<>();
+    
+    public ResultExam() { }
 
-    public ResultExam(Doctor examinator, Date examDate, String result) {
+    public ResultExam(Doctor examinator, Date examDate, String results) {
         this.examinator = examinator;
         this.examDate = examDate;
-        this.result = result;
+        this.results = results;
     }
 
     public long getId() {
@@ -41,7 +49,7 @@ public class ResultExam {
     }
 
     public String getResult() {
-        return result;
+        return results;
     }
 
     public List<String> getFiles() {

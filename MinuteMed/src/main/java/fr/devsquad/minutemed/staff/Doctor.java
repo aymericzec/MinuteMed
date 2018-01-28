@@ -51,7 +51,7 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
     public long getId() {
         return id;
     }
-    
+       
     @Override
     public String getFirstName() {
         return firstName;

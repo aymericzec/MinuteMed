@@ -30,6 +30,8 @@ public class Exam implements Serializable {
     @JoinColumn(name = "idMedicalRecord")
     private MedicalRecord medicalRecord;
     private boolean draft;
+    @OneToOne
+    @JoinColumn(name = "idResultExam")
     private ResultExam resultExam;
     
     public Exam() { }
@@ -69,6 +71,10 @@ public class Exam implements Serializable {
     
     public boolean getDraft() {
         return draft;
+    }
+    
+    public ResultExam getResultExam() {
+        return resultExam;
     }
     
     public void setDraft(boolean draft) {
