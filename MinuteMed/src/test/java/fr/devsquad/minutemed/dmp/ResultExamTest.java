@@ -5,6 +5,11 @@
  */
 package fr.devsquad.minutemed.dmp;
 
+import fr.devsquad.minutemed.arborescence.NodeAPHP;
+import fr.devsquad.minutemed.arborescence.NodeEnum;
+import fr.devsquad.minutemed.specialization.Specialization;
+import fr.devsquad.minutemed.specialization.SpecializationEnum;
+import fr.devsquad.minutemed.staff.Doctor;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,14 +51,11 @@ public class ResultExamTest {
     // @Test
     // public void hello() {}
     private ResultExam createTestResultExam() {
-        long id = 1;
-        IDoctor examinator = new IDoctor();
+        Doctor examinator = new Doctor("Frederic", "Marti", "5 rue caude siche", "a.o.fr", "0770138475", new NodeAPHP(NodeEnum.POLE, new ArrayList<>()), new Specialization(SpecializationEnum.Pediatrie));
         Date examDate = new Date();
-        String result = "Cassé";
-        List<String> files = new ArrayList<>();
-        files.add("fichier.jpg");
+        String result = "fracture";
 
-        ResultExam rs = new ResultExam(id, examinator, examDate, result, files);
+        ResultExam rs = new ResultExam(examinator, examDate, result);
         return rs;
     }
 
@@ -64,60 +66,32 @@ public class ResultExamTest {
 
     @Test(expected = NullPointerException.class)
     public void createNullResultExam() {
-        long id = 1;
-        IDoctor examinator = null;
-        Date examDate = null;
-        String result = null;
-        List<String> files = null;
-
-        ResultExam rs = new ResultExamTest(id, examinator, examDate, result, files);
+        ResultExam rs = new ResultExam(null, null, null);
     }
 
     @Test
     public void getFiles() {
-        long id = 1;
-        IDoctor examinator = new IDoctor();
-        Date examDate = new Date();
-        String result = "Cassé";
-        List<String> files = new ArrayList<>();
-        files.add("fichier.jpg");
+        ResultExam re = createTestResultExam();
+        re.addFiles("fichier.jpg");
 
-        ResultExam re = new ResultExamTest(id, examinator, examDate, result, files);
+        String s = re.getFiles().get(0);
         
-        assertEquals(re.getFiles(), files);
+        assertEquals(s, "fichier.jpg");
     }
     
     @Test
     public void getFilesNotEqual() {
         ResultExam re = createTestResultExam();
-        assertNotEquals(re.getFiles(), new ArrayList<>());
-    }
-    
-        @Test
-    public void getFiles() {
-        long id = 1;
-        IDoctor examinator = new IDoctor();
-        Date examDate = new Date();
-        String result = "Cassé";
-        List<String> files = new ArrayList<>();
-        files.add("fichier.jpg");
+        re.addFiles("fichier.jpg");
 
-        ResultExam re = new ResultExamTest(id, examinator, examDate, result, files);
+        String s = re.getFiles().get(0);
         
-        assertEquals(re.getFiles(), files);
+        assertNotEquals(s, "a");
     }
-    
-    
-    @Test (expected = NullPointerException.class)
-    public void getFilesNull() {
-        long id = 1;
-        IDoctor examinator = new IDoctor();
-        Date examDate = new Date();
-        String result = "Cassé";
-        List<String> files = null;
-        files.add("fichier.jpg");
 
-        ResultExam re = new ResultExamTest(id, examinator, examDate, result, files);
+    public void getResultTest() {
+        ResultExam re = createTestResultExam();
+        assertEquals(re.getResult(), "fracture");
     }
     
     @Test
@@ -128,22 +102,19 @@ public class ResultExamTest {
     
     @Test
     public void getDateExaminate() {
-        long id = 1;
-        IDoctor examinator = new IDoctor();
+        Doctor examinator = new Doctor("Frederic", "Marti", "5 rue caude siche", "a.o.fr", "0770138475", new NodeAPHP(NodeEnum.POLE, new ArrayList<>()), new Specialization(SpecializationEnum.Pediatrie));
         Date examDate = new Date();
-        String result = "Cassé";
-        List<String> files = new ArrayList<>();
-        files.add("fichier.jpg");
+        String result = "fracture";
 
-        ResultExam re = new ResultExamTest(id, examinator, examDate, result, files);
+        ResultExam rs = new ResultExam(examinator, examDate, result);
         
-        assertEquals(re.getDateExaminate(), result);
+        assertEquals(rs.getExamDate(), examDate);
     }
     
     @Test
     public void getDateExaminateNotEqual() {
         ResultExam re = createTestResultExam();
-        assertNotEquals(re.getDateExaminate(), new Date());
+        assertNotEquals(re.getExamDate(), new Date());
     }
    
 }

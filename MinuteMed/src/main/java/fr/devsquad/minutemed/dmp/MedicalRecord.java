@@ -41,8 +41,12 @@ public class MedicalRecord implements Serializable {
         this.gender = Objects.requireNonNull(gender.name());
     }
 
+    public long getId() {
+        return id;
+    }
+
     public String getSs() {
-        return this.ss;
+        return ss;
     }
 
     public String getFirstName() {
@@ -57,35 +61,21 @@ public class MedicalRecord implements Serializable {
         return address;
     }
 
-    public String getGender() {
-        return gender;
-    }
-
     public String getBirthday() {
         return birthday;
     }
 
-    public String getEmail() {
-        return email;
+    public String getGender() {
+        return gender;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public long getId() {
-        return id;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    
 }

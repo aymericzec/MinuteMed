@@ -30,6 +30,7 @@ public class Exam implements Serializable {
     @JoinColumn(name = "idMedicalRecord")
     private MedicalRecord medicalRecord;
     private boolean draft;
+    private ResultExam resultExam;
     
     public Exam() { }
     
@@ -54,7 +55,7 @@ public class Exam implements Serializable {
          return doctor;
     }
  
-    public MedicalRecord getPatient () {
+    public MedicalRecord getMedicalRecord () {
          return medicalRecord;
     }
     
@@ -74,16 +75,8 @@ public class Exam implements Serializable {
         this.draft = draft;
     }
     
-    public IAnnex getAnnexes () {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    public ResultExam getResultExam () {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
     public void setResultExam (ResultExam resultExam) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.resultExam = resultExam;
     }
     
 }

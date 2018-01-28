@@ -5,7 +5,12 @@
  */
 package fr.devsquad.minutemed.dmp;
 
+import fr.devsquad.minutemed.arborescence.NodeAPHP;
+import fr.devsquad.minutemed.arborescence.NodeEnum;
 import fr.devsquad.minutemed.database.IDoctor;
+import fr.devsquad.minutemed.specialization.Specialization;
+import fr.devsquad.minutemed.specialization.SpecializationEnum;
+import fr.devsquad.minutemed.staff.Doctor;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -47,17 +52,31 @@ public class PrescriptionTest {
     // @Test
     // public void hello() {}
     
+    private Diagnostic createDiagnostic () {
+        String title = "Radiologie du fémur";
+        Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
+        NodeAPHP node = new NodeAPHP(NodeEnum.POLE, new ArrayList<>());
+        Doctor diagnostic = new Doctor("Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
+        MedicalRecord medicalRecord = new MedicalRecord("194", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", GenderEnum.M);
+        Date consultDiagnostic = new Date();
+        String description = "Chute à vélo, demande dun' radio";
+    
+        Diagnostic diag = new Diagnostic(title, diagnostic, medicalRecord, consultDiagnostic, description);
+        
+        return diag;
+    }
+    
     private Prescription createTestPrescription() {
-        long id = 1;
         String title = "Ordonnance rhume";
-        IDoctor prescriptor = new IDoctor();
-        IPatient patient = new IPatient();
+        NodeAPHP node = new NodeAPHP(NodeEnum.POLE, new ArrayList<>());
+        Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
+        Doctor prescriptor = new Doctor("Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
+        MedicalRecord medicalRecord = new MedicalRecord("194", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", GenderEnum.M);
         Date consultDate = new Date();
-        DiagnosticTest diagnostic = new DiagnosticTest();
+        Diagnostic diagnostic = createDiagnostic();
         String prescription = "doliprane, spray nasale";
-        List<IAnnex> annexes = new ArrayList();
-
-        Prescription pres = new Prescription(id, title, prescriptor, patient, consultDate, diagnostic, prescription, annexes);
+        
+        Prescription pres = new Prescription(title, prescriptor, medicalRecord, consultDate, diagnostic, prescription);
 
         return pres;
     }
@@ -69,16 +88,7 @@ public class PrescriptionTest {
     
     @Test(expected = NullPointerException.class)
     public void createNullPrescription() {
-        long id = 1;
-        String title = null;
-        IDoctor prescriptor = null;
-        IPatient patient = null;
-        Date consultDate = null;
-        DiagnosticTest diagnostic = null;
-        String prescription = null;
-        List<IAnnex> annexes = null;
-
-        Prescription pres = new Prescription(id, title, prescriptor, patient, consultDate, diagnostic, prescription, annexes);
+        Prescription pres = new Prescription(null,null,null,null,null,null);
     }
     
     @Test
@@ -107,104 +117,106 @@ public class PrescriptionTest {
     
     @Test
     public void testGetDoctorEquals () {        
-        long id = 1;
         String title = "Ordonnance rhume";
-        IDoctor prescriptor = new IDoctor();
-        IPatient patient = new IPatient();
+        NodeAPHP node = new NodeAPHP(NodeEnum.POLE, new ArrayList<>());
+        Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
+        Doctor prescriptor = new Doctor("Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
+        MedicalRecord medicalRecord = new MedicalRecord("194", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", GenderEnum.M);
         Date consultDate = new Date();
-        DiagnosticTest diagnostic = new DiagnosticTest();
+        Diagnostic diagnostic = createDiagnostic();
         String prescription = "doliprane, spray nasale";
-        List<IAnnex> annexes = new ArrayList();
+        
+        Prescription pres = new Prescription(title, prescriptor, medicalRecord, consultDate, diagnostic, prescription);
 
-        Prescription pres = new Prescription(id, title, prescriptor, patient, consultDate, diagnostic, prescription, annexes);
-
-        assertEquals(pres.getDoctorPrescriptor(), prescriptor);
+        assertEquals(pres.getDiagnostic(), prescriptor);
     }
     
     @Test
     public void testGetDoctorNoEquals () {        
         Prescription prescription = createTestPrescription();
-        assertNotEquals(prescription.getDoctorPrescriptor(), new IDoctor());
+        NodeAPHP node = new NodeAPHP(NodeEnum.POLE, new ArrayList<>());
+        Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
+        assertNotEquals(prescription.getPrescriptor(), new Doctor("Kevin", "VieiraNoro", "2 rue jean", "a@t.gmail", "0770138333", node, specialization));
     }
     
     @Test
     public void testGetPatientEquals () {        
-        long id = 1;
         String title = "Ordonnance rhume";
-        IDoctor prescriptor = new IDoctor();
-        IPatient patient = new IPatient();
+        NodeAPHP node = new NodeAPHP(NodeEnum.POLE, new ArrayList<>());
+        Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
+        Doctor prescriptor = new Doctor("Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
+        MedicalRecord medicalRecord = new MedicalRecord("194", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", GenderEnum.M);
         Date consultDate = new Date();
-        DiagnosticTest diagnostic = new DiagnosticTest();
+        Diagnostic diagnostic = createDiagnostic();
         String prescription = "doliprane, spray nasale";
-        List<IAnnex> annexes = new ArrayList();
+        
+        Prescription pres = new Prescription(title, prescriptor, medicalRecord, consultDate, diagnostic, prescription);
 
-        Prescription pres = new Prescription(id, title, prescriptor, patient, consultDate, diagnostic, prescription, annexes);
-
-        assertEquals(pres.getPatient(), patient);
+        assertEquals(pres.getMedicalRecord(), medicalRecord);
     }
     
     @Test
     public void testGetPatientNoEquals () {        
         Prescription prescription = createTestPrescription();
-        assertNotEquals(prescription.getPatient(), new IPatient());
+        assertNotEquals(prescription.getMedicalRecord(), new MedicalRecord("194", "Julie", "Perriti", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", GenderEnum.F));
     }
     
     @Test
     public void testGetDateEquals () {        
-        long id = 1;
         String title = "Ordonnance rhume";
-        IDoctor prescriptor = new IDoctor();
-        IPatient patient = new IPatient();
+        NodeAPHP node = new NodeAPHP(NodeEnum.POLE, new ArrayList<>());
+        Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
+        Doctor prescriptor = new Doctor("Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
+        MedicalRecord medicalRecord = new MedicalRecord("194", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", GenderEnum.M);
         Date consultDate = new Date();
-        DiagnosticTest diagnostic = new DiagnosticTest();
+        Diagnostic diagnostic = createDiagnostic();
         String prescription = "doliprane, spray nasale";
-        List<IAnnex> annexes = new ArrayList();
+        
+        Prescription pres = new Prescription(title, prescriptor, medicalRecord, consultDate, diagnostic, prescription);
 
-        Prescription pres = new Prescription(id, title, prescriptor, patient, consultDate, diagnostic, prescription, annexes);
 
-        assertEquals(pres.getDateConsulting(), consultDate);
+        assertEquals(pres.getConsultDate(), consultDate);
     }
     
     @Test
     public void testGetDateNoEquals () {        
         Prescription prescription = createTestPrescription();
-        assertNotEquals(prescription.getDateConsulting(), new Date());
+        assertNotEquals(prescription.getConsultDate(), new Date());
     }
 
     @Test
     public void testGetDiagnotic () {        
-        long id = 1;
         String title = "Ordonnance rhume";
-        IDoctor prescriptor = new IDoctor();
-        IPatient patient = new IPatient();
+        NodeAPHP node = new NodeAPHP(NodeEnum.POLE, new ArrayList<>());
+        Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
+        Doctor prescriptor = new Doctor("Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
+        MedicalRecord medicalRecord = new MedicalRecord("194", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", GenderEnum.M);
         Date consultDate = new Date();
-        DiagnosticTest diagnostic = new DiagnosticTest();
+        Diagnostic diagnostic = createDiagnostic();
         String prescription = "doliprane, spray nasale";
-        List<IAnnex> annexes = new ArrayList();
+        
+        Prescription pres = new Prescription(title, prescriptor, medicalRecord, consultDate, diagnostic, prescription);
 
-        Prescription pres = new Prescription(id, title, prescriptor, patient, consultDate, diagnostic, prescription, annexes);
-
-        assertEquals(pres.getDiagnotic(), diagnostic);
+        assertEquals(pres.getDiagnostic(), diagnostic);
     }
     
     @Test
     public void testGetDiagnoticNotEquals () {        
         Prescription prescription = createTestPrescription();
-        assertNotEquals(prescription.getDiagnotic(), new DiagnosticTest());
+        assertNotEquals(prescription.getDiagnostic(), "Diagnostic parmis tant d'autres");
     }
 
     @Test
     public void testGetPrescription () {        
-        long id = 1;
         String title = "Ordonnance rhume";
-        IDoctor prescriptor = new IDoctor();
-        IPatient patient = new IPatient();
+        NodeAPHP node = new NodeAPHP(NodeEnum.POLE, new ArrayList<>());
+        Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
+        Doctor prescriptor = new Doctor("Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
+        MedicalRecord medicalRecord = new MedicalRecord("194", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", GenderEnum.M);
         Date consultDate = new Date();
-        DiagnosticTest diagnostic = new DiagnosticTest();
-        String prescription = "doliprane, spray nasale";
-        List<IAnnex> annexes = new ArrayList();
-
-        Prescription pres = new Prescription(id, title, prescriptor, patient, consultDate, diagnostic, prescription, annexes);
+        Diagnostic diagnostic = createDiagnostic();
+        String prescription = "doliprane, spray nasale";        
+        Prescription pres = new Prescription(title, prescriptor, medicalRecord, consultDate, diagnostic, prescription);
 
         assertEquals(pres.getPrescription(), prescription);
     }
@@ -213,27 +225,5 @@ public class PrescriptionTest {
     public void testGetPrescriptionNotEquals () {        
         Prescription prescription = createTestPrescription();
         assertNotEquals(prescription.getPrescription(), "lol");
-    } 
-    
-    @Test
-    public void testGetAnnexes () {        
-        long id = 1;
-        String title = "Ordonnance rhume";
-        IDoctor prescriptor = new IDoctor();
-        IPatient patient = new IPatient();
-        Date consultDate = new Date();
-        DiagnosticTest diagnostic = new DiagnosticTest();
-        String prescription = "doliprane, spray nasale";
-        List<IAnnex> annexes = new ArrayList();
-
-        Prescription pres = new Prescription(id, title, prescriptor, patient, consultDate, diagnostic, prescription, annexes);
-
-        assertEquals(pres.getAnnexes(), prescription);
-    }
-    
-    @Test
-    public void testGetAnnexesNotEquals () {        
-        Prescription prescription = createTestPrescription();
-        assertNotEquals(prescription.getAnnexes(), new ArrayList<>());
     } 
 }

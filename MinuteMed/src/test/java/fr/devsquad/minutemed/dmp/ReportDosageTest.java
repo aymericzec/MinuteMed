@@ -5,10 +5,12 @@
  */
 package fr.devsquad.minutemed.dmp;
 
-import fr.devsquad.minutemed.database.IDoctor;
+import fr.devsquad.minutemed.arborescence.NodeAPHP;
+import fr.devsquad.minutemed.arborescence.NodeEnum;
+import fr.devsquad.minutemed.staff.IHospitalStaff;
+import fr.devsquad.minutemed.staff.Nurse;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -48,13 +50,11 @@ public class ReportDosageTest {
     // public void hello() {}
     
     private ReportDosage createDefaultReportDosage () {
-        long id = 1;
-        IUser supervisor = new IUser();
+        IHospitalStaff supervisor = new Nurse("Lalie", "Martin", "2 rue", "a@g.fr", "077013834", new NodeAPHP(NodeEnum.POLE, new ArrayList<>()));
         Date createDate = new Date();
-        String rapport = "Ce client ne va pas bien";
+        String rapport = "Ce client ne va pas bien";;
         
-        
-        ReportDosage report = new ReportDosage(id, supervisor, createDate, rapport);
+        ReportDosage report = new ReportDosage(supervisor, createDate, rapport);
         
         return report;
     }
@@ -66,7 +66,7 @@ public class ReportDosageTest {
     
     @Test(expected = NullPointerException.class)
     public void fieldNullCreate () {
-         ReportDosage report = new Exam(1, null, null, null);
+         ReportDosage report = new ReportDosage(null, null, null);
     }
     
     @Test
@@ -83,53 +83,50 @@ public class ReportDosageTest {
     
     @Test
     public void testGetSupervisorEquals () {        
-        long id = 1;
-        IUser supervisor = new IUser();
+        IHospitalStaff supervisor = new Nurse("Lalie", "Martin", "2 rue", "a@g.fr", "077013834", new NodeAPHP(NodeEnum.POLE, new ArrayList<>()));
         Date createDate = new Date();
-        String rapport = "Ce client ne va pas bien";
+        String rapport = "Ce client ne va pas bien";;
         
-        ReportDosage report = new ReportDosage(id, supervisor, createDate, rapport);
+        ReportDosage report = new ReportDosage(supervisor, createDate, rapport);
         assertEquals(report.getSupervisor(), supervisor);
     }
     
     @Test
     public void testGetSupervisorNoEquals () {
         ReportDosage report = createDefaultReportDosage();
-        assertNotEquals(report.getSupervisor(), new IUser());
+        assertNotEquals(report.getSupervisor(), new Nurse("Julie", "Sofia", "2 rue", "a@g.fr", "077013834", new NodeAPHP(NodeEnum.POLE, new ArrayList<>())));
     }
     
     @Test
     public void testGetDateEquals () {        
-        long id = 1;
-        IUser supervisor = new IUser();
+        IHospitalStaff supervisor = new Nurse("Lalie", "Martin", "2 rue", "a@g.fr", "077013834", new NodeAPHP(NodeEnum.POLE, new ArrayList<>()));
         Date createDate = new Date();
-        String rapport = "Ce client ne va pas bien";
+        String rapport = "Ce client ne va pas bien";;
         
-        ReportDosage report = new ReportDosage(id, supervisor, createDate, rapport);
-        assertEquals(report.getDate(), createDate);
+        ReportDosage report = new ReportDosage(supervisor, createDate, rapport);
+        assertEquals(report.getCreateDate(), createDate);
     }
     
     @Test
     public void testGetDateNoEquals () {
         ReportDosage report = createDefaultReportDosage();
-        assertNotEquals(report.getDate(), new Date());
+        assertNotEquals(report.getCreateDate(), new Date());
     }
     
     @Test
     public void testGetDescriptionEquals () {
-        long id = 1;
-        IUser supervisor = new IUser();
+        IHospitalStaff supervisor = new Nurse("Lalie", "Martin", "2 rue", "a@g.fr", "077013834", new NodeAPHP(NodeEnum.POLE, new ArrayList<>()));
         Date createDate = new Date();
         String rapport = "Ce client ne va pas bien";
         
-        ReportDosage report = new ReportDosage(id, supervisor, createDate, rapport);
+        ReportDosage report = new ReportDosage(supervisor, createDate, rapport);
 
-        assertEquals(report.getDescription(), rapport);
+        assertEquals(report.getRapport(), rapport);
     }
     
     @Test
     public void testGetDescriptionNoEquals () {
         ReportDosage report = createDefaultReportDosage();
-        assertNotEquals(report.getDescription(), "Ceci n'est pas une description");
+        assertNotEquals(report.getRapport(), "Ceci n'est pas une description");
     }
 }

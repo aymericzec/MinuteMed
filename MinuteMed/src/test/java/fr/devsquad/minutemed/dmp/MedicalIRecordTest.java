@@ -44,15 +44,15 @@ public class MedicalIRecordTest {
     // @Test
     // public void hello() {}
     
-    private MedicalRecord createMedicalFolder () {
+    private MedicalRecord createMedicalFolder () {        
         String ss = "194054956815780";
         String firstName = "Aymeric";
         String lastName = "Zecchini";
         String address = "2 rue Jean Baptiste Lully, 77440 Champs sur Marne";
-        String email = "";
+        String email = "z.a@gmail.com";
+        String birthday = "02/03/1994";
+        GenderEnum gender = GenderEnum.M;
         String phoneNumber = "0770138334";
-        Date birthday = new Date();
-        String gender = "M";
         
         MedicalRecord mr = new MedicalRecord (ss, firstName, lastName, address, email, phoneNumber, birthday, gender);
         
@@ -66,28 +66,14 @@ public class MedicalIRecordTest {
     
     @Test (expected = IllegalArgumentException.class)
     public void createMedicalFolderBadSS () {
-        String ss = "19405495681578";
+        String ss = "1940549568157";
         String firstName = "Aymeric";
         String lastName = "Zecchini";
         String address = "2 rue Jean Baptiste Lully, 77440 Champs sur Marne";
-        String email = "";
+        String email = "z.a@gmail.com";
+        String birthday = "02/03/1994";
+        GenderEnum gender = GenderEnum.M;
         String phoneNumber = "0770138334";
-        Date birthday = new Date();
-        String gender = "M";
-        
-        MedicalRecord mr = new MedicalRecord (ss, firstName, lastName, address, email, phoneNumber, birthday, gender);
-    }
-    
-    @Test (expected = IllegalArgumentException.class)
-    public void createMedicalFolderBadGender () {
-        String ss = "194054956815788";
-        String firstName = "Aymeric";
-        String lastName = "Zecchini";
-        String address = "2 rue Jean Baptiste Lully, 77440 Champs sur Marne";
-        String email = "zecchini.aymeric@gmail.com";
-        String phoneNumber = "0770138334";
-        Date birthday = new Date();
-        String gender = "MM";
         
         MedicalRecord mr = new MedicalRecord (ss, firstName, lastName, address, email, phoneNumber, birthday, gender);
     }

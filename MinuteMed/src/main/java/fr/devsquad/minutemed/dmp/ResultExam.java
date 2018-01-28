@@ -5,6 +5,8 @@
  */
 package fr.devsquad.minutemed.dmp;
 
+import fr.devsquad.minutemed.staff.Doctor;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,18 +14,44 @@ import java.util.List;
  *
  * @author myfou
  */
-class ResultExam {
+public class ResultExam {
 
-    public List<String> getFiles() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private long id;
+    private Doctor examinator;
+    private Date examDate;
+    private String result;
+    private List<String> files = new ArrayList<>();
+
+    public ResultExam(Doctor examinator, Date examDate, String result) {
+        this.examinator = examinator;
+        this.examDate = examDate;
+        this.result = result;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public Doctor getExaminator() {
+        return examinator;
+    }
+
+    public Date getExamDate() {
+        return examDate;
     }
 
     public String getResult() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return result;
     }
 
-    public Date getDateExaminate() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<String> getFiles() {
+        return files;
     }
+    
+    public void addFiles (String s) {
+        files.add(s);
+    }
+    
+    
     
 }

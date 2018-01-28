@@ -5,10 +5,13 @@
  */
 package fr.devsquad.minutemed.dmp;
 
-import fr.devsquad.minutemed.database.IDoctor;
+import fr.devsquad.minutemed.arborescence.NodeAPHP;
+import fr.devsquad.minutemed.arborescence.NodeEnum;
+import fr.devsquad.minutemed.specialization.Specialization;
+import fr.devsquad.minutemed.specialization.SpecializationEnum;
+import fr.devsquad.minutemed.staff.Doctor;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -48,30 +51,27 @@ public class DiagnosticTest {
     // public void hello() {}
     
     private Diagnostic createDiagnostic () {
-        long id = 1;
         String title = "Radiologie du fémur";
-        IDoctor diagnotic = new IDoctor();
-        IPatient patient = new IPatient();
+        Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
+        NodeAPHP node = new NodeAPHP(NodeEnum.POLE, new ArrayList<>());
+        Doctor diagnostic = new Doctor("Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
+        MedicalRecord medicalRecord = new MedicalRecord("194", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", GenderEnum.M);
         Date consultDiagnostic = new Date();
         String description = "Chute à vélo, demande dun' radio";
-        
-        List<IAnnex> annexs = new ArrayList();
-        annexs.add(new IAnnex());
-        
-        
-        Diagnostic diag = new Diagnostic(id, title, patient, consultDiagnostic, description, annexs);
+    
+        Diagnostic diag = new Diagnostic(title, diagnostic, medicalRecord, consultDiagnostic, description);
         
         return diag;
     }
     
     @Test
     public void createDiagnosticTest() {
-        createDiagnotic();
+        createDiagnostic();
     }
     
     @Test(expected = NullPointerException.class)
     public void fieldNullCreate () {
-        Diagnostic diagnotic = new Diagnostic(null, null, null, null, null, null);
+        Diagnostic diagnotic = new Diagnostic(null, null, null, null, null);
     }
     
     @Test
@@ -100,88 +100,78 @@ public class DiagnosticTest {
     
     @Test
     public void testGetDiagnoticDoctorEquals () {        
-        long id = 1;
-        String title = "Radiologie du fémur";
-        IDoctor diagnostic = new IDoctor();
-        IPatient patient = new IPatient();
+       String title = "Radiologie du fémur";
+        Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
+        NodeAPHP node = new NodeAPHP(NodeEnum.POLE, new ArrayList<>());
+        Doctor diagnostic = new Doctor("Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
+        MedicalRecord medicalRecord = new MedicalRecord("194", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", GenderEnum.M);
         Date consultDiagnostic = new Date();
         String description = "Chute à vélo, demande dun' radio";
+    
+        Diagnostic diag = new Diagnostic(title, diagnostic, medicalRecord, consultDiagnostic, description);
         
-        List<IAnnex> annexs = new ArrayList();
-        annexs.add(new IAnnex());
-        
-        
-        Diagnostic diag = new Diagnostic(id, title, diagnostic, patient, consultDiagnostic, description, annexs);
-        
-        assertEquals(diag.getDoctorDiagnostic(), diagnostic);
+        assertEquals(diag.getDiagnostic(), diagnostic);
     }
     
     @Test
     public void testGetDiagnoticDoctorNoEquals () {
         Diagnostic diagnostic = createDiagnostic();
-        assertNotEquals(diagnostic.getDoctorDiagnostic(), new IDoctor());
+        Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
+        NodeAPHP node = new NodeAPHP(NodeEnum.POLE, new ArrayList<>());
+        assertNotEquals(diagnostic.getDiagnostic(), new Doctor("Thomas", "Sadaoui", "2 rue jean", "a@t.gmail", "0770138333", node, specialization));
     }
     
     @Test
     public void testGetPatientEquals () {
-       long id = 1;
         String title = "Radiologie du fémur";
-        IDoctor diagnostic = new IDoctor();
-        IPatient patient = new IPatient();
+        Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
+        NodeAPHP node = new NodeAPHP(NodeEnum.POLE, new ArrayList<>());
+        Doctor diagnostic = new Doctor("Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
+        MedicalRecord medicalRecord = new MedicalRecord("194", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", GenderEnum.M);
         Date consultDiagnostic = new Date();
         String description = "Chute à vélo, demande dun' radio";
-        
-        List<IAnnex> annexs = new ArrayList();
-        annexs.add(new IAnnex());
-        
-        
-        Diagnostic diag = new Diagnostic(id, title, diagnostic, patient, consultDiagnostic, description, annexs);
-        assertEquals(diag.getPatient(), diagnostic);
+    
+        Diagnostic diag = new Diagnostic(title, diagnostic, medicalRecord, consultDiagnostic, description);
+        assertEquals(diag.getMedicalRecord(), diagnostic);
     }
     
     @Test
     public void testGetPatientNoEquals () {
         Diagnostic diagnostic = createDiagnostic();
-        assertNotEquals(diagnostic.getPatient(), new IPatient());
+        assertNotEquals(diagnostic.getMedicalRecord(), new MedicalRecord("194", "Lucie", "Martin", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", GenderEnum.M));
     }
     
     @Test
     public void testGetDateEquals () {
-        long id = 1;
         String title = "Radiologie du fémur";
-        IDoctor diagnostic = new IDoctor();
-        IPatient patient = new IPatient();
+        Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
+        NodeAPHP node = new NodeAPHP(NodeEnum.POLE, new ArrayList<>());
+        Doctor diagnostic = new Doctor("Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
+        MedicalRecord medicalRecord = new MedicalRecord("194", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", GenderEnum.M);
         Date consultDiagnostic = new Date();
         String description = "Chute à vélo, demande dun' radio";
-        
-        List<IAnnex> annexs = new ArrayList();
-        annexs.add(new IAnnex());
-        
-        
-        Diagnostic diag = new Diagnostic(id, title, diagnostic, patient, consultDiagnostic, description, annexs);
-        assertEquals(diag.getDateConsulting(), consultDiagnostic);
+    
+        Diagnostic diag = new Diagnostic(title, diagnostic, medicalRecord, consultDiagnostic, description);
+        assertEquals(diag.getConsultDiagnostic(), consultDiagnostic);
     }
     
     @Test
     public void testGetDateNoEquals () {
         Diagnostic diagnostic = createDiagnostic();
-        assertNotEquals(diagnostic.getDateConsulting(), new Date());
+        assertNotEquals(diagnostic.getConsultDiagnostic(), new Date());
     }
     
     @Test
     public void testGetDescriptionEquals () {
-        long id = 1;
         String title = "Radiologie du fémur";
-        IDoctor diagnostic = new IDoctor();
-        IPatient patient = new IPatient();
+        Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
+        NodeAPHP node = new NodeAPHP(NodeEnum.POLE, new ArrayList<>());
+        Doctor diagnostic = new Doctor("Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
+        MedicalRecord medicalRecord = new MedicalRecord("194", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", GenderEnum.M);
         Date consultDiagnostic = new Date();
         String description = "Chute à vélo, demande dun' radio";
-        
-        List<IAnnex> annexs = new ArrayList();
-        annexs.add(new IAnnex());
-        
-        
-        Diagnostic diag = new Diagnostic(id, title, diagnostic, patient, consultDiagnostic, description, annexs);
+    
+        Diagnostic diag = new Diagnostic(title, diagnostic, medicalRecord, consultDiagnostic, description);
         assertEquals(diag.getDescription(), description);
     }
     
@@ -189,28 +179,5 @@ public class DiagnosticTest {
     public void testGetDescriptionNoEquals () {
         Diagnostic diagnostic = createDiagnostic();
         assertNotEquals(diagnostic.getDescription(), "toto");
-    }
-    
-    @Test
-    public void testGetAnnexEquals () {
-        long id = 1;
-        String title = "Radiologie du fémur";
-        IDoctor diagnostic = new IDoctor();
-        IPatient patient = new IPatient();
-        Date consultDiagnostic = new Date();
-        String description = "Chute à vélo, demande dun' radio";
-        
-        List<IAnnex> annexs = new ArrayList();
-        annexs.add(new IAnnex());
-        
-        
-        Diagnostic diag = new Diagnostic(id, title, diagnostic, patient, consultDiagnostic, description, annexs);
-        assertEquals(diag.getAnnexes(), annexs);
-    }
-    
-    @Test
-    public void testGetAnnexNoEquals () {
-        Diagnostic diagnostic = createDiagnostic();
-        assertNotEquals(diagnostic.getAnnexes(), new ArrayList<>());
     }
 }

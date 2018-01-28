@@ -5,6 +5,7 @@
  */
 package fr.devsquad.minutemed.dmp;
 
+import fr.devsquad.minutemed.staff.IHospitalStaff;
 import java.util.Date;
 
 /**
@@ -13,16 +14,35 @@ import java.util.Date;
  */
 public class ReportDosage {
 
+    private long id = 1;
+    private IHospitalStaff supervisor;
+    private Date createDate;
+    private String rapport;
+
+    public ReportDosage(IHospitalStaff supervisor, Date createDate, String rapport) {
+        this.supervisor = supervisor;
+        this.createDate = createDate;
+        this.rapport = rapport;
+    }
+
     public long getId() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return id;
     }
 
-    public Date getDate() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public IHospitalStaff getSupervisor() {
+        return supervisor;
     }
 
-    public String getDescription() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Date getCreateDate() {
+        return createDate;
     }
+
+    public String getRapport() {
+        return rapport;
+    }
+    
+    
+    
+   
     
 }

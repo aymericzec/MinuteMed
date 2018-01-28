@@ -5,7 +5,6 @@
  */
 package fr.devsquad.minutemed.dmp;
 
-import fr.devsquad.minutemed.specialization.SpecializationEnum;
 import fr.devsquad.minutemed.staff.Doctor;
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,12 +51,8 @@ public class ExamTest {
         MedicalRecord patient = new MedicalRecord();
         Date consultExam = new Date();
         String description = "Chute à vélo, demande dun' radio";
-        
-        List<IAnnex> annexs = new ArrayList();
-        annexs.add(new IAnnex());
-        
-        
-        Exam exam = new Exam(id, title, askExam, patient, consultExam, description, annexs);
+              
+        Exam exam = new Exam(title, askExam, patient, consultExam, description);
         
         return exam;
     }

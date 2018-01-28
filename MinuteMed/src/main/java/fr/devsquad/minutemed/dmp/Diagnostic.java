@@ -5,7 +5,9 @@
  */
 package fr.devsquad.minutemed.dmp;
 
+import fr.devsquad.minutemed.staff.Doctor;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  *
@@ -13,24 +15,44 @@ import java.util.Date;
  */
 public class Diagnostic {
 
+    private long id;
+    private String title;
+    private Doctor diagnostic;
+    private MedicalRecord medicalRecord;
+    private Date consultDiagnostic;
+    private String description;
+    
+    public Diagnostic() { }
+    
+    public Diagnostic(String title, Doctor diagnostic, MedicalRecord medicalRecord, Date consultDiagnostic, String description) {
+        this.title = Objects.requireNonNull(title);
+        this.description = Objects.requireNonNull(description);
+        this.diagnostic = Objects.requireNonNull(diagnostic);
+        this.medicalRecord = Objects.requireNonNull(medicalRecord);
+        this.medicalRecord = Objects.requireNonNull(medicalRecord);
+    }
+    
     public long getId() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return id;
     }
 
     public String getTitle() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return title;
     }
 
-    public Date getDateConsulting() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Date getConsultDiagnostic() {
+        return consultDiagnostic;
+    }
+
+    public Doctor getDiagnostic() {
+        return diagnostic;
+    }
+
+    public MedicalRecord getMedicalRecord() {
+        return medicalRecord;
     }
 
     public String getDescription() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    Object getAnnexes() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+        return description;
+    }  
 }
