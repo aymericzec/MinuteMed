@@ -465,4 +465,16 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
         JPADoctor doctor = new JPADoctor();
         return doctor.getNurse(idNurse);
     }
+    
+    /**
+     * Get the Staff in the Staff Entity
+     * 
+     * @param type The type of the Staff
+     * @param idStaff The if of the Staff
+     * @return The MedicalStaff
+     */
+    public MedicalStaff getStaff(String type, long idStaff) {
+        JPADoctor doctor = new JPADoctor();
+        return doctor.getMedicalStaff(type, idStaff);
+    }
 }

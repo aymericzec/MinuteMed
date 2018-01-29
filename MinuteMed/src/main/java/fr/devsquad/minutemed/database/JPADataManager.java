@@ -8,6 +8,7 @@ import fr.devsquad.minutemed.arborescence.NodeHospital;
 import fr.devsquad.minutemed.arborescence.NodePole;
 import fr.devsquad.minutemed.arborescence.NodeService;
 import fr.devsquad.minutemed.authentication.UserAccount;
+import fr.devsquad.minutemed.dmp.MedicalRecord;
 import fr.devsquad.minutemed.specialization.Specialization;
 import fr.devsquad.minutemed.staff.Doctor;
 import fr.devsquad.minutemed.staff.IHospitalStaff;
@@ -461,6 +462,26 @@ public class JPADataManager implements IDataManager {
         }
         return cu;
     }
+    
+    /**
+     * Get the node in the Entity Node
+     * 
+     * @param type Type of the Node
+     * @param idNodeInfo Id of the Node
+     * @return The Node
+     */
+    public Node getNode(String type, long idNodeInfo) {
+        
+        Node node;
+        
+        try {
+            TypedQuery<Node> tq = em.createQuery("SELECT node FROM Node node WHERE node.type = :type AND node.idNodeInfo = :idNodeInfo", Node.class);
+            node = tq.setParameter("type", type).setParameter("idNodeInfo", idNodeInfo).getSingleResult();
+        } catch(NoResultException e) {
+            return null;
+        }
+        return node;
+    }
 
     /**
      * Add a Doctor in the database
@@ -649,5 +670,6 @@ public class JPADataManager implements IDataManager {
         
         return staff;
     }
+  
     
 }

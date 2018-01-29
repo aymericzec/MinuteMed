@@ -1,5 +1,6 @@
 package fr.devsquad.minutemed.arborescence;
 
+import fr.devsquad.minutemed.database.JPADataManager;
 import fr.devsquad.minutemed.specialization.Specialization;
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -54,5 +55,11 @@ public class NodeCU implements Serializable, INode {
     
     public void setHospitalUnit(NodeHU hu) {
         this.hu = hu;
+    }
+    
+    @Override
+    public Node getNode() {
+        JPADataManager dataManager = new JPADataManager();
+        return dataManager.getNode(type, id);
     }
 }

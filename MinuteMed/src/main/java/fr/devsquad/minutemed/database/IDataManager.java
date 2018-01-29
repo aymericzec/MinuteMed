@@ -1,6 +1,7 @@
 package fr.devsquad.minutemed.database;
 
 import fr.devsquad.minutemed.arborescence.INode;
+import fr.devsquad.minutemed.arborescence.Node;
 import fr.devsquad.minutemed.arborescence.NodeAPHP;
 import fr.devsquad.minutemed.arborescence.NodeCU;
 import fr.devsquad.minutemed.arborescence.NodeHU;
@@ -11,6 +12,7 @@ import fr.devsquad.minutemed.authentication.UserAccount;
 import fr.devsquad.minutemed.specialization.Specialization;
 import fr.devsquad.minutemed.staff.Doctor;
 import fr.devsquad.minutemed.staff.IHospitalStaff;
+import fr.devsquad.minutemed.staff.MedicalStaff;
 import fr.devsquad.minutemed.staff.Nurse;
 import java.util.List;
 
@@ -74,4 +76,5 @@ public interface IDataManager {
     public boolean removeNurse(long idNurse);
     
     public List<IHospitalStaff> getStaff();
+    
 }

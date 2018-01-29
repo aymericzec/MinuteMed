@@ -221,4 +221,16 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
         JPANurse nurse = new JPANurse();
         return nurse.getNurse(idNurse);
     }
+    
+    /**
+     * Get the Staff in the Staff Entity
+     * 
+     * @param type The type of the Staff
+     * @param idStaff The if of the Staff
+     * @return The MedicalStaff
+     */
+    public MedicalStaff getStaff(String type, long idStaff) {
+        JPANurse nurse = new JPANurse();
+        return nurse.getMedicalStaff(type, idStaff);
+    }
 }

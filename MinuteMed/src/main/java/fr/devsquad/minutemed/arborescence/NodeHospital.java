@@ -1,5 +1,6 @@
 package fr.devsquad.minutemed.arborescence;
 
+import fr.devsquad.minutemed.database.JPADataManager;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
@@ -76,5 +77,11 @@ public class NodeHospital implements Serializable, INode {
     
     public void setAPHP(NodeAPHP aphp) {
         this.aphp = aphp;
+    }
+    
+    @Override
+    public Node getNode() {
+        JPADataManager dataManager = new JPADataManager();
+        return dataManager.getNode(type, id);
     }
 }

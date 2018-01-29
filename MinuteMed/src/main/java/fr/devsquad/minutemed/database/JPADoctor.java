@@ -6,6 +6,7 @@ import fr.devsquad.minutemed.dmp.Exam;
 import fr.devsquad.minutemed.dmp.MedicalRecord;
 import fr.devsquad.minutemed.dmp.Prescription;
 import fr.devsquad.minutemed.staff.Doctor;
+import fr.devsquad.minutemed.staff.MedicalStaff;
 import fr.devsquad.minutemed.staff.Nurse;
 import java.util.List;
 import java.util.Objects;
@@ -610,4 +611,23 @@ public class JPADoctor implements IDoctor, INurse {
         return nurse;
     }
 
+    /**
+     * Get the Staff in the Staff Entity
+     * 
+     * @param type The type of the Staff
+     * @param idStaff The if of the Staff
+     * @return The MedicalStaff
+     */
+    public MedicalStaff getMedicalStaff(String type, long idStaff) {
+        
+        MedicalStaff staff;
+        
+        try {
+            TypedQuery<MedicalStaff> tq = em.createQuery("SELECT staff FROM MedicalStaff staff WHERE staff.type = :type AND staff.idMedicalStaff = :idStaff", MedicalStaff.class);
+            staff = tq.setParameter("type", type).setParameter("idStaff", idStaff).getSingleResult();
+        } catch(NoResultException e) {
+            return null;
+        }
+        return staff;
+    }
 }

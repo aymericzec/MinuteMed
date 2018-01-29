@@ -1,5 +1,6 @@
 package fr.devsquad.minutemed.arborescence;
 
+import fr.devsquad.minutemed.database.JPADataManager;
 import fr.devsquad.minutemed.specialization.Specialization;
 import java.io.Serializable;
 import java.util.List;
@@ -77,5 +78,11 @@ public class NodeService implements Serializable, INode {
     
     public void setPole(NodePole pole) {
         this.pole = pole;
+    }
+    
+    @Override
+    public Node getNode() {
+        JPADataManager dataManager = new JPADataManager();
+        return dataManager.getNode(type, id);
     }
 }
