@@ -1,20 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.devsquad.minutemed.authentication;
 
 import com.google.common.hash.Hashing;
-import fr.devsquad.minutemed.staff.IHospitalStaff;
+import fr.devsquad.minutemed.staff.MedicalStaff;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.*;
 
-/**
- *
- * @author enzo
- */
+
 public class AccountManager {
     
     private final Map<String, UserAccount> accounts;
@@ -33,7 +25,7 @@ public class AccountManager {
     }
     
     
-    public boolean createAccount(String username, String password, IHospitalStaff user){
+    public boolean createAccount(String username, String password, MedicalStaff user){
         UserAccount userAccount = new UserAccount(username, Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString(), user);
         if(!accounts.containsKey(userAccount.getUsername())){
             return accounts.put(userAccount.getUsername(), userAccount) != null;

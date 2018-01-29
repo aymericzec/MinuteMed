@@ -1,6 +1,7 @@
 package fr.devsquad.minutemed.staff;
 
 import fr.devsquad.minutemed.arborescence.INode;
+import fr.devsquad.minutemed.arborescence.Node;
 import fr.devsquad.minutemed.database.INurse;
 import fr.devsquad.minutemed.database.JPANurse;
 import fr.devsquad.minutemed.dmp.MedicalRecord;
@@ -11,14 +12,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurse {
 
     @Id @GeneratedValue
-    @Column(name = "idStaff")
-    private long id; 
+    @Column(name = "idNurse")
+    private long id;
+    private String type;
     private String firstName;
     private String lastName;
     private String adress;
@@ -26,11 +29,13 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
     private String phoneNumber;
     
     @OneToOne
-    private INode node;
+    @JoinColumn(name = "idNode")
+    private Node node;
     
     public Nurse() { }
     
-    public Nurse(String firstName, String lastName, String adress, String email, String phoneNumber, INode node) { 
+    public Nurse(StaffEnum type, String firstName, String lastName, String adress, String email, String phoneNumber, Node node) { 
+        this.type = type.NURSE.name();
         this.firstName = firstName;
         this.lastName = lastName;
         this.adress = adress;
@@ -42,6 +47,11 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
     @Override
     public long getId() {
         return id;
+    }
+    
+    @Override
+    public String getType() {
+        return type;
     }
     
     @Override
@@ -70,7 +80,7 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
     }
     
     @Override
-    public INode getNode() {
+    public Node getNode() {
         return node;
     }
 
@@ -100,7 +110,7 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
     }
     
     @Override
-    public void setNode(INode node) {
+    public void setNode(Node node) {
         this.node = node;
     }
 

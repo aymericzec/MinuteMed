@@ -1,6 +1,7 @@
 package fr.devsquad.minutemed.staff;
 
 import fr.devsquad.minutemed.arborescence.INode;
+import fr.devsquad.minutemed.arborescence.Node;
 import fr.devsquad.minutemed.database.IDoctor;
 import fr.devsquad.minutemed.database.INurse;
 import fr.devsquad.minutemed.database.JPADoctor;
@@ -16,6 +17,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 
@@ -23,8 +25,9 @@ import javax.persistence.OneToOne;
 public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoctor, INurse {
 
     @Id @GeneratedValue
-    @Column(name = "idStaff")
+    @Column(name = "idDoctor")
     private long id; 
+    private String type;
     private String firstName;
     private String lastName;
     private String adress;
@@ -33,11 +36,13 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
     private String specialization;
     
     @OneToOne
-    private INode node;
+    @JoinColumn(name = "idNode")
+    private Node node;
  
     public Doctor() { }
     
-    public Doctor(String firstName, String lastName, String adress, String email, String phoneNumber, INode node , Specialization specialization) { 
+    public Doctor(StaffEnum type, String firstName, String lastName, String adress, String email, String phoneNumber, Node node , Specialization specialization) { 
+        this.type = type.DOCTOR.name();
         this.firstName = firstName;
         this.lastName = lastName;
         this.adress = adress;
@@ -52,6 +57,11 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
         return id;
     }
        
+    @Override
+    public String getType() {
+        return type;
+    }
+    
     @Override
     public String getFirstName() {
         return firstName;
@@ -78,7 +88,7 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
     }
     
     @Override
-    public INode getNode() {
+    public Node getNode() {
         return node;
     }
 
@@ -112,7 +122,7 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
     }
     
     @Override
-    public void setNode(INode node) {
+    public void setNode(Node node) {
         this.node = node;
     }
 

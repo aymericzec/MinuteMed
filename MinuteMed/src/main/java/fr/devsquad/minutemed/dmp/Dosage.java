@@ -2,6 +2,7 @@ package fr.devsquad.minutemed.dmp;
 
 import fr.devsquad.minutemed.staff.Doctor;
 import fr.devsquad.minutemed.staff.IHospitalStaff;
+import fr.devsquad.minutemed.staff.MedicalStaff;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,7 +25,7 @@ public class Dosage implements Serializable {
     private long id;
     private String title;
     @OneToOne
-    @JoinColumn(name = "idStaff")
+    @JoinColumn(name = "idDoctor")
     private Doctor doctorConsulting;
     @OneToOne
     @JoinColumn(name = "idMedicalRecord")
@@ -115,7 +116,7 @@ public class Dosage implements Serializable {
         return null;
     }
     
-    public void addReport (IHospitalStaff staff, Date dateDosage, String repport) {
+    public void addReport (MedicalStaff staff, Date dateDosage, String repport) {
         ReportDosage reportDosage = new ReportDosage(staff, dateDosage, repport);
         this.report.add(reportDosage);
     }

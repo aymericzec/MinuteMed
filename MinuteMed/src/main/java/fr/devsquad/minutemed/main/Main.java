@@ -10,6 +10,7 @@ import fr.devsquad.minutemed.arborescence.NodeHospital;
 import fr.devsquad.minutemed.specialization.Specialization;
 import fr.devsquad.minutemed.specialization.SpecializationEnum;
 import fr.devsquad.minutemed.staff.DataManager;
+import fr.devsquad.minutemed.staff.StaffEnum;
 
 /**
  *
@@ -20,7 +21,7 @@ public class Main {
     public static void main(String [] args) {
         
         Specialization pediatrie = new Specialization(SpecializationEnum.Pediatrie);
-        DataManager dataManager = new DataManager("Gerard", "Luy", "5 Rue de la butte verte", "gerard.luy@gmail.com", "0784514796");
+        DataManager dataManager = new DataManager(StaffEnum.DATAMANAGER, "Gerard", "Luy", "5 Rue de la butte verte", "gerard.luy@gmail.com", "0784514796");
         
         dataManager.createSpecialization(pediatrie);
         

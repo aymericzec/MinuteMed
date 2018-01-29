@@ -5,6 +5,8 @@ public interface IHospitalStaff {
     
     public long getId();
     
+    public String getType();
+    
     public String getFirstName();
     
     public String getLastName();

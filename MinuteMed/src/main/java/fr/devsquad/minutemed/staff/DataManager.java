@@ -22,8 +22,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
 
     @Id
     @GeneratedValue
-    @Column(name = "idStaff")
+    @Column(name = "idDataManager")
     private long id;
+    private String type;
     private String firstName;
     private String lastName;
     private String adress;
@@ -33,7 +34,8 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
     public DataManager() {
     }
 
-    public DataManager(String firstName, String lastName, String adress, String email, String phoneNumber) {
+    public DataManager(StaffEnum type, String firstName, String lastName, String adress, String email, String phoneNumber) {
+        this.type = type.DATAMANAGER.name();
         this.firstName = firstName;
         this.lastName = lastName;
         this.adress = adress;
@@ -44,6 +46,11 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
     @Override
     public long getId() {
         return id;
+    }
+    
+    @Override
+    public String getType() {
+        return type;
     }
 
     @Override

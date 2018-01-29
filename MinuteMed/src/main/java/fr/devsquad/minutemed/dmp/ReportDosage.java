@@ -1,7 +1,7 @@
 package fr.devsquad.minutemed.dmp;
 
-import fr.devsquad.minutemed.staff.Doctor;
-import fr.devsquad.minutemed.staff.IHospitalStaff;
+
+import fr.devsquad.minutemed.staff.MedicalStaff;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -22,7 +22,7 @@ public class ReportDosage implements Serializable {
     private long id;
     @OneToOne
     @JoinColumn(name = "idStaff")
-    private IHospitalStaff supervisor;
+    private MedicalStaff supervisor;
     @Temporal(TemporalType.DATE)
     private Date createDate;
     private String report;
@@ -31,7 +31,7 @@ public class ReportDosage implements Serializable {
     
     public ReportDosage () { }
 
-    public ReportDosage(IHospitalStaff supervisor, Date createDate, String report) {
+    public ReportDosage(MedicalStaff supervisor, Date createDate, String report) {
         this.supervisor = supervisor;
         this.createDate = createDate;
         this.report = report;
@@ -41,7 +41,7 @@ public class ReportDosage implements Serializable {
         return id;
     }
 
-    public IHospitalStaff getSupervisor() {
+    public MedicalStaff getSupervisor() {
         return supervisor;
     }
 

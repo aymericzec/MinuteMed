@@ -1,5 +1,6 @@
 package fr.devsquad.minutemed.database;
 
+import fr.devsquad.minutemed.arborescence.Node;
 import fr.devsquad.minutemed.arborescence.NodeAPHP;
 import fr.devsquad.minutemed.arborescence.NodeCU;
 import fr.devsquad.minutemed.arborescence.NodeHU;
@@ -10,6 +11,7 @@ import fr.devsquad.minutemed.authentication.UserAccount;
 import fr.devsquad.minutemed.specialization.Specialization;
 import fr.devsquad.minutemed.staff.Doctor;
 import fr.devsquad.minutemed.staff.IHospitalStaff;
+import fr.devsquad.minutemed.staff.MedicalStaff;
 import fr.devsquad.minutemed.staff.Nurse;
 import java.util.ArrayList;
 import java.util.List;
@@ -133,9 +135,12 @@ public class JPADataManager implements IDataManager {
         
         Objects.requireNonNull(aphp);
         
+        Node node = new Node(aphp.getType(), aphp.getId());
+        
         try {
             et.begin();
             em.persist(aphp);
+            em.persist(node);
             et.commit();
         } catch(EntityExistsException e) {
             return false;
@@ -154,9 +159,12 @@ public class JPADataManager implements IDataManager {
         
         Objects.requireNonNull(hospital);
         
+        Node node = new Node(hospital.getType(), hospital.getId());
+        
         try {
             et.begin();
             em.persist(hospital);
+            em.persist(node);
             et.commit();
         } catch(EntityExistsException e) {
             return false;
@@ -213,9 +221,12 @@ public class JPADataManager implements IDataManager {
         
         Objects.requireNonNull(pole);
         
+        Node node = new Node(pole.getType(), pole.getId());
+        
         try {
             et.begin();
             em.persist(pole);
+            em.persist(node);
             et.commit();
         } catch(EntityExistsException e) {
             return false;
@@ -273,9 +284,12 @@ public class JPADataManager implements IDataManager {
         
         Objects.requireNonNull(service);
         
+        Node node = new Node(service.getType(), service.getId());
+        
         try {
             et.begin();
             em.persist(service);
+            em.persist(node);
             et.commit();
         } catch(EntityExistsException e) {
             return false;
@@ -333,9 +347,12 @@ public class JPADataManager implements IDataManager {
         
         Objects.requireNonNull(hu);
         
+        Node node = new Node(hu.getType(), hu.getId());
+        
         try {
             et.begin();
             em.persist(hu);
+            em.persist(node);
             et.commit();
         } catch(EntityExistsException e) {
             return false;
@@ -393,9 +410,12 @@ public class JPADataManager implements IDataManager {
         
         Objects.requireNonNull(cu);
         
+        Node node = new Node(cu.getType(), cu.getId());
+        
         try {
             et.begin();
             em.persist(cu);
+            em.persist(node);
             et.commit();
         } catch(EntityExistsException e) {
             return false;
@@ -453,9 +473,12 @@ public class JPADataManager implements IDataManager {
         
         Objects.requireNonNull(doctor);
         
+        MedicalStaff staff = new MedicalStaff(doctor.getType(), doctor.getId());
+        
         try {
             et.begin();
             em.persist(doctor);
+            em.persist(staff);
             et.commit();
         } catch(EntityExistsException e) {
             return false;
@@ -532,9 +555,12 @@ public class JPADataManager implements IDataManager {
         
         Objects.requireNonNull(nurse);
         
+        MedicalStaff staff = new MedicalStaff(nurse.getType(), nurse.getId());
+        
         try {
             et.begin();
             em.persist(nurse);
+            em.persist(staff);
             et.commit();
         } catch(EntityExistsException e) {
             return false;

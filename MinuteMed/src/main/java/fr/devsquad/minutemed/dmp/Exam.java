@@ -24,7 +24,7 @@ public class Exam implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date dateExam;
     @OneToOne
-    @JoinColumn(name = "idStaff")
+    @JoinColumn(name = "idDoctor")
     private Doctor doctor;
     @OneToOne
     @JoinColumn(name = "idMedicalRecord")

@@ -20,7 +20,7 @@ public class Prescription implements Serializable {
     private long id;
     private String title;
     @OneToOne
-    @JoinColumn(name = "idStaff")
+    @JoinColumn(name = "idDoctor")
     private Doctor prescriptor;
     @OneToOne
     @JoinColumn(name = "idMedicalRecord")

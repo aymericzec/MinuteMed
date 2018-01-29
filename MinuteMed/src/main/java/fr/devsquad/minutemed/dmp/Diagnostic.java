@@ -21,7 +21,7 @@ public class Diagnostic implements Serializable {
     private long id;
     private String title;
     @OneToOne
-    @JoinColumn(name = "idStaff")
+    @JoinColumn(name = "idDoctor")
     private Doctor diagnosticDoctor;
     @OneToOne
     @JoinColumn(name = "idMedicalRecord")

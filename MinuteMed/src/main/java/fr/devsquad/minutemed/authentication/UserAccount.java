@@ -2,6 +2,7 @@ package fr.devsquad.minutemed.authentication;
 
 import com.google.common.hash.Hashing;
 import fr.devsquad.minutemed.staff.IHospitalStaff;
+import fr.devsquad.minutemed.staff.MedicalStaff;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -22,12 +23,12 @@ public class UserAccount implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "idStaff")
-    private IHospitalStaff user;
+    private MedicalStaff user;
 
     public UserAccount() {
     }
 
-    public UserAccount(String username, String password, IHospitalStaff user) {
+    public UserAccount(String username, String password, MedicalStaff user) {
         this.username = Objects.requireNonNull(username);
         this.password = Hashing.sha256().hashString(Objects.requireNonNull(password), StandardCharsets.UTF_8).toString();
         this.user = Objects.requireNonNull(user);
@@ -45,7 +46,7 @@ public class UserAccount implements Serializable {
         return password;
     }
 
-    public IHospitalStaff getUser() {
+    public MedicalStaff getUser() {
         return user;
     }
 
