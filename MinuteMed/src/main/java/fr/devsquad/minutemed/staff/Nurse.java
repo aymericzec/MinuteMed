@@ -35,6 +35,44 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
     public Nurse() { }
     
     public Nurse(StaffEnum type, String firstName, String lastName, String adress, String email, String phoneNumber, Node node) { 
+        if( type == null){
+            throw new NullPointerException();
+        }
+        if( firstName == null){
+            throw new NullPointerException();
+        }
+        if( lastName == null){
+            throw new NullPointerException();
+        }
+        if( adress == null){
+            throw new NullPointerException();
+        }
+        if( email == null){
+            throw new NullPointerException();
+        }
+        if( phoneNumber == null){
+            throw new NullPointerException();
+        }
+        if( node == null){
+            throw new NullPointerException();
+        }
+        
+        if( stringNotConform(firstName) ){
+            throw new IllegalArgumentException();
+        }
+        if( stringNotConform(lastName) ){
+            throw new IllegalArgumentException();
+        }
+        if( stringNotConform(adress) ){
+            throw new IllegalArgumentException();
+        }
+        if( stringNotConform(email) ){
+            throw new IllegalArgumentException();
+        }
+        if( stringNotConform(phoneNumber) ){
+            throw new IllegalArgumentException();
+        }
+        
         this.type = type.NURSE.name();
         this.firstName = firstName;
         this.lastName = lastName;
@@ -42,6 +80,10 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.node = node;
+    }
+    
+    private static boolean stringNotConform(String s){
+        return s.matches("[ ]*");
     }
 
     @Override
@@ -86,31 +128,64 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
 
     @Override
     public void setFirstName(String firstName) {
+        if(firstName==null){
+            throw new NullPointerException();
+        }
+        if(stringNotConform(firstName)){
+            throw new IllegalArgumentException();
+        }
         this.firstName = firstName;
     }
 
     @Override
     public void setLastName(String lastName) {
+        if(lastName==null){
+            throw new NullPointerException();
+        }
+        if(stringNotConform(lastName)){
+            throw new IllegalArgumentException();
+        }
         this.lastName = lastName;
     }
 
     @Override
     public void setAdress(String adress) {
+        if(adress==null){
+            throw new NullPointerException();
+        }
+        if(stringNotConform(adress)){
+            throw new IllegalArgumentException();
+        }
         this.adress = adress;
     }
 
     @Override
     public void setEmail(String email) {
+        if(email==null){
+            throw new NullPointerException();
+        }
+        if(stringNotConform(email)){
+            throw new IllegalArgumentException();
+        }
         this.email = email;
     }
 
     @Override
     public void setPhoneNumber(String phoneNumber) {
+        if(phoneNumber==null){
+            throw new NullPointerException();
+        }
+        if(stringNotConform(phoneNumber)){
+            throw new IllegalArgumentException();
+        }
         this.phoneNumber = phoneNumber;
     }
     
     @Override
     public void setNode(Node node) {
+        if(node==null){
+            throw new NullPointerException();
+        }
         this.node = node;
     }
 
@@ -122,6 +197,9 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
      */
     @Override
     public MedicalRecord getMedicalRecord(long idMedicalRecord) {
+        if(idMedicalRecord<0){
+            throw new IllegalArgumentException();
+        }
         JPANurse nurse = new JPANurse();
         return nurse.getMedicalRecord(idMedicalRecord);
     }
@@ -145,6 +223,12 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
      */
     @Override
     public MedicalRecord searchMedicalRecordBySS(String ss) {
+        if(ss==null){
+            throw new NullPointerException();
+        }
+        if(stringNotConform(ss)){
+            throw new IllegalArgumentException();
+        }
         JPANurse nurse = new JPANurse();
         return nurse.searchMedicalRecordBySS(ss);
     }
@@ -157,6 +241,12 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
      */
     @Override
     public List<MedicalRecord> searchMedicalRecordByName(String lastName) {
+        if(lastName==null){
+            throw new NullPointerException();
+        }
+        if(stringNotConform(lastName)){
+            throw new IllegalArgumentException();
+        }
         JPANurse nurse = new JPANurse();
         return nurse.searchMedicalRecordByName(lastName);
     }
@@ -170,6 +260,12 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
      */
     @Override
     public MedicalRecord searchMedicalRecord(String ss, String lastName) {
+        if(ss==null || lastName==null){
+            throw new NullPointerException();
+        }
+        if(stringNotConform(ss) || stringNotConform(lastName)){
+            throw new IllegalArgumentException();
+        }
         JPANurse nurse = new JPANurse();
         return nurse.searchMedicalRecord(ss, lastName);
     }
@@ -182,6 +278,9 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
      */
     @Override
     public Dosage getDosage(long idDosage) {
+        if(idDosage<0){
+            throw new IllegalArgumentException();
+        }
         JPANurse nurse = new JPANurse();
         return nurse.getDosage(idDosage);
     }
@@ -194,6 +293,9 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
      */
     @Override
     public List<Dosage> getAllDosages(long idMedicalRecord) {
+        if(idMedicalRecord<0){
+            throw new IllegalArgumentException();
+        }
         JPANurse nurse = new JPANurse();
         return nurse.getAllDosages(idMedicalRecord);
     }
@@ -206,6 +308,9 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
      */
     @Override
     public Doctor getDoctor(long idDoctor) {
+        if( idDoctor<0){
+            throw new IllegalArgumentException();
+        }
         JPANurse nurse = new JPANurse();
         return nurse.getDoctor(idDoctor);
     }
@@ -218,6 +323,9 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
      */
     @Override
     public Nurse getNurse(long idNurse) {
+        if(idNurse<0){
+            throw new IllegalArgumentException();
+        }
         JPANurse nurse = new JPANurse();
         return nurse.getNurse(idNurse);
     }
@@ -230,6 +338,12 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
      * @return The MedicalStaff
      */
     public MedicalStaff getStaff(String type, long idStaff) {
+        if(type==null){
+            throw new NullPointerException();
+        }
+        if(stringNotConform(type) || idStaff<0){
+            throw new IllegalArgumentException();
+        }
         JPANurse nurse = new JPANurse();
         return nurse.getMedicalStaff(type, idStaff);
     }
