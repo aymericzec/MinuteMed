@@ -1,16 +1,10 @@
 package fr.devsquad.minutemed.rest.filters;
 
-import java.io.IOException;
 
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerResponseContext;
-import javax.ws.rs.container.ContainerResponseFilter;
-import javax.ws.rs.ext.Provider;
+//@Provider
+public class CORSFilter /*implements ContainerResponseFilter*/ {
 
-@Provider
-public class CORSFilter implements ContainerResponseFilter {
-
-    @Override
+   /* @Override
     public void filter(final ContainerRequestContext requestContext,
                        final ContainerResponseContext responseContext) throws IOException {
         responseContext.getHeaders().add("Access-Control-Allow-Origin", "*");
@@ -19,5 +13,5 @@ public class CORSFilter implements ContainerResponseFilter {
         responseContext.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
         responseContext.getHeaders().add("Access-Control-Max-Age", "1209600");
     }
-
+*/
 }
