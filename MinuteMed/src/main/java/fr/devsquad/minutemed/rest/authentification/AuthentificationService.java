@@ -5,6 +5,15 @@
  */
 package fr.devsquad.minutemed.rest.authentification;
 
+import javax.ejb.EJB;
+import javax.ejb.NoSuchEntityException;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
+import java.util.List;
 
 
 /**
@@ -12,7 +21,7 @@ package fr.devsquad.minutemed.rest.authentification;
  * @author myfou
  */
 public class AuthentificationService {
-   /* @EJB
+    @EJB
     private BookRepository repository;
 
     @Context
@@ -36,5 +45,5 @@ public class AuthentificationService {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         return Response.noContent().build();
-    }    */
+    }    
 }

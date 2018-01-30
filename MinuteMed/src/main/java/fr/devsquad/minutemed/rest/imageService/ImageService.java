@@ -1,19 +1,43 @@
+
 package fr.devsquad.minutemed.rest.imageService;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.UriInfo;
 
-//@Path("/images")
+@Path("/images")
 public class ImageService {
-/*
+
     /*
      * The maximum allowed file size in megabytes.
      * Files larger than this size will not be uploadable or downloadable.
-     *
+     */
     private static final int MAX_SIZE_IN_MB = 1;
 
     /*
      * The directory where the images will be stored.
      * Make sure this directory exists before you run the service.
-     *
+     */
     private static final java.nio.file.Path BASE_DIR = Paths.get(System.getProperty("user.home"), "Documents", "Saved_Images");
 
     @Context
@@ -21,7 +45,7 @@ public class ImageService {
 
     /*
      * Download a list of all image file names.
-     *
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public JsonArray getFileNames() throws IOException {
@@ -43,11 +67,11 @@ public class ImageService {
 
     /*
      * Upload a JPEG or PNG file.
-     *
+     */
     @POST
     @Consumes({"image/jpeg", "image/png"})
     public Response uploadImage(InputStream in, @HeaderParam("Content-Type") String fileType,
-            @HeaderParam("Content-Length") long fileSize) throws IOException {
+                                @HeaderParam("Content-Length") long fileSize) throws IOException {
 
         // Make sure the file is not larger than the maximum allowed size.
         if (fileSize > 1024 * 1024 * MAX_SIZE_IN_MB) {
@@ -74,7 +98,7 @@ public class ImageService {
 
     /*
      * Download a JPEG file.
-     *
+     */
     @GET
     @Path("{name}.jpg")
     @Produces("image/jpeg")
@@ -92,7 +116,7 @@ public class ImageService {
 
     /*
      * Download a PNG file.
-     *
+     */
     @GET
     @Path("{name}.png")
     @Produces("image/png")
@@ -106,5 +130,5 @@ public class ImageService {
         }
 
         return Files.newInputStream(dest);
-    }*/
+    }
 }
