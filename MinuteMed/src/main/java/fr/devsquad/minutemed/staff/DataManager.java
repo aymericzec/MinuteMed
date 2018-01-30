@@ -35,12 +35,51 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
     }
 
     public DataManager(StaffEnum type, String firstName, String lastName, String adress, String email, String phoneNumber) {
+        if( type == null){
+            throw new NullPointerException();
+        }
+        if( firstName == null){
+            throw new NullPointerException();
+        }
+        if( lastName == null){
+            throw new NullPointerException();
+        }
+        if( adress == null){
+            throw new NullPointerException();
+        }
+        if( email == null){
+            throw new NullPointerException();
+        }
+        if( phoneNumber == null){
+            throw new NullPointerException();
+        }
+        
+        if( stringNotConform(firstName) ){
+            throw new IllegalArgumentException();
+        }
+        if( stringNotConform(lastName) ){
+            throw new IllegalArgumentException();
+        }
+        if( stringNotConform(adress) ){
+            throw new IllegalArgumentException();
+        }
+        if( stringNotConform(email) ){
+            throw new IllegalArgumentException();
+        }
+        if( stringNotConform(phoneNumber) ){
+            throw new IllegalArgumentException();
+        }
+        
         this.type = type.DATAMANAGER.name();
         this.firstName = firstName;
         this.lastName = lastName;
         this.adress = adress;
         this.email = email;
         this.phoneNumber = phoneNumber;
+    }
+    
+    private static boolean stringNotConform(String s){
+        return s.matches("[ ]*");
     }
 
     @Override
@@ -80,26 +119,56 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
 
     @Override
     public void setFirstName(String firstName) {
+        if(firstName==null){
+            throw new NullPointerException();
+        }
+        if(stringNotConform(firstName) ){
+            throw new IllegalArgumentException();
+        }
         this.firstName = firstName;
     }
 
     @Override
     public void setLastName(String lastName) {
+        if(lastName==null){
+            throw new NullPointerException();
+        }
+        if(stringNotConform(lastName) ){
+            throw new IllegalArgumentException();
+        }
         this.lastName = lastName;
     }
 
     @Override
     public void setAdress(String adress) {
+        if(adress==null){
+            throw new NullPointerException();
+        }
+        if(stringNotConform(adress) ){
+            throw new IllegalArgumentException();
+        }
         this.adress = adress;
     }
 
     @Override
     public void setEmail(String email) {
+        if(email==null){
+            throw new NullPointerException();
+        }
+        if(stringNotConform(email) ){
+            throw new IllegalArgumentException();
+        }
         this.email = email;
     }
 
     @Override
     public void setPhoneNumber(String phoneNumber) {
+        if(phoneNumber==null){
+            throw new NullPointerException();
+        }
+        if(stringNotConform(phoneNumber) ){
+            throw new IllegalArgumentException();
+        }
         this.phoneNumber = phoneNumber;
     }
 
@@ -112,6 +181,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public boolean createAccount(UserAccount account) {
+        if(account==null){
+            throw new NullPointerException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.createAccount(account);
     }
@@ -125,6 +197,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public boolean removeAccount(long idAccount) {
+        if(idAccount<0){
+            throw new IllegalArgumentException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.removeAccount(idAccount);
     }
@@ -138,6 +213,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public boolean createSpecialization(Specialization specialization) {
+        if(specialization==null){
+            throw new NullPointerException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.createSpecialization(specialization);
     }
@@ -151,6 +229,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public boolean removeSpecialization(long idSpecialization) {
+        if(idSpecialization<0){
+            throw new IllegalArgumentException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.removeSpecialization(idSpecialization);
     }
@@ -163,6 +244,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public boolean createAPHP(NodeAPHP aphp) {
+        if(aphp==null){
+            throw new NullPointerException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.createAPHP(aphp);
     }
@@ -176,6 +260,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public boolean createHospital(NodeHospital hospital) {
+        if(hospital==null){
+            throw new NullPointerException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.createHospital(hospital);
     }
@@ -188,6 +275,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public NodeHospital getHospital(long idHospital) {
+        if(idHospital<0){
+            throw new IllegalArgumentException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.getHospital(idHospital);
     }
@@ -211,6 +301,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public boolean createPole(NodePole pole) {
+        if(pole==null){
+            throw new NullPointerException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.createPole(pole);
     }
@@ -223,6 +316,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public NodePole getPole(long idPole) {
+        if(idPole<0){
+            throw new IllegalArgumentException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.getPole(idPole);
     }
@@ -235,6 +331,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public List<NodePole> getAllPoles(long idHospital) {
+        if(idHospital<0){
+            throw new IllegalArgumentException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.getAllPoles(idHospital);
     }
@@ -248,6 +347,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public boolean createService(NodeService service) {
+        if(service==null){
+            throw new NullPointerException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.createService(service);
     }
@@ -260,6 +362,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public NodeService getService(long idService) {
+        if(idService<0){
+            throw new IllegalArgumentException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.getService(idService);
     }
@@ -272,6 +377,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public List<NodeService> getAllServices(long idPole) {
+        if(idPole<0){
+            throw new IllegalArgumentException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.getAllServices(idPole);
     }
@@ -285,6 +393,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public boolean createHospitalUnit(NodeHU hu) {
+        if(hu==null){
+            throw new NullPointerException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.createHospitalUnit(hu);
     }
@@ -297,6 +408,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public NodeHU getHospitalUnit(long idHU) {
+        if(idHU<0){
+            throw new IllegalArgumentException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.getHospitalUnit(idHU);
     }
@@ -309,6 +423,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public List<NodeHU> getAllHospitalUnits(long idService) {
+        if(idService<0){
+            throw new IllegalArgumentException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.getAllHospitalUnits(idService);
     }
@@ -322,6 +439,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public boolean createCareUnit(NodeCU cu) {
+        if(cu==null){
+            throw new NullPointerException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.createCareUnit(cu);
     }
@@ -334,6 +454,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public NodeCU getCareUnit(long idCU) {
+        if(idCU<0){
+            throw new IllegalArgumentException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.getCareUnit(idCU);
     }
@@ -346,6 +469,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public List<NodeCU> getAllCareUnits(long idHU) {
+        if(idHU<0){
+            throw new IllegalArgumentException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.getAllCareUnits(idHU);
     }
@@ -359,6 +485,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public boolean createDoctor(Doctor doctor) {
+        if(doctor==null){
+            throw new NullPointerException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.createDoctor(doctor);
     }
@@ -371,6 +500,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public Doctor getDoctor(long idDoctor) {
+        if(idDoctor<0){
+            throw new IllegalArgumentException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.getDoctor(idDoctor);
     }
@@ -395,6 +527,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public boolean removeDoctor(long idDoctor) {
+        if(idDoctor<0){
+            throw new IllegalArgumentException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.removeDoctor(idDoctor);
     }
@@ -408,6 +543,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public boolean createNurse(Nurse nurse) {
+        if(nurse==null){
+            throw new NullPointerException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.createNurse(nurse);
     }
@@ -420,6 +558,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public Nurse getNurse(long idNurse) {
+        if(idNurse<0){
+            throw new IllegalArgumentException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.getNurse(idNurse);
     }
@@ -444,6 +585,9 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      */
     @Override
     public boolean removeNurse(long idNurse) {
+        if(idNurse<0){
+            throw new IllegalArgumentException();
+        }
         JPADataManager dataManager = new JPADataManager();
         return dataManager.removeNurse(idNurse);
     }

@@ -17,6 +17,7 @@ import org.mockito.runners.MockitoJUnitRunner;
  */
 public class SpecializationEnumTest {
     
+    
     @Test
      public void testCreate() {
          SpecializationEnum sep = SpecializationEnum.Allergologie;

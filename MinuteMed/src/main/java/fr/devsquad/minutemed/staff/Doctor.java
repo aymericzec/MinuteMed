@@ -22,7 +22,7 @@ import javax.persistence.OneToOne;
 
 
 @Entity
-public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoctor, INurse {
+public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoctor, INurse, ISpecialistStaff {
 
     @Id @GeneratedValue
     @Column(name = "idDoctor")
@@ -42,6 +42,47 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
     public Doctor() { }
     
     public Doctor(StaffEnum type, String firstName, String lastName, String adress, String email, String phoneNumber, Node node , Specialization specialization) { 
+        if( type == null){
+            throw new NullPointerException();
+        }
+        if( firstName == null){
+            throw new NullPointerException();
+        }
+        if( lastName == null){
+            throw new NullPointerException();
+        }
+        if( adress == null){
+            throw new NullPointerException();
+        }
+        if( email == null){
+            throw new NullPointerException();
+        }
+        if( phoneNumber == null){
+            throw new NullPointerException();
+        }
+        if( node == null){
+            throw new NullPointerException();
+        }
+        if( specialization == null){
+            throw new NullPointerException();
+        }
+        
+        if( stringNotConform(firstName) ){
+            throw new IllegalArgumentException();
+        }
+        if( stringNotConform(lastName) ){
+            throw new IllegalArgumentException();
+        }
+        if( stringNotConform(adress) ){
+            throw new IllegalArgumentException();
+        }
+        if( stringNotConform(email) ){
+            throw new IllegalArgumentException();
+        }
+        if( stringNotConform(phoneNumber) ){
+            throw new IllegalArgumentException();
+        }
+        
         this.type = type.DOCTOR.name();
         this.firstName = firstName;
         this.lastName = lastName;
@@ -50,6 +91,10 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
         this.phoneNumber = phoneNumber;
         this.node = node;
         this.specialization = specialization.getStaffName();
+    }
+    
+    private static boolean stringNotConform(String s){
+        return s.matches("[ ]*");
     }
 
     @Override
@@ -92,38 +137,80 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
         return node;
     }
 
+    @Override
     public String getSpecialization() {
         return specialization;
     }
     
     @Override
     public void setFirstName(String firstName) {
+        if(firstName==null){
+            throw new NullPointerException();
+        }
+        if(stringNotConform(firstName)){
+            throw new IllegalArgumentException();
+        }
         this.firstName = firstName;
     }
 
     @Override
     public void setLastName(String lastName) {
+        if(lastName==null){
+            throw new NullPointerException();
+        }
+        if(stringNotConform(lastName)){
+            throw new IllegalArgumentException();
+        }
         this.lastName = lastName;
     }
 
     @Override
     public void setAdress(String adress) {
+        if(adress==null){
+            throw new NullPointerException();
+        }
+        if(stringNotConform(adress)){
+            throw new IllegalArgumentException();
+        }
         this.adress = adress;
     }
 
     @Override
     public void setEmail(String email) {
+        if(email==null){
+            throw new NullPointerException();
+        }
+        if(stringNotConform(email)){
+            throw new IllegalArgumentException();
+        }
         this.email = email;
     }
 
     @Override
     public void setPhoneNumber(String phoneNumber) {
+        if(phoneNumber==null){
+            throw new NullPointerException();
+        }
+        if(stringNotConform(phoneNumber)){
+            throw new IllegalArgumentException();
+        }
         this.phoneNumber = phoneNumber;
     }
     
     @Override
     public void setNode(Node node) {
+        if(node==null){
+            throw new NullPointerException();
+        }
         this.node = node;
+    }
+    
+    @Override
+    public void setSpecialization(Specialization specialization){
+        if(specialization==null){
+            throw new NullPointerException();
+        }
+        this.specialization = specialization.getStaffName();
     }
 
     /**
@@ -134,6 +221,10 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public boolean createMedicalRecord(MedicalRecord medicalRecord) {
+        if( medicalRecord==null){
+            throw new NullPointerException();
+        }
+        
         JPADoctor doctor = new JPADoctor();
         return doctor.createMedicalRecord(medicalRecord);
     }
@@ -147,6 +238,10 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public boolean createExam(Exam exam) {
+        if(exam==null){
+            throw new NullPointerException();
+        }
+        
         JPADoctor doctor = new JPADoctor();
         return doctor.createExam(exam);
     }
@@ -159,6 +254,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public Exam getExam(long idExam) {
+        if(idExam<0){
+            throw new IllegalArgumentException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.getExam(idExam);
     }
@@ -171,6 +269,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public List<Exam> getAllExams(long idMedicalRecord) {
+        if(idMedicalRecord<0){
+            throw new IllegalArgumentException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.getAllExams(idMedicalRecord);
     }
@@ -183,6 +284,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public boolean validateExam(long idExam) {
+        if(idExam<0){
+            throw new IllegalArgumentException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.validateExam(idExam);
     }
@@ -195,6 +299,10 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public boolean removeDraftExam(long idExam) {
+        if(idExam<0){
+            throw new IllegalArgumentException();
+        }
+        
         JPADoctor doctor = new JPADoctor();
         return doctor.removeDraftExam(idExam);
     }
@@ -208,6 +316,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public boolean createPrescription(Prescription prescription) {
+        if(prescription==null){
+            throw new NullPointerException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.createPrescription(prescription);
     }
@@ -220,6 +331,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public Prescription getPrescription(long idPrescription) {
+        if(idPrescription<0){
+            throw new IllegalArgumentException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.getPrescription(idPrescription);
     }
@@ -232,6 +346,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public List<Prescription> getAllPrescriptions(long idMedicalRecord) {
+        if(idMedicalRecord<0){
+            throw new IllegalArgumentException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.getAllPrescriptions(idMedicalRecord);
     }
@@ -244,6 +361,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public boolean validatePrescription(long idPrescription) {
+        if(idPrescription<0){
+            throw new IllegalArgumentException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.validatePrescription(idPrescription);
     }
@@ -256,6 +376,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public boolean removeDraftPrescription(long idPrescription) {
+        if(idPrescription<0){
+            throw new IllegalArgumentException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.removeDraftPrescription(idPrescription);
     }
@@ -269,6 +392,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public boolean createDiagnostic(Diagnostic diagnostic) {
+        if(diagnostic==null){
+            throw new NullPointerException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.createDiagnostic(diagnostic);
     }
@@ -281,6 +407,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public Diagnostic getDiagnostic(long idDiagnostic) {
+        if(idDiagnostic<0){
+            throw new IllegalArgumentException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.getDiagnostic(idDiagnostic);
     }
@@ -293,6 +422,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public List<Diagnostic> getAllDiagnostics(long idMedicalRecord) {
+        if(idMedicalRecord<0){
+            throw new IllegalArgumentException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.getAllDiagnostics(idMedicalRecord);
     }
@@ -305,6 +437,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public boolean validateDiagnostic(long idDiagnostic) {
+        if(idDiagnostic<0){
+            throw new IllegalArgumentException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.validateDiagnostic(idDiagnostic);
     }
@@ -317,6 +452,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public boolean removeDraftDiagnostic(long idDiagnostic) {
+        if(idDiagnostic<0){
+            throw new IllegalArgumentException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.removeDraftDiagnostic(idDiagnostic);
     }
@@ -330,6 +468,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public boolean createDosage(Dosage dosage) {
+        if(dosage==null){
+            throw new NullPointerException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.createDosage(dosage);
     }
@@ -342,6 +483,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public boolean validateDosage(long idDosage) {
+        if(idDosage<0){
+            throw new IllegalArgumentException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.validateDosage(idDosage);
     }
@@ -354,6 +498,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public boolean removeDraftDosage(long idDosage) {
+        if(idDosage<0){
+            throw new IllegalArgumentException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.removeDraftDosage(idDosage);
     }
@@ -366,6 +513,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public MedicalRecord getMedicalRecord(long idMedicalRecord) {
+        if(idMedicalRecord<0){
+            throw new IllegalArgumentException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.getMedicalRecord(idMedicalRecord);
     }
@@ -389,6 +539,12 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public MedicalRecord searchMedicalRecordBySS(String ss) {
+        if(ss==null){
+            throw new NullPointerException();
+        }
+        if(stringNotConform(ss)){
+            throw new IllegalArgumentException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.searchMedicalRecordBySS(ss);
     }
@@ -401,6 +557,12 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public List<MedicalRecord> searchMedicalRecordByName(String lastName) {
+        if(lastName==null){
+            throw new NullPointerException();
+        }
+        if(stringNotConform(lastName)){
+            throw new IllegalArgumentException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.searchMedicalRecordByName(lastName);
     }
@@ -414,6 +576,12 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public MedicalRecord searchMedicalRecord(String ss, String lastName) {
+        if(ss==null || lastName==null){
+            throw new NullPointerException();
+        }
+        if(stringNotConform(lastName) || stringNotConform(ss)){
+            throw new IllegalArgumentException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.searchMedicalRecord(ss, lastName);
     }
@@ -426,6 +594,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public Dosage getDosage(long idDosage) {
+        if(idDosage<0){
+            throw new IllegalArgumentException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.getDosage(idDosage);
     }
@@ -438,6 +609,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public List<Dosage> getAllDosages(long idMedicalRecord) {
+        if(idMedicalRecord<0){
+            throw new IllegalArgumentException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.getAllDosages(idMedicalRecord);
     }
@@ -450,6 +624,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public Doctor getDoctor(long idDoctor) {
+        if(idDoctor<0){
+            throw new IllegalArgumentException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.getDoctor(idDoctor);
     }
@@ -462,6 +639,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      */
     @Override
     public Nurse getNurse(long idNurse) {
+        if(idNurse<0){
+            throw new IllegalArgumentException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.getNurse(idNurse);
     }
@@ -474,6 +654,12 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      * @return The MedicalStaff
      */
     public MedicalStaff getStaff(String type, long idStaff) {
+        if(type==null){
+            throw new NullPointerException();
+        }
+        if(stringNotConform(type) || idStaff<0){
+            throw new IllegalArgumentException();
+        }
         JPADoctor doctor = new JPADoctor();
         return doctor.getMedicalStaff(type, idStaff);
     }

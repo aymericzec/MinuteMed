@@ -18,6 +18,12 @@ public class MedicalStaff implements Serializable {
     public MedicalStaff() { }
     
     public MedicalStaff(String type, long idMedicalStaff) {
+        if(type==null){
+            throw new NullPointerException();
+        }
+        if(idMedicalStaff<0){
+            throw new IllegalArgumentException();
+        }
         this.type = type;
         this.idMedicalStaff = idMedicalStaff;
     }
