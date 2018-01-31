@@ -22,6 +22,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -29,8 +30,8 @@ import javax.ws.rs.core.Response;
  *
  * @author myfou
  */
-@ApplicationPath("/record")
-public class FolderMedicalService {
+@Path("/record")
+public class FolderMedicalService extends Application {
     
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -43,7 +44,6 @@ public class FolderMedicalService {
         JsonArrayBuilder result = Json.createArrayBuilder(); 
         
         return Response.status(201).entity(result).build();
-
     }
     
     @GET
