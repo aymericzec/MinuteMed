@@ -30,25 +30,22 @@ public class Dosage implements Serializable {
     @OneToOne
     @JoinColumn(name = "idMedicalRecord")
     private MedicalRecord medicalRecord;
-    @Temporal(TemporalType.DATE)
-    private Date dateDosage;
+    private String dateDosage;
     @OneToOne
     @JoinColumn(name = "idDiagnostic")
     private Diagnostic diagnostic;
     private String dosagePrescription;
     @OneToMany(mappedBy = "dosage")
     private List<ReportDosage> report;
-    @Temporal(TemporalType.DATE)
-    private Date beginDosage;
-    @Temporal(TemporalType.DATE)
-    private Date endDosage;
+    private String beginDosage;
+    private String endDosage;
     private boolean draft;
     
     public Dosage () {
         
     }
     
-    public Dosage (String title, Doctor doctorConsulting, MedicalRecord medicalRecord, Date dateDosage, Diagnostic diagnostic, String dosagePrescription, Date beginDosage, Date endDosage) {
+    public Dosage (String title, Doctor doctorConsulting, MedicalRecord medicalRecord, String dateDosage, Diagnostic diagnostic, String dosagePrescription, String beginDosage, String endDosage) {
         this.title = title;
         this.doctorConsulting = doctorConsulting;
         this.dateDosage = dateDosage;
@@ -76,7 +73,7 @@ public class Dosage implements Serializable {
         return medicalRecord;
     }
 
-    public Date getDateDosage() {
+    public String getDateDosage() {
         return dateDosage;
     }
 
@@ -92,11 +89,11 @@ public class Dosage implements Serializable {
         return report;
     }
 
-    public Date getBeginDosage() {
+    public String getBeginDosage() {
         return beginDosage;
     }
 
-    public Date getEndDosage() {
+    public String getEndDosage() {
         return endDosage;
     }
     
@@ -116,7 +113,7 @@ public class Dosage implements Serializable {
         return null;
     }
     
-    public void addReport (MedicalStaff staff, Date dateDosage, String repport) {
+    public void addReport (MedicalStaff staff, String dateDosage, String repport) {
         ReportDosage reportDosage = new ReportDosage(staff, dateDosage, repport);
         this.report.add(reportDosage);
     }

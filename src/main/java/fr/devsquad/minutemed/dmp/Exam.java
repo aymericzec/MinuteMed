@@ -21,8 +21,7 @@ public class Exam implements Serializable {
     private long id;
     private String title;
     private String description;
-    @Temporal(TemporalType.DATE)
-    private Date dateExam;
+    private String dateExam;
     @OneToOne
     @JoinColumn(name = "idDoctor")
     private Doctor doctor;
@@ -36,7 +35,7 @@ public class Exam implements Serializable {
     
     public Exam() { }
     
-    public Exam(String title, String description, Date dateExam, Doctor doctor, MedicalRecord medicalRecord) {
+    public Exam(String title, String description, String dateExam, Doctor doctor, MedicalRecord medicalRecord) {
         this.title = Objects.requireNonNull(title);
         this.description = Objects.requireNonNull(description);
         this.dateExam = Objects.requireNonNull(dateExam);
@@ -65,7 +64,7 @@ public class Exam implements Serializable {
         return description;
     }
     
-    public Date getDateExam() {
+    public String getDateExam() {
         return dateExam;
     }
     

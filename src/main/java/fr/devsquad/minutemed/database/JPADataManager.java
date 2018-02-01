@@ -671,5 +671,23 @@ public class JPADataManager implements IDataManager {
         return staff;
     }
   
-    
+    /**
+     * Get the staff in the Entity MedicalStaff
+     * 
+     * @param type Type of the MedicalStaff
+     * @param idMedicalStaff Id of the MedicalStaff
+     * @return The MedicalStaff
+     */
+    public MedicalStaff getMedicalStaff(String type, long idMedicalStaff) {
+        
+        MedicalStaff staff;
+        
+        try {
+            TypedQuery<MedicalStaff> tq = em.createQuery("SELECT staff FROM MedicalStaff staff WHERE staff.type = :type AND staff.idMedicalStaff = :idMedicalStaff", MedicalStaff.class);
+            staff = tq.setParameter("type", type).setParameter("idMedicalStaff", idMedicalStaff).getSingleResult();
+        } catch(NoResultException e) {
+            return null;
+        }
+        return staff;
+    }
 }

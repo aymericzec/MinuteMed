@@ -23,15 +23,14 @@ public class ReportDosage implements Serializable {
     @OneToOne
     @JoinColumn(name = "idStaff")
     private MedicalStaff supervisor;
-    @Temporal(TemporalType.DATE)
-    private Date createDate;
+    private String createDate;
     private String report;
     @ManyToOne
     private Dosage dosage;
     
     public ReportDosage () { }
 
-    public ReportDosage(MedicalStaff supervisor, Date createDate, String report) {
+    public ReportDosage(MedicalStaff supervisor, String createDate, String report) {
         this.supervisor = supervisor;
         this.createDate = createDate;
         this.report = report;
@@ -45,7 +44,7 @@ public class ReportDosage implements Serializable {
         return supervisor;
     }
 
-    public Date getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 

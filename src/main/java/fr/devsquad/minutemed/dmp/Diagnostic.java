@@ -26,14 +26,13 @@ public class Diagnostic implements Serializable {
     @OneToOne
     @JoinColumn(name = "idMedicalRecord")
     private MedicalRecord medicalRecord;
-    @Temporal(TemporalType.DATE)
-    private Date consultDiagnostic;
+    private String consultDiagnostic;
     private String description;
     private boolean draft;
     
     public Diagnostic() { }
     
-    public Diagnostic(String title, Doctor diagnosticDoctor, MedicalRecord medicalRecord, Date consultDiagnostic, String description) {
+    public Diagnostic(String title, Doctor diagnosticDoctor, MedicalRecord medicalRecord, String consultDiagnostic, String description) {
         this.title = Objects.requireNonNull(title);
         this.description = Objects.requireNonNull(description);
         this.diagnosticDoctor = Objects.requireNonNull(diagnosticDoctor);
@@ -50,7 +49,7 @@ public class Diagnostic implements Serializable {
         return title;
     }
 
-    public Date getConsultDiagnostic() {
+    public String getConsultDiagnostic() {
         return consultDiagnostic;
     }
 

@@ -23,14 +23,13 @@ public class ResultExam implements Serializable {
     @OneToOne
     @JoinColumn(name = "idDoctor")
     private Doctor examinator;
-    @Temporal(TemporalType.DATE)
-    private Date examDate;
+    private String examDate;
     private String results;
     private final List<String> files = new ArrayList<>();
     
     public ResultExam() { }
 
-    public ResultExam(Doctor examinator, Date examDate, String results) {
+    public ResultExam(Doctor examinator, String examDate, String results) {
         this.examinator = examinator;
         this.examDate = examDate;
         this.results = results;
@@ -44,7 +43,7 @@ public class ResultExam implements Serializable {
         return examinator;
     }
 
-    public Date getExamDate() {
+    public String getExamDate() {
         return examDate;
     }
 

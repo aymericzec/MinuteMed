@@ -25,8 +25,7 @@ public class Prescription implements Serializable {
     @OneToOne
     @JoinColumn(name = "idMedicalRecord")
     private MedicalRecord medicalRecord;
-    @Temporal(TemporalType.DATE)
-    private Date consultDate;
+    private String consultDate;
     @OneToOne
     @JoinColumn(name = "idDiagnostic")
     private Diagnostic diagnostic;
@@ -36,7 +35,7 @@ public class Prescription implements Serializable {
     
     public Prescription() { }
     
-    public Prescription(String title, Doctor prescriptor, MedicalRecord medicalRecord, Date consultDate, Diagnostic diagnostic, String prescription) {
+    public Prescription(String title, Doctor prescriptor, MedicalRecord medicalRecord, String consultDate, Diagnostic diagnostic, String prescription) {
         this.title = title;
         this.prescriptor = prescriptor;
         this.medicalRecord = medicalRecord;
@@ -62,7 +61,7 @@ public class Prescription implements Serializable {
         return medicalRecord;
     }
 
-    public Date getConsultDate() {
+    public String getConsultDate() {
         return consultDate;
     }
 
