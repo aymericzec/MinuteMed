@@ -14,6 +14,7 @@ import fr.devsquad.minutemed.dmp.MedicalRecord;
 import fr.devsquad.minutemed.dmp.Dosage;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,7 +35,7 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
     private String email;
     private String phoneNumber;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idNode")
     private Node node;
     

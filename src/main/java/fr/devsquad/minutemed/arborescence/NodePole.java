@@ -5,6 +5,7 @@ import fr.devsquad.minutemed.specialization.Specialization;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,9 +23,9 @@ public class NodePole implements Serializable, INode {
     private String type;
     private String specialization;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private NodeHospital hospital;
-    @OneToMany(mappedBy = "pole")
+    @OneToMany(mappedBy = "pole", cascade = CascadeType.PERSIST)
     private List<NodeService> services;
 
     public NodePole() {

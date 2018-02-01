@@ -4,6 +4,7 @@ package fr.devsquad.minutemed.dmp;
 import fr.devsquad.minutemed.staff.MedicalStaff;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,12 +21,12 @@ public class ReportDosage implements Serializable {
     @Id @GeneratedValue
     @Column(name = "idReportDosage")
     private long id;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idStaff")
     private MedicalStaff supervisor;
     private String createDate;
     private String report;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Dosage dosage;
     
     public ReportDosage () { }

@@ -21,6 +21,7 @@ import fr.devsquad.minutemed.dmp.Prescription;
 import fr.devsquad.minutemed.specialization.Specialization;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,7 +44,7 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
     private String phoneNumber;
     private String specialization;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idNode")
     private Node node;
  

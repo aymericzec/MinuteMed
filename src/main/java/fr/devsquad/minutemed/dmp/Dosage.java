@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,18 +25,18 @@ public class Dosage implements Serializable {
     @Column(name = "idDosage")
     private long id;
     private String title;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idDoctor")
     private Doctor doctorConsulting;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idMedicalRecord")
     private MedicalRecord medicalRecord;
     private String dateDosage;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idDiagnostic")
     private Diagnostic diagnostic;
     private String dosagePrescription;
-    @OneToMany(mappedBy = "dosage")
+    @OneToMany(mappedBy = "dosage", cascade = CascadeType.PERSIST)
     private List<ReportDosage> report;
     private String beginDosage;
     private String endDosage;

@@ -3,6 +3,7 @@ package fr.devsquad.minutemed.dmp;
 import fr.devsquad.minutemed.staff.Doctor;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,14 +20,14 @@ public class Prescription implements Serializable {
     @Column(name = "idPrescription")
     private long id;
     private String title;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idDoctor")
     private Doctor prescriptor;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idMedicalRecord")
     private MedicalRecord medicalRecord;
     private String consultDate;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idDiagnostic")
     private Diagnostic diagnostic;
     private String prescription;

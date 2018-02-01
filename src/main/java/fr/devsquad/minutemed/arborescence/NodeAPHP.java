@@ -4,6 +4,7 @@ import fr.devsquad.minutemed.database.JPADataManager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +20,7 @@ public class NodeAPHP implements Serializable, INode {
     private long id;
     private String type;
 
-    @OneToMany(mappedBy = "aphp")
+    @OneToMany(mappedBy = "aphp", cascade = CascadeType.PERSIST)
     private List<NodeHospital> hospitals;
 
     public NodeAPHP() {

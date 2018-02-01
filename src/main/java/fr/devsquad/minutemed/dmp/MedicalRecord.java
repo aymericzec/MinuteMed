@@ -3,6 +3,7 @@ package fr.devsquad.minutemed.dmp;
 import fr.devsquad.minutemed.arborescence.NodeHU;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,7 +28,7 @@ public class MedicalRecord implements Serializable {
     private String gender;
     private String phoneNumber;
     private String email;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idHu")
     private NodeHU hu;
 

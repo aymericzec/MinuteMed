@@ -4,6 +4,7 @@ import fr.devsquad.minutemed.staff.Doctor;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,10 +21,10 @@ public class Diagnostic implements Serializable {
     @Column(name = "idDiagnostic")
     private long id;
     private String title;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idDoctor")
     private Doctor diagnosticDoctor;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idMedicalRecord")
     private MedicalRecord medicalRecord;
     private String consultDiagnostic;

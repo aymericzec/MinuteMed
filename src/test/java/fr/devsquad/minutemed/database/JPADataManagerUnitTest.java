@@ -25,17 +25,16 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-@RunWith(MockitoJUnitRunner.class)
+
 public class JPADataManagerUnitTest {
 
     /**
      * Return an exception if a field is null
      */
-    @Test
+    @Test(expected = NullPointerException.class)
     public void testCreateAccountNull() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
-
-        Mockito.doThrow(new NullPointerException()).when(dataManager).createAccount(null);
+        JPADataManager dataManager = new JPADataManager();
+        dataManager.createAccount(null);
     }
 
     /**
@@ -44,38 +43,40 @@ public class JPADataManagerUnitTest {
      */
     @Test
     public void testCreateAccount() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
+        JPADataManager dataManager = new JPADataManager();
 
-        Specialization pediatrie = Mockito.spy(new Specialization(SpecializationEnum.Pediatrie));
+        Specialization pediatrie = new Specialization(SpecializationEnum.Pediatrie);
 
-        NodePole nodePole = Mockito.spy(new NodePole(NodeEnum.POLE, pediatrie));
+        NodePole nodePole = new NodePole(NodeEnum.POLE, pediatrie);
         List<NodePole> poles = new ArrayList<>();
         poles.add(nodePole);
 
-        NodeHospital nodeHospital = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles));
+        NodeHospital nodeHospital = new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles);
         List<NodeHospital> hospitals = new ArrayList<>();
         hospitals.add(nodeHospital);
 
-        NodeAPHP nodeAPHP = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
+        NodeAPHP nodeAPHP = new NodeAPHP(NodeEnum.APHP, hospitals);
 
         nodeHospital.setAPHP(nodeAPHP);
         nodePole.setHospital(nodeHospital);
+        
+        assertTrue(dataManager.createAPHP(nodeAPHP));
+        assertTrue(dataManager.createPole(nodePole));
 
         Node pole = dataManager.getNode(nodePole.getType(), nodePole.getId());
 
-        Doctor doctor = Mockito.spy(new Doctor(StaffEnum.DOCTOR, "Dupont", "Patrick", "5 Avenue de la Republique", "patoche@gmail.com", "0718547896", pole, pediatrie));
-        Nurse nurse = Mockito.spy(new Nurse(StaffEnum.NURSE, "Durand", "Emilie", "5 Avenue de la Republique", "emilie.durand@gmail.com", "0718547896", pole));
+        Doctor doctor = new Doctor(StaffEnum.DOCTOR, "Dupont", "Patrick", "5 Avenue de la Republique", "patoche@gmail.com", "0718547896", pole, pediatrie);
+        Nurse nurse = new Nurse(StaffEnum.NURSE, "Durand", "Emilie", "5 Avenue de la Republique", "emilie.durand@gmail.com", "0718547896", pole);
 
+        assertTrue(dataManager.createDoctor(doctor));
+        assertTrue(dataManager.createNurse(nurse));
+        
         MedicalStaff d = dataManager.getMedicalStaff(doctor.getType(), doctor.getId());
         MedicalStaff n = dataManager.getMedicalStaff(nurse.getType(), nurse.getId());
 
-        UserAccount doctorAccount = Mockito.spy(new UserAccount("pseudoDoctor", "passwordDoctor", d));
-        UserAccount nurseAccount = Mockito.spy(new UserAccount("pseudoNurse", "passwordNurse", n));
-
-        assertTrue(dataManager.createAPHP(nodeAPHP));
-        assertTrue(dataManager.createPole(nodePole));
-        assertTrue(dataManager.createDoctor((Doctor) doctor));
-        assertTrue(dataManager.createNurse((Nurse) nurse));
+        UserAccount doctorAccount = new UserAccount("pseudoDoctor", "passwordDoctor", d);
+        UserAccount nurseAccount = new UserAccount("pseudoNurse", "passwordNurse", n);       
+        
         assertTrue(dataManager.createAccount(doctorAccount));
         assertTrue(dataManager.createAccount(nurseAccount));
         assertFalse(dataManager.createAccount(doctorAccount));
@@ -86,34 +87,36 @@ public class JPADataManagerUnitTest {
      */
     @Test
     public void testRemoveAccount() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
+        JPADataManager dataManager = new JPADataManager();
 
-        Specialization pediatrie = Mockito.spy(new Specialization(SpecializationEnum.Pediatrie));
+        Specialization pediatrie = new Specialization(SpecializationEnum.Pediatrie);
 
-        NodePole nodePole = Mockito.spy(new NodePole(NodeEnum.POLE, pediatrie));
+        NodePole nodePole = new NodePole(NodeEnum.POLE, pediatrie);
         List<NodePole> poles = new ArrayList<>();
         poles.add(nodePole);
 
-        NodeHospital nodeHospital = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles));
+        NodeHospital nodeHospital = new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles);
         List<NodeHospital> hospitals = new ArrayList<>();
         hospitals.add(nodeHospital);
 
-        NodeAPHP nodeAPHP = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
+        NodeAPHP nodeAPHP = new NodeAPHP(NodeEnum.APHP, hospitals);
 
         nodeHospital.setAPHP(nodeAPHP);
         nodePole.setHospital(nodeHospital);
+        
+        assertTrue(dataManager.createAPHP(nodeAPHP));
+        assertTrue(dataManager.createPole(nodePole));
 
         Node pole = dataManager.getNode(nodePole.getType(), nodePole.getId());
 
-        Doctor doctor = Mockito.spy(new Doctor(StaffEnum.DOCTOR, "Dupont", "Patrick", "5 Avenue de la Republique", "patoche@gmail.com", "0718547896", pole, pediatrie));
+        Doctor doctor = new Doctor(StaffEnum.DOCTOR, "Dupont", "Patrick", "5 Avenue de la Republique", "patoche@gmail.com", "0718547896", pole, pediatrie);
 
+        assertTrue(dataManager.createDoctor(doctor));
+        
         MedicalStaff d = dataManager.getMedicalStaff(doctor.getType(), doctor.getId());
 
-        UserAccount doctorAccount = Mockito.spy(new UserAccount("pseudoDoctor", "passwordDoctor", d));
-
-        assertTrue(dataManager.createAPHP(nodeAPHP));
-        assertTrue(dataManager.createPole(nodePole));
-        assertTrue(dataManager.createDoctor((Doctor) doctor));
+        UserAccount doctorAccount = new UserAccount("pseudoDoctor", "passwordDoctor", d);      
+        
         assertTrue(dataManager.createAccount(doctorAccount));
         assertTrue(dataManager.removeAccount(doctorAccount.getIdAccount()));
         assertFalse(dataManager.removeAccount(doctorAccount.getIdAccount()));
@@ -122,11 +125,10 @@ public class JPADataManagerUnitTest {
     /**
      * Return an exception if a field is null
      */
-    @Test
+    @Test(expected = NullPointerException.class)
     public void testCreateHospitalNull() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
-
-        Mockito.doThrow(new NullPointerException()).when(dataManager).createHospital(null);
+        JPADataManager dataManager = new JPADataManager();
+        dataManager.createHospital(null);
     }
 
     /**
@@ -134,13 +136,13 @@ public class JPADataManagerUnitTest {
      */
     @Test
     public void testCreateHospital() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
+        JPADataManager dataManager = new JPADataManager();
 
-        NodeHospital hospital = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris"));
+        NodeHospital hospital = new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris");
         List<NodeHospital> hospitals = new ArrayList<>();
         hospitals.add(hospital);
 
-        NodeAPHP aphp = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
+        NodeAPHP aphp = new NodeAPHP(NodeEnum.APHP, hospitals);
         hospital.setAPHP(aphp);
 
         assertTrue(dataManager.createAPHP(aphp));
@@ -153,13 +155,13 @@ public class JPADataManagerUnitTest {
      */
     @Test
     public void testGetHospital() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
+        JPADataManager dataManager = new JPADataManager();
 
-        NodeHospital hospitalCreate = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris"));
+        NodeHospital hospitalCreate = new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris");
         List<NodeHospital> hospitals = new ArrayList<>();
         hospitals.add(hospitalCreate);
 
-        NodeAPHP aphp = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
+        NodeAPHP aphp = new NodeAPHP(NodeEnum.APHP, hospitals);
         hospitalCreate.setAPHP(aphp);
 
         assertTrue(dataManager.createAPHP(aphp));
@@ -171,40 +173,15 @@ public class JPADataManagerUnitTest {
         assertEquals(hospitalCreate.getId(), hospitalResult.getId());
         assertEquals(hospitalCreate.getName(), hospitalResult.getName());
         assertEquals(hospitalCreate.getType(), hospitalResult.getType());
-        assertEquals(hospitalCreate.getAPHP(), hospitalResult.getAPHP());
-    }
-
-    /**
-     * Test if Hospitals exists, it don't returns null
-     */
-    @Test
-    public void testGetAllHospitals() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
-
-        NodeHospital hospital1 = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris"));
-        NodeHospital hospital2 = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "CHU de Reims"));
-        List<NodeHospital> hospitals = new ArrayList<>();
-        hospitals.add(hospital1);
-        hospitals.add(hospital2);
-
-        NodeAPHP aphp = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
-        hospital1.setAPHP(aphp);
-        hospital2.setAPHP(aphp);
-
-        assertTrue(dataManager.createAPHP(aphp));
-        assertTrue(dataManager.createHospital(hospital1));
-        assertTrue(dataManager.createHospital(hospital2));
-        assertNotNull(dataManager.getAllHospitals());
     }
 
     /**
      * Return an exception if a field is null
      */
-    @Test
+    @Test(expected = NullPointerException.class)
     public void testCreatePoleNull() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
-
-        Mockito.doThrow(new NullPointerException()).when(dataManager).createPole(null);
+        JPADataManager dataManager = new JPADataManager();
+        dataManager.createPole(null);
     }
 
     /**
@@ -212,19 +189,19 @@ public class JPADataManagerUnitTest {
      */
     @Test
     public void testCreatePole() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
+        JPADataManager dataManager = new JPADataManager();
 
-        Specialization pediatrie = Mockito.spy(new Specialization(SpecializationEnum.Pediatrie));
+        Specialization pediatrie = new Specialization(SpecializationEnum.Pediatrie);
 
-        NodePole pole = Mockito.spy(new NodePole(NodeEnum.POLE, pediatrie));
+        NodePole pole = new NodePole(NodeEnum.POLE, pediatrie);
         List<NodePole> poles = new ArrayList<>();
         poles.add(pole);
 
-        NodeHospital hospital = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles));
+        NodeHospital hospital = new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles);
         List<NodeHospital> hospitals = new ArrayList<>();
         hospitals.add(hospital);
 
-        NodeAPHP aphp = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
+        NodeAPHP aphp = new NodeAPHP(NodeEnum.APHP, hospitals);
         pole.setHospital(hospital);
         hospital.setAPHP(aphp);
 
@@ -238,19 +215,19 @@ public class JPADataManagerUnitTest {
      */
     @Test
     public void testGetPole() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
+        JPADataManager dataManager = new JPADataManager();
 
-        Specialization pediatrie = Mockito.spy(new Specialization(SpecializationEnum.Pediatrie));
+        Specialization pediatrie = new Specialization(SpecializationEnum.Pediatrie);
 
-        NodePole poleCreate = Mockito.spy(new NodePole(NodeEnum.POLE, pediatrie));
+        NodePole poleCreate = new NodePole(NodeEnum.POLE, pediatrie);
         List<NodePole> poles = new ArrayList<>();
         poles.add(poleCreate);
 
-        NodeHospital hospital = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles));
+        NodeHospital hospital = new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles);
         List<NodeHospital> hospitals = new ArrayList<>();
         hospitals.add(hospital);
 
-        NodeAPHP aphp = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
+        NodeAPHP aphp = new NodeAPHP(NodeEnum.APHP, hospitals);
         poleCreate.setHospital(hospital);
         hospital.setAPHP(aphp);
 
@@ -264,49 +241,15 @@ public class JPADataManagerUnitTest {
         assertEquals(poleCreate.getId(), poleResult.getId());
         assertEquals(poleCreate.getType(), poleResult.getType());
         assertEquals(poleCreate.getSpecialization(), poleResult.getSpecialization());
-        assertEquals(poleCreate.getHospital(), poleResult.getHospital());
-    }
-
-    /**
-     * Test if Poles exists, it don't returns null
-     */
-    @Test
-    public void testGetAllPoles() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
-
-        Specialization pediatrie = Mockito.spy(new Specialization(SpecializationEnum.Pediatrie));
-        Specialization cardiologie = Mockito.spy(new Specialization(SpecializationEnum.Cardiologie));
-
-        NodePole pole1 = Mockito.spy(new NodePole(NodeEnum.POLE, pediatrie));
-        NodePole pole2 = Mockito.spy(new NodePole(NodeEnum.POLE, cardiologie));
-        List<NodePole> poles = new ArrayList<>();
-        poles.add(pole1);
-        poles.add(pole2);
-
-        NodeHospital hospital = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles));
-        List<NodeHospital> hospitals = new ArrayList<>();
-        hospitals.add(hospital);
-
-        NodeAPHP aphp = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
-        pole1.setHospital(hospital);
-        pole2.setHospital(hospital);
-        hospital.setAPHP(aphp);
-
-        assertTrue(dataManager.createAPHP(aphp));
-        assertTrue(dataManager.createHospital(hospital));
-        assertTrue(dataManager.createPole(pole1));
-        assertTrue(dataManager.createPole(pole2));
-        assertNotNull(dataManager.getAllPoles(hospital.getId()));
     }
 
     /**
      * Return an exception if a field is null
      */
-    @Test
+    @Test(expected = NullPointerException.class)
     public void testCreateServiceNull() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
-
-        Mockito.doThrow(new NullPointerException()).when(dataManager).createService(null);
+        JPADataManager dataManager = new JPADataManager();
+        dataManager.createService(null);
     }
 
     /**
@@ -314,24 +257,24 @@ public class JPADataManagerUnitTest {
      */
     @Test
     public void testCreateService() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
+        JPADataManager dataManager = new JPADataManager();
 
-        Specialization pediatrie = Mockito.spy(new Specialization(SpecializationEnum.Pediatrie));
-        Specialization andrologie = Mockito.spy(new Specialization(SpecializationEnum.Andrologie));
+        Specialization pediatrie = new Specialization(SpecializationEnum.Pediatrie);
+        Specialization andrologie = new Specialization(SpecializationEnum.Andrologie);
 
-        NodeService service = Mockito.spy(new NodeService(NodeEnum.SERVICE, andrologie));
+        NodeService service = new NodeService(NodeEnum.SERVICE, andrologie);
         List<NodeService> services = new ArrayList<>();
         services.add(service);
 
-        NodePole pole = Mockito.spy(new NodePole(NodeEnum.POLE, pediatrie, services));
+        NodePole pole = new NodePole(NodeEnum.POLE, pediatrie, services);
         List<NodePole> poles = new ArrayList<>();
         poles.add(pole);
 
-        NodeHospital hospital = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles));
+        NodeHospital hospital = new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles);
         List<NodeHospital> hospitals = new ArrayList<>();
         hospitals.add(hospital);
 
-        NodeAPHP aphp = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
+        NodeAPHP aphp = new NodeAPHP(NodeEnum.APHP, hospitals);
         service.setPole(pole);
         pole.setHospital(hospital);
         hospital.setAPHP(aphp);
@@ -348,24 +291,24 @@ public class JPADataManagerUnitTest {
      */
     @Test
     public void testGetService() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
+        JPADataManager dataManager = new JPADataManager();
 
-        Specialization pediatrie = Mockito.spy(new Specialization(SpecializationEnum.Pediatrie));
-        Specialization andrologie = Mockito.spy(new Specialization(SpecializationEnum.Andrologie));
+        Specialization pediatrie = new Specialization(SpecializationEnum.Pediatrie);
+        Specialization andrologie = new Specialization(SpecializationEnum.Andrologie);
 
-        NodeService serviceCreate = Mockito.spy(new NodeService(NodeEnum.SERVICE, andrologie));
+        NodeService serviceCreate = new NodeService(NodeEnum.SERVICE, andrologie);
         List<NodeService> services = new ArrayList<>();
         services.add(serviceCreate);
 
-        NodePole pole = Mockito.spy(new NodePole(NodeEnum.POLE, pediatrie, services));
+        NodePole pole = new NodePole(NodeEnum.POLE, pediatrie, services);
         List<NodePole> poles = new ArrayList<>();
         poles.add(pole);
 
-        NodeHospital hospital = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles));
+        NodeHospital hospital = new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles);
         List<NodeHospital> hospitals = new ArrayList<>();
         hospitals.add(hospital);
 
-        NodeAPHP aphp = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
+        NodeAPHP aphp = new NodeAPHP(NodeEnum.APHP, hospitals);
         serviceCreate.setPole(pole);
         pole.setHospital(hospital);
         hospital.setAPHP(aphp);
@@ -381,56 +324,15 @@ public class JPADataManagerUnitTest {
         assertEquals(serviceCreate.getId(), serviceResult.getId());
         assertEquals(serviceCreate.getType(), serviceResult.getType());
         assertEquals(serviceCreate.getSpecialization(), serviceResult.getSpecialization());
-        assertEquals(serviceCreate.getPole(), serviceResult.getPole());
     }
-
-    /**
-     * Test if Services exists, it don't returns null
-     */
-    @Test
-    public void testGetAllServices() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
-
-        Specialization pediatrie = Mockito.spy(new Specialization(SpecializationEnum.Pediatrie));
-        Specialization andrologie = Mockito.spy(new Specialization(SpecializationEnum.Andrologie));
-        Specialization cardiologie = Mockito.spy(new Specialization(SpecializationEnum.Cardiologie));
-
-        NodeService service1 = Mockito.spy(new NodeService(NodeEnum.SERVICE, andrologie));
-        NodeService service2 = Mockito.spy(new NodeService(NodeEnum.SERVICE, cardiologie));
-        List<NodeService> services = new ArrayList<>();
-        services.add(service1);
-        services.add(service2);
-
-        NodePole pole = Mockito.spy(new NodePole(NodeEnum.POLE, pediatrie, services));
-        List<NodePole> poles = new ArrayList<>();
-        poles.add(pole);
-
-        NodeHospital hospital = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles));
-        List<NodeHospital> hospitals = new ArrayList<>();
-        hospitals.add(hospital);
-
-        NodeAPHP aphp = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
-        service1.setPole(pole);
-        service2.setPole(pole);
-        pole.setHospital(hospital);
-        hospital.setAPHP(aphp);
-
-        assertTrue(dataManager.createAPHP(aphp));
-        assertTrue(dataManager.createHospital(hospital));
-        assertTrue(dataManager.createPole(pole));
-        assertTrue(dataManager.createService(service1));
-        assertTrue(dataManager.createService(service2));
-        assertNotNull(dataManager.getAllServices(pole.getId()));
-    }
-
+    
     /**
      * Return an exception if a field is null
      */
-    @Test
+    @Test(expected = NullPointerException.class)
     public void testCreateHospitalUnitNull() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
-
-        Mockito.doThrow(new NullPointerException()).when(dataManager).createHospitalUnit(null);
+        JPADataManager dataManager = new JPADataManager();
+        dataManager.createHospitalUnit(null);
     }
 
     /**
@@ -438,29 +340,29 @@ public class JPADataManagerUnitTest {
      */
     @Test
     public void testCreateHospitalUnit() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
+        JPADataManager dataManager = new JPADataManager();
 
-        Specialization pediatrie = Mockito.spy(new Specialization(SpecializationEnum.Pediatrie));
-        Specialization andrologie = Mockito.spy(new Specialization(SpecializationEnum.Andrologie));
-        Specialization cardiologie = Mockito.spy(new Specialization(SpecializationEnum.Cardiologie));
+        Specialization pediatrie = new Specialization(SpecializationEnum.Pediatrie);
+        Specialization andrologie = new Specialization(SpecializationEnum.Andrologie);
+        Specialization cardiologie = new Specialization(SpecializationEnum.Cardiologie);
 
-        NodeHU hu = Mockito.spy(new NodeHU(NodeEnum.HOSPITAL_UNIT, cardiologie));
+        NodeHU hu = new NodeHU(NodeEnum.HOSPITAL_UNIT, cardiologie);
         List<NodeHU> hospitalUnits = new ArrayList<>();
         hospitalUnits.add(hu);
 
-        NodeService service = Mockito.spy(new NodeService(NodeEnum.SERVICE, andrologie, hospitalUnits));
+        NodeService service = new NodeService(NodeEnum.SERVICE, andrologie, hospitalUnits);
         List<NodeService> services = new ArrayList<>();
         services.add(service);
 
-        NodePole pole = Mockito.spy(new NodePole(NodeEnum.POLE, pediatrie, services));
+        NodePole pole = new NodePole(NodeEnum.POLE, pediatrie, services);
         List<NodePole> poles = new ArrayList<>();
         poles.add(pole);
 
-        NodeHospital hospital = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles));
+        NodeHospital hospital = new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles);
         List<NodeHospital> hospitals = new ArrayList<>();
         hospitals.add(hospital);
 
-        NodeAPHP aphp = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
+        NodeAPHP aphp = new NodeAPHP(NodeEnum.APHP, hospitals);
         hu.setService(service);
         service.setPole(pole);
         pole.setHospital(hospital);
@@ -479,29 +381,29 @@ public class JPADataManagerUnitTest {
      */
     @Test
     public void testGetHospitalUnit() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
+        JPADataManager dataManager = new JPADataManager();
 
-        Specialization pediatrie = Mockito.spy(new Specialization(SpecializationEnum.Pediatrie));
-        Specialization andrologie = Mockito.spy(new Specialization(SpecializationEnum.Andrologie));
-        Specialization cardiologie = Mockito.spy(new Specialization(SpecializationEnum.Cardiologie));
+        Specialization pediatrie = new Specialization(SpecializationEnum.Pediatrie);
+        Specialization andrologie = new Specialization(SpecializationEnum.Andrologie);
+        Specialization cardiologie = new Specialization(SpecializationEnum.Cardiologie);
 
-        NodeHU huCreate = Mockito.spy(new NodeHU(NodeEnum.HOSPITAL_UNIT, cardiologie));
+        NodeHU huCreate = new NodeHU(NodeEnum.HOSPITAL_UNIT, cardiologie);
         List<NodeHU> hospitalUnits = new ArrayList<>();
         hospitalUnits.add(huCreate);
 
-        NodeService service = Mockito.spy(new NodeService(NodeEnum.SERVICE, andrologie, hospitalUnits));
+        NodeService service = new NodeService(NodeEnum.SERVICE, andrologie, hospitalUnits);
         List<NodeService> services = new ArrayList<>();
         services.add(service);
 
-        NodePole pole = Mockito.spy(new NodePole(NodeEnum.POLE, pediatrie, services));
+        NodePole pole = new NodePole(NodeEnum.POLE, pediatrie, services);
         List<NodePole> poles = new ArrayList<>();
         poles.add(pole);
 
-        NodeHospital hospital = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles));
+        NodeHospital hospital = new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles);
         List<NodeHospital> hospitals = new ArrayList<>();
         hospitals.add(hospital);
 
-        NodeAPHP aphp = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
+        NodeAPHP aphp = new NodeAPHP(NodeEnum.APHP, hospitals);
         huCreate.setService(service);
         service.setPole(pole);
         pole.setHospital(hospital);
@@ -519,63 +421,15 @@ public class JPADataManagerUnitTest {
         assertEquals(huCreate.getId(), huResult.getId());
         assertEquals(huCreate.getType(), huResult.getType());
         assertEquals(huCreate.getSpecialization(), huResult.getSpecialization());
-        assertEquals(huCreate.getService(), huResult.getService());
     }
-
-    /**
-     * Test if Hospital Units exists, it don't returns null
-     */
-    @Test
-    public void testGetAllHospitalUnits() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
-
-        Specialization pediatrie = Mockito.spy(new Specialization(SpecializationEnum.Pediatrie));
-        Specialization andrologie = Mockito.spy(new Specialization(SpecializationEnum.Andrologie));
-        Specialization cardiologie = Mockito.spy(new Specialization(SpecializationEnum.Cardiologie));
-        Specialization neurologie = Mockito.spy(new Specialization(SpecializationEnum.Neurologie));
-
-        NodeHU hu1 = Mockito.spy(new NodeHU(NodeEnum.HOSPITAL_UNIT, cardiologie));
-        NodeHU hu2 = Mockito.spy(new NodeHU(NodeEnum.HOSPITAL_UNIT, neurologie));
-        List<NodeHU> hospitalUnits = new ArrayList<>();
-        hospitalUnits.add(hu1);
-        hospitalUnits.add(hu2);
-
-        NodeService service = Mockito.spy(new NodeService(NodeEnum.SERVICE, andrologie, hospitalUnits));
-        List<NodeService> services = new ArrayList<>();
-        services.add(service);
-
-        NodePole pole = Mockito.spy(new NodePole(NodeEnum.POLE, pediatrie, services));
-        List<NodePole> poles = new ArrayList<>();
-        poles.add(pole);
-
-        NodeHospital hospital = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles));
-        List<NodeHospital> hospitals = new ArrayList<>();
-        hospitals.add(hospital);
-
-        NodeAPHP aphp = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
-        hu1.setService(service);
-        hu2.setService(service);
-        service.setPole(pole);
-        pole.setHospital(hospital);
-        hospital.setAPHP(aphp);
-
-        assertTrue(dataManager.createAPHP(aphp));
-        assertTrue(dataManager.createHospital(hospital));
-        assertTrue(dataManager.createPole(pole));
-        assertTrue(dataManager.createService(service));
-        assertTrue(dataManager.createHospitalUnit(hu1));
-        assertTrue(dataManager.createHospitalUnit(hu2));
-        assertNotNull(dataManager.getAllHospitalUnits(service.getId()));
-    }
-
+    
     /**
      * Return an exception if a field is null
      */
-    @Test
+    @Test(expected = NullPointerException.class)
     public void testCreateCareUnitNull() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
-
-        Mockito.doThrow(new NullPointerException()).when(dataManager).createCareUnit(null);
+        JPADataManager dataManager = new JPADataManager();
+        dataManager.createCareUnit(null);
     }
 
     /**
@@ -583,34 +437,34 @@ public class JPADataManagerUnitTest {
      */
     @Test
     public void testCreateCareUnit() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
+        JPADataManager dataManager = new JPADataManager();
 
-        Specialization pediatrie = Mockito.spy(new Specialization(SpecializationEnum.Pediatrie));
-        Specialization andrologie = Mockito.spy(new Specialization(SpecializationEnum.Andrologie));
-        Specialization cardiologie = Mockito.spy(new Specialization(SpecializationEnum.Cardiologie));
-        Specialization neonatologie = Mockito.spy(new Specialization(SpecializationEnum.Neonatologie));
+        Specialization pediatrie = new Specialization(SpecializationEnum.Pediatrie);
+        Specialization andrologie = new Specialization(SpecializationEnum.Andrologie);
+        Specialization cardiologie = new Specialization(SpecializationEnum.Cardiologie);
+        Specialization neonatologie = new Specialization(SpecializationEnum.Neonatologie);
 
-        NodeCU cu = Mockito.spy(new NodeCU(NodeEnum.CARE_UNIT, neonatologie));
+        NodeCU cu = new NodeCU(NodeEnum.CARE_UNIT, neonatologie);
         List<NodeCU> careUnits = new ArrayList<>();
         careUnits.add(cu);
 
-        NodeHU hu = Mockito.spy(new NodeHU(NodeEnum.HOSPITAL_UNIT, cardiologie, careUnits));
+        NodeHU hu = new NodeHU(NodeEnum.HOSPITAL_UNIT, cardiologie, careUnits);
         List<NodeHU> hospitalUnits = new ArrayList<>();
         hospitalUnits.add(hu);
 
-        NodeService service = Mockito.spy(new NodeService(NodeEnum.SERVICE, andrologie, hospitalUnits));
+        NodeService service = new NodeService(NodeEnum.SERVICE, andrologie, hospitalUnits);
         List<NodeService> services = new ArrayList<>();
         services.add(service);
 
-        NodePole pole = Mockito.spy(new NodePole(NodeEnum.POLE, pediatrie, services));
+        NodePole pole = new NodePole(NodeEnum.POLE, pediatrie, services);
         List<NodePole> poles = new ArrayList<>();
         poles.add(pole);
 
-        NodeHospital hospital = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles));
+        NodeHospital hospital = new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles);
         List<NodeHospital> hospitals = new ArrayList<>();
         hospitals.add(hospital);
 
-        NodeAPHP aphp = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
+        NodeAPHP aphp = new NodeAPHP(NodeEnum.APHP, hospitals);
         cu.setHospitalUnit(hu);
         hu.setService(service);
         service.setPole(pole);
@@ -631,34 +485,34 @@ public class JPADataManagerUnitTest {
      */
     @Test
     public void testGetCareUnit() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
+        JPADataManager dataManager = new JPADataManager();
 
-        Specialization pediatrie = Mockito.spy(new Specialization(SpecializationEnum.Pediatrie));
-        Specialization andrologie = Mockito.spy(new Specialization(SpecializationEnum.Andrologie));
-        Specialization cardiologie = Mockito.spy(new Specialization(SpecializationEnum.Cardiologie));
-        Specialization neonatologie = Mockito.spy(new Specialization(SpecializationEnum.Neonatologie));
+        Specialization pediatrie = new Specialization(SpecializationEnum.Pediatrie);
+        Specialization andrologie = new Specialization(SpecializationEnum.Andrologie);
+        Specialization cardiologie = new Specialization(SpecializationEnum.Cardiologie);
+        Specialization neonatologie = new Specialization(SpecializationEnum.Neonatologie);
 
-        NodeCU cuCreate = Mockito.spy(new NodeCU(NodeEnum.CARE_UNIT, neonatologie));
+        NodeCU cuCreate = new NodeCU(NodeEnum.CARE_UNIT, neonatologie);
         List<NodeCU> careUnits = new ArrayList<>();
         careUnits.add(cuCreate);
 
-        NodeHU hu = Mockito.spy(new NodeHU(NodeEnum.HOSPITAL_UNIT, cardiologie, careUnits));
+        NodeHU hu = new NodeHU(NodeEnum.HOSPITAL_UNIT, cardiologie, careUnits);
         List<NodeHU> hospitalUnits = new ArrayList<>();
         hospitalUnits.add(hu);
 
-        NodeService service = Mockito.spy(new NodeService(NodeEnum.SERVICE, andrologie, hospitalUnits));
+        NodeService service = new NodeService(NodeEnum.SERVICE, andrologie, hospitalUnits);
         List<NodeService> services = new ArrayList<>();
         services.add(service);
 
-        NodePole pole = Mockito.spy(new NodePole(NodeEnum.POLE, pediatrie, services));
+        NodePole pole = new NodePole(NodeEnum.POLE, pediatrie, services);
         List<NodePole> poles = new ArrayList<>();
         poles.add(pole);
 
-        NodeHospital hospital = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles));
+        NodeHospital hospital = new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles);
         List<NodeHospital> hospitals = new ArrayList<>();
         hospitals.add(hospital);
 
-        NodeAPHP aphp = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
+        NodeAPHP aphp = new NodeAPHP(NodeEnum.APHP, hospitals);
         cuCreate.setHospitalUnit(hu);
         hu.setService(service);
         service.setPole(pole);
@@ -678,70 +532,15 @@ public class JPADataManagerUnitTest {
         assertEquals(cuCreate.getId(), cuResult.getId());
         assertEquals(cuCreate.getType(), cuResult.getType());
         assertEquals(cuCreate.getSpecialization(), cuResult.getSpecialization());
-        assertEquals(cuCreate.getHospitalUnit(), cuResult.getHospitalUnit());
-    }
-
-    /**
-     * Test if Care Units exists, it don't returns null
-     */
-    @Test
-    public void testGetAllCareUnits() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
-
-        Specialization pediatrie = Mockito.spy(new Specialization(SpecializationEnum.Pediatrie));
-        Specialization andrologie = Mockito.spy(new Specialization(SpecializationEnum.Andrologie));
-        Specialization cardiologie = Mockito.spy(new Specialization(SpecializationEnum.Cardiologie));
-        Specialization neonatologie = Mockito.spy(new Specialization(SpecializationEnum.Neonatologie));
-        Specialization neurologie = Mockito.spy(new Specialization(SpecializationEnum.Neurologie));
-
-        NodeCU cu1 = Mockito.spy(new NodeCU(NodeEnum.CARE_UNIT, neonatologie));
-        NodeCU cu2 = Mockito.spy(new NodeCU(NodeEnum.CARE_UNIT, neurologie));
-        List<NodeCU> careUnits = new ArrayList<>();
-        careUnits.add(cu1);
-        careUnits.add(cu2);
-
-        NodeHU hu = Mockito.spy(new NodeHU(NodeEnum.HOSPITAL_UNIT, cardiologie, careUnits));
-        List<NodeHU> hospitalUnits = new ArrayList<>();
-        hospitalUnits.add(hu);
-
-        NodeService service = Mockito.spy(new NodeService(NodeEnum.SERVICE, andrologie, hospitalUnits));
-        List<NodeService> services = new ArrayList<>();
-        services.add(service);
-
-        NodePole pole = Mockito.spy(new NodePole(NodeEnum.POLE, pediatrie, services));
-        List<NodePole> poles = new ArrayList<>();
-        poles.add(pole);
-
-        NodeHospital hospital = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles));
-        List<NodeHospital> hospitals = new ArrayList<>();
-        hospitals.add(hospital);
-
-        NodeAPHP aphp = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
-        cu1.setHospitalUnit(hu);
-        cu2.setHospitalUnit(hu);
-        hu.setService(service);
-        service.setPole(pole);
-        pole.setHospital(hospital);
-        hospital.setAPHP(aphp);
-
-        assertTrue(dataManager.createAPHP(aphp));
-        assertTrue(dataManager.createHospital(hospital));
-        assertTrue(dataManager.createPole(pole));
-        assertTrue(dataManager.createService(service));
-        assertTrue(dataManager.createHospitalUnit(hu));
-        assertTrue(dataManager.createCareUnit(cu1));
-        assertTrue(dataManager.createCareUnit(cu2));
-        assertNotNull(dataManager.getAllCareUnits(hu.getId()));
-    }
+    }    
 
     /**
      * Return an exception if the doctor field is null
      */
-    @Test
+    @Test(expected = NullPointerException.class)
     public void testCreateDoctorNull() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
-
-        Mockito.doThrow(new NullPointerException()).when(dataManager).createDoctor(null);
+        JPADataManager dataManager = new JPADataManager();
+        dataManager.createDoctor(null);
     }
 
     /**
@@ -749,29 +548,30 @@ public class JPADataManagerUnitTest {
      */
     @Test
     public void testCreateDoctor() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
+        JPADataManager dataManager = new JPADataManager();
 
-        Specialization pediatrie = Mockito.spy(new Specialization(SpecializationEnum.Pediatrie));
+        Specialization pediatrie = new Specialization(SpecializationEnum.Pediatrie);
 
-        NodePole nodePole = Mockito.spy(new NodePole(NodeEnum.POLE, pediatrie));
+        NodePole nodePole = new NodePole(NodeEnum.POLE, pediatrie);
         List<NodePole> poles = new ArrayList<>();
         poles.add(nodePole);
 
-        NodeHospital nodeHospital = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles));
+        NodeHospital nodeHospital = new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles);
         List<NodeHospital> hospitals = new ArrayList<>();
         hospitals.add(nodeHospital);
 
-        NodeAPHP nodeAPHP = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
+        NodeAPHP nodeAPHP = new NodeAPHP(NodeEnum.APHP, hospitals);
         nodePole.setHospital(nodeHospital);
         nodeHospital.setAPHP(nodeAPHP);
-
-        Node pole = dataManager.getNode(nodePole.getType(), nodePole.getId());
-
-        Doctor doctor = Mockito.spy(new Doctor(StaffEnum.DOCTOR, "Durand", "Emilie", "5 Avenue de la Republique", "emilie.durand@gmail.com", "0718547896", pole, pediatrie));
-
+        
         assertTrue(dataManager.createAPHP(nodeAPHP));
         assertTrue(dataManager.createHospital(nodeHospital));
         assertTrue(dataManager.createPole(nodePole));
+        
+        Node pole = dataManager.getNode(nodePole.getType(), nodePole.getId());
+
+        Doctor doctor = new Doctor(StaffEnum.DOCTOR, "Durand", "Emilie", "5 Avenue de la Republique", "emilie.durand@gmail.com", "0718547896", pole, pediatrie);
+        
         assertTrue(dataManager.createDoctor(doctor));
         assertFalse(dataManager.createDoctor(doctor));
     }
@@ -781,30 +581,31 @@ public class JPADataManagerUnitTest {
      */
     @Test
     public void testGetDoctor() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
+        JPADataManager dataManager = new JPADataManager();
 
-        Specialization pediatrie = Mockito.spy(new Specialization(SpecializationEnum.Pediatrie));
+        Specialization pediatrie = new Specialization(SpecializationEnum.Pediatrie);
 
-        NodePole nodePole = Mockito.spy(new NodePole(NodeEnum.POLE, pediatrie));
+        NodePole nodePole = new NodePole(NodeEnum.POLE, pediatrie);
         List<NodePole> poles = new ArrayList<>();
         poles.add(nodePole);
 
-        NodeHospital nodeHospital = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles));
+        NodeHospital nodeHospital = new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles);
         List<NodeHospital> hospitals = new ArrayList<>();
         hospitals.add(nodeHospital);
 
-        NodeAPHP nodeAPHP = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
+        NodeAPHP nodeAPHP = new NodeAPHP(NodeEnum.APHP, hospitals);
 
         nodeHospital.setAPHP(nodeAPHP);
         nodePole.setHospital(nodeHospital);
 
-        Node pole = dataManager.getNode(nodePole.getType(), nodePole.getId());
-
-        Doctor doctorCreate = Mockito.spy(new Doctor(StaffEnum.DOCTOR, "Durand", "Emilie", "5 Avenue de la Republique", "emilie.durand@gmail.com", "0718547896", pole, pediatrie));
-
         assertTrue(dataManager.createAPHP(nodeAPHP));
         assertTrue(dataManager.createHospital(nodeHospital));
         assertTrue(dataManager.createPole(nodePole));
+        
+        Node pole = dataManager.getNode(nodePole.getType(), nodePole.getId());
+
+        Doctor doctorCreate = new Doctor(StaffEnum.DOCTOR, "Durand", "Emilie", "5 Avenue de la Republique", "emilie.durand@gmail.com", "0718547896", pole, pediatrie);
+        
         assertTrue(dataManager.createDoctor(doctorCreate));
 
         Doctor doctorResult = dataManager.getDoctor(doctorCreate.getId());
@@ -815,46 +616,7 @@ public class JPADataManagerUnitTest {
         assertEquals(doctorCreate.getAdress(), doctorResult.getAdress());
         assertEquals(doctorCreate.getEmail(), doctorResult.getEmail());
         assertEquals(doctorCreate.getPhoneNumber(), doctorResult.getPhoneNumber());
-        assertEquals(doctorCreate.getNode(), doctorResult.getNode());
         assertEquals(doctorCreate.getSpecialization(), doctorResult.getSpecialization());
-    }
-
-    /**
-     * Test if Doctors exists, it don't returns null
-     */
-    @Test
-    public void testGetAllDoctors() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
-
-        Specialization pediatrie = Mockito.spy(new Specialization(SpecializationEnum.Pediatrie));
-
-        NodePole nodePole = Mockito.spy(new NodePole(NodeEnum.POLE, pediatrie));
-        List<NodePole> poles = new ArrayList<>();
-        poles.add(nodePole);
-
-        NodeHospital nodeHospital = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles));
-        List<NodeHospital> hospitals = new ArrayList<>();
-        hospitals.add(nodeHospital);
-
-        NodeAPHP nodeAPHP = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
-
-        nodeHospital.setAPHP(nodeAPHP);
-        nodePole.setHospital(nodeHospital);
-
-        Node pole = dataManager.getNode(nodePole.getType(), nodePole.getId());
-
-        Doctor doctor1 = Mockito.spy(new Doctor(StaffEnum.DOCTOR, "Durand", "Emilie", "5 Avenue de la Republique", "emilie.durand@gmail.com", "0718547896", pole, pediatrie));
-        Doctor doctor2 = Mockito.spy(new Doctor(StaffEnum.DOCTOR, "Dupond", "Patrick", "5 Avenue de Paris", "patoche@gmail.com", "0718548716", pole, pediatrie));
-
-        assertTrue(dataManager.createAPHP(nodeAPHP));
-        assertTrue(dataManager.createHospital(nodeHospital));
-        assertTrue(dataManager.createPole(nodePole));
-        assertTrue(dataManager.createDoctor(doctor1));
-        assertTrue(dataManager.createDoctor(doctor2));
-
-        assertTrue(dataManager.createDoctor(doctor1));
-        assertTrue(dataManager.createDoctor(doctor2));
-        assertNotNull(dataManager.getAllDoctors());
     }
 
     /**
@@ -862,30 +624,31 @@ public class JPADataManagerUnitTest {
      */
     @Test
     public void testRemoveDoctor() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
+        JPADataManager dataManager = new JPADataManager();
 
-        Specialization pediatrie = Mockito.spy(new Specialization(SpecializationEnum.Pediatrie));
+        Specialization pediatrie = new Specialization(SpecializationEnum.Pediatrie);
 
-        NodePole nodePole = Mockito.spy(new NodePole(NodeEnum.POLE, pediatrie));
+        NodePole nodePole = new NodePole(NodeEnum.POLE, pediatrie);
         List<NodePole> poles = new ArrayList<>();
         poles.add(nodePole);
 
-        NodeHospital nodeHospital = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles));
+        NodeHospital nodeHospital = new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles);
         List<NodeHospital> hospitals = new ArrayList<>();
         hospitals.add(nodeHospital);
 
-        NodeAPHP nodeAPHP = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
+        NodeAPHP nodeAPHP = new NodeAPHP(NodeEnum.APHP, hospitals);
 
         nodeHospital.setAPHP(nodeAPHP);
         nodePole.setHospital(nodeHospital);
-
-        Node pole = dataManager.getNode(nodePole.getType(), nodePole.getId());
-
-        Doctor doctor = Mockito.spy(new Doctor(StaffEnum.DOCTOR, "Durand", "Emilie", "5 Avenue de la Republique", "emilie.durand@gmail.com", "0718547896", pole, pediatrie));
-
+        
         assertTrue(dataManager.createAPHP(nodeAPHP));
         assertTrue(dataManager.createHospital(nodeHospital));
         assertTrue(dataManager.createPole(nodePole));
+        
+        Node pole = dataManager.getNode(nodePole.getType(), nodePole.getId());
+
+        Doctor doctor = new Doctor(StaffEnum.DOCTOR, "Durand", "Emilie", "5 Avenue de la Republique", "emilie.durand@gmail.com", "0718547896", pole, pediatrie);
+        
         assertTrue(dataManager.createDoctor(doctor));
 
         assertTrue(dataManager.createDoctor(doctor));
@@ -896,11 +659,10 @@ public class JPADataManagerUnitTest {
     /**
      * Return an exception if the nurse field is null
      */
-    @Test
+    @Test(expected = NullPointerException.class)
     public void testCreateNurseNull() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
-
-        Mockito.doThrow(new NullPointerException()).when(dataManager).createNurse(null);
+        JPADataManager dataManager = new JPADataManager();
+        dataManager.createNurse(null);
     }
 
     /**
@@ -908,29 +670,30 @@ public class JPADataManagerUnitTest {
      */
     @Test
     public void testCreateNurse() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
+        JPADataManager dataManager = new JPADataManager();
 
-        Specialization pediatrie = Mockito.spy(new Specialization(SpecializationEnum.Pediatrie));
+        Specialization pediatrie = new Specialization(SpecializationEnum.Pediatrie);
 
-        NodePole nodePole = Mockito.spy(new NodePole(NodeEnum.POLE, pediatrie));
+        NodePole nodePole = new NodePole(NodeEnum.POLE, pediatrie);
         List<NodePole> poles = new ArrayList<>();
         poles.add(nodePole);
 
-        NodeHospital nodeHospital = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles));
+        NodeHospital nodeHospital = new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles);
         List<NodeHospital> hospitals = new ArrayList<>();
         hospitals.add(nodeHospital);
 
-        NodeAPHP nodeAPHP = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
+        NodeAPHP nodeAPHP = new NodeAPHP(NodeEnum.APHP, hospitals);
         nodePole.setHospital(nodeHospital);
         nodeHospital.setAPHP(nodeAPHP);
-
-        Node pole = dataManager.getNode(nodePole.getType(), nodePole.getId());
-
-        Nurse nurse = Mockito.spy(new Nurse(StaffEnum.NURSE, "Durand", "Emilie", "5 Avenue de la Republique", "emilie.durand@gmail.com", "0718547896", pole));
-
+                
         assertTrue(dataManager.createAPHP(nodeAPHP));
         assertTrue(dataManager.createHospital(nodeHospital));
         assertTrue(dataManager.createPole(nodePole));
+        
+        Node pole = dataManager.getNode(nodePole.getType(), nodePole.getId());
+
+        Nurse nurse = new Nurse(StaffEnum.NURSE, "Durand", "Emilie", "5 Avenue de la Republique", "emilie.durand@gmail.com", "0718547896", pole);
+        
         assertTrue(dataManager.createNurse(nurse));
         assertFalse(dataManager.createNurse(nurse));
     }
@@ -940,29 +703,30 @@ public class JPADataManagerUnitTest {
      */
     @Test
     public void testGetNurse() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
+        JPADataManager dataManager = new JPADataManager();
 
-        Specialization pediatrie = Mockito.spy(new Specialization(SpecializationEnum.Pediatrie));
+        Specialization pediatrie = new Specialization(SpecializationEnum.Pediatrie);
 
-        NodePole nodePole = Mockito.spy(new NodePole(NodeEnum.POLE, pediatrie));
+        NodePole nodePole = new NodePole(NodeEnum.POLE, pediatrie);
         List<NodePole> poles = new ArrayList<>();
         poles.add(nodePole);
 
-        NodeHospital nodeHospital = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles));
+        NodeHospital nodeHospital = new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles);
         List<NodeHospital> hospitals = new ArrayList<>();
         hospitals.add(nodeHospital);
 
-        NodeAPHP nodeAPHP = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
+        NodeAPHP nodeAPHP = new NodeAPHP(NodeEnum.APHP, hospitals);
         nodePole.setHospital(nodeHospital);
         nodeHospital.setAPHP(nodeAPHP);
-
-        Node pole = dataManager.getNode(nodePole.getType(), nodePole.getId());
-
-        Nurse nurseCreate = Mockito.spy(new Nurse(StaffEnum.NURSE, "Durand", "Emilie", "5 Avenue de la Republique", "emilie.durand@gmail.com", "0718547896", pole));
 
         assertTrue(dataManager.createAPHP(nodeAPHP));
         assertTrue(dataManager.createHospital(nodeHospital));
         assertTrue(dataManager.createPole(nodePole));
+        
+        Node pole = dataManager.getNode(nodePole.getType(), nodePole.getId());
+
+        Nurse nurseCreate = new Nurse(StaffEnum.NURSE, "Durand", "Emilie", "5 Avenue de la Republique", "emilie.durand@gmail.com", "0718547896", pole);
+        
         assertTrue(dataManager.createNurse(nurseCreate));
 
         Nurse nurseResult = dataManager.getNurse(nurseCreate.getId());
@@ -973,41 +737,6 @@ public class JPADataManagerUnitTest {
         assertEquals(nurseCreate.getAdress(), nurseResult.getAdress());
         assertEquals(nurseCreate.getEmail(), nurseResult.getEmail());
         assertEquals(nurseCreate.getPhoneNumber(), nurseResult.getPhoneNumber());
-        assertEquals(nurseCreate.getNode(), nurseResult.getNode());
-    }
-
-    /**
-     * Test if Nurses exists, it don't returns null
-     */
-    @Test
-    public void testGetAllNurses() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
-
-        Specialization pediatrie = Mockito.spy(new Specialization(SpecializationEnum.Pediatrie));
-
-        NodePole nodePole = Mockito.spy(new NodePole(NodeEnum.POLE, pediatrie));
-        List<NodePole> poles = new ArrayList<>();
-        poles.add(nodePole);
-
-        NodeHospital nodeHospital = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles));
-        List<NodeHospital> hospitals = new ArrayList<>();
-        hospitals.add(nodeHospital);
-
-        NodeAPHP nodeAPHP = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
-        nodePole.setHospital(nodeHospital);
-        nodeHospital.setAPHP(nodeAPHP);
-
-        Node pole = dataManager.getNode(nodePole.getType(), nodePole.getId());
-
-        Nurse nurse1 = Mockito.spy(new Nurse(StaffEnum.NURSE, "Durand", "Emilie", "5 Avenue de la Republique", "emilie.durand@gmail.com", "0718547896", pole));
-        Nurse nurse2 = Mockito.spy(new Nurse(StaffEnum.NURSE, "Dupond", "Marine", "5 Avenue de la Republique", "emilie.durand@gmail.com", "0718547896", pole));
-
-        assertTrue(dataManager.createAPHP(nodeAPHP));
-        assertTrue(dataManager.createHospital(nodeHospital));
-        assertTrue(dataManager.createPole(nodePole));
-        assertTrue(dataManager.createNurse(nurse1));
-        assertTrue(dataManager.createNurse(nurse2));
-        assertNotNull(dataManager.getAllNurses());
     }
 
     /**
@@ -1015,65 +744,32 @@ public class JPADataManagerUnitTest {
      */
     @Test
     public void testRemoveNurse() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
+        JPADataManager dataManager = new JPADataManager();
 
-        Specialization pediatrie = Mockito.spy(new Specialization(SpecializationEnum.Pediatrie));
+        Specialization pediatrie = new Specialization(SpecializationEnum.Pediatrie);
 
-        NodePole nodePole = Mockito.spy(new NodePole(NodeEnum.POLE, pediatrie));
+        NodePole nodePole = new NodePole(NodeEnum.POLE, pediatrie);
         List<NodePole> poles = new ArrayList<>();
         poles.add(nodePole);
 
-        NodeHospital nodeHospital = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles));
+        NodeHospital nodeHospital = new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles);
         List<NodeHospital> hospitals = new ArrayList<>();
         hospitals.add(nodeHospital);
 
-        NodeAPHP nodeAPHP = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
+        NodeAPHP nodeAPHP = new NodeAPHP(NodeEnum.APHP, hospitals);
         nodePole.setHospital(nodeHospital);
         nodeHospital.setAPHP(nodeAPHP);
-
-        Node pole = dataManager.getNode(nodePole.getType(), nodePole.getId());
-
-        Nurse nurse = Mockito.spy(new Nurse(StaffEnum.NURSE, "Durand", "Emilie", "5 Avenue de la Republique", "emilie.durand@gmail.com", "0718547896", pole));
 
         assertTrue(dataManager.createAPHP(nodeAPHP));
         assertTrue(dataManager.createHospital(nodeHospital));
         assertTrue(dataManager.createPole(nodePole));
+        
+        Node pole = dataManager.getNode(nodePole.getType(), nodePole.getId());
+
+        Nurse nurse = new Nurse(StaffEnum.NURSE, "Durand", "Emilie", "5 Avenue de la Republique", "emilie.durand@gmail.com", "0718547896", pole);
+        
         assertTrue(dataManager.createNurse(nurse));
         assertTrue(dataManager.removeNurse(nurse.getId()));
         assertFalse(dataManager.removeNurse(nurse.getId()));
-    }
-
-    /**
-     * Test if Staff exists, it don't returns null
-     */
-    @Test
-    public void testGetStaff() {
-        JPADataManager dataManager = Mockito.spy(new JPADataManager());
-
-        Specialization pediatrie = Mockito.spy(new Specialization(SpecializationEnum.Pediatrie));
-
-        NodePole nodePole = Mockito.spy(new NodePole(NodeEnum.POLE, pediatrie));
-        List<NodePole> poles = new ArrayList<>();
-        poles.add(nodePole);
-
-        NodeHospital nodeHospital = Mockito.spy(new NodeHospital(NodeEnum.HOSPITAL, "Hôpital de Paris", poles));
-        List<NodeHospital> hospitals = new ArrayList<>();
-        hospitals.add(nodeHospital);
-
-        NodeAPHP nodeAPHP = Mockito.spy(new NodeAPHP(NodeEnum.APHP, hospitals));
-        nodePole.setHospital(nodeHospital);
-        nodeHospital.setAPHP(nodeAPHP);
-
-        Node pole = dataManager.getNode(nodePole.getType(), nodePole.getId());
-
-        Nurse nurse = Mockito.spy(new Nurse(StaffEnum.NURSE, "Durand", "Emilie", "5 Avenue de la Republique", "emilie.durand@gmail.com", "0718547896", pole));
-        Doctor doctor = Mockito.spy(new Doctor(StaffEnum.DOCTOR, "Dupond", "Patrick", "5 Avenue de Paris", "patoche@gmail.com", "0718548716", pole, pediatrie));
-
-        assertTrue(dataManager.createAPHP(nodeAPHP));
-        assertTrue(dataManager.createHospital(nodeHospital));
-        assertTrue(dataManager.createPole(nodePole));
-        assertTrue(dataManager.createDoctor(doctor));
-        assertTrue(dataManager.createNurse(nurse));
-        assertNotNull(dataManager.getStaff());
     }
 }

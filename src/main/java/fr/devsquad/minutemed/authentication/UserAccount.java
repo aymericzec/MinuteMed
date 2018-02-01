@@ -6,6 +6,7 @@ import fr.devsquad.minutemed.staff.MedicalStaff;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -21,7 +22,7 @@ public class UserAccount implements Serializable {
     private String username;
     private String password; //encrypted password
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idStaff")
     private MedicalStaff user;
 

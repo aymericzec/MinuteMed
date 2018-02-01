@@ -3,6 +3,7 @@ package fr.devsquad.minutemed.arborescence;
 import fr.devsquad.minutemed.database.JPADataManager;
 import fr.devsquad.minutemed.specialization.Specialization;
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +19,7 @@ public class NodeCU implements Serializable, INode {
     private String type;
     private String specialization;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private NodeHU hu;
     
     public NodeCU() { }
