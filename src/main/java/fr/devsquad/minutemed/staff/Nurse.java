@@ -2,7 +2,13 @@ package fr.devsquad.minutemed.staff;
 
 import fr.devsquad.minutemed.arborescence.INode;
 import fr.devsquad.minutemed.arborescence.Node;
+import fr.devsquad.minutemed.arborescence.NodeEnum;
+import fr.devsquad.minutemed.arborescence.NodeHU;
+import fr.devsquad.minutemed.arborescence.NodeHospital;
+import fr.devsquad.minutemed.arborescence.NodePole;
+import fr.devsquad.minutemed.arborescence.NodeService;
 import fr.devsquad.minutemed.database.INurse;
+import fr.devsquad.minutemed.database.JPADataManager;
 import fr.devsquad.minutemed.database.JPANurse;
 import fr.devsquad.minutemed.dmp.MedicalRecord;
 import fr.devsquad.minutemed.dmp.Dosage;
@@ -200,8 +206,56 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
         if(idMedicalRecord<0){
             throw new IllegalArgumentException();
         }
+        JPADataManager manager = new JPADataManager();
         JPANurse nurse = new JPANurse();
-        return nurse.getMedicalRecord(idMedicalRecord);
+        
+        MedicalRecord mRecord = nurse.getMedicalRecord(idMedicalRecord);
+        
+        if(node.getType().equals(NodeEnum.HOSPITAL.name())) {
+            
+            NodeHospital hospital = manager.getHospital(node.getIdNodeInfo());
+            
+            for(INode node : hospital.getAttachedNodes()) {
+                if(node.getId() == mRecord.getId()) {
+                    return mRecord;
+                }
+            }
+        }
+        
+        if(node.getType().equals(NodeEnum.POLE.name())) {
+            
+            NodePole pole = manager.getPole(node.getIdNodeInfo());
+            
+            for(INode node : pole.getAttachedNodes()) {
+                if(node.getId() == mRecord.getId()) {
+                    return mRecord;
+                }
+            }
+        }
+        
+        if(node.getType().equals(NodeEnum.SERVICE.name())) {
+            
+            NodeService service = manager.getService(node.getIdNodeInfo());
+            
+            for(INode node : service.getAttachedNodes()) {
+                if(node.getId() == mRecord.getId()) {
+                    return mRecord;
+                }
+            }
+        }
+        
+        if(node.getType().equals(NodeEnum.HOSPITAL_UNIT.name())) {
+            
+            NodeHU hu = manager.getHospitalUnit(node.getIdNodeInfo());
+            
+            for(INode node : hu.getAttachedNodes()) {
+                if(node.getId() == mRecord.getId()) {
+                    return mRecord;
+                }
+            }
+        }
+         
+        return null;
     }
 
     /**

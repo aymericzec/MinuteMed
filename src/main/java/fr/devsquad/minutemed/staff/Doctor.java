@@ -2,8 +2,16 @@ package fr.devsquad.minutemed.staff;
 
 import fr.devsquad.minutemed.arborescence.INode;
 import fr.devsquad.minutemed.arborescence.Node;
+import fr.devsquad.minutemed.arborescence.NodeAPHP;
+import fr.devsquad.minutemed.arborescence.NodeCU;
+import fr.devsquad.minutemed.arborescence.NodeEnum;
+import fr.devsquad.minutemed.arborescence.NodeHU;
+import fr.devsquad.minutemed.arborescence.NodeHospital;
+import fr.devsquad.minutemed.arborescence.NodePole;
+import fr.devsquad.minutemed.arborescence.NodeService;
 import fr.devsquad.minutemed.database.IDoctor;
 import fr.devsquad.minutemed.database.INurse;
+import fr.devsquad.minutemed.database.JPADataManager;
 import fr.devsquad.minutemed.database.JPADoctor;
 import fr.devsquad.minutemed.dmp.Diagnostic;
 import fr.devsquad.minutemed.dmp.Dosage;
@@ -227,6 +235,23 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
         
         JPADoctor doctor = new JPADoctor();
         return doctor.createMedicalRecord(medicalRecord);
+    }
+    
+    /**
+     * Change a Node MedicalRecord 
+     * 
+     * @param idMedicalRecord The id of the MedicalRecord
+     * @param hu The Node to affect them
+     * @return True if the medicalRecord don't exists in the database, or false
+     */
+    @Override
+    public boolean changeNodeMedicalRecord(long idMedicalRecord, NodeHU hu) {
+        
+        if(node.getIdNodeInfo() == hu.getId()) {
+            JPADoctor doctor = new JPADoctor();
+            return doctor.changeNodeMedicalRecord(idMedicalRecord, hu);
+        }
+        return false;
     }
 
     /**
@@ -516,8 +541,56 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
         if(idMedicalRecord<0){
             throw new IllegalArgumentException();
         }
+        JPADataManager manager = new JPADataManager();
         JPADoctor doctor = new JPADoctor();
-        return doctor.getMedicalRecord(idMedicalRecord);
+        
+        MedicalRecord mRecord = doctor.getMedicalRecord(idMedicalRecord);
+        
+        if(node.getType().equals(NodeEnum.HOSPITAL.name())) {
+            
+            NodeHospital hospital = manager.getHospital(node.getIdNodeInfo());
+            
+            for(INode node : hospital.getAttachedNodes()) {
+                if(node.getId() == mRecord.getId()) {
+                    return mRecord;
+                }
+            }
+        }
+        
+        if(node.getType().equals(NodeEnum.POLE.name())) {
+            
+            NodePole pole = manager.getPole(node.getIdNodeInfo());
+            
+            for(INode node : pole.getAttachedNodes()) {
+                if(node.getId() == mRecord.getId()) {
+                    return mRecord;
+                }
+            }
+        }
+        
+        if(node.getType().equals(NodeEnum.SERVICE.name())) {
+            
+            NodeService service = manager.getService(node.getIdNodeInfo());
+            
+            for(INode node : service.getAttachedNodes()) {
+                if(node.getId() == mRecord.getId()) {
+                    return mRecord;
+                }
+            }
+        }
+        
+        if(node.getType().equals(NodeEnum.HOSPITAL_UNIT.name())) {
+            
+            NodeHU hu = manager.getHospitalUnit(node.getIdNodeInfo());
+            
+            for(INode node : hu.getAttachedNodes()) {
+                if(node.getId() == mRecord.getId()) {
+                    return mRecord;
+                }
+            }
+        }
+         
+        return null;
     }
 
     /**

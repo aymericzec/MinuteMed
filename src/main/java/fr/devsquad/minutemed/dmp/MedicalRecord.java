@@ -1,14 +1,14 @@
 package fr.devsquad.minutemed.dmp;
 
+import fr.devsquad.minutemed.arborescence.NodeHU;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -27,12 +27,15 @@ public class MedicalRecord implements Serializable {
     private String gender;
     private String phoneNumber;
     private String email;
+    @OneToOne
+    @JoinColumn(name = "idHu")
+    private NodeHU hu;
 
     public MedicalRecord() {
 
     }
 
-    public MedicalRecord(String ss, String firstName, String lastName, String address, String email, String phoneNumber, String birthday, String gender) {
+    public MedicalRecord(String ss, String firstName, String lastName, String address, String email, String phoneNumber, String birthday, String gender, NodeHU hu) {
         this.ss = Objects.requireNonNull(ss);
         this.firstName = Objects.requireNonNull(firstName);
         this.lastName = Objects.requireNonNull(lastName);
@@ -41,6 +44,7 @@ public class MedicalRecord implements Serializable {
         this.phoneNumber = Objects.requireNonNull(phoneNumber);
         this.birthday = Objects.requireNonNull(birthday);
         this.gender = Objects.requireNonNull(gender);
+        this.hu = Objects.requireNonNull(hu);
     }
 
     public long getId() {
@@ -78,5 +82,13 @@ public class MedicalRecord implements Serializable {
     public String getEmail() {
         return email;
     }
+    
+    public NodeHU getHU() {
+        return hu;
+    }
+    
+    public void setHU(NodeHU hu) {
+        this.hu = hu;
+    } 
 
 }

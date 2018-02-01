@@ -2,6 +2,7 @@ package fr.devsquad.minutemed.arborescence;
 
 import fr.devsquad.minutemed.database.JPADataManager;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,23 +13,25 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class NodeHospital implements Serializable, INode {
-    
-    @Id @GeneratedValue
+
+    @Id
+    @GeneratedValue
     @Column(name = "idHospital")
     private long id;
     private String type;
     private String name;
-    
+
     @ManyToOne
     private NodeAPHP aphp;
     @OneToMany(mappedBy = "hospital")
     private List<NodePole> poles;
-    
-    public NodeHospital() { }
-    
+
+    public NodeHospital() {
+    }
+
     /**
      * Constructor if there don't have poles in this hospital
-     * 
+     *
      * @param type Type of the node
      * @param name Name of the hospital
      */
@@ -38,10 +41,10 @@ public class NodeHospital implements Serializable, INode {
         this.aphp = null;
         this.poles = null;
     }
-    
+
     /**
      * Constructor to attach poles
-     * 
+     *
      * @param type Type of the node
      * @param name Name of the hospital
      * @param poles List of poles attached to this node
@@ -62,26 +65,43 @@ public class NodeHospital implements Serializable, INode {
     public String getType() {
         return type;
     }
-    
+
     public String getName() {
         return name;
     }
-    
+
     public NodeAPHP getAPHP() {
         return aphp;
     }
-    
+
     public List<NodePole> getPoles() {
         return poles;
     }
-    
+
     public void setAPHP(NodeAPHP aphp) {
         this.aphp = aphp;
     }
-    
+
     @Override
     public Node getNode() {
         JPADataManager dataManager = new JPADataManager();
         return dataManager.getNode(type, id);
+    }
+
+    /**
+     * Get all the nodes attached with them
+     *
+     * @return A List of INode
+     */
+    public List<INode> getAttachedNodes() {
+
+        List<INode> nodes = new ArrayList<>();
+
+        for (NodePole p : poles) {
+            for (INode node : p.getAttachedNodes()) {
+                nodes.add(node);
+            }
+        }
+        return nodes;
     }
 }

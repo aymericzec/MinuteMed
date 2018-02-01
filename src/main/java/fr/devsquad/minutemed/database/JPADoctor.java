@@ -1,5 +1,6 @@
 package fr.devsquad.minutemed.database;
 
+import fr.devsquad.minutemed.arborescence.NodeHU;
 import fr.devsquad.minutemed.dmp.Diagnostic;
 import fr.devsquad.minutemed.dmp.Dosage;
 import fr.devsquad.minutemed.dmp.Exam;
@@ -53,6 +54,27 @@ public class JPADoctor implements IDoctor, INurse {
             em.persist(medicalRecord);
             et.commit();
         } catch (EntityExistsException e) {
+            return false;
+        }
+        return true;
+    }
+    
+    /**
+     * Change a Node MedicalRecord 
+     * 
+     * @param idMedicalRecord The id of the MedicalRecord
+     * @param hu The Node to affect them
+     * @return True if the medicalRecord don't exists in the database, or false
+     */
+    @Override
+    public boolean changeNodeMedicalRecord(long idMedicalRecord, NodeHU hu) {
+        
+        try {
+            et.begin();
+            MedicalRecord mRecord = em.find(MedicalRecord.class, idMedicalRecord);
+            mRecord.setHU(hu);
+            et.commit();
+        } catch(EntityNotFoundException e) {
             return false;
         }
         return true;
