@@ -5,45 +5,49 @@
  */
 package fr.devsquad.minutemed.rest.authentication;
 
-import javax.ejb.EJB;
-import javax.ejb.NoSuchEntityException;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-import java.net.URI;
-import java.util.List;
-
+import java.io.IOException;
 
 /**
  *
  * @author myfou
  */
+@Path("/auth")
+@Api(description = "Speakers REST Endpoint")
 public class AuthenticationService {
-    /*@EJB
-    private BookRepository repository;
-
-    @Context
-    private UriInfo uriInfo;
-
+    
     @POST
+    @Path("/login")
+    @ApiOperation(value = "login to the conference")
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "The speaker is created"),
+        @ApiResponse(code = 400, message = "Invalid input")}
+    )
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response login(Book book) {
-        repository.save(book);
-        URI bookUri = uriInfo.getBaseUriBuilder().path(BookRestService.class).path(book.getId().toString()).build();
-        return Response.created(bookUri).build();
+    public Response login() throws IOException {
+        System.out.println("POST");
+        
+        return Response.ok("{\"name\":login}").build();
     }
-
+    
     @POST
-    @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response logout(@PathParam("id") Long id) {
-        try {
-            repository.delete(id);
-        } catch (NoSuchEntityException e) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-        return Response.noContent().build();
-    }    */
+    @ApiOperation(value = "logout to the conference")
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "The speaker is created"),
+        @ApiResponse(code = 400, message = "Invalid input")}
+    )
+    @Path("/logout")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response logout() throws IOException {
+        System.out.println("POST");
+        
+        return Response.ok("{\"name\":logout}").build();
+    }
+     
 }
