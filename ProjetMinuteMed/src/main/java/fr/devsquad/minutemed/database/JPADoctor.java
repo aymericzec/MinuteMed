@@ -1,14 +1,14 @@
 package fr.devsquad.minutemed.database;
 
-import fr.devsquad.minutemed.arborescence.NodeHU;
-import fr.devsquad.minutemed.dmp.Diagnostic;
-import fr.devsquad.minutemed.dmp.Dosage;
-import fr.devsquad.minutemed.dmp.Exam;
-import fr.devsquad.minutemed.dmp.MedicalRecord;
-import fr.devsquad.minutemed.dmp.Prescription;
-import fr.devsquad.minutemed.staff.Doctor;
-import fr.devsquad.minutemed.staff.MedicalStaff;
-import fr.devsquad.minutemed.staff.Nurse;
+import fr.devsquad.minutemed.arborescence.domain.NodeHU;
+import fr.devsquad.minutemed.dmp.domain.Diagnostic;
+import fr.devsquad.minutemed.dmp.domain.Dosage;
+import fr.devsquad.minutemed.dmp.domain.Exam;
+import fr.devsquad.minutemed.dmp.domain.MedicalRecord;
+import fr.devsquad.minutemed.dmp.domain.Prescription;
+import fr.devsquad.minutemed.staff.domain.Doctor;
+import fr.devsquad.minutemed.staff.domain.MedicalStaff;
+import fr.devsquad.minutemed.staff.domain.Nurse;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.EntityExistsException;

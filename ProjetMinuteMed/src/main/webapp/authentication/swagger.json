@@ -12,6 +12,49 @@
   } ],
   "schemes" : [ "http", "https" ],
   "paths" : {
+    "/auth/create" : {
+      "post" : {
+        "tags" : [ "Authentication REST Endpoint" ],
+        "summary" : "Create an user account",
+        "description" : "",
+        "operationId" : "createUser",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "201" : {
+            "description" : "The User Account is created."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/auth/delete/{idAccount}" : {
+      "delete" : {
+        "tags" : [ "Authentication REST Endpoint" ],
+        "summary" : "logout to the application",
+        "description" : "",
+        "operationId" : "deleteUser",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idAccount",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The User Account is deleted."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
     "/auth/login" : {
       "post" : {
         "tags" : [ "Authentication REST Endpoint" ],
@@ -19,6 +62,7 @@
         "description" : "",
         "operationId" : "login",
         "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
         "responses" : {
           "201" : {
             "description" : "You are login"
@@ -36,9 +80,10 @@
         "description" : "",
         "operationId" : "logout",
         "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
         "responses" : {
           "201" : {
-            "description" : "The speaker is created"
+            "description" : "You are logout"
           },
           "400" : {
             "description" : "Invalid input"

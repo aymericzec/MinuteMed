@@ -744,14 +744,14 @@
           "type" : "boolean",
           "default" : false
         },
-        "lastReport" : {
-          "$ref" : "#/definitions/ReportDosage"
-        },
         "repport" : {
           "type" : "array",
           "items" : {
             "$ref" : "#/definitions/ReportDosage"
           }
+        },
+        "lastReport" : {
+          "$ref" : "#/definitions/ReportDosage"
         }
       }
     },
@@ -933,16 +933,16 @@
         "service" : {
           "$ref" : "#/definitions/NodeService"
         },
-        "attachedNodes" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/INode"
-          }
-        },
         "careUnits" : {
           "type" : "array",
           "items" : {
             "$ref" : "#/definitions/NodeCU"
+          }
+        },
+        "attachedNodes" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/INode"
           }
         },
         "node" : {
@@ -1032,16 +1032,16 @@
         "pole" : {
           "$ref" : "#/definitions/NodePole"
         },
-        "attachedNodes" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/INode"
-          }
-        },
         "hospitalUnits" : {
           "type" : "array",
           "items" : {
             "$ref" : "#/definitions/NodeHU"
+          }
+        },
+        "attachedNodes" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/INode"
           }
         },
         "node" : {

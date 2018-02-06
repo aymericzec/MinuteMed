@@ -5,12 +5,12 @@
  */
 package fr.devsquad.minutemed.main;
 
-import fr.devsquad.minutemed.arborescence.NodeEnum;
-import fr.devsquad.minutemed.arborescence.NodeHospital;
-import fr.devsquad.minutemed.specialization.Specialization;
-import fr.devsquad.minutemed.specialization.SpecializationEnum;
-import fr.devsquad.minutemed.staff.DataManager;
-import fr.devsquad.minutemed.staff.StaffEnum;
+import fr.devsquad.minutemed.arborescence.domain.NodeEnum;
+import fr.devsquad.minutemed.arborescence.domain.NodeHospital;
+import fr.devsquad.minutemed.specialization.domain.Specialization;
+import fr.devsquad.minutemed.specialization.domain.SpecializationEnum;
+import fr.devsquad.minutemed.staff.domain.DataManager;
+import fr.devsquad.minutemed.staff.domain.StaffEnum;
 
 /**
  *

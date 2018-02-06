@@ -187,7 +187,7 @@
                         <apiSource>
                             <springmvc>false</springmvc>
                             <locations>
-                                <location>fr.devsquad.minutemed.rest.authentication</location>
+                                <location>fr.devsquad.minutemed.authentication.rest</location>
                             </locations>
                             <schemes>
                                 <scheme>http</scheme>  
@@ -206,7 +206,7 @@
                         <apiSource>
                             <springmvc>false</springmvc>
                             <locations>
-                                <location>fr.devsquad.minutemed.rest.dmp</location>
+                                <location>fr.devsquad.minutemed.dmp.rest</location>
                             </locations>
                             <schemes>
                                 <scheme>http</scheme>  

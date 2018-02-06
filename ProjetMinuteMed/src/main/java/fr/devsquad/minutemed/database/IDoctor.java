@@ -1,11 +1,11 @@
 package fr.devsquad.minutemed.database;
 
-import fr.devsquad.minutemed.arborescence.NodeHU;
-import fr.devsquad.minutemed.dmp.Diagnostic;
-import fr.devsquad.minutemed.dmp.Dosage;
-import fr.devsquad.minutemed.dmp.Exam;
-import fr.devsquad.minutemed.dmp.MedicalRecord;
-import fr.devsquad.minutemed.dmp.Prescription;
+import fr.devsquad.minutemed.arborescence.domain.NodeHU;
+import fr.devsquad.minutemed.dmp.domain.Diagnostic;
+import fr.devsquad.minutemed.dmp.domain.Dosage;
+import fr.devsquad.minutemed.dmp.domain.Exam;
+import fr.devsquad.minutemed.dmp.domain.MedicalRecord;
+import fr.devsquad.minutemed.dmp.domain.Prescription;
 import java.util.List;
 
 

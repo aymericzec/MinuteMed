@@ -1,9 +1,9 @@
 package fr.devsquad.minutemed.database;
 
-import fr.devsquad.minutemed.dmp.Dosage;
-import fr.devsquad.minutemed.dmp.MedicalRecord;
-import fr.devsquad.minutemed.staff.Doctor;
-import fr.devsquad.minutemed.staff.Nurse;
+import fr.devsquad.minutemed.dmp.domain.Dosage;
+import fr.devsquad.minutemed.dmp.domain.MedicalRecord;
+import fr.devsquad.minutemed.staff.domain.Doctor;
+import fr.devsquad.minutemed.staff.domain.Nurse;
 import java.util.List;
 import java.util.function.Predicate;
 

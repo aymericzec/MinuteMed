@@ -1,19 +1,19 @@
 package fr.devsquad.minutemed.database;
 
-import fr.devsquad.minutemed.arborescence.INode;
-import fr.devsquad.minutemed.arborescence.Node;
-import fr.devsquad.minutemed.arborescence.NodeAPHP;
-import fr.devsquad.minutemed.arborescence.NodeCU;
-import fr.devsquad.minutemed.arborescence.NodeHU;
-import fr.devsquad.minutemed.arborescence.NodeHospital;
-import fr.devsquad.minutemed.arborescence.NodePole;
-import fr.devsquad.minutemed.arborescence.NodeService;
-import fr.devsquad.minutemed.authentication.UserAccount;
-import fr.devsquad.minutemed.specialization.Specialization;
-import fr.devsquad.minutemed.staff.Doctor;
-import fr.devsquad.minutemed.staff.IHospitalStaff;
-import fr.devsquad.minutemed.staff.MedicalStaff;
-import fr.devsquad.minutemed.staff.Nurse;
+import fr.devsquad.minutemed.arborescence.domain.INode;
+import fr.devsquad.minutemed.arborescence.domain.Node;
+import fr.devsquad.minutemed.arborescence.domain.NodeAPHP;
+import fr.devsquad.minutemed.arborescence.domain.NodeCU;
+import fr.devsquad.minutemed.arborescence.domain.NodeHU;
+import fr.devsquad.minutemed.arborescence.domain.NodeHospital;
+import fr.devsquad.minutemed.arborescence.domain.NodePole;
+import fr.devsquad.minutemed.arborescence.domain.NodeService;
+import fr.devsquad.minutemed.authentication.domain.UserAccount;
+import fr.devsquad.minutemed.specialization.domain.Specialization;
+import fr.devsquad.minutemed.staff.domain.Doctor;
+import fr.devsquad.minutemed.staff.domain.IHospitalStaff;
+import fr.devsquad.minutemed.staff.domain.MedicalStaff;
+import fr.devsquad.minutemed.staff.domain.Nurse;
 import java.util.List;
 
 

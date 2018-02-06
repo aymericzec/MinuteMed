@@ -1,8 +1,8 @@
 package fr.devsquad.minutemed.application;
 
-import fr.devsquad.minutemed.rest.authentication.*;
-import fr.devsquad.minutemed.rest.dmp.MedicalRecordService;
-import fr.devsquad.minutemed.rest.filters.*;
+import fr.devsquad.minutemed.filters.rest.CORSFilter;
+import fr.devsquad.minutemed.authentication.rest.AuthenticationService;
+import fr.devsquad.minutemed.dmp.rest.MedicalRecordService;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 import javax.ws.rs.ApplicationPath;

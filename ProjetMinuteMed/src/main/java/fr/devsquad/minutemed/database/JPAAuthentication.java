@@ -1,6 +1,6 @@
 package fr.devsquad.minutemed.database;
 
-import fr.devsquad.minutemed.authentication.UserAccount;
+import fr.devsquad.minutemed.authentication.domain.UserAccount;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
