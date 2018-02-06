@@ -19,14 +19,14 @@ import java.io.IOException;
  * @author myfou
  */
 @Path("/auth")
-@Api(description = "Speakers REST Endpoint")
+@Api("Authentication REST Endpoint")
 public class AuthenticationService {
     
     @POST
     @Path("/login")
-    @ApiOperation(value = "login to the conference")
+    @ApiOperation(value = "login to the application")
     @ApiResponses(value = {
-        @ApiResponse(code = 201, message = "The speaker is created"),
+        @ApiResponse(code = 201, message = "You are login"),
         @ApiResponse(code = 400, message = "Invalid input")}
     )
     @Consumes(MediaType.APPLICATION_JSON)
@@ -37,7 +37,7 @@ public class AuthenticationService {
     }
     
     @POST
-    @ApiOperation(value = "logout to the conference")
+    @ApiOperation(value = "logout to the application")
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "The speaker is created"),
         @ApiResponse(code = 400, message = "Invalid input")}

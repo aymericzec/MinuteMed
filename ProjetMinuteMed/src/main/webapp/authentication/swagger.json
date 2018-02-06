@@ -1,0 +1,50 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Gives all the details of the authentications",
+    "version" : "1.0.0",
+    "title" : "AuthenticationAPI"
+  },
+  "host" : "localhost:8080",
+  "basePath" : "/api",
+  "tags" : [ {
+    "name" : "Authentication REST Endpoint"
+  } ],
+  "schemes" : [ "http", "https" ],
+  "paths" : {
+    "/auth/login" : {
+      "post" : {
+        "tags" : [ "Authentication REST Endpoint" ],
+        "summary" : "login to the application",
+        "description" : "",
+        "operationId" : "login",
+        "consumes" : [ "application/json" ],
+        "responses" : {
+          "201" : {
+            "description" : "You are login"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/auth/logout" : {
+      "post" : {
+        "tags" : [ "Authentication REST Endpoint" ],
+        "summary" : "logout to the application",
+        "description" : "",
+        "operationId" : "logout",
+        "consumes" : [ "application/json" ],
+        "responses" : {
+          "201" : {
+            "description" : "The speaker is created"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    }
+  }
+}
