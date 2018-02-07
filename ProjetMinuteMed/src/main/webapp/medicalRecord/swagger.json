@@ -744,14 +744,14 @@
           "type" : "boolean",
           "default" : false
         },
+        "lastReport" : {
+          "$ref" : "#/definitions/ReportDosage"
+        },
         "repport" : {
           "type" : "array",
           "items" : {
             "$ref" : "#/definitions/ReportDosage"
           }
-        },
-        "lastReport" : {
-          "$ref" : "#/definitions/ReportDosage"
         }
       }
     },
@@ -795,9 +795,6 @@
         },
         "type" : {
           "type" : "string"
-        },
-        "node" : {
-          "$ref" : "#/definitions/Node"
         }
       }
     },
@@ -855,6 +852,7 @@
     },
     "Node" : {
       "type" : "object",
+      "required" : [ "idNodeInfo", "type" ],
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -890,14 +888,12 @@
           "items" : {
             "$ref" : "#/definitions/INode"
           }
-        },
-        "node" : {
-          "$ref" : "#/definitions/Node"
         }
       }
     },
     "NodeCU" : {
       "type" : "object",
+      "required" : [ "specialization", "type" ],
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -911,14 +907,12 @@
         },
         "hospitalUnit" : {
           "$ref" : "#/definitions/NodeHU"
-        },
-        "node" : {
-          "$ref" : "#/definitions/Node"
         }
       }
     },
     "NodeHU" : {
       "type" : "object",
+      "required" : [ "specialization", "type" ],
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -944,14 +938,12 @@
           "items" : {
             "$ref" : "#/definitions/INode"
           }
-        },
-        "node" : {
-          "$ref" : "#/definitions/Node"
         }
       }
     },
     "NodeHospital" : {
       "type" : "object",
+      "required" : [ "name", "type" ],
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -977,14 +969,12 @@
           "items" : {
             "$ref" : "#/definitions/INode"
           }
-        },
-        "node" : {
-          "$ref" : "#/definitions/Node"
         }
       }
     },
     "NodePole" : {
       "type" : "object",
+      "required" : [ "specialization", "type" ],
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -1010,14 +1000,12 @@
           "items" : {
             "$ref" : "#/definitions/INode"
           }
-        },
-        "node" : {
-          "$ref" : "#/definitions/Node"
         }
       }
     },
     "NodeService" : {
       "type" : "object",
+      "required" : [ "specialization", "type" ],
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -1032,20 +1020,17 @@
         "pole" : {
           "$ref" : "#/definitions/NodePole"
         },
-        "hospitalUnits" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/NodeHU"
-          }
-        },
         "attachedNodes" : {
           "type" : "array",
           "items" : {
             "$ref" : "#/definitions/INode"
           }
         },
-        "node" : {
-          "$ref" : "#/definitions/Node"
+        "hospitalUnits" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/NodeHU"
+          }
         }
       }
     },

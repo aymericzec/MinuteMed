@@ -8,5 +8,5 @@ public interface INode {
     
     public String getType();
     
-    public Node getNode();
+    //public Node getNode();
 }

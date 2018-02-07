@@ -1,5 +1,6 @@
 package fr.devsquad.minutemed.application;
 
+import fr.devsquad.minutemed.arborescence.rest.ArborescenceService;
 import fr.devsquad.minutemed.filters.rest.CORSFilter;
 import fr.devsquad.minutemed.authentication.rest.AuthenticationService;
 import fr.devsquad.minutemed.dmp.rest.MedicalRecordService;
@@ -18,6 +19,7 @@ public class ApplicationConfig extends Application {
     public ApplicationConfig() {
         HashSet<Class<?>> c = new HashSet<>();
         c.add(JacksonFeature.class);
+        c.add(ArborescenceService.class);
         c.add(MedicalRecordService.class);
         c.add(AuthenticationService.class);
         //c.add(ImageService.class);

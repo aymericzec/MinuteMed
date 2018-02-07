@@ -1,5 +1,7 @@
 package fr.devsquad.minutemed.arborescence.domain;
 
+import com.sun.istack.NotNull;
+import static fr.devsquad.minutemed.arborescence.domain.NodeAPHP.FIND_ALL_NODEAPHP;
 import fr.devsquad.minutemed.database.JPADataManager;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,18 +11,24 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 @Entity
+@NamedQuery(name = FIND_ALL_NODEAPHP, query = "SELECT aphp FROM NodeAPHP aphp")
 public class NodeAPHP implements Serializable, INode {
 
+    public static final String FIND_ALL_NODEAPHP = "NodeAPHP.findAllNodeAPHP";
+    
     @Id
     @GeneratedValue
     @Column(name = "idAPHP")
     private long id;
+    
+    @NotNull
     private String type;
 
-    @OneToMany(mappedBy = "aphp", cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<NodeHospital> hospitals;
 
     public NodeAPHP() {
@@ -51,11 +59,11 @@ public class NodeAPHP implements Serializable, INode {
         return hospitals;
     }
 
-    @Override
+    /*@Override
     public Node getNode() {
         JPADataManager dataManager = new JPADataManager();
         return dataManager.getNode(type, id);
-    }
+    }*/
 
     /**
      * Get all the nodes attached with them

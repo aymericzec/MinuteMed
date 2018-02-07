@@ -1,5 +1,6 @@
 package fr.devsquad.minutemed.arborescence.domain;
 
+import static fr.devsquad.minutemed.arborescence.domain.NodeService.FIND_ALL_NODESERVICE;
 import fr.devsquad.minutemed.database.JPADataManager;
 import fr.devsquad.minutemed.specialization.domain.Specialization;
 import java.io.Serializable;
@@ -11,21 +12,31 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 @Entity
+@NamedQuery(name = FIND_ALL_NODESERVICE, query = "SELECT service FROM NodeService service")
 public class NodeService implements Serializable, INode {
 
+    public static final String FIND_ALL_NODESERVICE = "NodeService.findAllNodeService";
+    
     @Id
     @GeneratedValue
     @Column(name = "idService")
     private long id;
+    
+    @NotNull
     private String type;
+    
+    @NotNull
     private String specialization;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private NodePole pole;
-    @OneToMany(mappedBy = "service", cascade = CascadeType.PERSIST)
+    @NotNull
+    private long pole;
+    
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<NodeHU> hu;
 
     public NodeService() {
@@ -40,7 +51,6 @@ public class NodeService implements Serializable, INode {
     public NodeService(NodeEnum type, Specialization specialization) {
         this.type = type.SERVICE.name();
         this.specialization = specialization.getGeneralName();
-        this.pole = null;
         this.hu = null;
     }
 
@@ -54,7 +64,6 @@ public class NodeService implements Serializable, INode {
     public NodeService(NodeEnum type, Specialization specialization, List<NodeHU> hu) {
         this.type = type.SERVICE.name();
         this.specialization = specialization.getGeneralName();
-        this.pole = null;
         this.hu = hu;
     }
 
@@ -72,7 +81,7 @@ public class NodeService implements Serializable, INode {
         return specialization;
     }
 
-    public NodePole getPole() {
+    public long getPole() {
         return pole;
     }
 
@@ -80,15 +89,15 @@ public class NodeService implements Serializable, INode {
         return hu;
     }
 
-    public void setPole(NodePole pole) {
+    public void setPole(long pole) {
         this.pole = pole;
     }
 
-    @Override
+    /*@Override
     public Node getNode() {
         JPADataManager dataManager = new JPADataManager();
         return dataManager.getNode(type, id);
-    }
+    }*/
 
     /**
      * Get all the nodes attached with them

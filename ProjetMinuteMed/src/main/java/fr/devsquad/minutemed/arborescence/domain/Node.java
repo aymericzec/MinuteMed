@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Node implements Serializable {
@@ -12,7 +13,11 @@ public class Node implements Serializable {
     @Id @GeneratedValue
     @Column(name = "idNode")
     private long id;
+    
+    @NotNull
     private String type;
+    
+    @NotNull
     private long idNodeInfo;
     
     public Node() { }

@@ -1,5 +1,6 @@
 package fr.devsquad.minutemed.arborescence.domain;
 
+import static fr.devsquad.minutemed.arborescence.domain.NodeHospital.FIND_ALL_NODEHOSPITAL;
 import fr.devsquad.minutemed.database.JPADataManager;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,21 +11,28 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 @Entity
+@NamedQuery(name = FIND_ALL_NODEHOSPITAL, query = "SELECT hospital FROM NodeHospital hospital")
 public class NodeHospital implements Serializable, INode {
 
+    public static final String FIND_ALL_NODEHOSPITAL = "NodeHospital.findAllNodeHospital";
+    
     @Id
     @GeneratedValue
     @Column(name = "idHospital")
     private long id;
+    
+    @NotNull
     private String type;
+    
+    @NotNull
     private String name;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private NodeAPHP aphp;
-    @OneToMany(mappedBy = "hospital", cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<NodePole> poles;
 
     public NodeHospital() {
@@ -39,7 +47,6 @@ public class NodeHospital implements Serializable, INode {
     public NodeHospital(NodeEnum type, String name) {
         this.type = type.HOSPITAL.name();
         this.name = name;
-        this.aphp = null;
         this.poles = null;
     }
 
@@ -53,7 +60,6 @@ public class NodeHospital implements Serializable, INode {
     public NodeHospital(NodeEnum type, String name, List<NodePole> poles) {
         this.type = type.HOSPITAL.name();
         this.name = name;
-        this.aphp = null;
         this.poles = poles;
     }
 
@@ -71,23 +77,19 @@ public class NodeHospital implements Serializable, INode {
         return name;
     }
 
-    public NodeAPHP getAPHP() {
+    /*public NodeAPHP getAPHP() {
         return aphp;
-    }
+    }*/
 
     public List<NodePole> getPoles() {
         return poles;
     }
 
-    public void setAPHP(NodeAPHP aphp) {
-        this.aphp = aphp;
-    }
-
-    @Override
+    /*@Override
     public Node getNode() {
         JPADataManager dataManager = new JPADataManager();
         return dataManager.getNode(type, id);
-    }
+    }*/
 
     /**
      * Get all the nodes attached with them
