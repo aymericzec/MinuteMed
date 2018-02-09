@@ -1,3 +1,5 @@
+package fr.devsquad.minutemed.dmp.repository;
+
 ///*
 // * To change this license header, choose License Headers in Project Properties.
 // * To change this template file, choose Tools | Templates
@@ -292,3 +294,6 @@
 //        assertNull(exam.getResultExam());
 //    }
 //}
+
+import fr.devsquad.minutemed.dmp.*;
+

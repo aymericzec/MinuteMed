@@ -9,7 +9,7 @@ package fr.devsquad.minutemed.dmp.domain;
  *
  * @author myfou
  */
-public interface IRecord {
+public interface IRecordDelete {
     public boolean isDraft ();
     public void saveDraft() throws IllegalStateException;
     public void save();

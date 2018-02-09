@@ -1,9 +1,9 @@
 package fr.devsquad.minutemed.dmp.domain;
 
+import static fr.devsquad.minutemed.dmp.domain.ResultExam.FIND_ALL_RESULT_EXAM;
 import fr.devsquad.minutemed.staff.domain.Doctor;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,13 +11,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
+@NamedQuery(name = FIND_ALL_RESULT_EXAM, query = "SELECT u FROM ResultExam u")
 public class ResultExam implements Serializable {
-
+    public static final String FIND_ALL_RESULT_EXAM = "ReportDosage.findAllReportDosage";
     @Id @GeneratedValue
     @Column(name = "idResultExam")
     private long id;

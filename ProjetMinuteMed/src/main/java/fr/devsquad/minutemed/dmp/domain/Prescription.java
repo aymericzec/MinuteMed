@@ -1,21 +1,23 @@
 package fr.devsquad.minutemed.dmp.domain;
 
+import static fr.devsquad.minutemed.dmp.domain.Prescription.FIND_ALL_PRESCRIPTION;
 import fr.devsquad.minutemed.staff.domain.Doctor;
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
+@NamedQuery(name = FIND_ALL_PRESCRIPTION, query = "SELECT u FROM Prescription u")
 public class Prescription implements Serializable {
 
+    public static final String FIND_ALL_PRESCRIPTION = "Diagnostic.findAllPrescription";
+    
     @Id @GeneratedValue
     @Column(name = "idPrescription")
     private long id;

@@ -1,9 +1,8 @@
 package fr.devsquad.minutemed.dmp.domain;
 
-
+import static fr.devsquad.minutemed.dmp.domain.ReportDosage.FIND_ALL_REPORT_DOSAGE;
 import fr.devsquad.minutemed.staff.domain.MedicalStaff;
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,13 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
+@NamedQuery(name = FIND_ALL_REPORT_DOSAGE, query = "SELECT u FROM ReportDosage u")
 public class ReportDosage implements Serializable {
-
+    public static final String FIND_ALL_REPORT_DOSAGE = "ReportDosage.findAllReportDosage";
     @Id @GeneratedValue
     @Column(name = "idReportDosage")
     private long id;

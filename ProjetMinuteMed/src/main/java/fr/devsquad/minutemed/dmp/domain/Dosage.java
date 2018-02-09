@@ -1,11 +1,10 @@
 package fr.devsquad.minutemed.dmp.domain;
 
+import static fr.devsquad.minutemed.dmp.domain.Dosage.FIND_ALL_DOSAGE;
 import fr.devsquad.minutemed.staff.domain.Doctor;
-import fr.devsquad.minutemed.staff.domain.IHospitalStaff;
 import fr.devsquad.minutemed.staff.domain.MedicalStaff;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,13 +12,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
+@NamedQuery(name = FIND_ALL_DOSAGE, query = "SELECT u FROM Dosage u")
 public class Dosage implements Serializable {
+    public static final String FIND_ALL_DOSAGE = "Dosage.findAllDosage";
     
     @Id @GeneratedValue
     @Column(name = "idDosage")
