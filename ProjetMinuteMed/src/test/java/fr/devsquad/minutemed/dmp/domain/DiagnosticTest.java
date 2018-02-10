@@ -1,17 +1,15 @@
-package fr.devsquad.minutemed.dmp.repository;
+package fr.devsquad.minutemed.dmp.domain;
 
 import fr.devsquad.minutemed.arborescence.domain.Node;
 import fr.devsquad.minutemed.arborescence.domain.NodeEnum;
 import fr.devsquad.minutemed.arborescence.domain.NodeHU;
-import fr.devsquad.minutemed.dmp.domain.Diagnostic;
-import fr.devsquad.minutemed.dmp.domain.MedicalRecord;
 import fr.devsquad.minutemed.specialization.domain.Specialization;
 import fr.devsquad.minutemed.specialization.domain.SpecializationEnum;
 import fr.devsquad.minutemed.staff.domain.Doctor;
 import fr.devsquad.minutemed.staff.domain.StaffEnum;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.BeforeClass;
+import org.junit.Before;
 
 /**
  *
@@ -23,7 +21,7 @@ public class DiagnosticTest {
     public DiagnosticTest() {
     }
 
-    @BeforeClass
+    @Before
     public void setUp() {
         this.diagnostic = createDiagnostic();
     }
@@ -34,7 +32,7 @@ public class DiagnosticTest {
         Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
         Node node = new Node("Pole", 1);
         Doctor diagnosticDoctor = new Doctor(StaffEnum.DOCTOR, "Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
-        NodeHU nodehu = new NodeHU(NodeEnum.POLE.APHP, new Specialization(SpecializationEnum.Pediatrie));
+        NodeHU nodehu = new NodeHU(NodeEnum.APHP, new Specialization(SpecializationEnum.Pediatrie));
         MedicalRecord medicalRecord = new MedicalRecord("1945478549875", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", "M", nodehu);
         String consultDiagnostic = "12/12/2012";
         String description = "Chute à vélo, demande dun' radio";
@@ -51,7 +49,7 @@ public class DiagnosticTest {
     
     @Test(expected = NullPointerException.class)
     public void fieldNullCreate () {
-        new Diagnostic(null, null, null, null, null);
+        Diagnostic diagnostic1 = new Diagnostic(null, null, null, null, null);
     }
     
     @Test
@@ -80,7 +78,7 @@ public class DiagnosticTest {
         Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
         Node node = new Node("Pole", 1);
         Doctor diagnosticDoctor = new Doctor(StaffEnum.DOCTOR, "Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
-        NodeHU nodehu = new NodeHU(NodeEnum.POLE.APHP, new Specialization(SpecializationEnum.Pediatrie));
+        NodeHU nodehu = new NodeHU(NodeEnum.APHP, new Specialization(SpecializationEnum.Pediatrie));
         MedicalRecord medicalRecord = new MedicalRecord("1945478549875", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", "M", nodehu);
         String consultDiagnostic = "12/12/2012";
         String description = "Chute à vélo, demande dun' radio";
@@ -103,7 +101,7 @@ public class DiagnosticTest {
         Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
         Node node = new Node("Pole", 1);
         Doctor diagnosticDoctor = new Doctor(StaffEnum.DOCTOR, "Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
-        NodeHU nodehu = new NodeHU(NodeEnum.POLE.APHP, new Specialization(SpecializationEnum.Pediatrie));
+        NodeHU nodehu = new NodeHU(NodeEnum.APHP, new Specialization(SpecializationEnum.Pediatrie));
         MedicalRecord medicalRecord = new MedicalRecord("1945478549875", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", "M", nodehu);
         String consultDiagnostic = "12/12/2012";
         String description = "Chute à vélo, demande dun' radio";
@@ -115,7 +113,7 @@ public class DiagnosticTest {
     
     @Test
     public void testGetPatientNoEquals () {
-        NodeHU nodehu = new NodeHU(NodeEnum.POLE.APHP, new Specialization(SpecializationEnum.Pediatrie));
+        NodeHU nodehu = new NodeHU(NodeEnum.APHP, new Specialization(SpecializationEnum.Pediatrie));
         assertNotEquals(this.diagnostic.getMedicalRecord(), new MedicalRecord("1945478549875", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", "M", nodehu));
     }
     
@@ -125,7 +123,7 @@ public class DiagnosticTest {
         Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
         Node node = new Node("Pole", 1);
         Doctor diagnosticDoctor = new Doctor(StaffEnum.DOCTOR, "Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
-        NodeHU nodehu = new NodeHU(NodeEnum.POLE.APHP, new Specialization(SpecializationEnum.Pediatrie));
+        NodeHU nodehu = new NodeHU(NodeEnum.APHP, new Specialization(SpecializationEnum.Pediatrie));
         MedicalRecord medicalRecord = new MedicalRecord("1945478549875", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", "M", nodehu);
         String consultDiagnostic = "12/12/2012";
         String description = "Chute à vélo, demande dun' radio";
@@ -145,7 +143,7 @@ public class DiagnosticTest {
         Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
         Node node = new Node("Pole", 1);
         Doctor diagnosticDoctor = new Doctor(StaffEnum.DOCTOR, "Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
-        NodeHU nodehu = new NodeHU(NodeEnum.POLE.APHP, new Specialization(SpecializationEnum.Pediatrie));
+        NodeHU nodehu = new NodeHU(NodeEnum.APHP, new Specialization(SpecializationEnum.Pediatrie));
         MedicalRecord medicalRecord = new MedicalRecord("1945478549875", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", "M", nodehu);
         String consultDiagnostic = "12/12/2012";
         String description = "Chute à vélo, demande dun' radio";
@@ -157,6 +155,23 @@ public class DiagnosticTest {
     @Test
     public void testGetDescriptionNoEquals () {
         assertNotEquals(this.diagnostic.getDescription(), "toto");
+    }
+    
+    @Test
+    public void testDraftCreate() {
+        assertEquals(this.diagnostic.getDraft(), true);
+    }
+    
+    @Test
+    public void testDraftFalse() {
+        this.diagnostic.setDraft(false);
+        assertEquals(this.diagnostic.getDraft(), false);
+    }
+    
+    @Test(expected = IllegalAccessException.class)
+    public void testDraftFalseAndTrue() {
+        this.diagnostic.setDraft(false);
+        this.diagnostic.setDraft(true);
     }
 }
 

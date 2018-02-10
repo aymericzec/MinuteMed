@@ -58,8 +58,5 @@ public class ResultExam implements Serializable {
     
     public void addFiles (String s) {
         files.add(s);
-    }
-    
-    
-    
+    } 
 }

@@ -1,11 +1,8 @@
-package fr.devsquad.minutemed.dmp.repository;
+package fr.devsquad.minutemed.dmp.domain;
 
 import fr.devsquad.minutemed.arborescence.domain.Node;
 import fr.devsquad.minutemed.arborescence.domain.NodeEnum;
 import fr.devsquad.minutemed.arborescence.domain.NodeHU;
-import fr.devsquad.minutemed.dmp.domain.Diagnostic;
-import fr.devsquad.minutemed.dmp.domain.Dosage;
-import fr.devsquad.minutemed.dmp.domain.MedicalRecord;
 import fr.devsquad.minutemed.specialization.domain.Specialization;
 import fr.devsquad.minutemed.specialization.domain.SpecializationEnum;
 import fr.devsquad.minutemed.staff.domain.Doctor;
@@ -37,7 +34,7 @@ public class DosageTest {
         String title = "Gastro";
         Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
         Node node = new Node("Pole", 1);
-        NodeHU nodehu = new NodeHU(NodeEnum.POLE.APHP, new Specialization(SpecializationEnum.Pediatrie));
+        NodeHU nodehu = new NodeHU(NodeEnum.APHP, new Specialization(SpecializationEnum.Pediatrie));
         Doctor doctorConsulting = new Doctor(StaffEnum.DOCTOR, "Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
         MedicalRecord medicalRecord = new MedicalRecord("1945478549875", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", "M", nodehu);
         String dateDosage = "12/05/1996";
@@ -56,7 +53,7 @@ public class DosageTest {
 
     @Test(expected = NullPointerException.class)
     public void createDosageTestNull() {
-        new Dosage(null, null, null, null, null, null, null, null);
+        Dosage dosage1 = new Dosage(null, null, null, null, null, null, null, null);
     }
 
     @Test
@@ -73,7 +70,7 @@ public class DosageTest {
         String title = "Gastro";
         Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
         Node node = new Node("Pole", 1);
-        NodeHU nodehu = new NodeHU(NodeEnum.POLE.APHP, new Specialization(SpecializationEnum.Pediatrie));
+        NodeHU nodehu = new NodeHU(NodeEnum.APHP, new Specialization(SpecializationEnum.Pediatrie));
         Doctor doctorConsulting = new Doctor(StaffEnum.DOCTOR, "Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
         MedicalRecord medicalRecord = new MedicalRecord("1945478549875", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", "M", nodehu);
         String dateDosage = "12/05/1996";
@@ -82,8 +79,8 @@ public class DosageTest {
         String beginDosage = "12/05/1996";
         String endDosage = "12/09/1996";
 
-        Dosage dosage = new Dosage(title, doctorConsulting, medicalRecord, dateDosage, diagnostic, dosagePrescription, beginDosage, endDosage);
-        assertEquals(dosage.getDoctorConsulting(), doctorConsulting);
+        Dosage dosage2 = new Dosage(title, doctorConsulting, medicalRecord, dateDosage, diagnostic, dosagePrescription, beginDosage, endDosage);
+        assertEquals(dosage2.getDoctorConsulting(), doctorConsulting);
     }
 
     public void getDoctorConsultingTestNotEquals() {
@@ -99,7 +96,7 @@ public class DosageTest {
         String title = "Gastro";
         Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
         Node node = new Node("Pole", 1);
-        NodeHU nodehu = new NodeHU(NodeEnum.POLE.APHP, new Specialization(SpecializationEnum.Pediatrie));
+        NodeHU nodehu = new NodeHU(NodeEnum.APHP, new Specialization(SpecializationEnum.Pediatrie));
         Doctor doctorConsulting = new Doctor(StaffEnum.DOCTOR, "Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
         MedicalRecord medicalRecord = new MedicalRecord("1945478549875", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", "M", nodehu);
         String dateDosage = "12/05/1996";
@@ -108,12 +105,12 @@ public class DosageTest {
         String beginDosage = "12/05/1996";
         String endDosage = "12/09/1996";
 
-        Dosage dosage = new Dosage(title, doctorConsulting, medicalRecord, dateDosage, diagnostic, dosagePrescription, beginDosage, endDosage);
-        assertEquals(dosage.getMedicalRecord(), medicalRecord);
+        Dosage dosage2 = new Dosage(title, doctorConsulting, medicalRecord, dateDosage, diagnostic, dosagePrescription, beginDosage, endDosage);
+        assertEquals(dosage2.getMedicalRecord(), medicalRecord);
     }
 
     public void getPatientNotEquals() {
-        NodeHU nodehu = new NodeHU(NodeEnum.POLE.APHP, new Specialization(SpecializationEnum.Pediatrie));
+        NodeHU nodehu = new NodeHU(NodeEnum.APHP, new Specialization(SpecializationEnum.Pediatrie));
         assertNotEquals(this.dosage.getMedicalRecord(), new MedicalRecord("1945478549875", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", "M", nodehu));
     }
 
@@ -122,7 +119,7 @@ public class DosageTest {
         String title = "Gastro";
         Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
         Node node = new Node("Pole", 1);
-        NodeHU nodehu = new NodeHU(NodeEnum.POLE.APHP, new Specialization(SpecializationEnum.Pediatrie));
+        NodeHU nodehu = new NodeHU(NodeEnum.APHP, new Specialization(SpecializationEnum.Pediatrie));
         Doctor doctorConsulting = new Doctor(StaffEnum.DOCTOR, "Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
         MedicalRecord medicalRecord = new MedicalRecord("1945478549875", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", "M", nodehu);
         String dateDosage = "12/05/1996";
@@ -131,8 +128,8 @@ public class DosageTest {
         String beginDosage = "12/05/1996";
         String endDosage = "12/09/1996";
 
-        Dosage dosage = new Dosage(title, doctorConsulting, medicalRecord, dateDosage, diagnostic, dosagePrescription, beginDosage, endDosage);
-        assertEquals(dosage.getDateDosage(), dateDosage);
+        Dosage dosage2 = new Dosage(title, doctorConsulting, medicalRecord, dateDosage, diagnostic, dosagePrescription, beginDosage, endDosage);
+        assertEquals(dosage2.getDateDosage(), dateDosage);
     }
 
     public void getDatePosologieNotEquals() {
@@ -144,7 +141,7 @@ public class DosageTest {
         String title = "Gastro";
         Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
         Node node = new Node("Pole", 1);
-        NodeHU nodehu = new NodeHU(NodeEnum.POLE.APHP, new Specialization(SpecializationEnum.Pediatrie));
+        NodeHU nodehu = new NodeHU(NodeEnum.APHP, new Specialization(SpecializationEnum.Pediatrie));
         Doctor doctorConsulting = new Doctor(StaffEnum.DOCTOR, "Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
         MedicalRecord medicalRecord = new MedicalRecord("1945478549875", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", "M", nodehu);
         String dateDosage = "12/05/1996";
@@ -153,8 +150,8 @@ public class DosageTest {
         String beginDosage = "12/05/1996";
         String endDosage = "12/09/1996";
 
-        Dosage dosage = new Dosage(title, doctorConsulting, medicalRecord, dateDosage, diagnostic, dosagePrescription, beginDosage, endDosage);
-        assertEquals(dosage.getDiagnostic(), diagnostic);
+        Dosage dosage2 = new Dosage(title, doctorConsulting, medicalRecord, dateDosage, diagnostic, dosagePrescription, beginDosage, endDosage);
+        assertEquals(dosage2.getDiagnostic(), diagnostic);
     }
 
     public void getDiagnosticTestNotEquals() {
@@ -166,7 +163,7 @@ public class DosageTest {
         String title = "Gastro";
         Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
         Node node = new Node("Pole", 1);
-        NodeHU nodehu = new NodeHU(NodeEnum.POLE.APHP, new Specialization(SpecializationEnum.Pediatrie));
+        NodeHU nodehu = new NodeHU(NodeEnum.APHP, new Specialization(SpecializationEnum.Pediatrie));
         Doctor doctorConsulting = new Doctor(StaffEnum.DOCTOR, "Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
         MedicalRecord medicalRecord = new MedicalRecord("1945478549875", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", "M", nodehu);
         String dateDosage = "12/05/1996";
@@ -175,9 +172,9 @@ public class DosageTest {
         String beginDosage = "12/05/1996";
         String endDosage = "12/09/1996";
 
-        Dosage dosage = new Dosage(title, doctorConsulting, medicalRecord, dateDosage, diagnostic, dosagePrescription, beginDosage, endDosage);
+        Dosage dosage2 = new Dosage(title, doctorConsulting, medicalRecord, dateDosage, diagnostic, dosagePrescription, beginDosage, endDosage);
 
-        assertEquals(dosage.getRepport(), new ArrayList<>());
+        assertEquals(dosage2.getRepport(), new ArrayList<>());
     }
 
     public void getRapportTestNotEquals() {
@@ -189,7 +186,7 @@ public class DosageTest {
         String title = "Gastro";
         Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
         Node node = new Node("Pole", 1);
-        NodeHU nodehu = new NodeHU(NodeEnum.POLE.APHP, new Specialization(SpecializationEnum.Pediatrie));
+        NodeHU nodehu = new NodeHU(NodeEnum.APHP, new Specialization(SpecializationEnum.Pediatrie));
         Doctor doctorConsulting = new Doctor(StaffEnum.DOCTOR, "Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
         MedicalRecord medicalRecord = new MedicalRecord("1945478549875", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", "M", nodehu);
         String dateDosage = "12/05/1996";
@@ -198,13 +195,13 @@ public class DosageTest {
         String beginDosage = "12/05/1996";
         String endDosage = "12/09/1996";
 
-        Dosage dosage = new Dosage(title, doctorConsulting, medicalRecord, dateDosage, diagnostic, dosagePrescription, beginDosage, endDosage);
+        Dosage dosage2 = new Dosage(title, doctorConsulting, medicalRecord, dateDosage, diagnostic, dosagePrescription, beginDosage, endDosage);
         assertEquals(this.dosage.getBeginDosage(), beginDosage);
     }
 
     public void getDateBeginTestNotEquals() {
-        Dosage dosage = createDefaultDosage();
-        assertNotEquals(dosage.getEndDosage(), new Date());
+        Dosage dosage2 = createDefaultDosage();
+        assertNotEquals(dosage2.getEndDosage(), new Date());
     }
 
     @Test
@@ -212,7 +209,7 @@ public class DosageTest {
         String title = "Gastro";
         Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
         Node node = new Node("Pole", 1);
-        NodeHU nodehu = new NodeHU(NodeEnum.POLE.APHP, new Specialization(SpecializationEnum.Pediatrie));
+        NodeHU nodehu = new NodeHU(NodeEnum.APHP, new Specialization(SpecializationEnum.Pediatrie));
         Doctor doctorConsulting = new Doctor(StaffEnum.DOCTOR, "Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
         MedicalRecord medicalRecord = new MedicalRecord("1945478549875", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", "M", nodehu);
         String dateDosage = "12/05/1996";
@@ -221,8 +218,8 @@ public class DosageTest {
         String beginDosage = "12/05/1996";
         String endDosage = "12/09/1996";
 
-        Dosage dosage = new Dosage(title, doctorConsulting, medicalRecord, dateDosage, diagnostic, dosagePrescription, beginDosage, endDosage);
-        assertEquals(dosage.getEndDosage(), endDosage);
+        Dosage dosage2 = new Dosage(title, doctorConsulting, medicalRecord, dateDosage, diagnostic, dosagePrescription, beginDosage, endDosage);
+        assertEquals(dosage2.getEndDosage(), endDosage);
     }
 
     public void getDateEndTestNotEquals() {
@@ -236,17 +233,17 @@ public class DosageTest {
     }
 
     public void getDateLastRepportTestNotEquals() {
-        Dosage dosage = createDefaultDosage();
+        Dosage dosage2 = createDefaultDosage();
 
         MedicalStaff medicalStaff = new MedicalStaff(StaffEnum.NURSE.name(), 1);
         String dateDosage = "12/06/2554";
         String report = "Tout va bien";
 
-        dosage.addReport(medicalStaff, dateDosage, report);
+        dosage2.addReport(medicalStaff, dateDosage, report);
 
-        dosage.addReport(medicalStaff, dateDosage, report);
+        dosage2.addReport(medicalStaff, dateDosage, report);
 
-        assertNotEquals(dosage.getLastReport().getCreateDate(), new Date());
+        assertNotEquals(dosage2.getLastReport().getCreateDate(), new Date());
     }
 
     @Test
@@ -281,5 +278,23 @@ public class DosageTest {
 
     public void getDosagePrescriptionRepportTestNotEquals() {
         assertNotEquals(this.dosage.getDosagePrescription(), "Rien à faire");
+    }
+    
+        
+    @Test
+    public void testDraftCreate() {
+        assertEquals(this.dosage.getDraft(), true);
+    }
+    
+    @Test
+    public void testDraftFalse() {
+        this.dosage.setDraft(false);
+        assertEquals(this.dosage.getDraft(), false);
+    }
+    
+    @Test(expected = IllegalAccessException.class)
+    public void testDraftFalseAndTrue() {
+        this.dosage.setDraft(false);
+        this.dosage.setDraft(true);
     }
 }

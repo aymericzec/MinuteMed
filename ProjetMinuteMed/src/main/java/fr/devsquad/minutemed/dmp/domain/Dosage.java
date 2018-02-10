@@ -118,7 +118,5 @@ public class Dosage implements Serializable {
         ReportDosage reportDosage = new ReportDosage(staff, dateDosage, repport);
         this.report.add(reportDosage);
     }
-
-    
     
 }

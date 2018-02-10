@@ -1,11 +1,8 @@
-package fr.devsquad.minutemed.dmp.repository;
+package fr.devsquad.minutemed.dmp.domain;
 
 import fr.devsquad.minutemed.arborescence.domain.Node;
 import fr.devsquad.minutemed.arborescence.domain.NodeEnum;
 import fr.devsquad.minutemed.arborescence.domain.NodeHU;
-import fr.devsquad.minutemed.dmp.domain.Diagnostic;
-import fr.devsquad.minutemed.dmp.domain.MedicalRecord;
-import fr.devsquad.minutemed.dmp.domain.Prescription;
 import fr.devsquad.minutemed.specialization.domain.Specialization;
 import fr.devsquad.minutemed.specialization.domain.SpecializationEnum;
 import fr.devsquad.minutemed.staff.domain.Doctor;
@@ -20,12 +17,10 @@ import static org.junit.Assert.*;
  * @author myfou
  */
 public class PrescriptionTest {
-    private Diagnostic diagnostic;
     private Prescription prescription;
     
     @Before
     public void setUp() {
-        this.diagnostic = createDiagnostic();
         this.prescription = createTestPrescription();
     }
 
@@ -34,7 +29,7 @@ public class PrescriptionTest {
         Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
         Node node = new Node("Pole", 1);
         Doctor diagnosticDoctor = new Doctor(StaffEnum.DOCTOR, "Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
-        NodeHU nodehu = new NodeHU(NodeEnum.POLE.APHP, new Specialization(SpecializationEnum.Pediatrie));
+        NodeHU nodehu = new NodeHU(NodeEnum.APHP, new Specialization(SpecializationEnum.Pediatrie));
         MedicalRecord medicalRecord = new MedicalRecord("1945478549875", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", "M", nodehu);
         String consultDiagnostic = "12/12/2012";
         String description = "Chute à vélo, demande dun' radio";
@@ -47,7 +42,7 @@ public class PrescriptionTest {
     private Prescription createTestPrescription() {
         String title = "Ordonnance rhume";
         Node node = new Node("Pole", 1);
-        NodeHU nodehu = new NodeHU(NodeEnum.POLE.APHP, new Specialization(SpecializationEnum.Pediatrie));
+        NodeHU nodehu = new NodeHU(NodeEnum.APHP, new Specialization(SpecializationEnum.Pediatrie));
         Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
         Doctor prescriptor = new Doctor(StaffEnum.DOCTOR, "Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
         MedicalRecord medicalRecord = new MedicalRecord("1945478549875", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", "M", nodehu);
@@ -65,7 +60,7 @@ public class PrescriptionTest {
     
     @Test(expected = NullPointerException.class)
     public void createNullPrescription() {
-        new Prescription(null,null,null,null,null,null);
+        Prescription prescription1 = new Prescription(null,null,null,null,null,null);
     }
 
     @Test
@@ -92,7 +87,7 @@ public class PrescriptionTest {
     public void testGetDoctorEquals () {
         String title = "Ordonnance rhume";
         Node node = new Node("Pole", 1);
-        NodeHU nodehu = new NodeHU(NodeEnum.POLE.APHP, new Specialization(SpecializationEnum.Pediatrie));
+        NodeHU nodehu = new NodeHU(NodeEnum.APHP, new Specialization(SpecializationEnum.Pediatrie));
         Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
         Doctor prescriptor = new Doctor(StaffEnum.DOCTOR, "Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
         MedicalRecord medicalRecord = new MedicalRecord("1945478549875", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", "M", nodehu);
@@ -116,7 +111,7 @@ public class PrescriptionTest {
     public void testGetPatientEquals () {
         String title = "Ordonnance rhume";
         Node node = new Node("Pole", 1);
-        NodeHU nodehu = new NodeHU(NodeEnum.POLE.APHP, new Specialization(SpecializationEnum.Pediatrie));
+        NodeHU nodehu = new NodeHU(NodeEnum.APHP, new Specialization(SpecializationEnum.Pediatrie));
         Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
         Doctor prescriptor = new Doctor(StaffEnum.DOCTOR, "Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
         MedicalRecord medicalRecord = new MedicalRecord("1945478549875", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", "M", nodehu);
@@ -131,7 +126,7 @@ public class PrescriptionTest {
 
     @Test
     public void testGetPatientNoEquals () {
-        NodeHU nodehu = new NodeHU(NodeEnum.POLE.APHP, new Specialization(SpecializationEnum.Pediatrie));
+        NodeHU nodehu = new NodeHU(NodeEnum.APHP, new Specialization(SpecializationEnum.Pediatrie));
         assertNotEquals(this.prescription.getMedicalRecord(), new MedicalRecord("1945478549875", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", "M", nodehu));
     }
 
@@ -162,7 +157,7 @@ public class PrescriptionTest {
     public void testGetDiagnotic () {
         String title = "Ordonnance rhume";
         Node node = new Node("Pole", 1);
-        NodeHU nodehu = new NodeHU(NodeEnum.POLE.APHP, new Specialization(SpecializationEnum.Pediatrie));
+        NodeHU nodehu = new NodeHU(NodeEnum.APHP, new Specialization(SpecializationEnum.Pediatrie));
         Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
         Doctor prescriptor = new Doctor(StaffEnum.DOCTOR, "Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
         MedicalRecord medicalRecord = new MedicalRecord("1945478549875", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", "M", nodehu);
@@ -184,7 +179,7 @@ public class PrescriptionTest {
     public void testGetPrescription () {
         String title = "Ordonnance rhume";
         Node node = new Node("Pole", 1);
-        NodeHU nodehu = new NodeHU(NodeEnum.POLE.APHP, new Specialization(SpecializationEnum.Pediatrie));
+        NodeHU nodehu = new NodeHU(NodeEnum.APHP, new Specialization(SpecializationEnum.Pediatrie));
         Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
         Doctor prescriptor = new Doctor(StaffEnum.DOCTOR, "Aymeric", "Zecchini", "2 rue jean", "a@t.gmail", "0770138333", node, specialization);
         MedicalRecord medicalRecord = new MedicalRecord("1945478549875", "Aymeric", "Zecchini", "2 rue jean", "a@a.gmail", "0770138334", "02/03/94", "M", nodehu);
@@ -199,5 +194,22 @@ public class PrescriptionTest {
     @Test
     public void testGetPrescriptionNotEquals () {
         assertNotEquals(this.prescription.getPrescription(), "lol");
+    }
+    
+    @Test
+    public void testDraftCreate() {
+        assertEquals(this.prescription.getDraft(), true);
+    }
+    
+    @Test
+    public void testDraftFalse() {
+        this.prescription.setDraft(false);
+        assertEquals(this.prescription.getDraft(), false);
+    }
+    
+    @Test(expected = IllegalAccessException.class)
+    public void testDraftFalseAndTrue() {
+        this.prescription.setDraft(false);
+        this.prescription.setDraft(true);
     }
 }
