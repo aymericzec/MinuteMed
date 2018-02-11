@@ -1,16 +1,20 @@
 package fr.devsquad.minutemed.specialization.domain;
 
+import static fr.devsquad.minutemed.specialization.domain.Specialization.FIND_ALL_SPECIALIZATION;
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 
 
 
 @Entity
+@NamedQuery(name = FIND_ALL_SPECIALIZATION, query = "SELECT spe FROM Secialization spe")
 public class Specialization implements Serializable {
+    
+    public static final String FIND_ALL_SPECIALIZATION = "Specialization.findAllSpecialization";
     
     @Id @GeneratedValue
     @Column(name = "idSpecialization")

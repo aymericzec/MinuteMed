@@ -2,8 +2,6 @@ package fr.devsquad.minutemed.staff.domain;
 
 import fr.devsquad.minutemed.arborescence.domain.INode;
 import fr.devsquad.minutemed.arborescence.domain.Node;
-import fr.devsquad.minutemed.arborescence.domain.NodeAPHP;
-import fr.devsquad.minutemed.arborescence.domain.NodeCU;
 import fr.devsquad.minutemed.arborescence.domain.NodeEnum;
 import fr.devsquad.minutemed.arborescence.domain.NodeHU;
 import fr.devsquad.minutemed.arborescence.domain.NodeHospital;
@@ -19,6 +17,7 @@ import fr.devsquad.minutemed.dmp.domain.Exam;
 import fr.devsquad.minutemed.dmp.domain.MedicalRecord;
 import fr.devsquad.minutemed.dmp.domain.Prescription;
 import fr.devsquad.minutemed.specialization.domain.Specialization;
+import static fr.devsquad.minutemed.staff.domain.Doctor.FIND_ALL_DOCTOR;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -27,12 +26,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
 
 @Entity
+@NamedQuery(name = FIND_ALL_DOCTOR, query = "SELECT staff FROM Doctor staff")
 public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoctor, INurse, ISpecialistStaff {
 
+    public static final String FIND_ALL_DOCTOR = "Doctor.findAllDoctor";
+    
     @Id @GeneratedValue
     @Column(name = "idDoctor")
     private long id; 
@@ -737,4 +740,13 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
         JPADoctor doctor = new JPADoctor();
         return doctor.getMedicalStaff(type, idStaff);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder stb =  new StringBuilder();
+        stb.append("Infirmière :").append(this.lastName).append(this.firstName);
+        return stb.toString();
+    }
+    
+    
 }

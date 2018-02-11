@@ -10,16 +10,21 @@ import fr.devsquad.minutemed.authentication.domain.UserAccount;
 import fr.devsquad.minutemed.database.IDataManager;
 import fr.devsquad.minutemed.database.JPADataManager;
 import fr.devsquad.minutemed.specialization.domain.Specialization;
+import static fr.devsquad.minutemed.staff.domain.DataManager.FIND_ALL_DATAMANAGER;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQuery(name = FIND_ALL_DATAMANAGER, query = "SELECT staff FROM DataManager staff")
 public class DataManager implements Serializable, IHospitalStaff, IDataManager {
 
+    public static final String FIND_ALL_DATAMANAGER = "DataManager.findAllDataManager";
+    
     @Id
     @GeneratedValue
     @Column(name = "idDataManager")
@@ -601,5 +606,12 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
     public List<IHospitalStaff> getStaff() {
         JPADataManager dataManager = new JPADataManager();
         return dataManager.getStaff();
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder stb =  new StringBuilder();
+        stb.append("DataManager :").append(this.lastName).append(this.firstName);
+        return stb.toString();
     }
 }

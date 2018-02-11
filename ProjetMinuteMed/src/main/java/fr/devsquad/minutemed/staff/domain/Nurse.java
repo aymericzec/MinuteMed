@@ -12,6 +12,7 @@ import fr.devsquad.minutemed.database.JPADataManager;
 import fr.devsquad.minutemed.database.JPANurse;
 import fr.devsquad.minutemed.dmp.domain.MedicalRecord;
 import fr.devsquad.minutemed.dmp.domain.Dosage;
+import static fr.devsquad.minutemed.staff.domain.Nurse.FIND_ALL_NURSE;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -20,11 +21,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
 @Entity
+@NamedQuery(name = FIND_ALL_NURSE, query = "SELECT staff FROM Nurse staff")
 public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurse {
 
+    public static final String FIND_ALL_NURSE = "Nurse.findAllNurse";
+    
     @Id @GeneratedValue
     @Column(name = "idNurse")
     private long id;
@@ -401,5 +406,12 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
         }
         JPANurse nurse = new JPANurse();
         return nurse.getMedicalStaff(type, idStaff);
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder stb =  new StringBuilder();
+        stb.append("Doctor :").append(this.lastName).append(this.firstName);
+        return stb.toString();
     }
 }

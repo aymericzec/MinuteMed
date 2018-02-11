@@ -5,8 +5,9 @@
  */
 package fr.devsquad.minutemed.specialization.repository;
 
+import fr.devsquad.minutemed.specialization.domain.Specialization;
+import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 
 /**
  *
@@ -17,7 +18,10 @@ public class SpecializationRepository {
     private EntityManager em;
     
     public List<Specialization> listAllSpecializations(){
-        TypedQuery<Specialization> services = em.createQuery("SELECT idSpecialization FROM Specialization", Specialization.class);
-        return services.setParameter("idSpecialization", idSpecialization).getResultList();
+        return em.createNamedQuery(Specialization.FIND_ALL_SPECIALIZATION, Specialization.class).getResultList();
+    }
+    
+    public Specialization findSpecialization(Long id){
+        return em.find(Specialization.class, id);
     }
 }
