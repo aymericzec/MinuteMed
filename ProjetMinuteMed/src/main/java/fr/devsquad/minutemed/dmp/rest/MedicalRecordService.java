@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.devsquad.minutemed.dmp.rest;
 
 import fr.devsquad.minutemed.dmp.domain.Dosage;
@@ -10,22 +5,42 @@ import fr.devsquad.minutemed.dmp.domain.Diagnostic;
 import fr.devsquad.minutemed.dmp.domain.Prescription;
 import fr.devsquad.minutemed.dmp.domain.MedicalRecord;
 import fr.devsquad.minutemed.dmp.domain.Exam;
+import fr.devsquad.minutemed.dmp.repository.DiagnosticRepository;
+import fr.devsquad.minutemed.dmp.repository.DosageRepository;
+import fr.devsquad.minutemed.dmp.repository.ExamRepository;
+import fr.devsquad.minutemed.dmp.repository.MedicalRecordRepository;
+import fr.devsquad.minutemed.dmp.repository.PrescriptionRepository;
+import fr.devsquad.minutemed.dmp.repository.ReportDosageRepository;
+import fr.devsquad.minutemed.dmp.repository.ResultExamRepository;
 import io.swagger.annotations.*;
 import java.util.*;
+import javax.ejb.EJB;
 import javax.validation.constraints.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/**
- *
- * @author myfou
- */
+
 @Path("/records")
 @Api("MedicalRecords REST Endpoint")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class MedicalRecordService {
+    
+    @EJB
+    private MedicalRecordRepository medicalRecordRepository;
+    @EJB
+    private ExamRepository examRepository;
+    @EJB
+    private DiagnosticRepository diagnosticRepository;
+    @EJB
+    private PrescriptionRepository prescriptionRepository;
+    @EJB
+    private DosageRepository dosageRepository;
+    @EJB
+    private ResultExamRepository resultExamRepository;
+    @EJB
+    private ReportDosageRepository reportDosageRepository;
     
     //Example URL with params : 
     //http://localhost:8080/ProjetMinuteMed/api/records/4/dosages/5
@@ -41,8 +56,8 @@ public class MedicalRecordService {
         @ApiResponse(code = 400, message = "Invalid input")}
     )
     public Response createMedicalRecord(@NotNull MedicalRecord medicalRecord) {
-        
-        return Response.ok("{\"firstName\":"+medicalRecord.getFirstName()+"}").build();
+        Long id = medicalRecordRepository.save(medicalRecord);
+        return Response.ok("{\"idMedicalRecord\":"+ id +"}").build();
     }
     
     @POST
@@ -52,9 +67,9 @@ public class MedicalRecordService {
         @ApiResponse(code = 201, message = "The Exam is created !"),
         @ApiResponse(code = 400, message = "Invalid input")}
     )
-    public Response createExam(@PathParam("idRecord") Long idRecord, @NotNull Exam exam) {
-
-        return Response.ok("{\"idRecord\":"+idRecord+", \"examTitle\":"+exam.getTitle()+" }").build();
+    public Response createExam(@NotNull Exam exam) {
+        Long id = examRepository.save(exam);
+        return Response.ok("{\"idExam\":"+ id +"}").build();
     }
     
     @POST
@@ -64,9 +79,9 @@ public class MedicalRecordService {
         @ApiResponse(code = 201, message = "The Diagnostic is created !"),
         @ApiResponse(code = 400, message = "Invalid input")}
     )
-    public Response createDiagnostic(@PathParam("idRecord") Long idRecord, @NotNull Diagnostic diagnostic) {
-
-        return Response.ok("{\"idRecord\":"+idRecord+", \"diagnosticTitle\":"+diagnostic.getTitle()+" }").build();
+    public Response createDiagnostic(@NotNull Diagnostic diagnostic) {
+        Long id = diagnosticRepository.save(diagnostic);
+        return Response.ok("{\"idDiagnostic\":"+ id +"}").build();
     }
     
     @POST
@@ -76,9 +91,9 @@ public class MedicalRecordService {
         @ApiResponse(code = 201, message = "The Prescription is created !"),
         @ApiResponse(code = 400, message = "Invalid input")}
     )
-    public Response createPrescription(@PathParam("idRecord") Long idRecord, @NotNull Prescription prescription) {
-
-        return Response.ok("{\"idRecord\":"+idRecord+", \"prescriptionTitle\":"+prescription.getTitle()+" }").build();
+    public Response createPrescription(@NotNull Prescription prescription) {
+        Long id = prescriptionRepository.save(prescription);
+        return Response.ok("{\"idPrescription\":"+ id +"}").build();
     }
     
     @POST
@@ -88,11 +103,9 @@ public class MedicalRecordService {
         @ApiResponse(code = 201, message = "The Dosage is created !"),
         @ApiResponse(code = 400, message = "Invalid input")}
     )
-    public Response createDosage(@PathParam("idRecord") Long idRecord, @NotNull Dosage dosage) {
-        /*Book book = repository.find(id);
-        if (book == null)
-            return Response.status(Response.Status.NOT_FOUND).build();*/
-        return Response.ok("{\"idRecord\":"+idRecord+", \"dosageTitle\":"+dosage+" }").build();
+    public Response createDosage(@NotNull Dosage dosage) {
+        Long id = dosageRepository.save(dosage);
+        return Response.ok("{\"idDosage\":"+ id +"}").build();
     }
     
     
@@ -109,11 +122,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 404, message = "Medical Record not found")}
     )
     public Response deleteMedicalRecord(@PathParam("idRecord") Long idRecord) {
-        /*try {
-            repository.delete(id);
-        } catch (NoSuchEntityException e) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }*/
+        medicalRecordRepository.delete(idRecord);
         return Response.ok("{\"idRecord\":"+idRecord+"}").build();
     }
     
@@ -126,9 +135,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 404, message = "Exam not found")}
     )
     public Response deleteExam(@PathParam("idRecord") Long idRecord, @PathParam("idExam") Long idExam) {
-        /*Book book = repository.find(id);
-        if (book == null)
-            return Response.status(Response.Status.NOT_FOUND).build();*/
+        examRepository.delete(idExam);
         return Response.ok("{\"idRecord\":"+idRecord+", \"idExam\":"+idExam+" }").build();
     }
     
@@ -141,9 +148,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 404, message = "Diagnostic not found")}
     )
     public Response deleteDiagnostic(@PathParam("idRecord") Long idRecord, @PathParam("idDiagnostic") Long idDiagnostic) {
-        /*Book book = repository.find(id);
-        if (book == null)
-            return Response.status(Response.Status.NOT_FOUND).build();*/
+        diagnosticRepository.delete(idDiagnostic);
         return Response.ok("{\"idRecord\":"+idRecord+", \"idDiagnostic\":"+idDiagnostic+" }").build();
     }
     
@@ -156,9 +161,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 404, message = "Prescription not found")}
     )
     public Response deletePrescription(@PathParam("idRecord") Long idRecord, @PathParam("idPrescription") Long idPrescription) {
-        /*Book book = repository.find(id);
-        if (book == null)
-            return Response.status(Response.Status.NOT_FOUND).build();*/
+        prescriptionRepository.delete(idPrescription);
         return Response.ok("{\"idRecord\":"+idRecord+", \"idPrescription\":"+idPrescription+" }").build();
     }
     
@@ -171,9 +174,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 404, message = "Dosage not found")}
     )
     public Response deleteDosage(@PathParam("idRecord") Long idRecord, @PathParam("idDosage") Long idDosage) {
-        /*Book book = repository.find(id);
-        if (book == null)
-            return Response.status(Response.Status.NOT_FOUND).build();*/
+        dosageRepository.delete(idDosage);
         return Response.ok("{\"idRecord\":"+idRecord+", \"idDosage\":"+idDosage+" }").build();
     }
     
@@ -191,7 +192,8 @@ public class MedicalRecordService {
         @ApiResponse(code = 201, message = "All the Medical Records are returned.")}
     )
     public Response getAllMedicalRecord() {
-        return Response.ok("{\"idRecord\":5 }").build();
+        List<MedicalRecord> medicalRecords = medicalRecordRepository.list();
+        return Response.ok(medicalRecords).build();
     }
     
     @GET
@@ -203,7 +205,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 404, message = "Medical Record not found")}
     )
     public Response getMedicalRecord(@PathParam("idRecord") Long idRecord) {
-        MedicalRecord m = new MedicalRecord();
+        MedicalRecord m = medicalRecordRepository.find(idRecord);
         return Response.ok(m).build();
     }
     
@@ -216,7 +218,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 404, message = "Medical Record not found")}
     )
     public Response getExams(@PathParam("idRecord") Long idRecord) {
-        List<Exam> exams = new ArrayList<>();
+        List<Exam> exams = examRepository.list(idRecord);
         return Response.ok(exams).build();
     }
     
@@ -228,8 +230,8 @@ public class MedicalRecordService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Medical Record or Exam not found")}
     )
-    public Response getExam(@PathParam("idRecord") Long idRecord, @PathParam("idExam") Long idExam) {
-        Exam exam = new Exam();
+    public Response getExam(@PathParam("idExam") Long idExam) {
+        Exam exam = examRepository.find(idExam);
         return Response.ok(exam).build();
     }
     
@@ -242,7 +244,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 404, message = "Medical Record not found")}
     )
     public Response getDiagnostics(@PathParam("idRecord") Long idRecord) {
-        List<Diagnostic> diagnostics = new ArrayList<>();
+        List<Diagnostic> diagnostics = diagnosticRepository.list(idRecord);
         return Response.ok(diagnostics).build();
     }
     
@@ -255,8 +257,8 @@ public class MedicalRecordService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Medical Record or Diagnostic not found")}
     )
-    public Response getDiagnostic(@PathParam("idRecord") Long idRecord, @PathParam("idDiagnostic") Long idDiagnostic) {
-        Diagnostic diagnostic = new Diagnostic();
+    public Response getDiagnostic(@PathParam("idDiagnostic") Long idDiagnostic) {
+        Diagnostic diagnostic = diagnosticRepository.find(idDiagnostic);
         return Response.ok(diagnostic).build();
     }
     
@@ -269,7 +271,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 404, message = "Medical Record not found")}
     )
     public Response getPrescriptions(@PathParam("idRecord") Long idRecord) {
-        List<Prescription> prescriptions = new ArrayList<>();
+        List<Prescription> prescriptions = prescriptionRepository.list(idRecord);
         return Response.ok(prescriptions).build();
     }
     
@@ -281,8 +283,8 @@ public class MedicalRecordService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Medical Record or Prescription not found")}
     )
-    public Response getPrescription(@PathParam("idRecord") Long idRecord, @PathParam("idPrescription") Long idPrescription) {
-        Prescription prescription = new Prescription();
+    public Response getPrescription(@PathParam("idPrescription") Long idPrescription) {
+        Prescription prescription = prescriptionRepository.find(idPrescription);
         return Response.ok(prescription).build();
     }
     
@@ -295,7 +297,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 404, message = "Medical Record not found")}
     )
     public Response getAllDosages(@PathParam("idRecord") Long idRecord) {
-        List<Dosage> dosages = new ArrayList<>();
+        List<Dosage> dosages = dosageRepository.list(idRecord);
         return Response.ok(dosages).build();
     }
     
@@ -307,8 +309,8 @@ public class MedicalRecordService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Medical Record or Dosage not found")}
     ) 
-    public Response getDosage(@PathParam("idRecord") Long idRecord, @PathParam("idDosage") Long idDosage) {
-        Dosage dosage = new Dosage();
+    public Response getDosage(@PathParam("idDosage") Long idDosage) {
+        Dosage dosage = dosageRepository.find(idDosage);
         return Response.ok(dosage).build();
     }
         

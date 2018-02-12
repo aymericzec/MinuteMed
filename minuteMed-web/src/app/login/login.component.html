@@ -1,0 +1,20 @@
+<div class="content">
+
+   <div class="container">
+
+      <form class="form-signin" *ngIf="!submitted" (ngSubmit)="onSubmit()" #loginForm="ngForm">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        
+        <label for="inputEmail" class="sr-only">Username or Email</label>
+        <input  [(ngModel)]="mdUserName" name="username" #name="ngModel" class="form-control" placeholder="Username" required autofocus>
+        
+		    <label for="inputPassword" class="sr-only">Password</label>
+        <input [(ngModel)]="mdPassword" name="password" #name="ngModel" class="form-control" type="password"  placeholder="Password" required>
+        
+        <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="!loginForm.form.valid">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" type="reset" >Reset</button>
+      </form>
+
+    </div>
+
+</div>

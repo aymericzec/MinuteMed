@@ -1,6 +1,6 @@
 package fr.devsquad.minutemed.dmp.repository;
 
-import fr.devsquad.minutemed.authentication.domain.UserAccount;
+import fr.devsquad.minutemed.dmp.domain.MedicalRecord;
 
 import javax.ejb.NoSuchEntityException;
 import javax.ejb.Stateless;
@@ -18,28 +18,28 @@ public class MedicalRecordRepository {
     @PersistenceContext(unitName = "APHPPU")
     private EntityManager em;
 
-    public List<UserAccount> list() {
-        return em.createNamedQuery(UserAccount.FIND_ALL_USER_ACCOUNT, UserAccount.class).getResultList();
+    public List<MedicalRecord> list() {
+        return em.createNamedQuery(MedicalRecord.FIND_ALL_MEDICAL_RECORD, MedicalRecord.class).getResultList();
     }
 
-    public UserAccount find(Long id) {
-        return em.find(UserAccount.class, id);
+    public MedicalRecord find(Long id) {
+        return em.find(MedicalRecord.class, id);
     }
 
-    public Long save(UserAccount userAccount) {
-        em.persist(userAccount);
-        return userAccount.getIdAccount();
+    public Long save(MedicalRecord medicalRecord) {
+        em.persist(medicalRecord);
+        return medicalRecord.getId();
     }
 
-    public void update(UserAccount userAccount) {
-        em.merge(userAccount);
+    public void update(MedicalRecord medicalRecord) {
+        em.merge(medicalRecord);
     }
 
     public void delete(Long id) {
-        UserAccount userAccount = find(id);
-        if (userAccount == null) {
+        MedicalRecord medicalRecord = find(id);
+        if (medicalRecord == null) {
             throw new NoSuchEntityException("No entity with the id: " + id);
         }
-        em.remove(userAccount);
+        em.remove(medicalRecord);
     }
 }

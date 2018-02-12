@@ -1,11 +1,13 @@
 package fr.devsquad.minutemed.dmp.repository;
 
 import fr.devsquad.minutemed.dmp.domain.Dosage;
+import fr.devsquad.minutemed.dmp.domain.Exam;
 import java.util.List;
 import javax.ejb.NoSuchEntityException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -16,8 +18,9 @@ public class DosageRepository {
 @PersistenceContext(unitName = "APHPPU")
     private EntityManager em;
 
-    public List<Dosage> list() {
-        return em.createNamedQuery(Dosage.FIND_ALL_DOSAGE, Dosage.class).getResultList();
+    public List<Dosage> list(Long idMedicalRecord) {
+        TypedQuery<Dosage> tq = em.createQuery("SELECT d FROM Dosage d WHERE d.medicalRecord = :idMedicalRecord AND d.draft = :draft", Dosage.class);
+        return tq.setParameter("idMedicalRecord", idMedicalRecord).setParameter("draft", false).getResultList();
     }
 
     public Dosage find(Long id) {
