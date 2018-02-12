@@ -1,12 +1,14 @@
 package fr.devsquad.minutemed.dmp.repository;
 
 import fr.devsquad.minutemed.dmp.domain.Diagnostic;
+import fr.devsquad.minutemed.dmp.domain.Exam;
 
 import javax.ejb.NoSuchEntityException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import javax.persistence.TypedQuery;
 
 @Stateless
 public class DiagnosticRepository {
@@ -14,8 +16,9 @@ public class DiagnosticRepository {
     @PersistenceContext(unitName = "APHPPU")
     private EntityManager em;
 
-    public List<Diagnostic> list() {
-        return em.createNamedQuery(Diagnostic.FIND_ALL_DIAGNOSTIC, Diagnostic.class).getResultList();
+    public List<Diagnostic> list(Long idMedicalRecord) {
+        TypedQuery<Diagnostic> tq = em.createQuery("SELECT d FROM Diagnostic d WHERE d.medicalRecord = :idMedicalRecord AND d.draft = :draft", Diagnostic.class);
+        return tq.setParameter("idMedicalRecord", idMedicalRecord).setParameter("draft", false).getResultList();
     }
 
     public Diagnostic find(Long id) {
