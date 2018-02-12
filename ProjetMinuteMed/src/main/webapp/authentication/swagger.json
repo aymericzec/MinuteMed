@@ -12,15 +12,21 @@
   } ],
   "schemes" : [ "http", "https" ],
   "paths" : {
-    "/auth/create" : {
+    "/auth/create/doctor" : {
       "post" : {
         "tags" : [ "Authentication REST Endpoint" ],
-        "summary" : "Create an user account",
+        "summary" : "Create a doctor account",
         "description" : "",
-        "operationId" : "createUser",
+        "operationId" : "createDoctor",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/UserAccount"
+            }
+          },
           "201" : {
             "description" : "The User Account is created."
           },
@@ -33,7 +39,7 @@
     "/auth/delete/{idAccount}" : {
       "delete" : {
         "tags" : [ "Authentication REST Endpoint" ],
-        "summary" : "logout to the application",
+        "summary" : "delete an user account",
         "description" : "",
         "operationId" : "deleteUser",
         "consumes" : [ "application/json" ],
@@ -88,6 +94,27 @@
           "400" : {
             "description" : "Invalid input"
           }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "UserAccount" : {
+      "type" : "object",
+      "required" : [ "password", "type", "username" ],
+      "properties" : {
+        "idAccount" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "username" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string"
+        },
+        "type" : {
+          "type" : "string"
         }
       }
     }

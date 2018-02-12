@@ -1,6 +1,6 @@
 package fr.devsquad.minutemed.database;
 
-import fr.devsquad.minutemed.arborescence.domain.NodeHU;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeHUOld;
 import fr.devsquad.minutemed.dmp.domain.Diagnostic;
 import fr.devsquad.minutemed.dmp.domain.Dosage;
 import fr.devsquad.minutemed.dmp.domain.Exam;
@@ -67,7 +67,7 @@ public class JPADoctor implements IDoctor, INurse {
      * @return True if the medicalRecord don't exists in the database, or false
      */
     @Override
-    public boolean changeNodeMedicalRecord(long idMedicalRecord, NodeHU hu) {
+    public boolean changeNodeMedicalRecord(long idMedicalRecord, NodeHUOld hu) {
         
         try {
             et.begin();

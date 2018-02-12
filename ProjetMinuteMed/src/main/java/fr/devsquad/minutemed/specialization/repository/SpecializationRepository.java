@@ -7,14 +7,18 @@ package fr.devsquad.minutemed.specialization.repository;
 
 import fr.devsquad.minutemed.specialization.domain.Specialization;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
  * @author JSalmon
  */
+@Stateless
 public class SpecializationRepository {
     
+    @PersistenceContext(unitName = "APHPPU")
     private EntityManager em;
     
     public List<Specialization> listAllSpecializations(){

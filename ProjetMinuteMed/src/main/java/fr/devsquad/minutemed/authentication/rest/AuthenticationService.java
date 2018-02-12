@@ -5,8 +5,16 @@
  */
 package fr.devsquad.minutemed.authentication.rest;
 
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeOld;
+import fr.devsquad.minutemed.arborescenceOld.repository.ArborescenceRepositoryOld;
+import fr.devsquad.minutemed.authentication.domain.DoctorCreator;
 import fr.devsquad.minutemed.authentication.domain.UserAccount;
 import fr.devsquad.minutemed.authentication.repository.AuthenticationRepository;
+import fr.devsquad.minutemed.specialization.domain.Specialization;
+import fr.devsquad.minutemed.specialization.domain.SpecializationEnum;
+import fr.devsquad.minutemed.specialization.repository.SpecializationRepository;
+import fr.devsquad.minutemed.staff.domain.Doctor;
+import fr.devsquad.minutemed.staff.repository.StaffRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -31,7 +39,17 @@ import javax.ws.rs.core.UriInfo;
 public class AuthenticationService {
     
     @EJB
-    private AuthenticationRepository repository;
+    private AuthenticationRepository authenticationRepository;
+    
+    @EJB
+    private StaffRepository staffRepository;
+    
+    @EJB
+    private ArborescenceRepositoryOld arborescenceRepository;
+    
+//    @EJB
+//    private SpecializationRepository specializationRepository;
+    
 
     @Context
     private UriInfo uriInfo;
@@ -68,21 +86,27 @@ public class AuthenticationService {
     ////////////////////
     
     @POST
-    @ApiOperation(value = "Create an user account")
+    @ApiOperation(value = "Create a doctor account", response = UserAccount.class)
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "The User Account is created."),
         @ApiResponse(code = 400, message = "Invalid input")}
     )
-    @Path("/create")
-    public Response createUser(@NotNull UserAccount userAccount) throws IOException {
-        System.out.println("POST createUser");
-        Long id = repository.save(userAccount);
-        return Response.ok("{\"idAccountCreated\":"+ id +"}").build();
+    @Path("/create/doctor")
+    public Response createDoctor(@NotNull DoctorCreator doctorCreator) throws IOException {
+
+        System.out.println("createDoctor");
+        UserAccount userAccount = authenticationRepository.saveDoctorAccount(doctorCreator);
+        NodeOld node = arborescenceRepository.findNode(doctorCreator.getTypeNode(), doctorCreator.getIdNode());
+        Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
+        Doctor doctor = Doctor.createFromDoctorCreator(userAccount.getIdAccount(), doctorCreator, node, specialization);
+        staffRepository.saveDoctor(doctor);
+        
+        return Response.ok("{\"userAccount\":"+ userAccount +"}").build();
     }
     
     
     @DELETE
-    @ApiOperation(value = "logout to the application")
+    @ApiOperation(value = "delete an user account")
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "The User Account is deleted."),
         @ApiResponse(code = 400, message = "Invalid input")}
@@ -90,7 +114,7 @@ public class AuthenticationService {
     @Path("/delete/{idAccount}")
     public Response deleteUser(@PathParam("idAccount") Long idAccount) throws IOException {
         System.out.println("DELETE user");
-        repository.delete(idAccount);
+        authenticationRepository.delete(idAccount);
         return Response.ok("{\"delete\":"+ idAccount +"}").build();
     }
      

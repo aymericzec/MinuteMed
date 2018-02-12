@@ -1,13 +1,13 @@
 package fr.devsquad.minutemed.database;
 
-import fr.devsquad.minutemed.arborescence.domain.INode;
-import fr.devsquad.minutemed.arborescence.domain.Node;
-import fr.devsquad.minutemed.arborescence.domain.NodeAPHP;
-import fr.devsquad.minutemed.arborescence.domain.NodeCU;
-import fr.devsquad.minutemed.arborescence.domain.NodeHU;
-import fr.devsquad.minutemed.arborescence.domain.NodeHospital;
-import fr.devsquad.minutemed.arborescence.domain.NodePole;
-import fr.devsquad.minutemed.arborescence.domain.NodeService;
+import fr.devsquad.minutemed.arborescenceOld.domain.INode;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeAPHPOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeCUOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeHUOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeHospitalOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodePoleOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeServiceOld;
 import fr.devsquad.minutemed.authentication.domain.UserAccount;
 import fr.devsquad.minutemed.specialization.domain.Specialization;
 import fr.devsquad.minutemed.staff.domain.Doctor;
@@ -27,37 +27,37 @@ public interface IDataManager {
     
     public boolean removeSpecialization(long idSpecialization);
     
-    public boolean createAPHP(NodeAPHP aphp);
+    public boolean createAPHP(NodeAPHPOld aphp);
     
-    public boolean createHospital(NodeHospital hospital);
+    public boolean createHospital(NodeHospitalOld hospital);
     
-    public NodeHospital getHospital(long idHospital);
+    public NodeHospitalOld getHospital(long idHospital);
     
-    public List<NodeHospital> getAllHospitals();
+    public List<NodeHospitalOld> getAllHospitals();
     
-    public boolean createPole(NodePole pole);
+    public boolean createPole(NodePoleOld pole);
     
-    public NodePole getPole(long idPole);
+    public NodePoleOld getPole(long idPole);
     
-    public List<NodePole> getAllPoles(long idHospital);
+    public List<NodePoleOld> getAllPoles(long idHospital);
     
-    public boolean createService(NodeService service);
+    public boolean createService(NodeServiceOld service);
     
-    public NodeService getService(long idService);
+    public NodeServiceOld getService(long idService);
     
-    public List<NodeService> getAllServices(long idPole);
+    public List<NodeServiceOld> getAllServices(long idPole);
     
-    public boolean createHospitalUnit(NodeHU hu);
+    public boolean createHospitalUnit(NodeHUOld hu);
     
-    public NodeHU getHospitalUnit(long idHU);
+    public NodeHUOld getHospitalUnit(long idHU);
     
-    public List<NodeHU> getAllHospitalUnits(long idService);
+    public List<NodeHUOld> getAllHospitalUnits(long idService);
     
-    public boolean createCareUnit(NodeCU cu);
+    public boolean createCareUnit(NodeCUOld cu);
     
-    public NodeCU getCareUnit(long idCU);
+    public NodeCUOld getCareUnit(long idCU);
     
-    public List<NodeCU> getAllCareUnits(long idHU);
+    public List<NodeCUOld> getAllCareUnits(long idHU);
     
     public boolean createDoctor(Doctor doctor);
     

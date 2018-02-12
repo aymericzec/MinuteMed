@@ -12,14 +12,18 @@ import fr.devsquad.minutemed.staff.domain.Nurse;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.NoSuchEntityException;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
  * @author JSalmon
  */
+@Stateless
 public class StaffRepository {
     
+    @PersistenceContext(unitName = "APHPPU")
     private EntityManager em;
     
     public Doctor findDoctor(Long id){

@@ -1,4 +1,4 @@
-package fr.devsquad.minutemed.arborescence.domain;
+package fr.devsquad.minutemed.arborescenceOld.domain;
 
 
 

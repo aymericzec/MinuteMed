@@ -1,12 +1,12 @@
 package fr.devsquad.minutemed.staff.domain;
 
-import fr.devsquad.minutemed.arborescence.domain.INode;
-import fr.devsquad.minutemed.arborescence.domain.Node;
-import fr.devsquad.minutemed.arborescence.domain.NodeEnum;
-import fr.devsquad.minutemed.arborescence.domain.NodeHU;
-import fr.devsquad.minutemed.arborescence.domain.NodeHospital;
-import fr.devsquad.minutemed.arborescence.domain.NodePole;
-import fr.devsquad.minutemed.arborescence.domain.NodeService;
+import fr.devsquad.minutemed.arborescenceOld.domain.INode;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeEnumOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeHUOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeHospitalOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodePoleOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeServiceOld;
 import fr.devsquad.minutemed.database.INurse;
 import fr.devsquad.minutemed.database.JPADataManager;
 import fr.devsquad.minutemed.database.JPANurse;
@@ -42,11 +42,11 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
     
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idNode")
-    private Node node;
+    private NodeOld node;
     
     public Nurse() { }
     
-    public Nurse(StaffEnum type, String firstName, String lastName, String adress, String email, String phoneNumber, Node node) { 
+    public Nurse(StaffEnum type, String firstName, String lastName, String adress, String email, String phoneNumber, NodeOld node) { 
         if( type == null){
             throw new NullPointerException();
         }
@@ -134,7 +134,7 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
     }
     
     @Override
-    public Node getNode() {
+    public NodeOld getNode() {
         return node;
     }
 
@@ -194,7 +194,7 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
     }
     
     @Override
-    public void setNode(Node node) {
+    public void setNode(NodeOld node) {
         if(node==null){
             throw new NullPointerException();
         }
@@ -217,9 +217,9 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
         
         MedicalRecord mRecord = nurse.getMedicalRecord(idMedicalRecord);
         
-        if(node.getType().equals(NodeEnum.HOSPITAL.name())) {
+        if(node.getType().equals(NodeEnumOld.HOSPITAL.name())) {
             
-            NodeHospital hospital = manager.getHospital(node.getIdNodeInfo());
+            NodeHospitalOld hospital = manager.getHospital(node.getIdNodeInfo());
             
             for(INode node : hospital.getAttachedNodes()) {
                 if(node.getId() == mRecord.getId()) {
@@ -228,9 +228,9 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
             }
         }
         
-        if(node.getType().equals(NodeEnum.POLE.name())) {
+        if(node.getType().equals(NodeEnumOld.POLE.name())) {
             
-            NodePole pole = manager.getPole(node.getIdNodeInfo());
+            NodePoleOld pole = manager.getPole(node.getIdNodeInfo());
             
             for(INode node : pole.getAttachedNodes()) {
                 if(node.getId() == mRecord.getId()) {
@@ -239,9 +239,9 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
             }
         }
         
-        if(node.getType().equals(NodeEnum.SERVICE.name())) {
+        if(node.getType().equals(NodeEnumOld.SERVICE.name())) {
             
-            NodeService service = manager.getService(node.getIdNodeInfo());
+            NodeServiceOld service = manager.getService(node.getIdNodeInfo());
             
             for(INode node : service.getAttachedNodes()) {
                 if(node.getId() == mRecord.getId()) {
@@ -250,9 +250,9 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
             }
         }
         
-        if(node.getType().equals(NodeEnum.HOSPITAL_UNIT.name())) {
+        if(node.getType().equals(NodeEnumOld.HOSPITAL_UNIT.name())) {
             
-            NodeHU hu = manager.getHospitalUnit(node.getIdNodeInfo());
+            NodeHUOld hu = manager.getHospitalUnit(node.getIdNodeInfo());
             
             for(INode node : hu.getAttachedNodes()) {
                 if(node.getId() == mRecord.getId()) {

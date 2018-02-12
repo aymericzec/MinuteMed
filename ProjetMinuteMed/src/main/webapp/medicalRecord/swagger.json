@@ -672,6 +672,7 @@
     },
     "Doctor" : {
       "type" : "object",
+      "required" : [ "adress", "email", "firstName", "lastName", "node", "phoneNumber", "specialization", "type" ],
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -744,14 +745,14 @@
           "type" : "boolean",
           "default" : false
         },
+        "lastReport" : {
+          "$ref" : "#/definitions/ReportDosage"
+        },
         "repport" : {
           "type" : "array",
           "items" : {
             "$ref" : "#/definitions/ReportDosage"
           }
-        },
-        "lastReport" : {
-          "$ref" : "#/definitions/ReportDosage"
         }
       }
     },

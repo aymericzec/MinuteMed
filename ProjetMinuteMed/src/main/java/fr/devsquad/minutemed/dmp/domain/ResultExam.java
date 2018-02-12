@@ -17,7 +17,7 @@ import javax.persistence.OneToOne;
 @Entity
 @NamedQuery(name = FIND_ALL_RESULT_EXAM, query = "SELECT u FROM ResultExam u")
 public class ResultExam implements Serializable {
-    public static final String FIND_ALL_RESULT_EXAM = "ReportDosage.findAllReportDosage";
+    public static final String FIND_ALL_RESULT_EXAM = "ResultExam.findAllResultExam";
     @Id @GeneratedValue
     @Column(name = "idResultExam")
     private long id;

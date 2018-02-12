@@ -1,12 +1,13 @@
 package fr.devsquad.minutemed.staff.domain;
 
-import fr.devsquad.minutemed.arborescence.domain.INode;
-import fr.devsquad.minutemed.arborescence.domain.Node;
-import fr.devsquad.minutemed.arborescence.domain.NodeEnum;
-import fr.devsquad.minutemed.arborescence.domain.NodeHU;
-import fr.devsquad.minutemed.arborescence.domain.NodeHospital;
-import fr.devsquad.minutemed.arborescence.domain.NodePole;
-import fr.devsquad.minutemed.arborescence.domain.NodeService;
+import fr.devsquad.minutemed.arborescenceOld.domain.INode;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeEnumOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeHUOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeHospitalOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodePoleOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeServiceOld;
+import fr.devsquad.minutemed.authentication.domain.DoctorCreator;
 import fr.devsquad.minutemed.database.IDoctor;
 import fr.devsquad.minutemed.database.INurse;
 import fr.devsquad.minutemed.database.JPADataManager;
@@ -20,14 +21,15 @@ import fr.devsquad.minutemed.specialization.domain.Specialization;
 import static fr.devsquad.minutemed.staff.domain.Doctor.FIND_ALL_DOCTOR;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -36,49 +38,39 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
 
     public static final String FIND_ALL_DOCTOR = "Doctor.findAllDoctor";
     
-    @Id @GeneratedValue
+    @Id
     @Column(name = "idDoctor")
-    private long id; 
+    private Long id; 
+    
+    @NotNull
     private String type;
+    
+    @NotNull
     private String firstName;
+    
+    @NotNull
     private String lastName;
+    
+    @NotNull
     private String adress;
+    
+    @NotNull
     private String email;
+    
+    @NotNull
     private String phoneNumber;
+    
+    @NotNull
     private String specialization;
     
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @NotNull
     @JoinColumn(name = "idNode")
-    private Node node;
+    private NodeOld node;
  
     public Doctor() { }
     
-    public Doctor(StaffEnum type, String firstName, String lastName, String adress, String email, String phoneNumber, Node node , Specialization specialization) { 
-        if( type == null){
-            throw new NullPointerException();
-        }
-        if( firstName == null){
-            throw new NullPointerException();
-        }
-        if( lastName == null){
-            throw new NullPointerException();
-        }
-        if( adress == null){
-            throw new NullPointerException();
-        }
-        if( email == null){
-            throw new NullPointerException();
-        }
-        if( phoneNumber == null){
-            throw new NullPointerException();
-        }
-        if( node == null){
-            throw new NullPointerException();
-        }
-        if( specialization == null){
-            throw new NullPointerException();
-        }
-        
+    public Doctor(Long id, String firstName, String lastName, String adress, String email, String phoneNumber, NodeOld node , Specialization specialization) { 
+      
         if( stringNotConform(firstName) ){
             throw new IllegalArgumentException();
         }
@@ -94,15 +86,22 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
         if( stringNotConform(phoneNumber) ){
             throw new IllegalArgumentException();
         }
-        
-        this.type = type.DOCTOR.name();
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.adress = adress;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.node = node;
-        this.specialization = specialization.getStaffName();
+        this.id = Objects.requireNonNull(id);
+        this.type = StaffEnum.DOCTOR.name();
+        this.firstName = Objects.requireNonNull(firstName);
+        this.lastName = Objects.requireNonNull(lastName);
+        this.adress = Objects.requireNonNull(adress);
+        this.email = Objects.requireNonNull(email);
+        this.phoneNumber = Objects.requireNonNull(phoneNumber);
+        this.node = Objects.requireNonNull(node);
+        this.specialization = Objects.requireNonNull(specialization).getStaffName();
+    }
+    
+    public static Doctor createFromDoctorCreator(Long id, DoctorCreator doctorCreator, NodeOld node, Specialization specialization){
+        Objects.requireNonNull(doctorCreator);
+        return new Doctor(Objects.requireNonNull(id), doctorCreator.getFirstName(), doctorCreator.getFirstName(), 
+                            doctorCreator.getAdress(), doctorCreator.getEmail(), doctorCreator.getPhoneNumber(),
+                            Objects.requireNonNull(node), specialization);
     }
     
     private static boolean stringNotConform(String s){
@@ -145,7 +144,7 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
     }
     
     @Override
-    public Node getNode() {
+    public NodeOld getNode() {
         return node;
     }
 
@@ -156,9 +155,7 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
     
     @Override
     public void setFirstName(String firstName) {
-        if(firstName==null){
-            throw new NullPointerException();
-        }
+        Objects.requireNonNull(firstName);
         if(stringNotConform(firstName)){
             throw new IllegalArgumentException();
         }
@@ -167,9 +164,7 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
 
     @Override
     public void setLastName(String lastName) {
-        if(lastName==null){
-            throw new NullPointerException();
-        }
+        Objects.requireNonNull(lastName);
         if(stringNotConform(lastName)){
             throw new IllegalArgumentException();
         }
@@ -178,9 +173,7 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
 
     @Override
     public void setAdress(String adress) {
-        if(adress==null){
-            throw new NullPointerException();
-        }
+        Objects.requireNonNull(adress);
         if(stringNotConform(adress)){
             throw new IllegalArgumentException();
         }
@@ -210,7 +203,7 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
     }
     
     @Override
-    public void setNode(Node node) {
+    public void setNode(NodeOld node) {
         if(node==null){
             throw new NullPointerException();
         }
@@ -249,7 +242,7 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
      * @return True if the medicalRecord don't exists in the database, or false
      */
     @Override
-    public boolean changeNodeMedicalRecord(long idMedicalRecord, NodeHU hu) {
+    public boolean changeNodeMedicalRecord(long idMedicalRecord, NodeHUOld hu) {
         
         if(node.getIdNodeInfo() == hu.getId()) {
             JPADoctor doctor = new JPADoctor();
@@ -550,9 +543,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
         
         MedicalRecord mRecord = doctor.getMedicalRecord(idMedicalRecord);
         
-        if(node.getType().equals(NodeEnum.HOSPITAL.name())) {
+        if(node.getType().equals(NodeEnumOld.HOSPITAL.name())) {
             
-            NodeHospital hospital = manager.getHospital(node.getIdNodeInfo());
+            NodeHospitalOld hospital = manager.getHospital(node.getIdNodeInfo());
             
             for(INode node : hospital.getAttachedNodes()) {
                 if(node.getId() == mRecord.getId()) {
@@ -561,9 +554,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
             }
         }
         
-        if(node.getType().equals(NodeEnum.POLE.name())) {
+        if(node.getType().equals(NodeEnumOld.POLE.name())) {
             
-            NodePole pole = manager.getPole(node.getIdNodeInfo());
+            NodePoleOld pole = manager.getPole(node.getIdNodeInfo());
             
             for(INode node : pole.getAttachedNodes()) {
                 if(node.getId() == mRecord.getId()) {
@@ -572,9 +565,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
             }
         }
         
-        if(node.getType().equals(NodeEnum.SERVICE.name())) {
+        if(node.getType().equals(NodeEnumOld.SERVICE.name())) {
             
-            NodeService service = manager.getService(node.getIdNodeInfo());
+            NodeServiceOld service = manager.getService(node.getIdNodeInfo());
             
             for(INode node : service.getAttachedNodes()) {
                 if(node.getId() == mRecord.getId()) {
@@ -583,9 +576,9 @@ public class Doctor implements Serializable, IHospitalStaff, IMedicalStaff, IDoc
             }
         }
         
-        if(node.getType().equals(NodeEnum.HOSPITAL_UNIT.name())) {
+        if(node.getType().equals(NodeEnumOld.HOSPITAL_UNIT.name())) {
             
-            NodeHU hu = manager.getHospitalUnit(node.getIdNodeInfo());
+            NodeHUOld hu = manager.getHospitalUnit(node.getIdNodeInfo());
             
             for(INode node : hu.getAttachedNodes()) {
                 if(node.getId() == mRecord.getId()) {

@@ -1,6 +1,7 @@
 package fr.devsquad.minutemed.staff.domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,14 +18,11 @@ public class MedicalStaff implements Serializable {
     
     public MedicalStaff() { }
     
-    public MedicalStaff(String type, long idMedicalStaff) {
-        if(type==null){
-            throw new NullPointerException();
-        }
+    public MedicalStaff(String type, long idMedicalStaff) {      
         if(idMedicalStaff<0){
             throw new IllegalArgumentException();
         }
-        this.type = type;
+        this.type = Objects.requireNonNull(type);
         this.idMedicalStaff = idMedicalStaff;
     }
     

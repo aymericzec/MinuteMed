@@ -2,17 +2,14 @@ package fr.devsquad.minutemed.authentication.domain;
 
 import com.google.common.hash.Hashing;
 import static fr.devsquad.minutemed.authentication.domain.UserAccount.FIND_ALL_USER_ACCOUNT;
-import fr.devsquad.minutemed.staff.domain.MedicalStaff;
+import fr.devsquad.minutemed.staff.domain.StaffEnum;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -31,17 +28,16 @@ public class UserAccount implements Serializable {
     @NotNull
     private String password; //encrypted password
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "idStaff")
-    private MedicalStaff user;
+    @NotNull
+    private String type;
 
     public UserAccount() {
     }
 
-    public UserAccount(String username, String password, MedicalStaff user) {
+    public UserAccount(String username, String password, StaffEnum type) {
         this.username = Objects.requireNonNull(username);
         this.password = Hashing.sha256().hashString(Objects.requireNonNull(password), StandardCharsets.UTF_8).toString();
-        this.user = Objects.requireNonNull(user);
+        this.type = Objects.requireNonNull(type).name();
     }
 
     public long getIdAccount() {
@@ -56,12 +52,16 @@ public class UserAccount implements Serializable {
         return password;
     }
 
-    public MedicalStaff getUser() {
-        return user;
+    public String getType() {
+        return type;
     }
 
     public void setPassword(String newPassword) {
         password = Objects.requireNonNull(newPassword);
+    }
+    
+    public void setType(StaffEnum type){
+        this.type = Objects.requireNonNull(type).name();
     }
 
     @Override

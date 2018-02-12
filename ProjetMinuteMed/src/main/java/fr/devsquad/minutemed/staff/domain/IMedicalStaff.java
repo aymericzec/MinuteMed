@@ -1,12 +1,12 @@
 package fr.devsquad.minutemed.staff.domain;
 
-import fr.devsquad.minutemed.arborescence.domain.Node;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeOld;
 
 
 
 public interface IMedicalStaff {
     
-    public Node getNode();
+    public NodeOld getNode();
     
-    public void setNode(Node node);
+    public void setNode(NodeOld node);
 }

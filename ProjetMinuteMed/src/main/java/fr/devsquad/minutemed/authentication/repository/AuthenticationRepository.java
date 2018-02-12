@@ -1,6 +1,9 @@
 package fr.devsquad.minutemed.authentication.repository;
 
+import fr.devsquad.minutemed.authentication.domain.DoctorCreator;
+import fr.devsquad.minutemed.authentication.domain.NurseCreator;
 import fr.devsquad.minutemed.authentication.domain.UserAccount;
+import fr.devsquad.minutemed.staff.domain.StaffEnum;
 
 import javax.ejb.NoSuchEntityException;
 import javax.ejb.Stateless;
@@ -26,7 +29,20 @@ public class AuthenticationRepository {
         return em.find(UserAccount.class, id);
     }
 
-    public Long save(UserAccount userAccount) {
+    
+    public UserAccount saveDoctorAccount(DoctorCreator doctorCreator){
+        UserAccount doctorAccount = new UserAccount(doctorCreator.getUsername(), doctorCreator.getPassword(), StaffEnum.DOCTOR);
+        saveUserAccount(doctorAccount);
+        return doctorAccount;
+    }
+    
+    public UserAccount saveNurseAccount(NurseCreator nurseCreator){
+        UserAccount nurseAccount = new UserAccount(nurseCreator.getUsername(), nurseCreator.getPassword(), StaffEnum.NURSE);
+        saveUserAccount(nurseAccount);
+        return nurseAccount;
+    }
+    
+    private Long saveUserAccount(UserAccount userAccount) {
         em.persist(userAccount);
         return userAccount.getIdAccount();
     }

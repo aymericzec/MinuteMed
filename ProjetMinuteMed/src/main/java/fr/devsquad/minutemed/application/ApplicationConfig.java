@@ -1,6 +1,6 @@
 package fr.devsquad.minutemed.application;
 
-import fr.devsquad.minutemed.arborescence.rest.ArborescenceService;
+import fr.devsquad.minutemed.arborescenceOld.rest.ArborescenceService;
 import fr.devsquad.minutemed.filters.rest.CORSFilter;
 import fr.devsquad.minutemed.authentication.rest.AuthenticationService;
 import fr.devsquad.minutemed.dmp.rest.MedicalRecordService;

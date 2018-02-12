@@ -11,7 +11,7 @@ import javax.persistence.NamedQuery;
 
 
 @Entity
-@NamedQuery(name = FIND_ALL_SPECIALIZATION, query = "SELECT spe FROM Secialization spe")
+@NamedQuery(name = FIND_ALL_SPECIALIZATION, query = "SELECT spe FROM Specialization spe")
 public class Specialization implements Serializable {
     
     public static final String FIND_ALL_SPECIALIZATION = "Specialization.findAllSpecialization";

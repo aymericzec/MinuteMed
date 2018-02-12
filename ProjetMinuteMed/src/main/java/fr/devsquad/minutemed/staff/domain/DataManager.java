@@ -1,11 +1,11 @@
 package fr.devsquad.minutemed.staff.domain;
 
-import fr.devsquad.minutemed.arborescence.domain.NodeAPHP;
-import fr.devsquad.minutemed.arborescence.domain.NodeCU;
-import fr.devsquad.minutemed.arborescence.domain.NodeHU;
-import fr.devsquad.minutemed.arborescence.domain.NodeHospital;
-import fr.devsquad.minutemed.arborescence.domain.NodePole;
-import fr.devsquad.minutemed.arborescence.domain.NodeService;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeAPHPOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeCUOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeHUOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeHospitalOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodePoleOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeServiceOld;
 import fr.devsquad.minutemed.authentication.domain.UserAccount;
 import fr.devsquad.minutemed.database.IDataManager;
 import fr.devsquad.minutemed.database.JPADataManager;
@@ -248,7 +248,7 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      * @return True if the APHP don't exists in the database, or false otherwise
      */
     @Override
-    public boolean createAPHP(NodeAPHP aphp) {
+    public boolean createAPHP(NodeAPHPOld aphp) {
         if(aphp==null){
             throw new NullPointerException();
         }
@@ -264,7 +264,7 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      * otherwise
      */
     @Override
-    public boolean createHospital(NodeHospital hospital) {
+    public boolean createHospital(NodeHospitalOld hospital) {
         if(hospital==null){
             throw new NullPointerException();
         }
@@ -279,7 +279,7 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      * @return The Hospital
      */
     @Override
-    public NodeHospital getHospital(long idHospital) {
+    public NodeHospitalOld getHospital(long idHospital) {
         if(idHospital<0){
             throw new IllegalArgumentException();
         }
@@ -293,7 +293,7 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      * @return A list of Hospitals
      */
     @Override
-    public List<NodeHospital> getAllHospitals() {
+    public List<NodeHospitalOld> getAllHospitals() {
         JPADataManager dataManager = new JPADataManager();
         return dataManager.getAllHospitals();
     }
@@ -305,7 +305,7 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      * @return True if the pole don't exists in the database, or false otherwise
      */
     @Override
-    public boolean createPole(NodePole pole) {
+    public boolean createPole(NodePoleOld pole) {
         if(pole==null){
             throw new NullPointerException();
         }
@@ -320,7 +320,7 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      * @return The Pole
      */
     @Override
-    public NodePole getPole(long idPole) {
+    public NodePoleOld getPole(long idPole) {
         if(idPole<0){
             throw new IllegalArgumentException();
         }
@@ -335,7 +335,7 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      * @return A list of Poles
      */
     @Override
-    public List<NodePole> getAllPoles(long idHospital) {
+    public List<NodePoleOld> getAllPoles(long idHospital) {
         if(idHospital<0){
             throw new IllegalArgumentException();
         }
@@ -351,7 +351,7 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      * otherwise
      */
     @Override
-    public boolean createService(NodeService service) {
+    public boolean createService(NodeServiceOld service) {
         if(service==null){
             throw new NullPointerException();
         }
@@ -366,7 +366,7 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      * @return The Service
      */
     @Override
-    public NodeService getService(long idService) {
+    public NodeServiceOld getService(long idService) {
         if(idService<0){
             throw new IllegalArgumentException();
         }
@@ -381,7 +381,7 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      * @return A list of Services
      */
     @Override
-    public List<NodeService> getAllServices(long idPole) {
+    public List<NodeServiceOld> getAllServices(long idPole) {
         if(idPole<0){
             throw new IllegalArgumentException();
         }
@@ -397,7 +397,7 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      * otherwise
      */
     @Override
-    public boolean createHospitalUnit(NodeHU hu) {
+    public boolean createHospitalUnit(NodeHUOld hu) {
         if(hu==null){
             throw new NullPointerException();
         }
@@ -412,7 +412,7 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      * @return The Hospital Unit
      */
     @Override
-    public NodeHU getHospitalUnit(long idHU) {
+    public NodeHUOld getHospitalUnit(long idHU) {
         if(idHU<0){
             throw new IllegalArgumentException();
         }
@@ -427,7 +427,7 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      * @return A list of Hospital Unit
      */
     @Override
-    public List<NodeHU> getAllHospitalUnits(long idService) {
+    public List<NodeHUOld> getAllHospitalUnits(long idService) {
         if(idService<0){
             throw new IllegalArgumentException();
         }
@@ -443,7 +443,7 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      * otherwise
      */
     @Override
-    public boolean createCareUnit(NodeCU cu) {
+    public boolean createCareUnit(NodeCUOld cu) {
         if(cu==null){
             throw new NullPointerException();
         }
@@ -458,7 +458,7 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      * @return The Care Unit
      */
     @Override
-    public NodeCU getCareUnit(long idCU) {
+    public NodeCUOld getCareUnit(long idCU) {
         if(idCU<0){
             throw new IllegalArgumentException();
         }
@@ -473,7 +473,7 @@ public class DataManager implements Serializable, IHospitalStaff, IDataManager {
      * @return A list of Care Unit
      */
     @Override
-    public List<NodeCU> getAllCareUnits(long idHU) {
+    public List<NodeCUOld> getAllCareUnits(long idHU) {
         if(idHU<0){
             throw new IllegalArgumentException();
         }

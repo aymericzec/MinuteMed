@@ -1,6 +1,6 @@
 package fr.devsquad.minutemed.database;
 
-import fr.devsquad.minutemed.arborescence.domain.NodeHU;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeHUOld;
 import fr.devsquad.minutemed.dmp.domain.Diagnostic;
 import fr.devsquad.minutemed.dmp.domain.Dosage;
 import fr.devsquad.minutemed.dmp.domain.Exam;
@@ -13,7 +13,7 @@ public interface IDoctor {
     
     public boolean createMedicalRecord(MedicalRecord medicalRecord);
     
-    public boolean changeNodeMedicalRecord(long idMedicalRecord, NodeHU hu);
+    public boolean changeNodeMedicalRecord(long idMedicalRecord, NodeHUOld hu);
     
     public boolean createExam(Exam exam);
     

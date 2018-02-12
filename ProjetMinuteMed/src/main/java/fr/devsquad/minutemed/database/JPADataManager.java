@@ -1,12 +1,12 @@
 package fr.devsquad.minutemed.database;
 
-import fr.devsquad.minutemed.arborescence.domain.Node;
-import fr.devsquad.minutemed.arborescence.domain.NodeAPHP;
-import fr.devsquad.minutemed.arborescence.domain.NodeCU;
-import fr.devsquad.minutemed.arborescence.domain.NodeHU;
-import fr.devsquad.minutemed.arborescence.domain.NodeHospital;
-import fr.devsquad.minutemed.arborescence.domain.NodePole;
-import fr.devsquad.minutemed.arborescence.domain.NodeService;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeAPHPOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeCUOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeHUOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeHospitalOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodePoleOld;
+import fr.devsquad.minutemed.arborescenceOld.domain.NodeServiceOld;
 import fr.devsquad.minutemed.authentication.domain.UserAccount;
 import fr.devsquad.minutemed.dmp.domain.MedicalRecord;
 import fr.devsquad.minutemed.specialization.domain.Specialization;
@@ -132,11 +132,11 @@ public class JPADataManager implements IDataManager {
      * @return True if the APHP don't exists in the database, or false otherwise
      */
     @Override
-    public boolean createAPHP(NodeAPHP aphp) {
+    public boolean createAPHP(NodeAPHPOld aphp) {
         
         Objects.requireNonNull(aphp);
         
-        Node node = new Node(aphp.getType(), aphp.getId());
+        NodeOld node = new NodeOld(aphp.getType(), aphp.getId());
         
         try {
             et.begin();
@@ -156,11 +156,11 @@ public class JPADataManager implements IDataManager {
      * @return True if the hospital don't exists in the database, or false otherwise
      */
     @Override
-    public boolean createHospital(NodeHospital hospital) {
+    public boolean createHospital(NodeHospitalOld hospital) {
         
         Objects.requireNonNull(hospital);
         
-        Node node = new Node(hospital.getType(), hospital.getId());
+        NodeOld node = new NodeOld(hospital.getType(), hospital.getId());
         
         try {
             et.begin();
@@ -180,12 +180,12 @@ public class JPADataManager implements IDataManager {
      * @return The Hospital
      */
     @Override
-    public NodeHospital getHospital(long idHospital) {
+    public NodeHospitalOld getHospital(long idHospital) {
         
-        NodeHospital hospital;
+        NodeHospitalOld hospital;
         
         try {
-            hospital = em.find(NodeHospital.class, idHospital);
+            hospital = em.find(NodeHospitalOld.class, idHospital);
         } catch(EntityNotFoundException e) {
             return null;
         }
@@ -198,12 +198,12 @@ public class JPADataManager implements IDataManager {
      * @return A list of Hospitals
      */
     @Override
-    public List<NodeHospital> getAllHospitals() {
+    public List<NodeHospitalOld> getAllHospitals() {
         
-        List<NodeHospital> hospitals;
+        List<NodeHospitalOld> hospitals;
         
         try {
-            TypedQuery<NodeHospital> tq = em.createQuery("SELECT hospital FROM NodeHospital hospital", NodeHospital.class);
+            TypedQuery<NodeHospitalOld> tq = em.createQuery("SELECT hospital FROM NodeHospital hospital", NodeHospitalOld.class);
             hospitals = tq.getResultList();
         } catch(NoResultException e) {
             return null;
@@ -218,11 +218,11 @@ public class JPADataManager implements IDataManager {
      * @return True if the pole don't exists in the database, or false otherwise
      */
     @Override
-    public boolean createPole(NodePole pole) {
+    public boolean createPole(NodePoleOld pole) {
         
         Objects.requireNonNull(pole);
         
-        Node node = new Node(pole.getType(), pole.getId());
+        NodeOld node = new NodeOld(pole.getType(), pole.getId());
         
         try {
             et.begin();
@@ -242,12 +242,12 @@ public class JPADataManager implements IDataManager {
      * @return The Pole
      */
     @Override
-    public NodePole getPole(long idPole) {
+    public NodePoleOld getPole(long idPole) {
         
-        NodePole pole;
+        NodePoleOld pole;
         
         try {
-            pole = em.find(NodePole.class, idPole);
+            pole = em.find(NodePoleOld.class, idPole);
         } catch(EntityNotFoundException e) {
             return null;
         }
@@ -261,12 +261,12 @@ public class JPADataManager implements IDataManager {
      * @return A list of Poles
      */
     @Override
-    public List<NodePole> getAllPoles(long idHospital) {
+    public List<NodePoleOld> getAllPoles(long idHospital) {
        
-        List<NodePole> poles;
+        List<NodePoleOld> poles;
         
         try {
-            TypedQuery<NodePole> tq = em.createQuery("SELECT pole FROM NodePole pole WHERE pole.hospital = :idHospital", NodePole.class);
+            TypedQuery<NodePoleOld> tq = em.createQuery("SELECT pole FROM NodePole pole WHERE pole.hospital = :idHospital", NodePoleOld.class);
             poles = tq.setParameter("idHospital", idHospital).getResultList();
         } catch(NoResultException e) {
             return null;
@@ -281,11 +281,11 @@ public class JPADataManager implements IDataManager {
      * @return True if the service don't exists in the database, or false otherwise
      */
     @Override
-    public boolean createService(NodeService service) {
+    public boolean createService(NodeServiceOld service) {
         
         Objects.requireNonNull(service);
         
-        Node node = new Node(service.getType(), service.getId());
+        NodeOld node = new NodeOld(service.getType(), service.getId());
         
         try {
             et.begin();
@@ -305,12 +305,12 @@ public class JPADataManager implements IDataManager {
      * @return The Service
      */
     @Override
-    public NodeService getService(long idService) {
+    public NodeServiceOld getService(long idService) {
         
-        NodeService service;
+        NodeServiceOld service;
         
         try {
-            service = em.find(NodeService.class, idService);
+            service = em.find(NodeServiceOld.class, idService);
         } catch(EntityNotFoundException e) {
             return null;
         }
@@ -324,12 +324,12 @@ public class JPADataManager implements IDataManager {
      * @return A list of Services
      */
     @Override
-    public List<NodeService> getAllServices(long idPole) {
+    public List<NodeServiceOld> getAllServices(long idPole) {
         
-        List<NodeService> services;
+        List<NodeServiceOld> services;
         
         try {
-            TypedQuery<NodeService> tq = em.createQuery("SELECT service FROM NodeService service WHERE service.pole = :idPole", NodeService.class);
+            TypedQuery<NodeServiceOld> tq = em.createQuery("SELECT service FROM NodeService service WHERE service.pole = :idPole", NodeServiceOld.class);
             services = tq.setParameter("idPole", idPole).getResultList();
         } catch(NoResultException e) {
             return null;
@@ -344,11 +344,11 @@ public class JPADataManager implements IDataManager {
      * @return True if the hospital unit don't exists in the database, or false otherwise
      */
     @Override
-    public boolean createHospitalUnit(NodeHU hu) {
+    public boolean createHospitalUnit(NodeHUOld hu) {
         
         Objects.requireNonNull(hu);
         
-        Node node = new Node(hu.getType(), hu.getId());
+        NodeOld node = new NodeOld(hu.getType(), hu.getId());
         
         try {
             et.begin();
@@ -368,12 +368,12 @@ public class JPADataManager implements IDataManager {
      * @return The Hospital Unit
      */
     @Override
-    public NodeHU getHospitalUnit(long idHU) {
+    public NodeHUOld getHospitalUnit(long idHU) {
         
-        NodeHU hu;
+        NodeHUOld hu;
         
         try {
-            hu = em.find(NodeHU.class, idHU);
+            hu = em.find(NodeHUOld.class, idHU);
         } catch(EntityNotFoundException e) {
             return null;
         }
@@ -387,12 +387,12 @@ public class JPADataManager implements IDataManager {
      * @return A list of Hospital Unit
      */
     @Override
-    public List<NodeHU> getAllHospitalUnits(long idService) {
+    public List<NodeHUOld> getAllHospitalUnits(long idService) {
         
-        List<NodeHU> hu;
+        List<NodeHUOld> hu;
         
         try {
-            TypedQuery<NodeHU> tq = em.createQuery("SELECT hu FROM NodeHU hu WHERE hu.service = :idService", NodeHU.class);
+            TypedQuery<NodeHUOld> tq = em.createQuery("SELECT hu FROM NodeHU hu WHERE hu.service = :idService", NodeHUOld.class);
             hu = tq.setParameter("idService", idService).getResultList();
         } catch(NoResultException e) {
             return null;
@@ -407,11 +407,11 @@ public class JPADataManager implements IDataManager {
      * @return True if the care unit don't exists in the database, or false otherwise
      */
     @Override
-    public boolean createCareUnit(NodeCU cu) {
+    public boolean createCareUnit(NodeCUOld cu) {
         
         Objects.requireNonNull(cu);
         
-        Node node = new Node(cu.getType(), cu.getId());
+        NodeOld node = new NodeOld(cu.getType(), cu.getId());
         
         try {
             et.begin();
@@ -431,12 +431,12 @@ public class JPADataManager implements IDataManager {
      * @return The Care Unit
      */
     @Override
-    public NodeCU getCareUnit(long idCU) {
+    public NodeCUOld getCareUnit(long idCU) {
         
-        NodeCU cu;
+        NodeCUOld cu;
         
         try {
-            cu = em.find(NodeCU.class, idCU);
+            cu = em.find(NodeCUOld.class, idCU);
         } catch(EntityNotFoundException e) {
             return null;
         }
@@ -450,12 +450,12 @@ public class JPADataManager implements IDataManager {
      * @return A list of Care Unit
      */
     @Override
-    public List<NodeCU> getAllCareUnits(long idHU) {
+    public List<NodeCUOld> getAllCareUnits(long idHU) {
         
-        List<NodeCU> cu;
+        List<NodeCUOld> cu;
         
         try {
-            TypedQuery<NodeCU> tq = em.createQuery("SELECT cu FROM NodeCU cu WHERE cu.hu = :idHU", NodeCU.class);
+            TypedQuery<NodeCUOld> tq = em.createQuery("SELECT cu FROM NodeCU cu WHERE cu.hu = :idHU", NodeCUOld.class);
             cu = tq.setParameter("idHU", idHU).getResultList();
         } catch(NoResultException e) {
             return null;
@@ -470,12 +470,12 @@ public class JPADataManager implements IDataManager {
      * @param idNodeInfo Id of the Node
      * @return The Node
      */
-    public Node getNode(String type, long idNodeInfo) {
+    public NodeOld getNode(String type, long idNodeInfo) {
         
-        Node node;
+        NodeOld node;
         
         try {
-            TypedQuery<Node> tq = em.createQuery("SELECT node FROM Node node WHERE node.type = :type AND node.idNodeInfo = :idNodeInfo", Node.class);
+            TypedQuery<NodeOld> tq = em.createQuery("SELECT node FROM Node node WHERE node.type = :type AND node.idNodeInfo = :idNodeInfo", NodeOld.class);
             node = tq.setParameter("type", type).setParameter("idNodeInfo", idNodeInfo).getSingleResult();
         } catch(NoResultException e) {
             return null;
