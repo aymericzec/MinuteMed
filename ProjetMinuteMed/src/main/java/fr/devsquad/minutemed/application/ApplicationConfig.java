@@ -22,6 +22,9 @@ public class ApplicationConfig extends Application {
         c.add(ArborescenceService.class);
         c.add(MedicalRecordService.class);
         c.add(AuthenticationService.class);
+        c.add(AuthenticationService.class);
+        c.add(AuthenticationService.class);
+        
         //c.add(ImageService.class);
         c.add(CORSFilter.class);
         classes = Collections.unmodifiableSet(c);
