@@ -155,13 +155,6 @@
         "operationId" : "createDiagnostic",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "idRecord",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        } ],
         "responses" : {
           "201" : {
             "description" : "The Diagnostic is created !"
@@ -181,12 +174,6 @@
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "name" : "idRecord",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
           "name" : "idDiagnostic",
           "in" : "path",
           "required" : true,
@@ -287,13 +274,6 @@
         "operationId" : "createDosage",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "idRecord",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        } ],
         "responses" : {
           "201" : {
             "description" : "The Dosage is created !"
@@ -313,12 +293,6 @@
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "name" : "idRecord",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
           "name" : "idDosage",
           "in" : "path",
           "required" : true,
@@ -419,13 +393,6 @@
         "operationId" : "createExam",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "idRecord",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        } ],
         "responses" : {
           "201" : {
             "description" : "The Exam is created !"
@@ -445,12 +412,6 @@
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "name" : "idRecord",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
           "name" : "idExam",
           "in" : "path",
           "required" : true,
@@ -551,13 +512,6 @@
         "operationId" : "createPrescription",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "idRecord",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        } ],
         "responses" : {
           "201" : {
             "description" : "The Prescription is created !"
@@ -577,12 +531,6 @@
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "name" : "idRecord",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
           "name" : "idPrescription",
           "in" : "path",
           "required" : true,
@@ -700,7 +648,7 @@
           "type" : "string"
         },
         "node" : {
-          "$ref" : "#/definitions/Node"
+          "$ref" : "#/definitions/NodeOld"
         },
         "allMedicalRecords" : {
           "type" : "array",
@@ -745,14 +693,14 @@
           "type" : "boolean",
           "default" : false
         },
-        "lastReport" : {
-          "$ref" : "#/definitions/ReportDosage"
-        },
         "repport" : {
           "type" : "array",
           "items" : {
             "$ref" : "#/definitions/ReportDosage"
           }
+        },
+        "lastReport" : {
+          "$ref" : "#/definitions/ReportDosage"
         }
       }
     },
@@ -831,7 +779,7 @@
           "type" : "string"
         },
         "hu" : {
-          "$ref" : "#/definitions/NodeHU"
+          "$ref" : "#/definitions/NodeHUOld"
         }
       }
     },
@@ -851,24 +799,7 @@
         }
       }
     },
-    "Node" : {
-      "type" : "object",
-      "required" : [ "idNodeInfo", "type" ],
-      "properties" : {
-        "id" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "type" : {
-          "type" : "string"
-        },
-        "idNodeInfo" : {
-          "type" : "integer",
-          "format" : "int64"
-        }
-      }
-    },
-    "NodeCU" : {
+    "NodeCUOld" : {
       "type" : "object",
       "required" : [ "specialization", "type" ],
       "properties" : {
@@ -888,7 +819,7 @@
         }
       }
     },
-    "NodeHU" : {
+    "NodeHUOld" : {
       "type" : "object",
       "required" : [ "service", "specialization", "type" ],
       "properties" : {
@@ -915,8 +846,25 @@
         "careUnits" : {
           "type" : "array",
           "items" : {
-            "$ref" : "#/definitions/NodeCU"
+            "$ref" : "#/definitions/NodeCUOld"
           }
+        }
+      }
+    },
+    "NodeOld" : {
+      "type" : "object",
+      "required" : [ "idNodeInfo", "type" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "type" : {
+          "type" : "string"
+        },
+        "idNodeInfo" : {
+          "type" : "integer",
+          "format" : "int64"
         }
       }
     },

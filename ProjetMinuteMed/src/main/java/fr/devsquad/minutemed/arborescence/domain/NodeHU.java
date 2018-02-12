@@ -5,25 +5,28 @@
  */
 package fr.devsquad.minutemed.arborescence.domain;
 
-import java.util.List;
 import java.util.Objects;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 /**
  *
  * @author thomas
  */
 @Entity
-@DiscriminatorValue("NODE_HOSPITAL_UNIT")
+@DiscriminatorValue("HOSPITAL_UNIT")
 public class NodeHU extends Node {
     
-    private final static String FLOOR = "NODE_HOSPITAL_UNIT";
+    private final static String FLOOR = "HOSPITAL_UNIT";
   
+    @ManyToOne
+    private NodeCU father;
 
     public NodeHU() {
         super(FLOOR);
+    }
+
+    public NodeHU(NodeCU father) {
+        this.father = Objects.requireNonNull(father);
     }
     
 }

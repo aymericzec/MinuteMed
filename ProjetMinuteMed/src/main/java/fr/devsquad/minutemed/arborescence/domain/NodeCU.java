@@ -7,29 +7,31 @@ package fr.devsquad.minutemed.arborescence.domain;
 
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 /**
  *
  * @author thomas
  */
 @Entity
-@DiscriminatorValue("NODE_CARE_UNIT")
+@DiscriminatorValue("CARE_UNIT")
 public class NodeCU extends Node {
     
-    private final static String FLOOR = "NODE_CARE_UNIT";
+    private final static String FLOOR = "CARE_UNIT";
     
-    @OneToMany(mappedBy = "hospitalUnits")
+    @ManyToOne
+    private NodeService father;
+    
+    @OneToMany(mappedBy = "father")
     private List<NodeHU> hospitalUnits;
 
     public NodeCU() {
         super(FLOOR);
     }
 
-    public NodeCU(List<NodeHU> hospitalUnits) {
+    public NodeCU(NodeService father, List<NodeHU> hospitalUnits) {
         super(FLOOR);
+        this.father = Objects.requireNonNull(father);
         this.hospitalUnits = Objects.requireNonNull(hospitalUnits);
     }
     

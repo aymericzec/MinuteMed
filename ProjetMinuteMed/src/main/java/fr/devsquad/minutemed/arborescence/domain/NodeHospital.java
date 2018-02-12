@@ -7,9 +7,7 @@ package fr.devsquad.minutemed.arborescence.domain;
 
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 /**
  *
@@ -21,16 +19,28 @@ public class NodeHospital extends Node {
     
     private final static String FLOOR = "HOSPITAL";
     
-    @OneToMany(mappedBy = "poles")
+    @ManyToOne
+    private NodeAPHP father;
+    
+    @OneToMany(mappedBy = "father")
     private List<NodePole> poles;
 
     public NodeHospital() {
         super(FLOOR);
     }
 
-    public NodeHospital(List<NodePole> poles) {
+    public NodeHospital(NodeAPHP father, List<NodePole> poles) {
         super(FLOOR);
+        this.father = Objects.requireNonNull(father);
         this.poles = Objects.requireNonNull(poles);
+    }
+    
+    public NodeAPHP getFather(){
+        return father;
+    }
+    
+    public void setFather(NodeAPHP aphp){
+        this.father = Objects.requireNonNull(aphp);
     }
     
 }

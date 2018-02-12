@@ -21,7 +21,7 @@ public class NodeAPHP extends Node {
     
     private final static String FLOOR = "APHP";
     
-    @OneToMany(mappedBy = "hospitals")
+    @OneToMany(mappedBy = "father")
     private List<NodeHospital> hospitals;
 
     public NodeAPHP() {
@@ -32,7 +32,6 @@ public class NodeAPHP extends Node {
         super(FLOOR);
         this.hospitals = Objects.requireNonNull(hospitals);
     }
-    
     
     
 }

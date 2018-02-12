@@ -7,9 +7,7 @@ package fr.devsquad.minutemed.arborescence.domain;
 
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 /**
  *
@@ -21,15 +19,19 @@ public class NodePole extends Node {
     
     private final static String FLOOR = "POLE";
     
-    @OneToMany(mappedBy = "services")
+    @ManyToOne
+    private NodeHospital father;
+    
+    @OneToMany(mappedBy = "father")
     private List<NodeService> services;
 
     public NodePole() {
         super(FLOOR);
     }
 
-    public NodePole(List<NodeService> services) {
+    public NodePole(NodeHospital father, List<NodeService> services) {
         super(FLOOR);
+        this.father = Objects.requireNonNull(father);
         this.services = Objects.requireNonNull(services);
     }
     

@@ -5,14 +5,10 @@
  */
 package fr.devsquad.minutemed.arborescence.domain;
 
+import static fr.devsquad.minutemed.arborescence.domain.Node.FIND_ALL_NODES;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -21,9 +17,12 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorValue("ROOT")
+@DiscriminatorValue("ROOT") //DTYPE
+@NamedQuery(name = FIND_ALL_NODES, query = "SELECT n FROM Node n")
 public class Node implements Serializable {
     
+    public static final String FIND_ALL_NODES = "Node.findAllNodes";
+        
     @Id @GeneratedValue
     private long idNode;
     
@@ -41,8 +40,9 @@ public class Node implements Serializable {
         return idNode;
     }
     
-    public String getLevel() {
+    public String getFloor() {
         return floor;
     }
+
     
 }
