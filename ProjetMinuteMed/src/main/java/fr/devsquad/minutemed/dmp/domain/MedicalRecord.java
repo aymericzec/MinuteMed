@@ -1,6 +1,6 @@
 package fr.devsquad.minutemed.dmp.domain;
 
-import fr.devsquad.minutemed.arborescenceOld.domain.NodeHUOld;
+import fr.devsquad.minutemed.arborescence.domain.*;
 import static fr.devsquad.minutemed.dmp.domain.MedicalRecord.FIND_ALL_MEDICAL_RECORD;
 import java.io.Serializable;
 import java.util.Objects;
@@ -33,13 +33,13 @@ public class MedicalRecord implements Serializable {
     private String email;
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idHu")
-    private NodeHUOld hu;
+    private NodeHU hu;
 
     public MedicalRecord() {
 
     }
 
-    public MedicalRecord(String ss, String firstName, String lastName, String address, String email, String phoneNumber, String birthday, String gender, NodeHUOld hu) {
+    public MedicalRecord(String ss, String firstName, String lastName, String address, String email, String phoneNumber, String birthday, String gender, NodeHU hu) {
         this.ss = Objects.requireNonNull(ss);
         this.firstName = Objects.requireNonNull(firstName);
         this.lastName = Objects.requireNonNull(lastName);
@@ -87,11 +87,11 @@ public class MedicalRecord implements Serializable {
         return email;
     }
     
-    public NodeHUOld getHU() {
+    public NodeHU getHU() {
         return hu;
     }
     
-    public void setHU(NodeHUOld hu) {
+    public void setHU(NodeHU hu) {
         this.hu = hu;
     } 
 

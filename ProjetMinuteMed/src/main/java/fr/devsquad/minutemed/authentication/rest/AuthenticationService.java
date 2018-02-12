@@ -5,15 +5,10 @@
  */
 package fr.devsquad.minutemed.authentication.rest;
 
-import fr.devsquad.minutemed.arborescenceOld.domain.NodeOld;
-import fr.devsquad.minutemed.arborescenceOld.repository.ArborescenceRepositoryOld;
+import fr.devsquad.minutemed.arborescence.repository.*;
 import fr.devsquad.minutemed.authentication.domain.DoctorCreator;
 import fr.devsquad.minutemed.authentication.domain.UserAccount;
 import fr.devsquad.minutemed.authentication.repository.AuthenticationRepository;
-import fr.devsquad.minutemed.specialization.domain.Specialization;
-import fr.devsquad.minutemed.specialization.domain.SpecializationEnum;
-import fr.devsquad.minutemed.specialization.repository.SpecializationRepository;
-import fr.devsquad.minutemed.staff.domain.Doctor;
 import fr.devsquad.minutemed.staff.repository.StaffRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -45,7 +40,7 @@ public class AuthenticationService {
     private StaffRepository staffRepository;
     
     @EJB
-    private ArborescenceRepositoryOld arborescenceRepository;
+    private ArborescenceRepository arborescenceRepository;
     
 //    @EJB
 //    private SpecializationRepository specializationRepository;
@@ -93,15 +88,15 @@ public class AuthenticationService {
     )
     @Path("/create/doctor")
     public Response createDoctor(@NotNull DoctorCreator doctorCreator) throws IOException {
-
+/*
         System.out.println("createDoctor");
         UserAccount userAccount = authenticationRepository.saveDoctorAccount(doctorCreator);
         NodeOld node = arborescenceRepository.findNode(doctorCreator.getTypeNode(), doctorCreator.getIdNode());
         Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
         Doctor doctor = Doctor.createFromDoctorCreator(userAccount.getIdAccount(), doctorCreator, node, specialization);
         staffRepository.saveDoctor(doctor);
-        
-        return Response.ok("{\"userAccount\":"+ userAccount +"}").build();
+        */
+        return Response.ok("{\"userAccount\":}").build();
     }
     
     

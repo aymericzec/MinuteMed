@@ -1,15 +1,6 @@
 package fr.devsquad.minutemed.staff.domain;
 
-import fr.devsquad.minutemed.arborescenceOld.domain.INode;
-import fr.devsquad.minutemed.arborescenceOld.domain.NodeOld;
-import fr.devsquad.minutemed.arborescenceOld.domain.NodeEnumOld;
-import fr.devsquad.minutemed.arborescenceOld.domain.NodeHUOld;
-import fr.devsquad.minutemed.arborescenceOld.domain.NodeHospitalOld;
-import fr.devsquad.minutemed.arborescenceOld.domain.NodePoleOld;
-import fr.devsquad.minutemed.arborescenceOld.domain.NodeServiceOld;
-import fr.devsquad.minutemed.database.INurse;
-import fr.devsquad.minutemed.database.JPADataManager;
-import fr.devsquad.minutemed.database.JPANurse;
+import fr.devsquad.minutemed.arborescence.domain.*;
 import fr.devsquad.minutemed.dmp.domain.MedicalRecord;
 import fr.devsquad.minutemed.dmp.domain.Dosage;
 import static fr.devsquad.minutemed.staff.domain.Nurse.FIND_ALL_NURSE;
@@ -26,7 +17,7 @@ import javax.persistence.OneToOne;
 
 @Entity
 @NamedQuery(name = FIND_ALL_NURSE, query = "SELECT staff FROM Nurse staff")
-public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurse {
+public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff {
 
     public static final String FIND_ALL_NURSE = "Nurse.findAllNurse";
     
@@ -42,11 +33,11 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
     
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idNode")
-    private NodeOld node;
+    private Node node;
     
     public Nurse() { }
     
-    public Nurse(StaffEnum type, String firstName, String lastName, String adress, String email, String phoneNumber, NodeOld node) { 
+    public Nurse(StaffEnum type, String firstName, String lastName, String adress, String email, String phoneNumber, Node node) { 
         if( type == null){
             throw new NullPointerException();
         }
@@ -134,7 +125,7 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
     }
     
     @Override
-    public NodeOld getNode() {
+    public Node getNode() {
         return node;
     }
 
@@ -194,219 +185,14 @@ public class Nurse implements Serializable, IHospitalStaff, IMedicalStaff, INurs
     }
     
     @Override
-    public void setNode(NodeOld node) {
+    public void setNode(Node node) {
         if(node==null){
             throw new NullPointerException();
         }
         this.node = node;
     }
 
-    /**
-     * Get a MedicalRecord with its id passed in argument
-     * 
-     * @param idMedicalRecord The id of the MedicalRecord
-     * @return The MedicalRecord
-     */
-    @Override
-    public MedicalRecord getMedicalRecord(long idMedicalRecord) {
-        if(idMedicalRecord<0){
-            throw new IllegalArgumentException();
-        }
-        JPADataManager manager = new JPADataManager();
-        JPANurse nurse = new JPANurse();
-        
-        MedicalRecord mRecord = nurse.getMedicalRecord(idMedicalRecord);
-        
-        if(node.getType().equals(NodeEnumOld.HOSPITAL.name())) {
-            
-            NodeHospitalOld hospital = manager.getHospital(node.getIdNodeInfo());
-            
-            for(INode node : hospital.getAttachedNodes()) {
-                if(node.getId() == mRecord.getId()) {
-                    return mRecord;
-                }
-            }
-        }
-        
-        if(node.getType().equals(NodeEnumOld.POLE.name())) {
-            
-            NodePoleOld pole = manager.getPole(node.getIdNodeInfo());
-            
-            for(INode node : pole.getAttachedNodes()) {
-                if(node.getId() == mRecord.getId()) {
-                    return mRecord;
-                }
-            }
-        }
-        
-        if(node.getType().equals(NodeEnumOld.SERVICE.name())) {
-            
-            NodeServiceOld service = manager.getService(node.getIdNodeInfo());
-            
-            for(INode node : service.getAttachedNodes()) {
-                if(node.getId() == mRecord.getId()) {
-                    return mRecord;
-                }
-            }
-        }
-        
-        if(node.getType().equals(NodeEnumOld.HOSPITAL_UNIT.name())) {
-            
-            NodeHUOld hu = manager.getHospitalUnit(node.getIdNodeInfo());
-            
-            for(INode node : hu.getAttachedNodes()) {
-                if(node.getId() == mRecord.getId()) {
-                    return mRecord;
-                }
-            }
-        }
-         
-        return null;
-    }
 
-    /**
-     * Get all MedicalRecords
-     * 
-     * @return A list of MedicalRecords
-     */
-    @Override
-    public List<MedicalRecord> getAllMedicalRecords() {
-        JPANurse nurse = new JPANurse();
-        return nurse.getAllMedicalRecords();
-    }
-
-    /**
-     * Get a MedicalRecord by its number of social security
-     *
-     * @param ss The number of social security of the patient
-     * @return The MedicalRecord
-     */
-    @Override
-    public MedicalRecord searchMedicalRecordBySS(String ss) {
-        if(ss==null){
-            throw new NullPointerException();
-        }
-        if(stringNotConform(ss)){
-            throw new IllegalArgumentException();
-        }
-        JPANurse nurse = new JPANurse();
-        return nurse.searchMedicalRecordBySS(ss);
-    }
-    
-    /**
-     * Get a MedicalRecord by its lastName
-     *
-     * @param lastName The lastName of the patient
-     * @return A List of MedicalRecord
-     */
-    @Override
-    public List<MedicalRecord> searchMedicalRecordByName(String lastName) {
-        if(lastName==null){
-            throw new NullPointerException();
-        }
-        if(stringNotConform(lastName)){
-            throw new IllegalArgumentException();
-        }
-        JPANurse nurse = new JPANurse();
-        return nurse.searchMedicalRecordByName(lastName);
-    }
-    
-    /**
-     * Get a MedicalRecord by its number of social security and its lastName
-     *
-     * @param ss The number of social security of the patient
-     * @param lastName The lastName of the patient
-     * @return The MedicalRecord
-     */
-    @Override
-    public MedicalRecord searchMedicalRecord(String ss, String lastName) {
-        if(ss==null || lastName==null){
-            throw new NullPointerException();
-        }
-        if(stringNotConform(ss) || stringNotConform(lastName)){
-            throw new IllegalArgumentException();
-        }
-        JPANurse nurse = new JPANurse();
-        return nurse.searchMedicalRecord(ss, lastName);
-    }
-
-    /**
-     * Get a Dosage with its id passed in argument
-     * 
-     * @param idDosage The id of the Dosage
-     * @return The Dosage
-     */
-    @Override
-    public Dosage getDosage(long idDosage) {
-        if(idDosage<0){
-            throw new IllegalArgumentException();
-        }
-        JPANurse nurse = new JPANurse();
-        return nurse.getDosage(idDosage);
-    }
-
-    /**
-     * Get all dosages corresponding to the MedicalRecord passed in parameter
-     * 
-     * @param idMedicalRecord The id of the MedicalRecord
-     * @return A List of Dosage
-     */
-    @Override
-    public List<Dosage> getAllDosages(long idMedicalRecord) {
-        if(idMedicalRecord<0){
-            throw new IllegalArgumentException();
-        }
-        JPANurse nurse = new JPANurse();
-        return nurse.getAllDosages(idMedicalRecord);
-    }
-
-    /**
-     * Get a Doctor with its id passed in argument
-     * 
-     * @param idDoctor The id of the Doctor
-     * @return The Doctor
-     */
-    @Override
-    public Doctor getDoctor(long idDoctor) {
-        if( idDoctor<0){
-            throw new IllegalArgumentException();
-        }
-        JPANurse nurse = new JPANurse();
-        return nurse.getDoctor(idDoctor);
-    }
-
-    /**
-     * Get a Nurse with its id passed in argument
-     * 
-     * @param idNurse The id of the Nurse
-     * @return The Nurse
-     */
-    @Override
-    public Nurse getNurse(long idNurse) {
-        if(idNurse<0){
-            throw new IllegalArgumentException();
-        }
-        JPANurse nurse = new JPANurse();
-        return nurse.getNurse(idNurse);
-    }
-    
-    /**
-     * Get the Staff in the Staff Entity
-     * 
-     * @param type The type of the Staff
-     * @param idStaff The if of the Staff
-     * @return The MedicalStaff
-     */
-    public MedicalStaff getStaff(String type, long idStaff) {
-        if(type==null){
-            throw new NullPointerException();
-        }
-        if(stringNotConform(type) || idStaff<0){
-            throw new IllegalArgumentException();
-        }
-        JPANurse nurse = new JPANurse();
-        return nurse.getMedicalStaff(type, idStaff);
-    }
     
     @Override
     public String toString() {
