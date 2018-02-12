@@ -35,4 +35,12 @@ public class NodeCU extends Node {
         this.hospitalUnits = Objects.requireNonNull(hospitalUnits);
     }
     
+    public NodeService getFather(){
+        return father;
+    }
+    
+    public void setFather(NodeService service){
+        this.father = Objects.requireNonNull(service);
+    }
+    
 }

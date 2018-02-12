@@ -648,13 +648,7 @@
           "type" : "string"
         },
         "node" : {
-          "$ref" : "#/definitions/NodeOld"
-        },
-        "allMedicalRecords" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/MedicalRecord"
-          }
+          "$ref" : "#/definitions/Node"
         }
       }
     },
@@ -693,14 +687,14 @@
           "type" : "boolean",
           "default" : false
         },
+        "lastReport" : {
+          "$ref" : "#/definitions/ReportDosage"
+        },
         "repport" : {
           "type" : "array",
           "items" : {
             "$ref" : "#/definitions/ReportDosage"
           }
-        },
-        "lastReport" : {
-          "$ref" : "#/definitions/ReportDosage"
         }
       }
     },
@@ -732,18 +726,6 @@
         },
         "doctorAskExamination" : {
           "$ref" : "#/definitions/Doctor"
-        }
-      }
-    },
-    "INode" : {
-      "type" : "object",
-      "properties" : {
-        "id" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "type" : {
-          "type" : "string"
         }
       }
     },
@@ -779,7 +761,7 @@
           "type" : "string"
         },
         "hu" : {
-          "$ref" : "#/definitions/NodeHUOld"
+          "$ref" : "#/definitions/NodeHU"
         }
       }
     },
@@ -799,72 +781,109 @@
         }
       }
     },
-    "NodeCUOld" : {
+    "Node" : {
       "type" : "object",
-      "required" : [ "specialization", "type" ],
+      "required" : [ "floor" ],
       "properties" : {
-        "id" : {
+        "idNode" : {
           "type" : "integer",
           "format" : "int64"
         },
-        "type" : {
+        "floor" : {
           "type" : "string"
-        },
-        "specialization" : {
-          "type" : "string"
-        },
-        "hospitalUnit" : {
-          "type" : "integer",
-          "format" : "int64"
         }
       }
     },
-    "NodeHUOld" : {
+    "NodeAPHP" : {
       "type" : "object",
-      "required" : [ "service", "specialization", "type" ],
+      "required" : [ "floor" ],
       "properties" : {
-        "id" : {
+        "idNode" : {
           "type" : "integer",
           "format" : "int64"
         },
-        "type" : {
+        "floor" : {
           "type" : "string"
-        },
-        "specialization" : {
-          "type" : "string"
-        },
-        "service" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "attachedNodes" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/INode"
-          }
-        },
-        "careUnits" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/NodeCUOld"
-          }
         }
       }
     },
-    "NodeOld" : {
+    "NodeCU" : {
       "type" : "object",
-      "required" : [ "idNodeInfo", "type" ],
+      "required" : [ "floor" ],
       "properties" : {
-        "id" : {
+        "idNode" : {
           "type" : "integer",
           "format" : "int64"
         },
-        "type" : {
+        "floor" : {
           "type" : "string"
         },
-        "idNodeInfo" : {
+        "father" : {
+          "$ref" : "#/definitions/NodeService"
+        }
+      }
+    },
+    "NodeHU" : {
+      "type" : "object",
+      "required" : [ "floor" ],
+      "properties" : {
+        "idNode" : {
           "type" : "integer",
           "format" : "int64"
+        },
+        "floor" : {
+          "type" : "string"
+        },
+        "father" : {
+          "$ref" : "#/definitions/NodeCU"
+        }
+      }
+    },
+    "NodeHospital" : {
+      "type" : "object",
+      "required" : [ "floor" ],
+      "properties" : {
+        "idNode" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "floor" : {
+          "type" : "string"
+        },
+        "father" : {
+          "$ref" : "#/definitions/NodeAPHP"
+        }
+      }
+    },
+    "NodePole" : {
+      "type" : "object",
+      "required" : [ "floor" ],
+      "properties" : {
+        "idNode" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "floor" : {
+          "type" : "string"
+        },
+        "father" : {
+          "$ref" : "#/definitions/NodeHospital"
+        }
+      }
+    },
+    "NodeService" : {
+      "type" : "object",
+      "required" : [ "floor" ],
+      "properties" : {
+        "idNode" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "floor" : {
+          "type" : "string"
+        },
+        "father" : {
+          "$ref" : "#/definitions/NodePole"
         }
       }
     },

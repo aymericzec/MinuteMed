@@ -76,8 +76,12 @@ public class ArborescenceService {
         @ApiResponse(code = 404, message = "The Hospital is not known.")}
     )
     @Path("/APHP/hospitals/{idHospital}/poles")
-    public Response createPole(@PathParam("idHospital") Long idHospital, @NotNull NodePole pole) {
-        //pole.setHospital(idHospital);
+    public Response createPole(@NotNull NodePole pole) {
+        if(pole.getFather() == null){
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("The Hospital node is required in the Pole node !")
+                    .build();
+        }
         Long id = repository.saveGenericNode(pole);
         return Response.ok("{\"idPoleCreated\":"+ id +"}").build();
     }
@@ -89,8 +93,12 @@ public class ArborescenceService {
         @ApiResponse(code = 400, message = "Invalid input")}
     )
     @Path("/APHP/hospitals/{idHospital}/poles/{idPole}/services")
-    public Response createService(@PathParam("idPole") Long idPole, @NotNull NodeService service) {
-        //service.setPole(idPole);
+    public Response createService(@NotNull NodeService service) {
+        if(service.getFather() == null){
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("The Pole node is required in the Service node !")
+                    .build();
+        }
         Long id = repository.saveGenericNode(service);
         return Response.ok("{\"idServiceCreated\":"+ id +"}").build();
     }
@@ -102,8 +110,12 @@ public class ArborescenceService {
         @ApiResponse(code = 400, message = "Invalid input")}
     )
     @Path("/APHP/hospitals/{idHospital}/poles/{idPole}/services/{idService}/hUnits")
-    public Response createHospitalUnit(@PathParam("idService") Long idService, @NotNull NodeHU hu) {
-        //hu.setService(idService);
+    public Response createHospitalUnit(@NotNull NodeHU hu) {
+        if(hu.getFather() == null){
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("The Service node is required in the Hospital Unit node !")
+                    .build();
+        }
         Long id = repository.saveGenericNode(hu);
         return Response.ok("{\"idHUCreated\":"+ id +"}").build();
     }
@@ -115,8 +127,12 @@ public class ArborescenceService {
         @ApiResponse(code = 400, message = "Invalid input")}
     )
     @Path("/APHP/hospitals/{idHospital}/poles/{idPole}/services/{idService}/hUnits/{idHU}/cUnits")
-    public Response createCareUnit(@PathParam("idHU") Long idHU, @NotNull NodeCU cu) {
-        //cu.setHospitalUnit(idHU);
+    public Response createCareUnit(@NotNull NodeCU cu) {
+        if(cu.getFather() == null){
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("The Hospital Unit node is required in the Care Unit node !")
+                    .build();
+        }
         Long id = repository.saveGenericNode(cu);
         return Response.ok("{\"idCUCreated\":"+ id +"}").build();
     }

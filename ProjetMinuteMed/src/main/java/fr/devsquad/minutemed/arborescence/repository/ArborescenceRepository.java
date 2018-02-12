@@ -6,7 +6,6 @@
 package fr.devsquad.minutemed.arborescence.repository;
 
 import fr.devsquad.minutemed.arborescence.domain.*;
-import fr.devsquad.minutemed.arborescenceOld.domain.*;
 import java.util.*;
 import javax.ejb.Stateless;
 import javax.persistence.*;

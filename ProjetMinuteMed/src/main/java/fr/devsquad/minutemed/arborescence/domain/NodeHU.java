@@ -29,4 +29,12 @@ public class NodeHU extends Node {
         this.father = Objects.requireNonNull(father);
     }
     
+    public NodeCU getFather(){
+        return father;
+    }
+    
+    public void setFather(NodeCU cu){
+        this.father = Objects.requireNonNull(cu);
+    }
+    
 }

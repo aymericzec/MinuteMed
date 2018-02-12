@@ -35,4 +35,12 @@ public class NodePole extends Node {
         this.services = Objects.requireNonNull(services);
     }
     
+    public NodeHospital getFather(){
+        return father;
+    }
+    
+    public void setFather(NodeHospital hospital){
+        this.father = Objects.requireNonNull(hospital);
+    }
+    
 }
