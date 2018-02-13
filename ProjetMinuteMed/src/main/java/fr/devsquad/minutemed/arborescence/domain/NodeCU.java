@@ -20,27 +20,23 @@ public class NodeCU extends Node {
     private final static String FLOOR = "CARE_UNIT";
     
     @ManyToOne
-    private NodeService father;
-    
-    @OneToMany(mappedBy = "father")
-    private List<NodeHU> hospitalUnits;
+    private NodeHU father;
 
     public NodeCU() {
         super(FLOOR);
     }
 
-    public NodeCU(NodeService father, List<NodeHU> hospitalUnits) {
+    public NodeCU(NodeHU father) {
         super(FLOOR);
         this.father = Objects.requireNonNull(father);
-        this.hospitalUnits = Objects.requireNonNull(hospitalUnits);
     }
     
-    public NodeService getFather(){
+    public NodeHU getFather(){
         return father;
     }
     
-    public void setFather(NodeService service){
-        this.father = Objects.requireNonNull(service);
+    public void setFather(NodeHU hu){
+        this.father = Objects.requireNonNull(hu);
     }
     
 }
