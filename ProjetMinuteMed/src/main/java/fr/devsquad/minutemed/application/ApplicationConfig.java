@@ -4,6 +4,9 @@ import fr.devsquad.minutemed.arborescence.rest.ArborescenceService;
 import fr.devsquad.minutemed.filters.rest.CORSFilter;
 import fr.devsquad.minutemed.authentication.rest.AuthenticationService;
 import fr.devsquad.minutemed.dmp.rest.MedicalRecordService;
+import fr.devsquad.minutemed.jwt.rest.EchoEndpoint;
+import fr.devsquad.minutemed.jwt.rest.UserEndpoint;
+
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 import javax.ws.rs.ApplicationPath;
@@ -22,9 +25,8 @@ public class ApplicationConfig extends Application {
         c.add(ArborescenceService.class);
         c.add(MedicalRecordService.class);
         c.add(AuthenticationService.class);
-        c.add(AuthenticationService.class);
-        c.add(AuthenticationService.class);
-        
+        c.add(UserEndpoint.class);
+        c.add(EchoEndpoint.class);
         //c.add(ImageService.class);
         c.add(CORSFilter.class);
         classes = Collections.unmodifiableSet(c);

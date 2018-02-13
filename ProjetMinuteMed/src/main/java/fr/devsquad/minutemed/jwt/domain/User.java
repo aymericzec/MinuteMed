@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.devsquad.minutemed.jwt.domain;
 
-/**
- *
- * @author thomas
- */
+
 import fr.devsquad.minutemed.jwt.util.PasswordUtils;
-import java.io.Serializable;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -18,6 +9,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * @author Antonio Goncalves
+ *         http://www.antoniogoncalves.org
+ *         --
+ */
 @Entity
 @Table(name = "t_user")
 @NamedQueries({
@@ -27,7 +23,7 @@ import java.util.UUID;
 })
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class User implements Serializable {
+public class User {
 
     // ======================================
     // =             Constants              =

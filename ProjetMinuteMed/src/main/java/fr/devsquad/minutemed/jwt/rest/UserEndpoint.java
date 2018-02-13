@@ -1,17 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.devsquad.minutemed.jwt.rest;
-
 
 import fr.devsquad.minutemed.jwt.domain.User;
 import fr.devsquad.minutemed.jwt.util.KeyGenerator;
 import fr.devsquad.minutemed.jwt.util.PasswordUtils;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -35,7 +28,11 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
 
-
+/**
+ * @author Antonio Goncalves
+ *         http://www.antoniogoncalves.org
+ *         --
+ */
 @Path("/users")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
@@ -55,7 +52,7 @@ public class UserEndpoint {
     @Inject
     private KeyGenerator keyGenerator;
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "APHPPU")
     private EntityManager em;
 
     // ======================================

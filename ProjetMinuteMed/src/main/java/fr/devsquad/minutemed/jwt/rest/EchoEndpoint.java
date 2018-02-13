@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.devsquad.minutemed.jwt.rest;
 
-/**
- *
- * @author thomas
- */
+
+
 import fr.devsquad.minutemed.jwt.filter.JWTTokenNeeded;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -27,7 +20,7 @@ import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
  */
 @Path("/echo")
 @Produces(TEXT_PLAIN)
-public class EchoEndPoint {
+public class EchoEndpoint {
 
     // ======================================
     // =          Injection Points          =
