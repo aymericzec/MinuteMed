@@ -21,15 +21,12 @@ public class ArborescenceRepository {
     private EntityManager em;
     
     
-    public List<Node> findAllNodes(){
-        return em.createNamedQuery(Node.FIND_ALL_NODES, Node.class).getResultList();
-    }
-    
     public <T extends Node> List<T> getGenericNodes(Class<T> clazz) {
         Objects.requireNonNull(clazz);
         TypedQuery<T> qry = em.createQuery("Select n FROM Node n WHERE n.floor = :floor", clazz);
         return qry.setParameter("floor", NodeFloorSupplier.getFloor(clazz)).getResultList();
     }
+    
     
     public <T extends Node> List<T> getGenericNodesWithFatherId(Class<T> clazz, Long fatherId) {
         Objects.requireNonNull(clazz);
@@ -38,10 +35,12 @@ public class ArborescenceRepository {
         return qry.setParameter("fatherId", fatherId).setParameter("floor", NodeFloorSupplier.getFloor(clazz)).getResultList();
     }
     
+    
     public <T extends Node> Long saveGenericNode(T node){
         em.persist(node);
         return node.getIdNode();
     }
+    
     
     public <T extends Node> T findNodeGeneric(Long nodeID, Class<T> clazz){
         Objects.requireNonNull(clazz);

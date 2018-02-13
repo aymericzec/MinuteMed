@@ -72,15 +72,21 @@ public class ArborescenceService {
     @ApiOperation(value = "Create a Pole")
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "The Pole is created."),
-        @ApiResponse(code = 400, message = "Invalid input"),
-        @ApiResponse(code = 404, message = "The Hospital is not known.")}
+        @ApiResponse(code = 400, message = "Invalid input."),
+        @ApiResponse(code = 404, message = "Unknow node.")}
     )
     @Path("/APHP/hospitals/{idHospital}/poles")
-    public Response createPole(@NotNull NodePole pole) {
-        if(pole.getFather() == null){
+    public Response createPole(@PathParam("idHospital") Long idHospital, @NotNull NodePole pole) {
+        NodeHospital hospital = pole.getFather();
+        if(hospital == null){
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("The Hospital node is required in the Pole node !")
                     .build();
+        }
+        if(hospital.getIdNode() != idHospital){
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("The idHospital param is not equal to the father id !")
+                    .build();    
         }
         Long id = repository.saveGenericNode(pole);
         return Response.ok("{\"idPoleCreated\":"+ id +"}").build();
@@ -90,14 +96,26 @@ public class ArborescenceService {
     @ApiOperation(value = "Create a Service")
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "The Service is created."),
-        @ApiResponse(code = 400, message = "Invalid input")}
+        @ApiResponse(code = 400, message = "Invalid input."),
+        @ApiResponse(code = 404, message = "Unknow node.")}
     )
     @Path("/APHP/hospitals/{idHospital}/poles/{idPole}/services")
-    public Response createService(@NotNull NodeService service) {
-        if(service.getFather() == null){
+    public Response createService(@PathParam("idHospital") Long idHospital, @PathParam("idPole") Long idPole, @NotNull NodeService service) {
+        NodePole pole = service.getFather();
+        if(pole == null){
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("The Pole node is required in the Service node !")
                     .build();
+        }
+        if(pole.getIdNode() != idPole){
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("The idPole param is not equal to the father id !")
+                    .build(); 
+        }
+        if(pole.getFather().getIdNode() != idHospital){
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("The idHospital param is not equal to the father id !")
+                    .build(); 
         }
         Long id = repository.saveGenericNode(service);
         return Response.ok("{\"idServiceCreated\":"+ id +"}").build();
@@ -107,14 +125,32 @@ public class ArborescenceService {
     @ApiOperation(value = "Create a Hospital Unit")
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "The Hospital Unit is created."),
-        @ApiResponse(code = 400, message = "Invalid input")}
+        @ApiResponse(code = 400, message = "Invalid input"),
+        @ApiResponse(code = 404, message = "Unknow node.")}
     )
     @Path("/APHP/hospitals/{idHospital}/poles/{idPole}/services/{idService}/hUnits")
-    public Response createHospitalUnit(@NotNull NodeHU hu) {
-        if(hu.getFather() == null){
+    public Response createHospitalUnit(@PathParam("idHospital") Long idHospital, @PathParam("idPole") Long idPole,
+            @PathParam("idService") Long idService, @NotNull NodeHU hu) {
+        NodeService service = hu.getFather();
+        if(service == null){
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("The Service node is required in the Hospital Unit node !")
                     .build();
+        }
+        if(service.getIdNode() != idService){
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("The idService param is not equal to the father id !")
+                    .build(); 
+        }
+        if(service.getFather().getIdNode() != idPole){
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("The idPole param is not equal to the father id !")
+                    .build(); 
+        }
+        if(service.getFather().getFather().getIdNode() != idHospital){
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("The idHospital param is not equal to the father id !")
+                    .build(); 
         }
         Long id = repository.saveGenericNode(hu);
         return Response.ok("{\"idHUCreated\":"+ id +"}").build();
@@ -124,14 +160,37 @@ public class ArborescenceService {
     @ApiOperation(value = "Create a Care Unit")
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "The Care Unit is created."),
-        @ApiResponse(code = 400, message = "Invalid input")}
+        @ApiResponse(code = 400, message = "Invalid input"),
+        @ApiResponse(code = 404, message = "Unknow node.")}
     )
     @Path("/APHP/hospitals/{idHospital}/poles/{idPole}/services/{idService}/hUnits/{idHU}/cUnits")
-    public Response createCareUnit(@NotNull NodeCU cu) {
-        if(cu.getFather() == null){
+    public Response createCareUnit(@PathParam("idHospital") Long idHospital, @PathParam("idPole") Long idPole,
+            @PathParam("idService") Long idService, @PathParam("idHU") Long idHU, @NotNull NodeCU cu) {
+        NodeHU hospitalUnit = cu.getFather();
+        if(hospitalUnit == null){
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("The Hospital Unit node is required in the Care Unit node !")
                     .build();
+        }
+        if(hospitalUnit.getIdNode() != idHU){
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("The idHU param is not equal to the father id !")
+                    .build(); 
+        }
+        if(hospitalUnit.getFather().getIdNode() != idService){
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("The idService param is not equal to the father id !")
+                    .build(); 
+        }
+        if(hospitalUnit.getFather().getFather().getIdNode() != idPole){
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("The idPole param is not equal to the father id !")
+                    .build(); 
+        }
+        if(hospitalUnit.getFather().getFather().getFather().getIdNode() != idHospital){
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("The idHospital param is not equal to the father id !")
+                    .build(); 
         }
         Long id = repository.saveGenericNode(cu);
         return Response.ok("{\"idCUCreated\":"+ id +"}").build();
@@ -190,8 +249,12 @@ public class ArborescenceService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Pole not found")}
     )
-    public Response getPole(@PathParam("idPole") Long idPole) {
+    public Response getPole(@PathParam("idHospital") Long idHospital, @PathParam("idPole") Long idPole) {
         NodePole pole = repository.findNodeGeneric(idPole, NodePole.class);
+        if(pole.getFather().getIdNode() != idHospital){
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Error with the idHospital param.").build();
+        }
         return Response.ok(pole).build();
     }
     

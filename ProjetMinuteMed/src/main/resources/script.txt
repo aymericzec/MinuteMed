@@ -1,0 +1,19 @@
+1) Create APHP node
+POST : /nodes/APHP
+{
+
+}
+
+2) Create Hospital node
+POST : /nodes/hospitals
+{
+	"father":{
+		"idNode":<id node APHP>
+	}
+}
+
+3) Get all Hospital nodes
+GET : /nodes/hospitals
+
+4) Get a specific Hospital node
+GET : /nodes/hospitals/{id_hospital_node}

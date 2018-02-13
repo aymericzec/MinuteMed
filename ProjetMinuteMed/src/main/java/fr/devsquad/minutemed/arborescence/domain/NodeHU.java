@@ -5,7 +5,7 @@
  */
 package fr.devsquad.minutemed.arborescence.domain;
 
-import java.util.Objects;
+import java.util.*;
 import javax.persistence.*;
 
 /**
@@ -19,22 +19,26 @@ public class NodeHU extends Node {
     private final static String FLOOR = "HOSPITAL_UNIT";
   
     @ManyToOne
-    private NodeCU father;
+    private NodeService father;
+    
+    @OneToMany(mappedBy = "father")
+    private List<NodeCU> careUnits;
 
     public NodeHU() {
         super(FLOOR);
     }
 
-    public NodeHU(NodeCU father) {
+    public NodeHU(NodeService father, List<NodeCU> careUnits) {
         this.father = Objects.requireNonNull(father);
+        this.careUnits = Objects.requireNonNull(careUnits);
     }
     
-    public NodeCU getFather(){
+    public NodeService getFather(){
         return father;
     }
     
-    public void setFather(NodeCU cu){
-        this.father = Objects.requireNonNull(cu);
+    public void setFather(NodeService service){
+        this.father = Objects.requireNonNull(service);
     }
     
 }
