@@ -5,16 +5,13 @@
  */
 package fr.devsquad.minutemed.staff.rest;
 
-import fr.devsquad.minutemed.staff.domain.DataManager;
-import fr.devsquad.minutemed.staff.domain.Doctor;
-import fr.devsquad.minutemed.staff.domain.IHospitalStaff;
-import fr.devsquad.minutemed.staff.domain.Nurse;
+import fr.devsquad.minutemed.staff.domain.*;
 import fr.devsquad.minutemed.staff.repository.StaffRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import java.util.List;
+import java.util.*;
 import javax.ejb.EJB;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
@@ -32,7 +29,7 @@ import javax.ws.rs.core.Response;
  * @author JSalmon
  */
 
-@Path("/staff")
+@Path("/staffs")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Api("Staff REST Endpoint")
@@ -47,7 +44,7 @@ public class StaffService {
     /////////////
     
     @DELETE
-    @Path("/doctor/{idDoctor}")
+    @Path("/doctors/{idDoctor}")
     @ApiOperation(value = "Delete a Doctor.")
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "The Doctor is deleted"),
@@ -57,12 +54,12 @@ public class StaffService {
     public Response deleteDoctor(@PathParam("idDoctor") Long idDoctor) {
         System.out.println("DELETE deleteDoctor("+idDoctor+")");
         
-        repository.deleteDoctor(idDoctor);
+        repository.deleteMedicalStaff(idDoctor, Doctor.class);
         return Response.ok("{\"idDoctor\":"+idDoctor+"}").build();
     }
     
     @DELETE
-    @Path("/nurse/{idNurse}")
+    @Path("/nurses/{idNurse}")
     @ApiOperation(value = "Delete a Nurse.")
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "The Nurse is deleted"),
@@ -72,7 +69,7 @@ public class StaffService {
     public Response deleteNurse(@PathParam("idNurse") Long idNurse) {
         System.out.println("DELETE deleteNurse("+idNurse+")");
         
-        repository.deleteNurse(idNurse);
+        repository.deleteMedicalStaff(idNurse, Nurse.class);
         return Response.ok("{\"idNurse\":"+idNurse+"}").build();
     }
     
@@ -81,7 +78,7 @@ public class StaffService {
     /////////////
     
     @POST
-    @Path("/doctor")
+    @Path("/doctors")
     @ApiOperation(value = "Create a Doctor")
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "The Doctor is created !"),
@@ -91,12 +88,12 @@ public class StaffService {
     public Response createDoctor(@NotNull Doctor doctor) {
         System.out.println("POST createNurse("+doctor+")");
         
-        repository.saveDoctor(doctor);
+        repository.saveMedicalStaff(doctor);
         return Response.ok("{\"firstName\":"+doctor.getFirstName()+"}").build();
     }
     
     @POST
-    @Path("/nurse")
+    @Path("/nurses")
     @ApiOperation(value = "Create a Nurse")
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "The Nurse is created !"),
@@ -106,7 +103,7 @@ public class StaffService {
     public Response createNurse(@NotNull Nurse nurse) {
         System.out.println("POST createNurse("+nurse+")");
         
-        repository.saveNurse(nurse);
+        repository.saveMedicalStaff(nurse);
         return Response.ok("{\"firstName\":"+nurse.getFirstName()+"}").build();
     }
     
@@ -115,20 +112,19 @@ public class StaffService {
     ////////////
     
     @GET
-    @Path("/")
-    @ApiOperation(value = "Get all staff.", response = IHospitalStaff.class, responseContainer = "List")
+    @ApiOperation(value = "Get all staff.", response = MedicalStaff.class, responseContainer = "List")
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "All Staff Hospital are returned.")}
     )
     public Response getAllStaffs() {
         System.out.println("GET getALLStaffs()");
         
-        List<IHospitalStaff> staffs = repository.findAllStaffs();
+        List<MedicalStaff> staffs = repository.findAllMedicalStaffs();
         return Response.ok(staffs).build();
     }
     
     @GET
-    @Path("/staff/dataManager/{idDataManager}")
+    @Path("/dataManagers/{idDataManager}")
     @ApiOperation(value = "Get a DataManager.", response = DataManager.class)
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "The DataManager is returned."),
@@ -138,7 +134,7 @@ public class StaffService {
     public Response getDatamanager(@PathParam("idDataManager") Long idDataManager) {
         System.out.println("GET getDatamanager("+idDataManager+")");
         
-        DataManager staff = repository.findDataManager(idDataManager);
+        DataManager staff = repository.findMedicalStaff(idDataManager, DataManager.class);
         return Response.ok(staff).build();
     }
     
@@ -151,12 +147,12 @@ public class StaffService {
     public Response getAllDoctors() {
         System.out.println("GET getAllDoctors()");
         
-        List<Doctor> staffs = repository.findAllDoctor();
+        List<Doctor> staffs = repository.findMedicalStaffs(Doctor.class);
         return Response.ok(staffs).build();
     }
     
     @GET
-    @Path("/staff/doctor/{idDoctor}")
+    @Path("/doctors/{idDoctor}")
     @ApiOperation(value = "Get a doctor.", response = Doctor.class)
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "The Doctor is returned."),
@@ -166,7 +162,7 @@ public class StaffService {
     public Response getDoctor(@PathParam("idDoctor") Long idDoctor) {
         System.out.println("GET getDoctor("+idDoctor+")");
         
-        Doctor staff = repository.findDoctor(idDoctor);
+        Doctor staff = repository.findMedicalStaff(idDoctor, Doctor.class);
         return Response.ok(staff).build();
     }
     
@@ -179,12 +175,12 @@ public class StaffService {
     public Response getAllNurses() {
         System.out.println("GET getAllNurses()");
         
-        List<Nurse> staffs = repository.findAllNurse();
+        List<Nurse> staffs = repository.findMedicalStaffs(Nurse.class);
         return Response.ok(staffs).build();
     }
     
     @GET
-    @Path("/staff/nurse/{idNurse}")
+    @Path("/nurses/{idNurse}")
     @ApiOperation(value = "Get a nurse.", response = Nurse.class)
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "The Nurse is returned."),
@@ -194,7 +190,7 @@ public class StaffService {
     public Response getNurse(@PathParam("idNurse") Long idNurse) {
         System.out.println("GET getNurse("+idNurse+")");
         
-        Nurse staff = repository.findNurse(idNurse);
+        Nurse staff = repository.findMedicalStaff(idNurse, Nurse.class);
         return Response.ok(staff).build();
     }
     

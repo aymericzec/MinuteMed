@@ -19,7 +19,7 @@ abstract class AbstractUserCreator implements Serializable{
     public String password; //encrypted password
     public String firstName;
     public String lastName;
-    public String adress;
+    public String address;
     public String email;
     public String phoneNumber;
     public long idNode;
@@ -27,21 +27,22 @@ abstract class AbstractUserCreator implements Serializable{
     
     public AbstractUserCreator(){}
     
-    public AbstractUserCreator(String type, String username, String password, String firstName, String lastName, String adress, String email, String phoneNumber, String typeNode, long idNode) {
+    public AbstractUserCreator(String type, String username, String password, String firstName, String lastName,
+            String address, String email, String phoneNumber, String typeNode, long idNode) {
         this.username = Objects.requireNonNull(username);
         this.password = Objects.requireNonNull(password);
         this.type = Objects.requireNonNull(type);
         this.firstName = Objects.requireNonNull(firstName);
         this.lastName = Objects.requireNonNull(lastName);
-        this.adress = Objects.requireNonNull(adress);
+        this.address = Objects.requireNonNull(address);
         this.email = Objects.requireNonNull(email);
         this.phoneNumber = Objects.requireNonNull(phoneNumber);
         this.idNode = idNode;
         this.typeNode = Objects.requireNonNull(typeNode);
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
     /**
@@ -115,10 +116,10 @@ abstract class AbstractUserCreator implements Serializable{
     }
 
     /**
-     * @param adress the adress to set
+     * @param address the address to set
      */
-    public void setAdress(String adress) {
-        this.adress = Objects.requireNonNull(adress);
+    public void setAddress(String address) {
+        this.address = Objects.requireNonNull(address);
     }
 
     /**

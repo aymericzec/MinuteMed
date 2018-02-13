@@ -5,6 +5,7 @@
  */
 package fr.devsquad.minutemed.arborescence.repository;
 
+import fr.devsquad.minutemed.arborescence.domain.utils.NodeFloorSupplier;
 import fr.devsquad.minutemed.arborescence.domain.*;
 import java.util.*;
 import javax.ejb.Stateless;
@@ -21,14 +22,20 @@ public class ArborescenceRepository {
     private EntityManager em;
     
     
-    public <T extends Node> List<T> getGenericNodes(Class<T> clazz) {
+    public List<Node> findAllNodes(){
+        TypedQuery<Node> qry = em.createQuery("Select n FROM Node n", Node.class);
+        return qry.getResultList();      
+    }
+    
+    
+    public <T extends Node> List<T> findNodes(Class<T> clazz) {
         Objects.requireNonNull(clazz);
         TypedQuery<T> qry = em.createQuery("Select n FROM Node n WHERE n.floor = :floor", clazz);
         return qry.setParameter("floor", NodeFloorSupplier.getFloor(clazz)).getResultList();
     }
     
     
-    public <T extends Node> List<T> getGenericNodesWithFatherId(Class<T> clazz, Long fatherId) {
+    public <T extends Node> List<T> findNodesWithFatherId(Class<T> clazz, Long fatherId) {
         Objects.requireNonNull(clazz);
         Objects.requireNonNull(fatherId);
         TypedQuery<T> qry = em.createNamedQuery("Select n FROM Node n WHERE n.father_idnode = :fatherId AND n.floor = :floor", clazz);
@@ -36,13 +43,13 @@ public class ArborescenceRepository {
     }
     
     
-    public <T extends Node> Long saveGenericNode(T node){
+    public <T extends Node> Long saveNode(T node){
         em.persist(node);
         return node.getIdNode();
     }
     
     
-    public <T extends Node> T findNodeGeneric(Long nodeID, Class<T> clazz){
+    public <T extends Node> T findNode(Long nodeID, Class<T> clazz){
         Objects.requireNonNull(clazz);
         TypedQuery<T> qry = em.createQuery("SELECT n FROM Node n WHERE n.idNode = :id AND n.floor = :floor", clazz);
         return qry.setParameter("id", nodeID).setParameter("floor", NodeFloorSupplier.getFloor(clazz)).getSingleResult();  

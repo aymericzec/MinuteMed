@@ -88,6 +88,16 @@ public class AuthenticationService {
     )
     @Path("/create/doctor")
     public Response createDoctor(@NotNull DoctorCreator doctorCreator) throws IOException {
+        /*
+        1) Check if the username does not exist.
+        2) Check if the node exist with the nodeID given in the doctorCreator.
+        3) Check if the specialization exist with the spiecializationID given in the doctorCreator.
+        4) Lookup the specialization.
+        5) Lookup the node.
+        6) Create the doctor and persist it.
+        7) Create the userAccount and persist it.
+        
+        */
 /*
         System.out.println("createDoctor");
         UserAccount userAccount = authenticationRepository.saveDoctorAccount(doctorCreator);

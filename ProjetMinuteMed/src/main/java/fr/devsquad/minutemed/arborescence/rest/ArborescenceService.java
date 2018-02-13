@@ -42,9 +42,9 @@ public class ArborescenceService {
     @Path("/APHP")
     public Response createAPHP(@NotNull NodeAPHP aphp) {
         try{
-            repository.findNodeGeneric(new Long(1), NodeAPHP.class);
+            repository.findNode(new Long(1), NodeAPHP.class);
         }catch(EJBException ex){
-            Long id = repository.saveGenericNode(aphp);
+            Long id = repository.saveNode(aphp);
             return Response.ok("{\"idAPHPCreated\":"+ id +"}").build();
         }
         return Response.status(Response.Status.BAD_REQUEST)
@@ -64,7 +64,7 @@ public class ArborescenceService {
                     .entity("The APHP node is required in the Hospital node !")
                     .build();
         }
-        Long id = repository.saveGenericNode(hospital);
+        Long id = repository.saveNode(hospital);
         return Response.ok("{\"idHospitalCreated\":"+ id +"}").build();
     }
     
@@ -88,7 +88,7 @@ public class ArborescenceService {
                     .entity("The idHospital param is not equal to the father id !")
                     .build();    
         }
-        Long id = repository.saveGenericNode(pole);
+        Long id = repository.saveNode(pole);
         return Response.ok("{\"idPoleCreated\":"+ id +"}").build();
     }
     
@@ -117,7 +117,7 @@ public class ArborescenceService {
                     .entity("The idHospital param is not equal to the father id !")
                     .build(); 
         }
-        Long id = repository.saveGenericNode(service);
+        Long id = repository.saveNode(service);
         return Response.ok("{\"idServiceCreated\":"+ id +"}").build();
     }
     
@@ -152,7 +152,7 @@ public class ArborescenceService {
                     .entity("The idHospital param is not equal to the father id !")
                     .build(); 
         }
-        Long id = repository.saveGenericNode(hu);
+        Long id = repository.saveNode(hu);
         return Response.ok("{\"idHUCreated\":"+ id +"}").build();
     }
     
@@ -192,7 +192,7 @@ public class ArborescenceService {
                     .entity("The idHospital param is not equal to the father id !")
                     .build(); 
         }
-        Long id = repository.saveGenericNode(cu);
+        Long id = repository.saveNode(cu);
         return Response.ok("{\"idCUCreated\":"+ id +"}").build();
     }
     
@@ -211,7 +211,7 @@ public class ArborescenceService {
         @ApiResponse(code = 404, message = "Hospitals not found")}
     )
     public Response getHospitals() {
-        List<NodeHospital> hospitals = repository.getGenericNodes(NodeHospital.class);
+        List<NodeHospital> hospitals = repository.findNodes(NodeHospital.class);
         return Response.ok(hospitals).build();
     }
     
@@ -224,7 +224,7 @@ public class ArborescenceService {
         @ApiResponse(code = 404, message = "Hospital not found")}
     )
     public Response getHospital(@PathParam("idHospital") Long idHospital) {
-        NodeHospital hospital = repository.findNodeGeneric(idHospital, NodeHospital.class);
+        NodeHospital hospital = repository.findNode(idHospital, NodeHospital.class);
         return Response.ok(hospital).build();
     }
     
@@ -237,7 +237,7 @@ public class ArborescenceService {
         @ApiResponse(code = 404, message = "Poles not found")}
     )
     public Response getPoles(@PathParam("idHospital") Long idHospital) {
-        List<NodePole> poles = repository.getGenericNodesWithFatherId(NodePole.class, idHospital);
+        List<NodePole> poles = repository.findNodesWithFatherId(NodePole.class, idHospital);
         return Response.ok(poles).build();
     }
     
@@ -250,7 +250,7 @@ public class ArborescenceService {
         @ApiResponse(code = 404, message = "Pole not found")}
     )
     public Response getPole(@PathParam("idHospital") Long idHospital, @PathParam("idPole") Long idPole) {
-        NodePole pole = repository.findNodeGeneric(idPole, NodePole.class);
+        NodePole pole = repository.findNode(idPole, NodePole.class);
         if(pole.getFather().getIdNode() != idHospital){
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("Error with the idHospital param.").build();
@@ -267,7 +267,7 @@ public class ArborescenceService {
         @ApiResponse(code = 404, message = "Services not found")}
     )
     public Response getServices(@PathParam("idPole") Long idPole) {
-        List<NodeService> services = repository.getGenericNodesWithFatherId(NodeService.class, idPole);
+        List<NodeService> services = repository.findNodesWithFatherId(NodeService.class, idPole);
         return Response.ok(services).build();
     }
     
@@ -280,7 +280,7 @@ public class ArborescenceService {
         @ApiResponse(code = 404, message = "Service not found")}
     )
     public Response getService(@PathParam("idService") Long idService) {
-        NodeService service = repository.findNodeGeneric(idService, NodeService.class);
+        NodeService service = repository.findNode(idService, NodeService.class);
         return Response.ok(service).build();
     }
     
@@ -293,7 +293,7 @@ public class ArborescenceService {
         @ApiResponse(code = 404, message = "Hospital Units not found")}
     )
     public Response getHospitalUnits(@PathParam("idService") Long idService) {
-        List<NodeHU> hu = repository.getGenericNodesWithFatherId(NodeHU.class, idService);
+        List<NodeHU> hu = repository.findNodesWithFatherId(NodeHU.class, idService);
         return Response.ok(hu).build();
     }
     
@@ -306,7 +306,7 @@ public class ArborescenceService {
         @ApiResponse(code = 404, message = "Hospital Unit not found")}
     )
     public Response getHospitalUnit(@PathParam("idHU") Long idHU) {
-        NodeHU hu = repository.findNodeGeneric(idHU, NodeHU.class);
+        NodeHU hu = repository.findNode(idHU, NodeHU.class);
         return Response.ok(hu).build();
     }
     
@@ -319,7 +319,7 @@ public class ArborescenceService {
         @ApiResponse(code = 404, message = "Care Units not found")}
     )
     public Response getCareUnits(@PathParam("idHU") Long idHU) {
-        List<NodeCU> cu = repository.getGenericNodesWithFatherId(NodeCU.class, idHU);
+        List<NodeCU> cu = repository.findNodesWithFatherId(NodeCU.class, idHU);
         return Response.ok(cu).build();
     }
     
@@ -332,7 +332,7 @@ public class ArborescenceService {
         @ApiResponse(code = 404, message = "Care Unit not found")}
     )
     public Response getCareUnit(@PathParam("idCU") Long idCU) {
-        NodeCU cu = repository.findNodeGeneric(idCU, NodeCU.class);
+        NodeCU cu = repository.findNode(idCU, NodeCU.class);
         return Response.ok(cu).build();
     }
 }
