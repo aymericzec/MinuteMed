@@ -1,7 +1,5 @@
 package fr.devsquad.minutemed.jwt.rest;
 
-
-
 import fr.devsquad.minutemed.jwt.filter.JWTTokenNeeded;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -10,6 +8,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import java.util.logging.Logger;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.core.HttpHeaders;
 
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 
@@ -41,7 +41,10 @@ public class EchoEndpoint {
     @GET
     @Path("jwt")
     @JWTTokenNeeded
-    public Response echoWithJWTToken(@QueryParam("message") String message) {
+    public Response echoWithJWTToken(@QueryParam("message") String message, ContainerRequestContext requestContext) {
+        System.out.println("MinuteMed JWT Hello !");
+        String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
+        System.out.println(authorizationHeader);
         return Response.ok().entity(message == null ? "no message" : message).build();
     }
 }

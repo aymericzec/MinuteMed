@@ -1,9 +1,10 @@
 package fr.devsquad.minutemed.application;
 
-import fr.devsquad.minutemed.arborescence.rest.ArborescenceService;
-import fr.devsquad.minutemed.filters.rest.CORSFilter;
-import fr.devsquad.minutemed.authentication.rest.AuthenticationService;
-import fr.devsquad.minutemed.dmp.rest.MedicalRecordService;
+//import fr.devsquad.minutemed.arborescence.rest.ArborescenceService;
+//import fr.devsquad.minutemed.filters.rest.CORSFilter;
+//import fr.devsquad.minutemed.authentication.rest.AuthenticationService;
+//import fr.devsquad.minutemed.dmp.rest.MedicalRecordService;
+import fr.devsquad.minutemed.jwt.filter.JWTTokenNeededFilter;
 import fr.devsquad.minutemed.jwt.rest.EchoEndpoint;
 import fr.devsquad.minutemed.jwt.rest.UserEndpoint;
 
@@ -22,13 +23,14 @@ public class ApplicationConfig extends Application {
     public ApplicationConfig() {
         HashSet<Class<?>> c = new HashSet<>();
         c.add(JacksonFeature.class);
-        c.add(ArborescenceService.class);
-        c.add(MedicalRecordService.class);
-        c.add(AuthenticationService.class);
+        //c.add(ArborescenceService.class);
+        //c.add(MedicalRecordService.class);
+        //c.add(AuthenticationService.class);
         c.add(UserEndpoint.class);
         c.add(EchoEndpoint.class);
         //c.add(ImageService.class);
-        c.add(CORSFilter.class);
+        //c.add(CORSFilter.class);
+        c.add(JWTTokenNeededFilter.class);
         classes = Collections.unmodifiableSet(c);
     }
 

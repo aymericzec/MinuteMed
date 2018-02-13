@@ -139,6 +139,7 @@
     </dependencies>
 
     <build>
+        <finalName>sampleJaxRsJWT</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

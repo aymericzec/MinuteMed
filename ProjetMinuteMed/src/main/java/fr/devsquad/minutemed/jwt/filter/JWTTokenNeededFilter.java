@@ -44,6 +44,7 @@ public class JWTTokenNeededFilter implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
 
+        logger.info("FILTER");
         // Get the HTTP Authorization header from the request
         String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
         logger.info("#### authorizationHeader : " + authorizationHeader);
