@@ -22,7 +22,7 @@ public class MedicalRecord implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "idMedicalRecord")
-    private long id;
+    private long idMedicalRecord;
     private String ss;
     private String firstName;
     private String lastName;
@@ -51,8 +51,8 @@ public class MedicalRecord implements Serializable {
         this.hu = Objects.requireNonNull(hu);
     }
 
-    public long getId() {
-        return id;
+    public long getIdMedicalRecord() {
+        return idMedicalRecord;
     }
 
     public String getSs() {

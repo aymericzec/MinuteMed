@@ -3,41 +3,42 @@ package fr.devsquad.minutemed.dmp.domain;
 import static fr.devsquad.minutemed.dmp.domain.ResultExam.FIND_ALL_RESULT_EXAM;
 import fr.devsquad.minutemed.staff.domain.Doctor;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import java.util.*;
+import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 @NamedQuery(name = FIND_ALL_RESULT_EXAM, query = "SELECT u FROM ResultExam u")
 public class ResultExam implements Serializable {
     public static final String FIND_ALL_RESULT_EXAM = "ResultExam.findAllResultExam";
+    
     @Id @GeneratedValue
-    @Column(name = "idResultExam")
-    private long id;
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "idDoctor")
+    private long idResultExam;
+    
+    @NotNull
+    @ManyToOne @MapsId
     private Doctor examinator;
+    
+    @NotNull
     private String examDate;
-    private String results;
+    
+    @NotNull
+    private String body;
+    
+    @ElementCollection
     private final List<String> files = new ArrayList<>();
+    
     
     public ResultExam() { }
 
-    public ResultExam(Doctor examinator, String examDate, String results) {
-        this.examinator = examinator;
-        this.examDate = examDate;
-        this.results = results;
+    public ResultExam(Doctor examinator, String examDate, String body) {
+        this.examinator = Objects.requireNonNull(examinator);
+        this.examDate = Objects.requireNonNull(examDate);
+        this.body = Objects.requireNonNull(body);
     }
 
-    public long getId() {
-        return id;
+    public long getIdResultExam() {
+        return idResultExam;
     }
 
     public Doctor getExaminator() {
@@ -48,15 +49,15 @@ public class ResultExam implements Serializable {
         return examDate;
     }
 
-    public String getResult() {
-        return results;
+    public String getBody() {
+        return body;
     }
 
     public List<String> getFiles() {
         return files;
     }
     
-    public void addFiles (String s) {
-        files.add(s);
+    public void addFiles (String file) {
+        files.add(Objects.requireNonNull(file));
     } 
 }

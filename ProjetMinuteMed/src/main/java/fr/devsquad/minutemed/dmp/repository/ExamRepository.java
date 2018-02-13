@@ -26,7 +26,7 @@ public class ExamRepository {
 
     public Long save(Exam exam) {
         em.persist(exam);
-        return exam.getId();
+        return exam.getIdExam();
     }
 
     public void update(Exam exam) {

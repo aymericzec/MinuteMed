@@ -51,8 +51,14 @@ public class ArborescenceRepository {
     
     public <T extends Node> T findNode(Long nodeID, Class<T> clazz){
         Objects.requireNonNull(clazz);
+        T result = null;
         TypedQuery<T> qry = em.createQuery("SELECT n FROM Node n WHERE n.idNode = :id AND n.floor = :floor", clazz);
-        return qry.setParameter("id", nodeID).setParameter("floor", NodeFloorSupplier.getFloor(clazz)).getSingleResult();  
+        try{
+            result = qry.setParameter("id", nodeID).setParameter("floor", NodeFloorSupplier.getFloor(clazz)).getSingleResult();
+        } catch (NoResultException nre){
+            // do nothing
+        }
+        return result;
     }
     
 }

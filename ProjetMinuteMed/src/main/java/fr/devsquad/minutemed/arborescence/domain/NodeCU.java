@@ -19,7 +19,7 @@ public class NodeCU extends Node {
     
     private final static String FLOOR = "CARE_UNIT";
     
-    @ManyToOne
+    @ManyToOne @MapsId
     private NodeHU father;
 
     public NodeCU() {

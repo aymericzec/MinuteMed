@@ -19,7 +19,7 @@ public class NodeHospital extends Node {
     
     private final static String FLOOR = "HOSPITAL";
     
-    @ManyToOne
+    @ManyToOne @MapsId
     private NodeAPHP father;
     
     @OneToMany(mappedBy = "father")

@@ -60,12 +60,6 @@ public class MedicalStaff implements Serializable {
         return idMedicalStaff;
     }
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(long id) {
-        this.idMedicalStaff = Objects.requireNonNull(id);
-    }
 
     /**
      * @return the status

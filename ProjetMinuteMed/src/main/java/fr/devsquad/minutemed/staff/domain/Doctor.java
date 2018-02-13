@@ -1,7 +1,6 @@
 package fr.devsquad.minutemed.staff.domain;
 
 import fr.devsquad.minutemed.arborescence.domain.*;
-import fr.devsquad.minutemed.authentication.domain.DoctorCreator;
 import fr.devsquad.minutemed.specialization.domain.Specialization;
 import static fr.devsquad.minutemed.staff.domain.Doctor.FIND_ALL_DOCTOR;
 import java.io.Serializable;
@@ -20,29 +19,27 @@ public class Doctor extends MedicalStaff implements Serializable {
     private static final String STATUS = "DOCTOR";
     
     @NotNull
-    private String specialization;
+    @OneToOne @MapsId
+    private Specialization specialization;
     
  
     public Doctor() {
         super(STATUS);
     }
 
-    public Doctor(String specialization, String firstName, String lastName, String address, String email, String phoneNumber, Node node) {
+    public Doctor(Specialization specialization, String firstName, String lastName, String address, String email, String phoneNumber, Node node) {
         super(STATUS, Objects.requireNonNull(firstName), Objects.requireNonNull(lastName), Objects.requireNonNull(address),
                 Objects.requireNonNull(email), Objects.requireNonNull(phoneNumber), Objects.requireNonNull(node));
         this.specialization = Objects.requireNonNull(specialization);
     }
     
 
-    public String getSpecialization() {
+    public Specialization getSpecialization() {
         return specialization;
     }
  
     public void setSpecialization(Specialization specialization){
-        if(specialization==null){
-            throw new NullPointerException();
-        }
-        this.specialization = specialization.getStaffName();
+        this.specialization = Objects.requireNonNull(specialization);
     }
 
     @Override

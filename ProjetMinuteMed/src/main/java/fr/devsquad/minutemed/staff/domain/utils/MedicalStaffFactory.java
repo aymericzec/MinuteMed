@@ -13,7 +13,7 @@ import java.util.*;
 public class MedicalStaffFactory {
     
 
-    public static Doctor createFromDoctorCreator(DoctorCreator doctorCreator, Node node, String specialization) {
+    public static Doctor createDoctorFromCreator(DoctorCreator doctorCreator, Node node, Specialization specialization) {
         Objects.requireNonNull(doctorCreator);
         return new Doctor(Objects.requireNonNull(specialization),
                 doctorCreator.getFirstName(),
@@ -25,7 +25,7 @@ public class MedicalStaffFactory {
     }
     
     
-    public static Nurse createFromNurseCreator(NurseCreator nurseCreator, Node node) {
+    public static Nurse createNurseFromCreator(NurseCreator nurseCreator, Node node) {
         Objects.requireNonNull(nurseCreator);
         return new Nurse(nurseCreator.getFirstName(),
                 nurseCreator.getLastName(),

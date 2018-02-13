@@ -4,14 +4,8 @@ import static fr.devsquad.minutemed.dmp.domain.Exam.FIND_ALL_EXAM;
 import fr.devsquad.minutemed.staff.domain.Doctor;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 @NamedQuery(name = FIND_ALL_EXAM, query = "SELECT u FROM Exam u")
@@ -20,22 +14,33 @@ public class Exam implements Serializable {
     public static final String FIND_ALL_EXAM = "Diagnostic.findAllExam";
     
     @Id @GeneratedValue
-    @Column(name = "idExam")
-    private long id;
-    private String title;
-    private String description;
-    private String dateExam;
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "idDoctor")
+    private long idExam;
+    
+    @NotNull
+    @ManyToOne @MapsId
     private Doctor doctor;
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "idMedicalRecord")
+    
+    @NotNull
+    @ManyToOne @MapsId
     private MedicalRecord medicalRecord;
-    private boolean draft;
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "idResultExam")
+    
+    @NotNull
+    private String title;
+    
+    @NotNull
+    private String description;
+    
+    @NotNull
+    private String dateExam;
+    
+    @NotNull
+    @OneToOne @MapsId
     private ResultExam resultExam;
     
+    @NotNull
+    private boolean draft;
+    
+
     public Exam() { }
     
     public Exam(String title, String description, String dateExam, Doctor doctor, MedicalRecord medicalRecord) {
@@ -47,8 +52,8 @@ public class Exam implements Serializable {
         this.draft = true;
     }
     
-    public long getId() {
-        return id;
+    public long getIdExam() {
+        return idExam;
     }
 
     public String getTitle() {
@@ -74,17 +79,17 @@ public class Exam implements Serializable {
     public boolean getDraft() {
         return draft;
     }
+   
+    public void setDraft() {
+        this.draft = false;
+    }
     
     public ResultExam getResultExam() {
         return resultExam;
     }
     
-    public void setDraft(boolean draft) {
-        this.draft = draft;
-    }
-    
     public void setResultExam (ResultExam resultExam) {
-        this.resultExam = resultExam;
+        this.resultExam = Objects.requireNonNull(resultExam);
     }
     
 }

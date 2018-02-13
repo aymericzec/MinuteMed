@@ -17,8 +17,8 @@ public class NurseCreator extends AbstractUserCreator {
         super();
     }
     
-    public NurseCreator(String username, String password, String firstName, String lastName, String adress, String email, String phoneNumber, String typeNode, long idNode) {
-        super(StaffEnum.NURSE.name(), username, password, firstName, lastName, adress, email, phoneNumber, typeNode, idNode);
+    public NurseCreator(String username, String password, String firstName, String lastName, String adress, String email, String phoneNumber, long idNode) {
+        super(StaffEnum.NURSE.name(), username, password, firstName, lastName, adress, email, phoneNumber, idNode);
     }
     
 }

@@ -4,12 +4,13 @@ import fr.devsquad.minutemed.authentication.domain.DoctorCreator;
 import fr.devsquad.minutemed.authentication.domain.NurseCreator;
 import fr.devsquad.minutemed.authentication.domain.UserAccount;
 import fr.devsquad.minutemed.staff.domain.StaffEnum;
+import java.util.*;
 
 import javax.ejb.NoSuchEntityException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.List;
+import javax.persistence.*;
 
 /**
  * Manages interactions with the database.
@@ -22,22 +23,29 @@ public class AuthenticationRepository {
     private EntityManager em;
 
     public List<UserAccount> list() {
-        return em.createNamedQuery(UserAccount.FIND_ALL_USER_ACCOUNT, UserAccount.class).getResultList();
+        return em.createNamedQuery("SELECT u FROM UserAccount u", UserAccount.class).getResultList();
     }
 
     public UserAccount find(Long id) {
         return em.find(UserAccount.class, id);
     }
+    
+    public boolean usernameAlreadyExist(String username){
+        TypedQuery<UserAccount> qry = em.createQuery("SELECT u FROM UserAccount u WHERE u.username = :username", UserAccount.class);
+        return !qry.setParameter("username", username).getResultList().isEmpty();
+    }
 
     
-    public UserAccount saveDoctorAccount(DoctorCreator doctorCreator){
-        UserAccount doctorAccount = new UserAccount(doctorCreator.getUsername(), doctorCreator.getPassword(), StaffEnum.DOCTOR);
+    public UserAccount saveDoctorAccount(Long id, DoctorCreator doctorCreator){
+        Objects.requireNonNull(doctorCreator);
+        UserAccount doctorAccount = new UserAccount(Objects.requireNonNull(id), doctorCreator.getUsername(), doctorCreator.getPassword(), StaffEnum.DOCTOR);
         saveUserAccount(doctorAccount);
         return doctorAccount;
     }
     
-    public UserAccount saveNurseAccount(NurseCreator nurseCreator){
-        UserAccount nurseAccount = new UserAccount(nurseCreator.getUsername(), nurseCreator.getPassword(), StaffEnum.NURSE);
+    public UserAccount saveNurseAccount(Long id, NurseCreator nurseCreator){
+        Objects.requireNonNull(nurseCreator);
+        UserAccount nurseAccount = new UserAccount(Objects.requireNonNull(id), nurseCreator.getUsername(), nurseCreator.getPassword(), StaffEnum.NURSE);
         saveUserAccount(nurseAccount);
         return nurseAccount;
     }

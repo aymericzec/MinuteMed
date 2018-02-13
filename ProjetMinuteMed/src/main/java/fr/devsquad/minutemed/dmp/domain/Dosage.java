@@ -4,17 +4,9 @@ import static fr.devsquad.minutemed.dmp.domain.Dosage.FIND_ALL_DOSAGE;
 import fr.devsquad.minutemed.staff.domain.Doctor;
 import fr.devsquad.minutemed.staff.domain.MedicalStaff;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import java.util.*;
+import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 @NamedQuery(name = FIND_ALL_DOSAGE, query = "SELECT u FROM Dosage u")
@@ -22,39 +14,56 @@ public class Dosage implements Serializable {
     public static final String FIND_ALL_DOSAGE = "Dosage.findAllDosage";
     
     @Id @GeneratedValue
-    @Column(name = "idDosage")
-    private long id;
+    private Long idDosage;
+    
+    @NotNull
     private String title;
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "idDoctor")
-    private Doctor doctorConsulting;
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "idMedicalRecord")
+    
+    @NotNull
+    @ManyToOne @MapsId
+    private Doctor creator;
+    
+    @NotNull
+    @ManyToOne @MapsId
     private MedicalRecord medicalRecord;
-    private String dateDosage;
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "idDiagnostic")
+    
+    @NotNull
+    private String creationDate;
+    
+    @NotNull
+    @OneToOne @MapsId
     private Diagnostic diagnostic;
-    private String dosagePrescription;
-    @OneToMany(mappedBy = "dosage", cascade = CascadeType.PERSIST)
-    private List<ReportDosage> report;
+    
+    @NotNull
+    private String body;
+    
+    @NotNull
+    @OneToMany(mappedBy = "dosage")
+    private List<DosageReport> reports;
+    
+    @NotNull
     private String beginDosage;
+    
+    @NotNull
     private String endDosage;
+    
+    @NotNull
     private boolean draft;
+    
     
     public Dosage () {
         
     }
     
-    public Dosage (String title, Doctor doctorConsulting, MedicalRecord medicalRecord, String dateDosage, Diagnostic diagnostic, String dosagePrescription, String beginDosage, String endDosage) {
-        this.title = title;
-        this.doctorConsulting = doctorConsulting;
-        this.dateDosage = dateDosage;
-        this.diagnostic = diagnostic;
-        this.dosagePrescription = dosagePrescription;
-        this.report = new ArrayList();
-        this.beginDosage = beginDosage;
-        this.endDosage = endDosage;
+    public Dosage (String title, Doctor creator, MedicalRecord medicalRecord, String creationDate, Diagnostic diagnostic, String body, String beginDosage, String endDosage) {
+        this.title = Objects.requireNonNull(title);
+        this.creator = Objects.requireNonNull(creator);
+        this.creationDate = Objects.requireNonNull(creationDate);
+        this.diagnostic = Objects.requireNonNull(diagnostic);
+        this.body = Objects.requireNonNull(body);
+        this.reports = new ArrayList();
+        this.beginDosage = Objects.requireNonNull(beginDosage);
+        this.endDosage = Objects.requireNonNull(endDosage);
         this.draft = true;
     }
 
@@ -63,31 +72,31 @@ public class Dosage implements Serializable {
     }
 
     public long getId() {
-        return id;
+        return idDosage;
     }
 
-    public Doctor getDoctorConsulting() {
-        return doctorConsulting;
+    public Doctor getCreator() {
+        return creator;
     }
 
     public MedicalRecord getMedicalRecord() {
         return medicalRecord;
     }
 
-    public String getDateDosage() {
-        return dateDosage;
+    public String getCreationDate() {
+        return creationDate;
     }
 
     public Diagnostic getDiagnostic() {
         return diagnostic;
     }
 
-    public String getDosagePrescription() {
-        return dosagePrescription;
+    public String getBody() {
+        return body;
     }
 
-    public List<ReportDosage> getRepport() {
-        return report;
+    public List<DosageReport> getReports() {
+        return reports;
     }
 
     public String getBeginDosage() {
@@ -98,25 +107,23 @@ public class Dosage implements Serializable {
         return endDosage;
     }
     
-    public boolean getDraft() {
+    public boolean isDraft() {
         return draft;
     }
     
-    public void setDraft(boolean draft) {
-        this.draft = draft;
+    public void setDraft() {
+        this.draft = false;
     }
     
-    public ReportDosage getLastReport () {
-        if (report.size() > 0) {
-            return report.get(0);
-        }
-        
-        return null;
+    public DosageReport getLastReport () {
+        return reports.isEmpty() ? null : reports.get(reports.size() - 1);
     }
     
-    public void addReport (MedicalStaff staff, String dateDosage, String repport) {
-        ReportDosage reportDosage = new ReportDosage(staff, dateDosage, repport);
-        this.report.add(reportDosage);
+    public void addReport (MedicalStaff staff, String creationDate, String body) {
+        DosageReport reportDosage = new DosageReport(Objects.requireNonNull(staff),
+                Objects.requireNonNull(creationDate),
+                Objects.requireNonNull(body));
+        reports.add(reportDosage);
     }
     
 }
