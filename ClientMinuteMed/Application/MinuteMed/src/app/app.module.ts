@@ -8,6 +8,8 @@ import { MinuteMedRouter } from './app.routes';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { ExamComponent } from './exam/exam.component';
+import { DmpComponent } from './dmp/dmp.component';
 
 
 @NgModule({
@@ -15,6 +17,8 @@ import { HomeComponent } from './home/home.component';
     AppComponent,
     LoginComponent,
     HomeComponent,
+    ExamComponent,
+    DmpComponent,
   ],
   imports: [
     BrowserModule,

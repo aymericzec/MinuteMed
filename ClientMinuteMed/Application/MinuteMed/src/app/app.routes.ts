@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuardService } from './auth.guard.service';
+import { DmpComponent } from './dmp/dmp.component';
 
 const routes: Routes = [
 //  { path: 'rooms', component: VenueComponent },
@@ -12,6 +13,7 @@ const routes: Routes = [
 //  { path: 'speakers/:id', component: SpeakerDetailComponent },
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'dmp', component: DmpComponent },
 //  { path: 'attendees', component : AttendeeComponent},
 //  { path: 'ratings/:id', component: VoteComponent, canActivate: [AuthGuardService] }
 ];
