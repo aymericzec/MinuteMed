@@ -19,7 +19,7 @@ public class NodeService extends Node {
     
     private final static String FLOOR = "SERVICE";
     
-    @ManyToOne @MapsId
+    @ManyToOne
     private NodePole father;
     
     @OneToMany(mappedBy = "father")

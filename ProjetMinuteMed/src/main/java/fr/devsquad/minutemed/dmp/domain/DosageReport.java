@@ -17,7 +17,7 @@ public class DosageReport implements Serializable {
     private long idReportDosage;
     
     @NotNull
-    @ManyToOne @MapsId
+    @ManyToOne
     private MedicalStaff supervisor;
     
     @NotNull
@@ -27,7 +27,7 @@ public class DosageReport implements Serializable {
     private String body;
     
     @NotNull
-    @ManyToOne @MapsId
+    @ManyToOne
     private Dosage dosage;
     
     

@@ -19,7 +19,7 @@ public class NodePole extends Node {
     
     private final static String FLOOR = "POLE";
     
-    @ManyToOne @MapsId
+    @ManyToOne
     private NodeHospital father;
     
     @OneToMany(mappedBy = "father")

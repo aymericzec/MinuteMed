@@ -16,7 +16,7 @@ public class ResultExam implements Serializable {
     private long idResultExam;
     
     @NotNull
-    @ManyToOne @MapsId
+    @ManyToOne
     private Doctor examinator;
     
     @NotNull

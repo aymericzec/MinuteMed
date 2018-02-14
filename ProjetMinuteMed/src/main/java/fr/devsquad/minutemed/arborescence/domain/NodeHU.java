@@ -18,7 +18,7 @@ public class NodeHU extends Node {
     
     private final static String FLOOR = "HOSPITAL_UNIT";
   
-    @ManyToOne @MapsId
+    @ManyToOne
     private NodeService father;
     
     @OneToMany(mappedBy = "father")

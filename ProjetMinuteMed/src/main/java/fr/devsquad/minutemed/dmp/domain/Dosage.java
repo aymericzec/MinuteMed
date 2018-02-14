@@ -20,18 +20,18 @@ public class Dosage implements Serializable {
     private String title;
     
     @NotNull
-    @ManyToOne @MapsId
+    @ManyToOne
     private Doctor creator;
     
     @NotNull
-    @ManyToOne @MapsId
+    @ManyToOne
     private MedicalRecord medicalRecord;
     
     @NotNull
     private String creationDate;
     
     @NotNull
-    @OneToOne @MapsId
+    @OneToOne
     private Diagnostic diagnostic;
     
     @NotNull

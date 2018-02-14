@@ -19,7 +19,7 @@ public class Doctor extends MedicalStaff implements Serializable {
     private static final String STATUS = "DOCTOR";
     
     @NotNull
-    @OneToOne @MapsId
+    @OneToOne
     private Specialization specialization;
     
  

@@ -17,11 +17,11 @@ public class Exam implements Serializable {
     private long idExam;
     
     @NotNull
-    @ManyToOne @MapsId
+    @ManyToOne
     private Doctor doctor;
     
     @NotNull
-    @ManyToOne @MapsId
+    @ManyToOne
     private MedicalRecord medicalRecord;
     
     @NotNull
@@ -34,7 +34,7 @@ public class Exam implements Serializable {
     private String dateExam;
     
     @NotNull
-    @OneToOne @MapsId
+    @OneToOne
     private ResultExam resultExam;
     
     @NotNull

@@ -17,11 +17,11 @@ public class Diagnostic implements Serializable {
     private Long idDiagnostic;
     
     @NotNull
-    @ManyToOne @MapsId
+    @ManyToOne
     private Doctor creator;
     
     @NotNull
-    @ManyToOne @MapsId
+    @ManyToOne
     private MedicalRecord medicalRecord;
     
     @NotNull

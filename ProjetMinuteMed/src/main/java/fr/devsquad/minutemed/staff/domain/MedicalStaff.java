@@ -12,7 +12,7 @@ import javax.validation.constraints.*;
 public class MedicalStaff implements Serializable {
     
     @Id @GeneratedValue
-    private long idMedicalStaff;
+    private Long idMedicalStaff;
     
     @NotNull
     private String status;
@@ -56,7 +56,7 @@ public class MedicalStaff implements Serializable {
     /**
      * @return the id
      */
-    public long getIdMedicalStaff() {
+    public Long getIdMedicalStaff() {
         return idMedicalStaff;
     }
 

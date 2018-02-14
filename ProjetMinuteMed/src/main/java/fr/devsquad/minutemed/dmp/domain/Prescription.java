@@ -17,14 +17,14 @@ public class Prescription implements Serializable {
     private long idPrescription;
     
     @NotNull
-    @ManyToOne @MapsId
+    @ManyToOne
     private Doctor prescriptor;
     
     @NotNull
-    @ManyToOne @MapsId
+    @ManyToOne
     private MedicalRecord medicalRecord;
     
-    @ManyToOne @MapsId
+    @ManyToOne
     private Diagnostic diagnostic;
     
     @NotNull

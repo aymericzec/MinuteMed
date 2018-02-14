@@ -1,0 +1,58 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Gives all the details of the specialization api",
+    "version" : "1.0.0",
+    "title" : "SpecializationAPI"
+  },
+  "host" : "localhost:8080",
+  "basePath" : "/api",
+  "tags" : [ {
+    "name" : "Specializations REST Endpoint"
+  } ],
+  "schemes" : [ "http", "https" ],
+  "paths" : {
+    "/specializations" : {
+      "get" : {
+        "tags" : [ "Specializations REST Endpoint" ],
+        "summary" : "Get all specializations.",
+        "description" : "",
+        "operationId" : "getAllSpecializations",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Specialization"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All Specializations are returned."
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Specialization" : {
+      "type" : "object",
+      "required" : [ "generalName", "staffName" ],
+      "properties" : {
+        "idSpecialization" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "generalName" : {
+          "type" : "string"
+        },
+        "staffName" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}

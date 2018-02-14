@@ -592,41 +592,42 @@
   "definitions" : {
     "Diagnostic" : {
       "type" : "object",
+      "required" : [ "body", "creationDate", "creator", "draft", "medicalRecord", "title" ],
       "properties" : {
-        "id" : {
+        "idDiagnostic" : {
           "type" : "integer",
           "format" : "int64"
         },
-        "title" : {
-          "type" : "string"
+        "creator" : {
+          "$ref" : "#/definitions/Doctor"
         },
         "medicalRecord" : {
           "$ref" : "#/definitions/MedicalRecord"
         },
-        "consultDiagnostic" : {
+        "title" : {
           "type" : "string"
         },
-        "description" : {
+        "creationDate" : {
+          "type" : "string"
+        },
+        "body" : {
           "type" : "string"
         },
         "draft" : {
           "type" : "boolean",
           "default" : false
-        },
-        "diagnostic" : {
-          "$ref" : "#/definitions/Doctor"
         }
       }
     },
     "Doctor" : {
       "type" : "object",
-      "required" : [ "adress", "email", "firstName", "lastName", "node", "phoneNumber", "specialization", "type" ],
+      "required" : [ "address", "email", "firstName", "lastName", "node", "phoneNumber", "specialization", "status" ],
       "properties" : {
-        "id" : {
+        "idMedicalStaff" : {
           "type" : "integer",
           "format" : "int64"
         },
-        "type" : {
+        "status" : {
           "type" : "string"
         },
         "firstName" : {
@@ -635,7 +636,7 @@
         "lastName" : {
           "type" : "string"
         },
-        "adress" : {
+        "address" : {
           "type" : "string"
         },
         "email" : {
@@ -644,38 +645,41 @@
         "phoneNumber" : {
           "type" : "string"
         },
-        "specialization" : {
-          "type" : "string"
-        },
         "node" : {
           "$ref" : "#/definitions/Node"
+        },
+        "specialization" : {
+          "$ref" : "#/definitions/Specialization"
         }
       }
     },
     "Dosage" : {
       "type" : "object",
+      "required" : [ "beginDosage", "body", "creationDate", "creator", "diagnostic", "draft", "endDosage", "medicalRecord", "reports", "title" ],
       "properties" : {
-        "id" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
         "title" : {
           "type" : "string"
         },
-        "doctorConsulting" : {
+        "creator" : {
           "$ref" : "#/definitions/Doctor"
         },
         "medicalRecord" : {
           "$ref" : "#/definitions/MedicalRecord"
         },
-        "dateDosage" : {
+        "creationDate" : {
           "type" : "string"
         },
         "diagnostic" : {
           "$ref" : "#/definitions/Diagnostic"
         },
-        "dosagePrescription" : {
+        "body" : {
           "type" : "string"
+        },
+        "reports" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/DosageReport"
+          }
         },
         "beginDosage" : {
           "type" : "string"
@@ -688,22 +692,46 @@
           "default" : false
         },
         "lastReport" : {
-          "$ref" : "#/definitions/ReportDosage"
+          "$ref" : "#/definitions/DosageReport"
         },
-        "repport" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/ReportDosage"
-          }
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        }
+      }
+    },
+    "DosageReport" : {
+      "type" : "object",
+      "required" : [ "body", "creationDate", "dosage", "supervisor" ],
+      "properties" : {
+        "idReportDosage" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "supervisor" : {
+          "$ref" : "#/definitions/MedicalStaff"
+        },
+        "creationDate" : {
+          "type" : "string"
+        },
+        "body" : {
+          "type" : "string"
+        },
+        "dosage" : {
+          "$ref" : "#/definitions/Dosage"
         }
       }
     },
     "Exam" : {
       "type" : "object",
+      "required" : [ "dateExam", "description", "draft", "medicalRecord", "resultExam", "title" ],
       "properties" : {
-        "id" : {
+        "idExam" : {
           "type" : "integer",
           "format" : "int64"
+        },
+        "medicalRecord" : {
+          "$ref" : "#/definitions/MedicalRecord"
         },
         "title" : {
           "type" : "string"
@@ -714,15 +742,12 @@
         "dateExam" : {
           "type" : "string"
         },
-        "medicalRecord" : {
-          "$ref" : "#/definitions/MedicalRecord"
+        "resultExam" : {
+          "$ref" : "#/definitions/ResultExam"
         },
         "draft" : {
           "type" : "boolean",
           "default" : false
-        },
-        "resultExam" : {
-          "$ref" : "#/definitions/ResultExam"
         },
         "doctorAskExamination" : {
           "$ref" : "#/definitions/Doctor"
@@ -731,8 +756,9 @@
     },
     "MedicalRecord" : {
       "type" : "object",
+      "required" : [ "address", "birthday", "email", "firstName", "gender", "hu", "lastName", "phoneNumber", "ss" ],
       "properties" : {
-        "id" : {
+        "idMedicalRecord" : {
           "type" : "integer",
           "format" : "int64"
         },
@@ -767,17 +793,32 @@
     },
     "MedicalStaff" : {
       "type" : "object",
+      "required" : [ "address", "email", "firstName", "lastName", "node", "phoneNumber", "status" ],
       "properties" : {
-        "id" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "type" : {
-          "type" : "string"
-        },
         "idMedicalStaff" : {
           "type" : "integer",
           "format" : "int64"
+        },
+        "status" : {
+          "type" : "string"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "address" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "phoneNumber" : {
+          "type" : "string"
+        },
+        "node" : {
+          "$ref" : "#/definitions/Node"
         }
       }
     },
@@ -807,22 +848,6 @@
         }
       }
     },
-    "NodeCU" : {
-      "type" : "object",
-      "required" : [ "floor" ],
-      "properties" : {
-        "idNode" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "floor" : {
-          "type" : "string"
-        },
-        "father" : {
-          "$ref" : "#/definitions/NodeService"
-        }
-      }
-    },
     "NodeHU" : {
       "type" : "object",
       "required" : [ "floor" ],
@@ -835,7 +860,7 @@
           "type" : "string"
         },
         "father" : {
-          "$ref" : "#/definitions/NodeCU"
+          "$ref" : "#/definitions/NodeService"
         }
       }
     },
@@ -889,13 +914,11 @@
     },
     "Prescription" : {
       "type" : "object",
+      "required" : [ "body", "creationDate", "draft", "medicalRecord", "prescriptor", "title" ],
       "properties" : {
-        "id" : {
+        "idPrescription" : {
           "type" : "integer",
           "format" : "int64"
-        },
-        "title" : {
-          "type" : "string"
         },
         "prescriptor" : {
           "$ref" : "#/definitions/Doctor"
@@ -903,13 +926,16 @@
         "medicalRecord" : {
           "$ref" : "#/definitions/MedicalRecord"
         },
-        "consultDate" : {
-          "type" : "string"
-        },
         "diagnostic" : {
           "$ref" : "#/definitions/Diagnostic"
         },
-        "prescription" : {
+        "title" : {
+          "type" : "string"
+        },
+        "creationDate" : {
+          "type" : "string"
+        },
+        "body" : {
           "type" : "string"
         },
         "draft" : {
@@ -918,31 +944,11 @@
         }
       }
     },
-    "ReportDosage" : {
-      "type" : "object",
-      "properties" : {
-        "id" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "supervisor" : {
-          "$ref" : "#/definitions/MedicalStaff"
-        },
-        "createDate" : {
-          "type" : "string"
-        },
-        "dosage" : {
-          "$ref" : "#/definitions/Dosage"
-        },
-        "rapport" : {
-          "type" : "string"
-        }
-      }
-    },
     "ResultExam" : {
       "type" : "object",
+      "required" : [ "body", "examDate", "examinator" ],
       "properties" : {
-        "id" : {
+        "idResultExam" : {
           "type" : "integer",
           "format" : "int64"
         },
@@ -952,13 +958,29 @@
         "examDate" : {
           "type" : "string"
         },
+        "body" : {
+          "type" : "string"
+        },
         "files" : {
           "type" : "array",
           "items" : {
             "type" : "string"
           }
+        }
+      }
+    },
+    "Specialization" : {
+      "type" : "object",
+      "required" : [ "generalName", "staffName" ],
+      "properties" : {
+        "idSpecialization" : {
+          "type" : "integer",
+          "format" : "int64"
         },
-        "result" : {
+        "generalName" : {
+          "type" : "string"
+        },
+        "staffName" : {
           "type" : "string"
         }
       }

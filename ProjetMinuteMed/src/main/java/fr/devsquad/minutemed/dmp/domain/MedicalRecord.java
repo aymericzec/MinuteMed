@@ -4,14 +4,8 @@ import fr.devsquad.minutemed.arborescence.domain.*;
 import static fr.devsquad.minutemed.dmp.domain.MedicalRecord.FIND_ALL_MEDICAL_RECORD;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 @NamedQuery(name = FIND_ALL_MEDICAL_RECORD, query = "SELECT u FROM MedicalRecord u")
@@ -19,22 +13,38 @@ public class MedicalRecord implements Serializable {
     
     public static final String FIND_ALL_MEDICAL_RECORD = "MedicalRecord.findAllMedicalRecord";
     
-    @Id
-    @GeneratedValue
-    @Column(name = "idMedicalRecord")
+    @Id @GeneratedValue
     private long idMedicalRecord;
+    
+    @NotNull
     private String ss;
+    
+    @NotNull
     private String firstName;
+    
+    @NotNull
     private String lastName;
+    
+    @NotNull
     private String address;
+    
+    @NotNull
     private String birthday;
+    
+    @NotNull
     private String gender;
+    
+    @NotNull
     private String phoneNumber;
+    
+    @NotNull
     private String email;
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "idHu")
+    
+    @NotNull
+    @ManyToOne
     private NodeHU hu;
 
+    
     public MedicalRecord() {
 
     }
@@ -92,7 +102,7 @@ public class MedicalRecord implements Serializable {
     }
     
     public void setHU(NodeHU hu) {
-        this.hu = hu;
+        this.hu = Objects.requireNonNull(hu);
     } 
 
 }
