@@ -196,81 +196,9 @@
                             <springmvc>false</springmvc>
                             <locations>
                                 <location>fr.devsquad.minutemed.authentication.rest</location>
-                            </locations>
-                            <schemes>
-                                <scheme>http</scheme>  
-                                <scheme>https</scheme>  
-                            </schemes>
-                            <host>localhost:8080</host>
-                            <basePath>/api</basePath>
-                            <info>
-                                <title>AuthenticationAPI</title>
-                                <version>1.0.0</version>
-                                <description>Gives all the details of the authentications</description>
-                            </info>
-                            <swaggerDirectory>src/main/webapp/authentication</swaggerDirectory>
-                            <outputFormats>json</outputFormats>
-                        </apiSource>
-                        <apiSource>
-                            <springmvc>false</springmvc>
-                            <locations>
                                 <location>fr.devsquad.minutemed.dmp.rest</location>
-                            </locations>
-                            <schemes>
-                                <scheme>http</scheme>  
-                                <scheme>https</scheme>  
-                            </schemes>
-                            <host>localhost:8080</host>
-                            <basePath>/api</basePath>
-                            <info>
-                                <title>MedicalRecordAPI</title>
-                                <version>1.0.0</version>
-                                <description>Gives all the details of the medical records api</description>
-                            </info>
-                            <swaggerDirectory>src/main/webapp/medicalRecord</swaggerDirectory>
-                            <outputFormats>json</outputFormats>
-                        </apiSource>
-                        <apiSource>
-                            <springmvc>false</springmvc>
-                            <locations>
                                 <location>fr.devsquad.minutemed.arborescence.rest</location>
-                            </locations>
-                            <schemes>
-                                <scheme>http</scheme>  
-                                <scheme>https</scheme>  
-                            </schemes>
-                            <host>localhost:8080</host>
-                            <basePath>/api</basePath>
-                            <info>
-                                <title>NodeAPI</title>
-                                <version>1.0.0</version>
-                                <description>Gives all the details of the node api</description>
-                            </info>
-                            <swaggerDirectory>src/main/webapp/node</swaggerDirectory>
-                            <outputFormats>json</outputFormats>
-                        </apiSource>
-                        <apiSource>
-                            <springmvc>false</springmvc>
-                            <locations>
                                 <location>fr.devsquad.minutemed.staff.rest</location>
-                            </locations>
-                            <schemes>
-                                <scheme>http</scheme>  
-                                <scheme>https</scheme>  
-                            </schemes>
-                            <host>localhost:8080</host>
-                            <basePath>/api</basePath>
-                            <info>
-                                <title>MedicalStaffAPI</title>
-                                <version>1.0.0</version>
-                                <description>Gives all the details of the medical staff api</description>
-                            </info>
-                            <swaggerDirectory>src/main/webapp/medicalStaff</swaggerDirectory>
-                            <outputFormats>json</outputFormats>
-                        </apiSource>
-                        <apiSource>
-                            <springmvc>false</springmvc>
-                            <locations>
                                 <location>fr.devsquad.minutemed.specialization.rest</location>
                             </locations>
                             <schemes>
@@ -280,11 +208,11 @@
                             <host>localhost:8080</host>
                             <basePath>/api</basePath>
                             <info>
-                                <title>SpecializationAPI</title>
+                                <title>MinuteMedAPI</title>
                                 <version>1.0.0</version>
-                                <description>Gives all the details of the specialization api</description>
+                                <description>Gives all the details of the MinuteMed APIs</description>
                             </info>
-                            <swaggerDirectory>src/main/webapp/specialization</swaggerDirectory>
+                            <swaggerDirectory>src/main/webapp/swagger</swaggerDirectory>
                             <outputFormats>json</outputFormats>
                         </apiSource>
                     </apiSources>

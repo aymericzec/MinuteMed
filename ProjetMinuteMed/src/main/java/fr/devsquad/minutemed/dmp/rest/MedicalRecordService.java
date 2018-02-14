@@ -71,7 +71,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 400, message = "Invalid input")}
     )
     @JWTNeeded(groups = {StaffEnum.DOCTOR})
-    public Response createExam(@NotNull Exam exam) {
+    public Response createExam(@PathParam("idRecord") Long idRecord, @NotNull Exam exam) {
         Long id = examRepository.save(exam);
         return Response.ok("{\"idExam\":"+ id +"}").build();
     }
@@ -84,7 +84,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 400, message = "Invalid input")}
     )
     @JWTNeeded(groups = {StaffEnum.DOCTOR})
-    public Response createDiagnostic(@NotNull Diagnostic diagnostic) {
+    public Response createDiagnostic(@PathParam("idRecord") Long idRecord, @NotNull Diagnostic diagnostic) {
         Long id = diagnosticRepository.save(diagnostic);
         return Response.ok("{\"idDiagnostic\":"+ id +"}").build();
     }
@@ -97,7 +97,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 400, message = "Invalid input")}
     )
     @JWTNeeded(groups = {StaffEnum.DOCTOR})
-    public Response createPrescription(@NotNull Prescription prescription) {
+    public Response createPrescription(@PathParam("idRecord") Long idRecord, @NotNull Prescription prescription) {
         Long id = prescriptionRepository.save(prescription);
         return Response.ok("{\"idPrescription\":"+ id +"}").build();
     }
@@ -110,7 +110,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 400, message = "Invalid input")}
     )
     @JWTNeeded(groups = {StaffEnum.DOCTOR})
-    public Response createDosage(@NotNull Dosage dosage) {
+    public Response createDosage(@PathParam("idRecord") Long idRecord, @NotNull Dosage dosage) {
         Long id = dosageRepository.save(dosage);
         return Response.ok("{\"idDosage\":"+ id +"}").build();
     }
@@ -248,7 +248,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 404, message = "Medical Record or Exam not found")}
     )
     @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
-    public Response getExam(@PathParam("idExam") Long idExam) {
+    public Response getExam(@PathParam("idRecord") Long idRecord, @PathParam("idExam") Long idExam) {
         Exam exam = examRepository.find(idExam);
         return Response.ok(exam).build();
     }
@@ -276,7 +276,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Medical Record or Diagnostic not found")}
     )
-    public Response getDiagnostic(@PathParam("idDiagnostic") Long idDiagnostic) {
+    public Response getDiagnostic(@PathParam("idRecord") Long idRecord, @PathParam("idDiagnostic") Long idDiagnostic) {
         Diagnostic diagnostic = diagnosticRepository.find(idDiagnostic);
         return Response.ok(diagnostic).build();
     }
@@ -304,7 +304,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 404, message = "Medical Record or Prescription not found")}
     )
     @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
-    public Response getPrescription(@PathParam("idPrescription") Long idPrescription) {
+    public Response getPrescription(@PathParam("idRecord") Long idRecord, @PathParam("idPrescription") Long idPrescription) {
         Prescription prescription = prescriptionRepository.find(idPrescription);
         return Response.ok(prescription).build();
     }
@@ -332,7 +332,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 404, message = "Medical Record or Dosage not found")}
     ) 
     @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
-    public Response getDosage(@PathParam("idDosage") Long idDosage) {
+    public Response getDosage(@PathParam("idRecord") Long idRecord, @PathParam("idDosage") Long idDosage) {
         Dosage dosage = dosageRepository.find(idDosage);
         return Response.ok(dosage).build();
     }  

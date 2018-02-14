@@ -269,7 +269,7 @@ public class ArborescenceService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Services not found")}
     )
-    public Response getServices(@PathParam("idPole") Long idPole) {
+    public Response getServices(@PathParam("idHospital") Long idHospital, @PathParam("idPole") Long idPole) {
         List<NodeService> services = repository.findNodesWithFatherId(NodeService.class, idPole);
         return Response.ok(services).build();
     }
@@ -282,7 +282,7 @@ public class ArborescenceService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Service not found")}
     )
-    public Response getService(@PathParam("idService") Long idService) {
+    public Response getService(@PathParam("idHospital") Long idHospital, @PathParam("idPole") Long idPole, @PathParam("idService") Long idService) {
         NodeService service = repository.findNode(idService, NodeService.class);
         return Response.ok(service).build();
     }
@@ -295,7 +295,7 @@ public class ArborescenceService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Hospital Units not found")}
     )
-    public Response getHospitalUnits(@PathParam("idService") Long idService) {
+    public Response getHospitalUnits(@PathParam("idHospital") Long idHospital, @PathParam("idPole") Long idPole, @PathParam("idService") Long idService) {
         List<NodeHU> hu = repository.findNodesWithFatherId(NodeHU.class, idService);
         return Response.ok(hu).build();
     }
@@ -308,7 +308,7 @@ public class ArborescenceService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Hospital Unit not found")}
     )
-    public Response getHospitalUnit(@PathParam("idHU") Long idHU) {
+    public Response getHospitalUnit(@PathParam("idHospital") Long idHospital, @PathParam("idPole") Long idPole, @PathParam("idService") Long idService, @PathParam("idHU") Long idHU) {
         NodeHU hu = repository.findNode(idHU, NodeHU.class);
         return Response.ok(hu).build();
     }
@@ -321,7 +321,7 @@ public class ArborescenceService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Care Units not found")}
     )
-    public Response getCareUnits(@PathParam("idHU") Long idHU) {
+    public Response getCareUnits(@PathParam("idHospital") Long idHospital, @PathParam("idPole") Long idPole, @PathParam("idService") Long idService, @PathParam("idHU") Long idHU) {
         List<NodeCU> cu = repository.findNodesWithFatherId(NodeCU.class, idHU);
         return Response.ok(cu).build();
     }
@@ -334,7 +334,7 @@ public class ArborescenceService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Care Unit not found")}
     )
-    public Response getCareUnit(@PathParam("idCU") Long idCU) {
+    public Response getCareUnit(@PathParam("idHospital") Long idHospital, @PathParam("idPole") Long idPole, @PathParam("idService") Long idService, @PathParam("idHU") Long idHU, @PathParam("idCU") Long idCU) {
         NodeCU cu = repository.findNode(idCU, NodeCU.class);
         return Response.ok(cu).build();
     }

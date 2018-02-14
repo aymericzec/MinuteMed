@@ -135,7 +135,7 @@ public class AuthenticationService {
         @ApiResponse(code = 409, message = "Username conflict")
     })
     @Path("/create")
-    public Response createDataManagerAccount(@NotNull UserAccount user) throws IOException {
+    public Response createUserAccount(@NotNull UserAccount user) throws IOException {
         System.out.println(user);
         if(authenticationRepository.usernameAlreadyExist(user.getUsername())){
             return Response.status(Response.Status.CONFLICT).entity("An account with this username already exist !").build();
