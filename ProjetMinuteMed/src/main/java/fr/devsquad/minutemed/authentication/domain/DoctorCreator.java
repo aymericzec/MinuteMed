@@ -14,28 +14,28 @@ import java.util.Objects;
  */
 public class DoctorCreator extends AbstractUserCreator {
     
-    public Long specialization;
+    public String specialization;
     
     public DoctorCreator(){
         super();
     }
   
-    public DoctorCreator(Long specialization, String username, String password, String firstName, String lastName, String adress, String email, String phoneNumber, String typeNode, long idNode) {
-        super(StaffEnum.DOCTOR.name(), username, password, firstName, lastName, adress, email, phoneNumber, typeNode, idNode);
+    public DoctorCreator(String specialization, String username, String password, String firstName, String lastName, String address, String email, String phoneNumber, long idNode) {
+        super(StaffEnum.DOCTOR.name(), username, password, firstName, lastName, address, email, phoneNumber, idNode);
         this.specialization = Objects.requireNonNull(specialization);
     }
 
     /**
      * @return the specialization
      */
-    public Long getSpecialization() {
+    public String getSpecialization() {
         return specialization;
     }
 
     /**
      * @param specialization the specialization to set
      */
-    public void setSpecialization(Long specialization) {
+    public void setSpecialization(String specialization) {
         this.specialization = Objects.requireNonNull(specialization);
     }
     

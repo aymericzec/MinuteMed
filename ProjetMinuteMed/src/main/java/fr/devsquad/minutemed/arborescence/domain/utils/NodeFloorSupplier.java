@@ -3,8 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.devsquad.minutemed.arborescence.domain;
+package fr.devsquad.minutemed.arborescence.domain.utils;
 
+import fr.devsquad.minutemed.arborescence.domain.Node;
+import fr.devsquad.minutemed.arborescence.domain.NodeAPHP;
+import fr.devsquad.minutemed.arborescence.domain.NodeCU;
+import fr.devsquad.minutemed.arborescence.domain.NodeHU;
+import fr.devsquad.minutemed.arborescence.domain.NodeHospital;
+import fr.devsquad.minutemed.arborescence.domain.NodePole;
+import fr.devsquad.minutemed.arborescence.domain.NodeService;
 import java.util.*;
 
 /**

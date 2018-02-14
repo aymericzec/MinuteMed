@@ -1,4 +1,4 @@
-package fr.devsquad.minutemed.filters.rest;
+package fr.devsquad.minutemed.application.filter;
 
 import java.io.IOException;
 

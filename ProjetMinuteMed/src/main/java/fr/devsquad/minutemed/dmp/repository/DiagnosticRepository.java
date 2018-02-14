@@ -27,7 +27,7 @@ public class DiagnosticRepository {
 
     public Long save(Diagnostic diagnostic) {
         em.persist(diagnostic);
-        return diagnostic.getId();
+        return diagnostic.getIdDiagnostic();
     }
 
     public void update(Diagnostic diagnostic) {

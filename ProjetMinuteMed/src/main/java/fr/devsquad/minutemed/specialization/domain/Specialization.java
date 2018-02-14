@@ -1,25 +1,24 @@
 package fr.devsquad.minutemed.specialization.domain;
 
-import static fr.devsquad.minutemed.specialization.domain.Specialization.FIND_ALL_SPECIALIZATION;
 import java.io.Serializable;
-import javax.persistence.Column;
+import java.util.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
+import javax.validation.constraints.*;
 
 
 
 @Entity
-@NamedQuery(name = FIND_ALL_SPECIALIZATION, query = "SELECT spe FROM Specialization spe")
 public class Specialization implements Serializable {
-    
-    public static final String FIND_ALL_SPECIALIZATION = "Specialization.findAllSpecialization";
-    
+        
     @Id @GeneratedValue
-    @Column(name = "idSpecialization")
-    private long id;
+    private Long idSpecialization;
+    
+    @NotNull
     private String generalName;
+    
+    @NotNull
     private String staffName;
 
     
@@ -35,9 +34,7 @@ public class Specialization implements Serializable {
      * @param specialization the SpecializationEnum of the specialization
      */
     public Specialization(SpecializationEnum specialization) {
-        if(specialization==null){
-            throw new NullPointerException();
-        }
+        Objects.requireNonNull(specialization);
         this.generalName = specialization.getGeneralName();
         this.staffName = specialization.getStaffName();
     }
@@ -47,8 +44,8 @@ public class Specialization implements Serializable {
      * 
      * @return the id of this specialization
      */
-    public long getId() {
-        return id;
+    public long getIdSpecialization() {
+        return idSpecialization;
     }
     
     /**
@@ -89,6 +86,14 @@ public class Specialization implements Serializable {
             }
         }
         return false; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 11 * hash + Objects.hashCode(this.generalName);
+        hash = 11 * hash + Objects.hashCode(this.staffName);
+        return hash;
     }
 
 

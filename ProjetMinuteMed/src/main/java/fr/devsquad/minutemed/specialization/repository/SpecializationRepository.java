@@ -6,10 +6,9 @@
 package fr.devsquad.minutemed.specialization.repository;
 
 import fr.devsquad.minutemed.specialization.domain.Specialization;
-import java.util.List;
+import java.util.*;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.*;
 
 /**
  *
@@ -22,10 +21,19 @@ public class SpecializationRepository {
     private EntityManager em;
     
     public List<Specialization> listAllSpecializations(){
-        return em.createNamedQuery(Specialization.FIND_ALL_SPECIALIZATION, Specialization.class).getResultList();
+        return em.createQuery("SELECT spe FROM Specialization spe", Specialization.class).getResultList();
     }
     
     public Specialization findSpecialization(Long id){
         return em.find(Specialization.class, id);
     }
+    
+    public Specialization findByStaffName(String staffName){
+        Objects.requireNonNull(staffName);
+        TypedQuery<Specialization> qry = em.createQuery("SELECT s FROM Specialization s WHERE s.staffName = :staffName", Specialization.class);
+        List<Specialization> tmp = qry.setParameter("staffName", staffName).getResultList();
+        return tmp.isEmpty() ? null : tmp.get(0);
+    }
+    
+    
 }

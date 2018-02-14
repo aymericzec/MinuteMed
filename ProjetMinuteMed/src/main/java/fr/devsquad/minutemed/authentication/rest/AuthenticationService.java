@@ -5,10 +5,14 @@
  */
 package fr.devsquad.minutemed.authentication.rest;
 
+import fr.devsquad.minutemed.arborescence.domain.*;
 import fr.devsquad.minutemed.arborescence.repository.*;
-import fr.devsquad.minutemed.authentication.domain.DoctorCreator;
-import fr.devsquad.minutemed.authentication.domain.UserAccount;
+import fr.devsquad.minutemed.authentication.domain.*;
 import fr.devsquad.minutemed.authentication.repository.AuthenticationRepository;
+import fr.devsquad.minutemed.specialization.domain.*;
+import fr.devsquad.minutemed.specialization.repository.*;
+import fr.devsquad.minutemed.staff.domain.*;
+import fr.devsquad.minutemed.staff.domain.utils.*;
 import fr.devsquad.minutemed.staff.repository.StaffRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -42,12 +46,9 @@ public class AuthenticationService {
     @EJB
     private ArborescenceRepository arborescenceRepository;
     
-//    @EJB
-//    private SpecializationRepository specializationRepository;
+    @EJB
+    private SpecializationRepository specializationRepository;
     
-
-    @Context
-    private UriInfo uriInfo;
     
     @POST
     @Path("/login")
@@ -84,19 +85,51 @@ public class AuthenticationService {
     @ApiOperation(value = "Create a doctor account", response = UserAccount.class)
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "The User Account is created."),
-        @ApiResponse(code = 400, message = "Invalid input")}
+        @ApiResponse(code = 400, message = "Invalid input"),
+        @ApiResponse(code = 409, message = "Username conflict")}
     )
     @Path("/create/doctor")
-    public Response createDoctor(@NotNull DoctorCreator doctorCreator) throws IOException {
-/*
-        System.out.println("createDoctor");
-        UserAccount userAccount = authenticationRepository.saveDoctorAccount(doctorCreator);
-        NodeOld node = arborescenceRepository.findNode(doctorCreator.getTypeNode(), doctorCreator.getIdNode());
-        Specialization specialization = new Specialization(SpecializationEnum.Pediatrie);
-        Doctor doctor = Doctor.createFromDoctorCreator(userAccount.getIdAccount(), doctorCreator, node, specialization);
-        staffRepository.saveDoctor(doctor);
-        */
-        return Response.ok("{\"userAccount\":}").build();
+    public Response createDoctorAccount(@NotNull DoctorCreator doctorCreator) throws IOException {
+        if(authenticationRepository.usernameAlreadyExist(doctorCreator.getUsername())){
+            return Response.status(Response.Status.CONFLICT).entity("An account with this username already exist !").build();
+        }
+        Specialization specialization = specializationRepository.findByStaffName(doctorCreator.getSpecialization());
+        if(specialization == null){
+            return Response.status(Response.Status.BAD_REQUEST).entity("Invalid Node !").build();
+        }
+        Node node = arborescenceRepository.findNode(doctorCreator.getIdNode(), Node.class);
+        if(node == null){
+            return Response.status(Response.Status.BAD_REQUEST).entity("Invalid Node !").build();
+        }
+        Doctor doctor = MedicalStaffFactory.createDoctorFromCreator(doctorCreator, node, specialization);
+        Long doctorID = staffRepository.saveMedicalStaff(doctor);
+        UserAccount userAccount = authenticationRepository.saveDoctorAccount(doctorID, doctorCreator);
+
+        return Response.ok("{\"userAccount\": " + userAccount + "}").build();
+    }
+    
+    
+    @POST
+    @ApiOperation(value = "Create a nurse account", response = UserAccount.class)
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "The User Account is created."),
+        @ApiResponse(code = 400, message = "Invalid input"),
+        @ApiResponse(code = 409, message = "Username conflict")}
+    )
+    @Path("/create/nurse")
+    public Response createNurseAccount(@NotNull NurseCreator nurseCreator) throws IOException {
+        if(authenticationRepository.usernameAlreadyExist(nurseCreator.getUsername())){
+            return Response.status(Response.Status.CONFLICT).entity("An account with this username already exist !").build();
+        }
+        Node node = arborescenceRepository.findNode(nurseCreator.getIdNode(), Node.class);
+        if(node == null){
+            return Response.status(Response.Status.BAD_REQUEST).entity("Invalid Node !").build();
+        }
+        Nurse nurse = MedicalStaffFactory.createNurseFromCreator(nurseCreator, node);
+        Long nurseID = staffRepository.saveMedicalStaff(nurse);
+        UserAccount userAccount = authenticationRepository.saveNurseAccount(nurseID, nurseCreator);
+
+        return Response.ok("{\"userAccount\": " + userAccount + "}").build();
     }
     
     

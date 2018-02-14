@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 public class Node implements Serializable {
             
     @Id @GeneratedValue
-    private long idNode;
+    private Long idNode;
     
     @NotNull
     private String floor;

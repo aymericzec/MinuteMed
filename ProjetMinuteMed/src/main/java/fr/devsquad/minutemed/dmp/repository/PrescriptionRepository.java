@@ -27,7 +27,7 @@ public class PrescriptionRepository {
 
     public Long save(Prescription prescription) {
         em.persist(prescription);
-        return prescription.getId();
+        return prescription.getIdPrescription();
     }
 
     public void update(Prescription prescription) {
