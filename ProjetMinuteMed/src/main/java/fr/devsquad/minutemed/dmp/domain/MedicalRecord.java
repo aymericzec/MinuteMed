@@ -42,14 +42,14 @@ public class MedicalRecord implements Serializable {
     
     @NotNull
     @ManyToOne
-    private NodeHU hu;
+    private NodeCU cu;
 
     
     public MedicalRecord() {
 
     }
 
-    public MedicalRecord(String ss, String firstName, String lastName, String address, String email, String phoneNumber, String birthday, String gender, NodeHU hu) {
+    public MedicalRecord(String ss, String firstName, String lastName, String address, String email, String phoneNumber, String birthday, String gender, NodeCU cu) {
         this.ss = Objects.requireNonNull(ss);
         this.firstName = Objects.requireNonNull(firstName);
         this.lastName = Objects.requireNonNull(lastName);
@@ -58,7 +58,7 @@ public class MedicalRecord implements Serializable {
         this.phoneNumber = Objects.requireNonNull(phoneNumber);
         this.birthday = Objects.requireNonNull(birthday);
         this.gender = Objects.requireNonNull(gender);
-        this.hu = Objects.requireNonNull(hu);
+        this.cu = Objects.requireNonNull(cu);
     }
 
     public long getIdMedicalRecord() {
@@ -97,12 +97,12 @@ public class MedicalRecord implements Serializable {
         return email;
     }
     
-    public NodeHU getHU() {
-        return hu;
+    public NodeCU getCU() {
+        return cu;
     }
     
-    public void setHU(NodeHU hu) {
-        this.hu = Objects.requireNonNull(hu);
+    public void setCU(NodeCU cu) {
+        this.cu = Objects.requireNonNull(cu);
     } 
 
 }

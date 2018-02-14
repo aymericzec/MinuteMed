@@ -13,5 +13,5 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Target({TYPE, METHOD})
 public @interface JWTNeeded {  
-    StaffEnum[] groups();
+    StaffEnum[] groups() default StaffEnum.ALL;
 }

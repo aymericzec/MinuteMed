@@ -10,6 +10,6 @@ package fr.devsquad.minutemed.staff.domain;
  * @author enzo
  */
 public enum StaffEnum {
-    DATA_MANAGER, DOCTOR, NURSE,;
+    ALL, DATA_MANAGER, DOCTOR, NURSE,;
     
 }

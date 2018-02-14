@@ -9,7 +9,9 @@ import fr.devsquad.minutemed.arborescence.domain.*;
 import fr.devsquad.minutemed.arborescence.repository.*;
 import fr.devsquad.minutemed.authentication.domain.*;
 import fr.devsquad.minutemed.authentication.repository.AuthenticationRepository;
+import fr.devsquad.minutemed.jwt.filter.JWTNeeded;
 import fr.devsquad.minutemed.jwt.util.KeyGenerator;
+import fr.devsquad.minutemed.jwt.util.TokenUtils;
 import fr.devsquad.minutemed.specialization.domain.*;
 import fr.devsquad.minutemed.specialization.repository.*;
 import fr.devsquad.minutemed.staff.domain.*;
@@ -97,7 +99,7 @@ public class AuthenticationService {
                 throw new SecurityException("Invalid user/password");
             
             // Issue a token for the user
-            String token = issueToken(login, user.getIdAccount());
+            String token = TokenUtils.issueToken(keyGenerator, login, user.getIdAccount(), uriInfo.getAbsolutePath().toString());
 
             // Return the token on the response
             return Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
@@ -107,24 +109,7 @@ public class AuthenticationService {
         }
     }
 
-    private String issueToken(String login, Long id) {
-        Key key = keyGenerator.generateKey();
-        String jwtToken = Jwts.builder()
-                .setSubject(id.toString())
-                .setIssuer(uriInfo.getAbsolutePath().toString())
-                .setIssuedAt(new Date())
-                .setExpiration(toDate(LocalDateTime.now().plusMinutes(15L)))
-                .signWith(SignatureAlgorithm.HS512, key)
-                .compact();
-        logger.info("#### generating token for a key : " + jwtToken + " - " + key);
-        return jwtToken;
-
-    }
-    
-    private Date toDate(LocalDateTime localDateTime) {
-        return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
-    }
-    
+    //TODO: A voir si besoin en back !
     @POST
     @ApiOperation(value = "logout to the application")
     @ApiResponses(value = {
@@ -169,6 +154,7 @@ public class AuthenticationService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 409, message = "Username conflict")}
     )
+    @JWTNeeded(groups = {StaffEnum.DATA_MANAGER})
     @Path("/create/datamanager")
     public Response createDataManagerAccount(@NotNull DataManagerCreator dataManagerCreator) throws IOException {
         if(authenticationRepository.usernameAlreadyExist(dataManagerCreator.getUsername())){
@@ -192,6 +178,7 @@ public class AuthenticationService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 409, message = "Username conflict")}
     )
+    @JWTNeeded(groups = {StaffEnum.DATA_MANAGER})
     @Path("/create/doctor")
     public Response createDoctorAccount(@NotNull DoctorCreator doctorCreator) throws IOException {
         if(authenticationRepository.usernameAlreadyExist(doctorCreator.getUsername())){
@@ -220,6 +207,7 @@ public class AuthenticationService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 409, message = "Username conflict")}
     )
+    @JWTNeeded(groups = {StaffEnum.DATA_MANAGER})
     @Path("/create/nurse")
     public Response createNurseAccount(@NotNull NurseCreator nurseCreator) throws IOException {
         if(authenticationRepository.usernameAlreadyExist(nurseCreator.getUsername())){
@@ -243,6 +231,7 @@ public class AuthenticationService {
         @ApiResponse(code = 201, message = "The User Account is deleted."),
         @ApiResponse(code = 400, message = "Invalid input")}
     )
+    @JWTNeeded(groups = {StaffEnum.DATA_MANAGER})
     @Path("/delete/{idAccount}")
     public Response deleteUser(@PathParam("idAccount") Long idAccount) throws IOException {
         System.out.println("DELETE user");
@@ -256,6 +245,7 @@ public class AuthenticationService {
         @ApiResponse(code = 201, message = "All the user account."),
         @ApiResponse(code = 404, message = "Invalid input")}
     )
+    @JWTNeeded(groups = {StaffEnum.DATA_MANAGER})
     public Response findAllUsers() {
         
         List<UserAccount> allUsers = authenticationRepository.findAllUsers();

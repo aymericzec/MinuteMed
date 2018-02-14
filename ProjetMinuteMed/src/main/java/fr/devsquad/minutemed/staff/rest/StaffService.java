@@ -5,6 +5,7 @@
  */
 package fr.devsquad.minutemed.staff.rest;
 
+import fr.devsquad.minutemed.jwt.filter.JWTNeeded;
 import fr.devsquad.minutemed.staff.domain.*;
 import fr.devsquad.minutemed.staff.repository.StaffRepository;
 import io.swagger.annotations.Api;
@@ -43,6 +44,9 @@ public class StaffService {
     /// DELETE ///
     /////////////
     
+    //TODO:  A BOUGER DANS ABRBORESCENCE
+    
+    
     @DELETE
     @Path("/doctors/{idDoctor}")
     @ApiOperation(value = "Delete a Doctor.")
@@ -51,6 +55,7 @@ public class StaffService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Doctor not found")}
     )
+    @JWTNeeded(groups = {StaffEnum.DATA_MANAGER})
     public Response deleteDoctor(@PathParam("idDoctor") Long idDoctor) {
         System.out.println("DELETE deleteDoctor("+idDoctor+")");
         
@@ -66,6 +71,7 @@ public class StaffService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Nurse not found")}
     )
+    @JWTNeeded(groups = {StaffEnum.DATA_MANAGER})
     public Response deleteNurse(@PathParam("idNurse") Long idNurse) {
         System.out.println("DELETE deleteNurse("+idNurse+")");
         
@@ -73,39 +79,6 @@ public class StaffService {
         return Response.ok("{\"idNurse\":"+idNurse+"}").build();
     }
     
-    ///////////////
-    //// POST ////
-    /////////////
-    
-    @POST
-    @Path("/doctors")
-    @ApiOperation(value = "Create a Doctor")
-    @ApiResponses(value = {
-        @ApiResponse(code = 201, message = "The Doctor is created !"),
-        @ApiResponse(code = 400, message = "Invalid input"),
-        @ApiResponse(code = 404, message = "Doctor already exists")}
-    )
-    public Response createDoctor(@NotNull Doctor doctor) {
-        System.out.println("POST createNurse("+doctor+")");
-        
-        repository.saveMedicalStaff(doctor);
-        return Response.ok("{\"firstName\":"+doctor.getFirstName()+"}").build();
-    }
-    
-    @POST
-    @Path("/nurses")
-    @ApiOperation(value = "Create a Nurse")
-    @ApiResponses(value = {
-        @ApiResponse(code = 201, message = "The Nurse is created !"),
-        @ApiResponse(code = 400, message = "Invalid input"),
-        @ApiResponse(code = 404, message = "Nurse already exists")}
-    )
-    public Response createNurse(@NotNull Nurse nurse) {
-        System.out.println("POST createNurse("+nurse+")");
-        
-        repository.saveMedicalStaff(nurse);
-        return Response.ok("{\"firstName\":"+nurse.getFirstName()+"}").build();
-    }
     
     //////////////
     //// GET ////
@@ -116,6 +89,7 @@ public class StaffService {
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "All Staff Hospital are returned.")}
     )
+    @JWTNeeded(groups = {StaffEnum.DATA_MANAGER})
     public Response getAllStaffs() {
         System.out.println("GET getALLStaffs()");
         
@@ -131,6 +105,7 @@ public class StaffService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "DataManager not exists")}
     )
+    @JWTNeeded(groups = {StaffEnum.DATA_MANAGER})
     public Response getDatamanager(@PathParam("idDataManager") Long idDataManager) {
         System.out.println("GET getDatamanager("+idDataManager+")");
         
@@ -144,6 +119,7 @@ public class StaffService {
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "All Doctors are returned.")}
     )
+    @JWTNeeded(groups = {StaffEnum.DATA_MANAGER})
     public Response getAllDoctors() {
         System.out.println("GET getAllDoctors()");
         
@@ -159,6 +135,7 @@ public class StaffService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Doctor not exists")}
     )
+    @JWTNeeded(groups = {StaffEnum.DATA_MANAGER, StaffEnum.DOCTOR})
     public Response getDoctor(@PathParam("idDoctor") Long idDoctor) {
         System.out.println("GET getDoctor("+idDoctor+")");
         
@@ -172,6 +149,7 @@ public class StaffService {
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "All Nurses are returned.")}
     )
+    @JWTNeeded(groups = {StaffEnum.DATA_MANAGER})
     public Response getAllNurses() {
         System.out.println("GET getAllNurses()");
         
@@ -187,6 +165,7 @@ public class StaffService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Nurse not exists")}
     )
+    @JWTNeeded(groups = {StaffEnum.DATA_MANAGER, StaffEnum.NURSE})
     public Response getNurse(@PathParam("idNurse") Long idNurse) {
         System.out.println("GET getNurse("+idNurse+")");
         

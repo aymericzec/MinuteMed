@@ -7,7 +7,6 @@ package fr.devsquad.minutemed.specialization.rest;
 
 import fr.devsquad.minutemed.specialization.domain.*;
 import fr.devsquad.minutemed.specialization.repository.*;
-import fr.devsquad.minutemed.staff.domain.*;
 import io.swagger.annotations.*;
 import java.util.*;
 import javax.ejb.*;
