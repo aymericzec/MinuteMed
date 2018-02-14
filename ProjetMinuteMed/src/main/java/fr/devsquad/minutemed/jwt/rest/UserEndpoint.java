@@ -73,7 +73,7 @@ public class UserEndpoint {
             authenticate(login, password);
 
             // Issue a token for the user
-            String token = issueToken(login, "test");
+            String token = issueToken(login);
 
             // Return the token on the response
             return Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
@@ -93,17 +93,14 @@ public class UserEndpoint {
             throw new SecurityException("Invalid user/password");
     }
 
-    private String issueToken(String login, String group) {
+    private String issueToken(String login) {
         Key key = keyGenerator.generateKey();
-        
-        
         String jwtToken = Jwts.builder()
                 .setSubject(login)
                 .setIssuer(uriInfo.getAbsolutePath().toString())
                 .setIssuedAt(new Date())
                 .setExpiration(toDate(LocalDateTime.now().plusMinutes(15L)))
                 .signWith(SignatureAlgorithm.HS512, key)
-                .claim("group", group)
                 .compact();
         logger.info("#### generating token for a key : " + jwtToken + " - " + key);
         return jwtToken;
