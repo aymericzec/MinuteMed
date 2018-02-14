@@ -3,6 +3,7 @@ package fr.devsquad.minutemed.jwt.filter;
 import fr.devsquad.minutemed.authentication.domain.UserAccount;
 import fr.devsquad.minutemed.authentication.repository.AuthenticationRepository;
 import fr.devsquad.minutemed.jwt.util.KeyGenerator;
+import fr.devsquad.minutemed.staff.domain.StaffEnum;
 import io.jsonwebtoken.Jwts;
 
 
@@ -113,7 +114,7 @@ public class JWTFilter implements ContainerRequestFilter {
                 throw new Exception(); 
             }
             //test the role of the user
-            if (!groups.contains(user.getType())) {
+            if (!groups.contains(user.getType()) && !groups.contains(StaffEnum.ALL.name())) {
                 throw new Exception(); 
             }
 
