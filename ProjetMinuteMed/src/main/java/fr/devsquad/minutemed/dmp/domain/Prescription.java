@@ -3,14 +3,9 @@ package fr.devsquad.minutemed.dmp.domain;
 import static fr.devsquad.minutemed.dmp.domain.Prescription.FIND_ALL_PRESCRIPTION;
 import fr.devsquad.minutemed.staff.domain.Doctor;
 import java.io.Serializable;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import java.util.*;
+import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 @NamedQuery(name = FIND_ALL_PRESCRIPTION, query = "SELECT u FROM Prescription u")
@@ -19,37 +14,46 @@ public class Prescription implements Serializable {
     public static final String FIND_ALL_PRESCRIPTION = "Diagnostic.findAllPrescription";
     
     @Id @GeneratedValue
-    @Column(name = "idPrescription")
-    private long id;
-    private String title;
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "idDoctor")
+    private long idPrescription;
+    
+    @NotNull
+    @ManyToOne
     private Doctor prescriptor;
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "idMedicalRecord")
+    
+    @NotNull
+    @ManyToOne
     private MedicalRecord medicalRecord;
-    private String consultDate;
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "idDiagnostic")
+    
+    @ManyToOne
     private Diagnostic diagnostic;
-    private String prescription;
+    
+    @NotNull
+    private String title;
+    
+    @NotNull
+    private String creationDate;
+
+    @NotNull
+    private String body;
+    
+    @NotNull
     private boolean draft;
 
     
     public Prescription() { }
     
-    public Prescription(String title, Doctor prescriptor, MedicalRecord medicalRecord, String consultDate, Diagnostic diagnostic, String prescription) {
-        this.title = title;
-        this.prescriptor = prescriptor;
-        this.medicalRecord = medicalRecord;
-        this.consultDate = consultDate;
-        this.diagnostic = diagnostic;
-        this.prescription = prescription;
+    public Prescription(String title, Doctor prescriptor, MedicalRecord medicalRecord, String creationDate, Diagnostic diagnostic, String body) {
+        this.title = Objects.requireNonNull(title);
+        this.prescriptor = Objects.requireNonNull(prescriptor);
+        this.medicalRecord = Objects.requireNonNull(medicalRecord);
+        this.creationDate = Objects.requireNonNull(creationDate);
+        this.diagnostic = Objects.requireNonNull(diagnostic);
+        this.body = Objects.requireNonNull(body);
         this.draft = true;
     }
 
-    public long getId() {
-        return id;
+    public long getIdPrescription() {
+        return idPrescription;
     }
 
     public String getTitle() {
@@ -64,23 +68,23 @@ public class Prescription implements Serializable {
         return medicalRecord;
     }
 
-    public String getConsultDate() {
-        return consultDate;
+    public String getCreationDate() {
+        return creationDate;
     }
 
     public Diagnostic getDiagnostic() {
         return diagnostic;
     }
 
-    public String getPrescription() {
-        return prescription;
+    public String getBody() {
+        return body;
     }
 
-    public boolean getDraft() {
+    public boolean isDraft() {
         return draft;
     }
     
-    public void setDraft(boolean draft) {
-        this.draft = draft;
+    public void setDraft() {
+        this.draft = false;
     }
 }

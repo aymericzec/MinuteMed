@@ -4,14 +4,8 @@ import fr.devsquad.minutemed.arborescence.domain.*;
 import static fr.devsquad.minutemed.dmp.domain.MedicalRecord.FIND_ALL_MEDICAL_RECORD;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 @NamedQuery(name = FIND_ALL_MEDICAL_RECORD, query = "SELECT u FROM MedicalRecord u")
@@ -19,27 +13,43 @@ public class MedicalRecord implements Serializable {
     
     public static final String FIND_ALL_MEDICAL_RECORD = "MedicalRecord.findAllMedicalRecord";
     
-    @Id
-    @GeneratedValue
-    @Column(name = "idMedicalRecord")
-    private long id;
+    @Id @GeneratedValue
+    private long idMedicalRecord;
+    
+    @NotNull
     private String ss;
+    
+    @NotNull
     private String firstName;
+    
+    @NotNull
     private String lastName;
+    
+    @NotNull
     private String address;
+    
+    @NotNull
     private String birthday;
+    
+    @NotNull
     private String gender;
+    
+    @NotNull
     private String phoneNumber;
+    
+    @NotNull
     private String email;
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "idHu")
-    private NodeHU hu;
+    
+    @NotNull
+    @ManyToOne
+    private NodeCU cu;
 
+    
     public MedicalRecord() {
 
     }
 
-    public MedicalRecord(String ss, String firstName, String lastName, String address, String email, String phoneNumber, String birthday, String gender, NodeHU hu) {
+    public MedicalRecord(String ss, String firstName, String lastName, String address, String email, String phoneNumber, String birthday, String gender, NodeCU cu) {
         this.ss = Objects.requireNonNull(ss);
         this.firstName = Objects.requireNonNull(firstName);
         this.lastName = Objects.requireNonNull(lastName);
@@ -48,11 +58,11 @@ public class MedicalRecord implements Serializable {
         this.phoneNumber = Objects.requireNonNull(phoneNumber);
         this.birthday = Objects.requireNonNull(birthday);
         this.gender = Objects.requireNonNull(gender);
-        this.hu = Objects.requireNonNull(hu);
+        this.cu = Objects.requireNonNull(cu);
     }
 
-    public long getId() {
-        return id;
+    public long getIdMedicalRecord() {
+        return idMedicalRecord;
     }
 
     public String getSs() {
@@ -87,12 +97,12 @@ public class MedicalRecord implements Serializable {
         return email;
     }
     
-    public NodeHU getHU() {
-        return hu;
+    public NodeCU getCU() {
+        return cu;
     }
     
-    public void setHU(NodeHU hu) {
-        this.hu = hu;
+    public void setCU(NodeCU cu) {
+        this.cu = Objects.requireNonNull(cu);
     } 
 
 }

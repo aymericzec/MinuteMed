@@ -1,26 +1,32 @@
 package fr.devsquad.minutemed.authentication.domain;
 
-import com.google.common.hash.Hashing;
-import static fr.devsquad.minutemed.authentication.domain.UserAccount.FIND_ALL_USER_ACCOUNT;
+import fr.devsquad.minutemed.jwt.util.PasswordUtils;
 import fr.devsquad.minutemed.staff.domain.StaffEnum;
 import java.io.Serializable;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@NamedQuery(name = FIND_ALL_USER_ACCOUNT, query = "SELECT u FROM UserAccount u")
+@NamedQueries({
+        @NamedQuery(name = UserAccount.FIND_ALL_USER, query = "SELECT u FROM UserAccount u"),
+        @NamedQuery(name = UserAccount.FIND_USER_BY_USERNAME, query = "SELECT u FROM UserAccount u WHERE u.username = :username"),
+})
 public class UserAccount implements Serializable {
     
-    public static final String FIND_ALL_USER_ACCOUNT = "UserAccount.findAllUserAccounts";
+    
+    // ======================================
+    // =             Constants              =
+    // ======================================
 
+    public static final String FIND_ALL_USER = "UserAccount.findAll";
+    public static final String FIND_USER_BY_USERNAME = "UserAccount.findUSerByUsername";
+    
     @Id
-    @GeneratedValue
-    private long idAccount;
+    private Long idAccount; //id of the medicalStaff associated
     
     @NotNull
     private String username;
@@ -34,13 +40,14 @@ public class UserAccount implements Serializable {
     public UserAccount() {
     }
 
-    public UserAccount(String username, String password, StaffEnum type) {
+    public UserAccount(Long idAccount, String username, String password, StaffEnum type) {
+        this.idAccount = Objects.requireNonNull(idAccount);
         this.username = Objects.requireNonNull(username);
-        this.password = Hashing.sha256().hashString(Objects.requireNonNull(password), StandardCharsets.UTF_8).toString();
+        this.password = PasswordUtils.digestPassword(Objects.requireNonNull(password));
         this.type = Objects.requireNonNull(type).name();
     }
 
-    public long getIdAccount() {
+    public Long getIdAccount() {
         return idAccount;
     }
 
@@ -57,34 +64,12 @@ public class UserAccount implements Serializable {
     }
 
     public void setPassword(String newPassword) {
-        password = Objects.requireNonNull(newPassword);
+        password = PasswordUtils.digestPassword(Objects.requireNonNull(newPassword));
     }
     
     public void setType(StaffEnum type){
         this.type = Objects.requireNonNull(type).name();
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof UserAccount)) {
-            return false;
-        }
-        UserAccount otherAccount = (UserAccount) obj;
-        return (otherAccount.getIdAccount() == idAccount
-                && otherAccount.getUsername().equals(username)
-                && otherAccount.getPassword().equals(password));
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 17;
-        hash += idAccount * 31;
-        hash += username.hashCode() * 33;
-        hash += password.hashCode() * 32;
-        return hash;
-    }
 
 }

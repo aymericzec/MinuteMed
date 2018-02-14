@@ -1,0 +1,438 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Gives all the details of the medical staff api",
+    "version" : "1.0.0",
+    "title" : "MedicalStaffAPI"
+  },
+  "host" : "localhost:8080",
+  "basePath" : "/api",
+  "tags" : [ {
+    "name" : "Staff REST Endpoint"
+  } ],
+  "schemes" : [ "http", "https" ],
+  "paths" : {
+    "/staffs" : {
+      "get" : {
+        "tags" : [ "Staff REST Endpoint" ],
+        "summary" : "Get all staff.",
+        "description" : "",
+        "operationId" : "getAllStaffs",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/MedicalStaff"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All Staff Hospital are returned."
+          }
+        }
+      }
+    },
+    "/staffs/dataManagers/{idDataManager}" : {
+      "get" : {
+        "tags" : [ "Staff REST Endpoint" ],
+        "summary" : "Get a DataManager.",
+        "description" : "",
+        "operationId" : "getDatamanager",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idDataManager",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DataManager"
+            }
+          },
+          "201" : {
+            "description" : "The DataManager is returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "DataManager not exists"
+          }
+        }
+      }
+    },
+    "/staffs/doctors" : {
+      "get" : {
+        "tags" : [ "Staff REST Endpoint" ],
+        "summary" : "Get all doctor.",
+        "description" : "",
+        "operationId" : "getAllDoctors",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Doctor"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All Doctors are returned."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Staff REST Endpoint" ],
+        "summary" : "Create a Doctor",
+        "description" : "",
+        "operationId" : "createDoctor",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "201" : {
+            "description" : "The Doctor is created !"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Doctor already exists"
+          }
+        }
+      }
+    },
+    "/staffs/doctors/{idDoctor}" : {
+      "get" : {
+        "tags" : [ "Staff REST Endpoint" ],
+        "summary" : "Get a doctor.",
+        "description" : "",
+        "operationId" : "getDoctor",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idDoctor",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Doctor"
+            }
+          },
+          "201" : {
+            "description" : "The Doctor is returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Doctor not exists"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Staff REST Endpoint" ],
+        "summary" : "Delete a Doctor.",
+        "description" : "",
+        "operationId" : "deleteDoctor",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idDoctor",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The Doctor is deleted"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Doctor not found"
+          }
+        }
+      }
+    },
+    "/staffs/nurses" : {
+      "get" : {
+        "tags" : [ "Staff REST Endpoint" ],
+        "summary" : "Get all nurses.",
+        "description" : "",
+        "operationId" : "getAllNurses",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Nurse"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All Nurses are returned."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Staff REST Endpoint" ],
+        "summary" : "Create a Nurse",
+        "description" : "",
+        "operationId" : "createNurse",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "201" : {
+            "description" : "The Nurse is created !"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Nurse already exists"
+          }
+        }
+      }
+    },
+    "/staffs/nurses/{idNurse}" : {
+      "get" : {
+        "tags" : [ "Staff REST Endpoint" ],
+        "summary" : "Get a nurse.",
+        "description" : "",
+        "operationId" : "getNurse",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idNurse",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Nurse"
+            }
+          },
+          "201" : {
+            "description" : "The Nurse is returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Nurse not exists"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Staff REST Endpoint" ],
+        "summary" : "Delete a Nurse.",
+        "description" : "",
+        "operationId" : "deleteNurse",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idNurse",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The Nurse is deleted"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Nurse not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "DataManager" : {
+      "type" : "object",
+      "required" : [ "address", "email", "firstName", "lastName", "node", "phoneNumber", "status" ],
+      "properties" : {
+        "idMedicalStaff" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "status" : {
+          "type" : "string"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "address" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "phoneNumber" : {
+          "type" : "string"
+        },
+        "node" : {
+          "$ref" : "#/definitions/Node"
+        }
+      }
+    },
+    "Doctor" : {
+      "type" : "object",
+      "required" : [ "address", "email", "firstName", "lastName", "node", "phoneNumber", "specialization", "status" ],
+      "properties" : {
+        "idMedicalStaff" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "status" : {
+          "type" : "string"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "address" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "phoneNumber" : {
+          "type" : "string"
+        },
+        "node" : {
+          "$ref" : "#/definitions/Node"
+        },
+        "specialization" : {
+          "$ref" : "#/definitions/Specialization"
+        }
+      }
+    },
+    "MedicalStaff" : {
+      "type" : "object",
+      "required" : [ "address", "email", "firstName", "lastName", "node", "phoneNumber", "status" ],
+      "properties" : {
+        "idMedicalStaff" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "status" : {
+          "type" : "string"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "address" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "phoneNumber" : {
+          "type" : "string"
+        },
+        "node" : {
+          "$ref" : "#/definitions/Node"
+        }
+      }
+    },
+    "Node" : {
+      "type" : "object",
+      "required" : [ "floor" ],
+      "properties" : {
+        "idNode" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "floor" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Nurse" : {
+      "type" : "object",
+      "required" : [ "address", "email", "firstName", "lastName", "node", "phoneNumber", "status" ],
+      "properties" : {
+        "idMedicalStaff" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "status" : {
+          "type" : "string"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "address" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "phoneNumber" : {
+          "type" : "string"
+        },
+        "node" : {
+          "$ref" : "#/definitions/Node"
+        }
+      }
+    },
+    "Specialization" : {
+      "type" : "object",
+      "required" : [ "generalName", "staffName" ],
+      "properties" : {
+        "idSpecialization" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "generalName" : {
+          "type" : "string"
+        },
+        "staffName" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}

@@ -12,6 +12,8 @@ import fr.devsquad.minutemed.dmp.repository.MedicalRecordRepository;
 import fr.devsquad.minutemed.dmp.repository.PrescriptionRepository;
 import fr.devsquad.minutemed.dmp.repository.ReportDosageRepository;
 import fr.devsquad.minutemed.dmp.repository.ResultExamRepository;
+import fr.devsquad.minutemed.jwt.filter.JWTNeeded;
+import fr.devsquad.minutemed.staff.domain.StaffEnum;
 import io.swagger.annotations.*;
 import java.util.*;
 import javax.ejb.EJB;
@@ -55,6 +57,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 201, message = "The Medical Record is created !"),
         @ApiResponse(code = 400, message = "Invalid input")}
     )
+    @JWTNeeded(groups = {StaffEnum.DOCTOR})
     public Response createMedicalRecord(@NotNull MedicalRecord medicalRecord) {
         Long id = medicalRecordRepository.save(medicalRecord);
         return Response.ok("{\"idMedicalRecord\":"+ id +"}").build();
@@ -67,6 +70,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 201, message = "The Exam is created !"),
         @ApiResponse(code = 400, message = "Invalid input")}
     )
+    @JWTNeeded(groups = {StaffEnum.DOCTOR})
     public Response createExam(@NotNull Exam exam) {
         Long id = examRepository.save(exam);
         return Response.ok("{\"idExam\":"+ id +"}").build();
@@ -79,6 +83,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 201, message = "The Diagnostic is created !"),
         @ApiResponse(code = 400, message = "Invalid input")}
     )
+    @JWTNeeded(groups = {StaffEnum.DOCTOR})
     public Response createDiagnostic(@NotNull Diagnostic diagnostic) {
         Long id = diagnosticRepository.save(diagnostic);
         return Response.ok("{\"idDiagnostic\":"+ id +"}").build();
@@ -91,6 +96,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 201, message = "The Prescription is created !"),
         @ApiResponse(code = 400, message = "Invalid input")}
     )
+    @JWTNeeded(groups = {StaffEnum.DOCTOR})
     public Response createPrescription(@NotNull Prescription prescription) {
         Long id = prescriptionRepository.save(prescription);
         return Response.ok("{\"idPrescription\":"+ id +"}").build();
@@ -103,6 +109,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 201, message = "The Dosage is created !"),
         @ApiResponse(code = 400, message = "Invalid input")}
     )
+    @JWTNeeded(groups = {StaffEnum.DOCTOR})
     public Response createDosage(@NotNull Dosage dosage) {
         Long id = dosageRepository.save(dosage);
         return Response.ok("{\"idDosage\":"+ id +"}").build();
@@ -113,6 +120,8 @@ public class MedicalRecordService {
     //// DELETE
     /////////////////////////
     
+    //TODO: surement à supprimer
+    
     @DELETE
     @Path("{idRecord}")
     @ApiOperation(value = "Delete a Medical Record.")
@@ -121,6 +130,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Medical Record not found")}
     )
+    @JWTNeeded(groups = {StaffEnum.DOCTOR})
     public Response deleteMedicalRecord(@PathParam("idRecord") Long idRecord) {
         medicalRecordRepository.delete(idRecord);
         return Response.ok("{\"idRecord\":"+idRecord+"}").build();
@@ -134,6 +144,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Exam not found")}
     )
+    @JWTNeeded(groups = {StaffEnum.DOCTOR})
     public Response deleteExam(@PathParam("idRecord") Long idRecord, @PathParam("idExam") Long idExam) {
         examRepository.delete(idExam);
         return Response.ok("{\"idRecord\":"+idRecord+", \"idExam\":"+idExam+" }").build();
@@ -147,6 +158,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Diagnostic not found")}
     )
+    @JWTNeeded(groups = {StaffEnum.DOCTOR})
     public Response deleteDiagnostic(@PathParam("idRecord") Long idRecord, @PathParam("idDiagnostic") Long idDiagnostic) {
         diagnosticRepository.delete(idDiagnostic);
         return Response.ok("{\"idRecord\":"+idRecord+", \"idDiagnostic\":"+idDiagnostic+" }").build();
@@ -160,6 +172,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Prescription not found")}
     )
+    @JWTNeeded(groups = {StaffEnum.DOCTOR})
     public Response deletePrescription(@PathParam("idRecord") Long idRecord, @PathParam("idPrescription") Long idPrescription) {
         prescriptionRepository.delete(idPrescription);
         return Response.ok("{\"idRecord\":"+idRecord+", \"idPrescription\":"+idPrescription+" }").build();
@@ -173,6 +186,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Dosage not found")}
     )
+    @JWTNeeded(groups = {StaffEnum.DOCTOR})
     public Response deleteDosage(@PathParam("idRecord") Long idRecord, @PathParam("idDosage") Long idDosage) {
         dosageRepository.delete(idDosage);
         return Response.ok("{\"idRecord\":"+idRecord+", \"idDosage\":"+idDosage+" }").build();
@@ -191,6 +205,7 @@ public class MedicalRecordService {
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "All the Medical Records are returned.")}
     )
+    @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
     public Response getAllMedicalRecord() {
         List<MedicalRecord> medicalRecords = medicalRecordRepository.list();
         return Response.ok(medicalRecords).build();
@@ -204,6 +219,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Medical Record not found")}
     )
+    @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
     public Response getMedicalRecord(@PathParam("idRecord") Long idRecord) {
         MedicalRecord m = medicalRecordRepository.find(idRecord);
         return Response.ok(m).build();
@@ -217,6 +233,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Medical Record not found")}
     )
+    @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
     public Response getExams(@PathParam("idRecord") Long idRecord) {
         List<Exam> exams = examRepository.list(idRecord);
         return Response.ok(exams).build();
@@ -230,6 +247,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Medical Record or Exam not found")}
     )
+    @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
     public Response getExam(@PathParam("idExam") Long idExam) {
         Exam exam = examRepository.find(idExam);
         return Response.ok(exam).build();
@@ -243,6 +261,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Medical Record not found")}
     )
+    @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
     public Response getDiagnostics(@PathParam("idRecord") Long idRecord) {
         List<Diagnostic> diagnostics = diagnosticRepository.list(idRecord);
         return Response.ok(diagnostics).build();
@@ -270,6 +289,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Medical Record not found")}
     )
+    @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
     public Response getPrescriptions(@PathParam("idRecord") Long idRecord) {
         List<Prescription> prescriptions = prescriptionRepository.list(idRecord);
         return Response.ok(prescriptions).build();
@@ -283,6 +303,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Medical Record or Prescription not found")}
     )
+    @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
     public Response getPrescription(@PathParam("idPrescription") Long idPrescription) {
         Prescription prescription = prescriptionRepository.find(idPrescription);
         return Response.ok(prescription).build();
@@ -296,6 +317,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Medical Record not found")}
     )
+    @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
     public Response getAllDosages(@PathParam("idRecord") Long idRecord) {
         List<Dosage> dosages = dosageRepository.list(idRecord);
         return Response.ok(dosages).build();
@@ -309,25 +331,10 @@ public class MedicalRecordService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Medical Record or Dosage not found")}
     ) 
+    @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
     public Response getDosage(@PathParam("idDosage") Long idDosage) {
         Dosage dosage = dosageRepository.find(idDosage);
         return Response.ok(dosage).build();
-    }
-        
-    /* exemple de Json à passer dans le post 
-   
-    {
-        "ss":"194061202154",
-        "firstName":"Aymeric",
-        "lastName":"Zecchini",
-        "address":"9 rue des Lilas",
-        "birthday":"02/03/94",
-        "gender":"M",
-        "phoneNumber":"0770138334",
-        "email":"zec@gmail.com"
-    }
-    
-    mettre en header => content-type : /application/json
-    */    
+    }  
 
 }

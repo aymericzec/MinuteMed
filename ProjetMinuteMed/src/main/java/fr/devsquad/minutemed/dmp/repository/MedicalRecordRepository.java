@@ -28,7 +28,7 @@ public class MedicalRecordRepository {
 
     public Long save(MedicalRecord medicalRecord) {
         em.persist(medicalRecord);
-        return medicalRecord.getId();
+        return medicalRecord.getIdMedicalRecord();
     }
 
     public void update(MedicalRecord medicalRecord) {

@@ -4,75 +4,79 @@ import static fr.devsquad.minutemed.dmp.domain.Diagnostic.FIND_ALL_DIAGNOSTIC;
 import fr.devsquad.minutemed.staff.domain.Doctor;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
-@NamedQuery(name = FIND_ALL_DIAGNOSTIC, query = "SELECT u FROM Diagnostic u")
+@NamedQuery(name = FIND_ALL_DIAGNOSTIC, query = "SELECT d FROM Diagnostic d")
 public class Diagnostic implements Serializable {
 
     public static final String FIND_ALL_DIAGNOSTIC = "Diagnostic.findAllDiagnostic";
     
     @Id @GeneratedValue
-    @Column(name = "idDiagnostic")
-    private long id;
-    private String title;
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "idDoctor")
-    private Doctor diagnosticDoctor;
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "idMedicalRecord")
+    private Long idDiagnostic;
+    
+    @NotNull
+    @ManyToOne
+    private Doctor creator;
+    
+    @NotNull
+    @ManyToOne
     private MedicalRecord medicalRecord;
-    private String consultDiagnostic;
-    private String description;
+    
+    @NotNull
+    private String title;
+    
+    @NotNull
+    private String creationDate;
+    
+    @NotNull
+    private String body;
+    
+    @NotNull
     private boolean draft;
+    
     
     public Diagnostic() { }
     
-    public Diagnostic(String title, Doctor diagnosticDoctor, MedicalRecord medicalRecord, String consultDiagnostic, String description) {
+    public Diagnostic(String title, Doctor creator, MedicalRecord medicalRecord, String creationDate, String body) {
         this.title = Objects.requireNonNull(title);
-        this.description = Objects.requireNonNull(description);
-        this.diagnosticDoctor = Objects.requireNonNull(diagnosticDoctor);
-        this.medicalRecord = Objects.requireNonNull(medicalRecord);
+        this.body = Objects.requireNonNull(body);
+        this.creator = Objects.requireNonNull(creator);
+        this.creationDate = Objects.requireNonNull(creationDate);
         this.medicalRecord = Objects.requireNonNull(medicalRecord);
         this.draft = true;
     }
     
-    public long getId() {
-        return id;
+    public Long getIdDiagnostic() {
+        return idDiagnostic;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public String getConsultDiagnostic() {
-        return consultDiagnostic;
+    public String getCreationDate() {
+        return creationDate;
     }
 
-    public Doctor getDiagnostic() {
-        return diagnosticDoctor;
+    public Doctor getCreator() {
+        return creator;
     }
 
     public MedicalRecord getMedicalRecord() {
         return medicalRecord;
     }
 
-    public String getDescription() {
-        return description;
+    public String getBody() {
+        return body;
     }  
     
-    public boolean getDraft() {
+    public boolean isDraft() {
         return draft;
     }
     
-    public void setDraft(boolean draft) {
-        this.draft = draft;
+    public void setDraft() {
+        this.draft = false;
     }
 }

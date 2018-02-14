@@ -2,6 +2,8 @@ package fr.devsquad.minutemed.arborescence.rest;
 
 import fr.devsquad.minutemed.arborescence.domain.*;
 import fr.devsquad.minutemed.arborescence.repository.*;
+import fr.devsquad.minutemed.jwt.filter.JWTNeeded;
+import fr.devsquad.minutemed.staff.domain.StaffEnum;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -21,6 +23,7 @@ import javax.ws.rs.core.Response;
 @Path("/nodes")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@JWTNeeded(groups = {StaffEnum.DATA_MANAGER})
 @Api("Arborescence REST Endpoint")
 public class ArborescenceService {
     

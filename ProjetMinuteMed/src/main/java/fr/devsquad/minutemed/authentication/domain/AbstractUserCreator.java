@@ -23,12 +23,12 @@ abstract class AbstractUserCreator implements Serializable{
     public String email;
     public String phoneNumber;
     public long idNode;
-    public String typeNode;
+
     
     public AbstractUserCreator(){}
     
     public AbstractUserCreator(String type, String username, String password, String firstName, String lastName,
-            String address, String email, String phoneNumber, String typeNode, long idNode) {
+            String address, String email, String phoneNumber, long idNode) {
         this.username = Objects.requireNonNull(username);
         this.password = Objects.requireNonNull(password);
         this.type = Objects.requireNonNull(type);
@@ -38,7 +38,6 @@ abstract class AbstractUserCreator implements Serializable{
         this.email = Objects.requireNonNull(email);
         this.phoneNumber = Objects.requireNonNull(phoneNumber);
         this.idNode = idNode;
-        this.typeNode = Objects.requireNonNull(typeNode);
     }
 
     public String getAddress() {
@@ -162,20 +161,6 @@ abstract class AbstractUserCreator implements Serializable{
      */
     public void setIdNode(long idNode) {
         this.idNode = idNode;
-    }
-
-    /**
-     * @return the typeNode
-     */
-    public String getTypeNode() {
-        return typeNode;
-    }
-
-    /**
-     * @param typeNode the typeNode to set
-     */
-    public void setTypeNode(String typeNode) {
-        this.typeNode = typeNode;
     }
     
 }

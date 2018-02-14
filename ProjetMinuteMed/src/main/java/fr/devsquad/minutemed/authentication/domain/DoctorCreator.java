@@ -20,8 +20,8 @@ public class DoctorCreator extends AbstractUserCreator {
         super();
     }
   
-    public DoctorCreator(String specialization, String username, String password, String firstName, String lastName, String address, String email, String phoneNumber, String typeNode, long idNode) {
-        super(StaffEnum.DOCTOR.name(), username, password, firstName, lastName, address, email, phoneNumber, typeNode, idNode);
+    public DoctorCreator(String specialization, String username, String password, String firstName, String lastName, String address, String email, String phoneNumber, long idNode) {
+        super(StaffEnum.DOCTOR.name(), username, password, firstName, lastName, address, email, phoneNumber, idNode);
         this.specialization = Objects.requireNonNull(specialization);
     }
 

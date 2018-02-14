@@ -13,7 +13,7 @@ import java.util.*;
 public class MedicalStaffFactory {
     
 
-    public static Doctor createFromDoctorCreator(DoctorCreator doctorCreator, Node node, String specialization) {
+    public static Doctor createDoctorFromCreator(DoctorCreator doctorCreator, Node node, Specialization specialization) {
         Objects.requireNonNull(doctorCreator);
         return new Doctor(Objects.requireNonNull(specialization),
                 doctorCreator.getFirstName(),
@@ -25,13 +25,23 @@ public class MedicalStaffFactory {
     }
     
     
-    public static Nurse createFromNurseCreator(NurseCreator nurseCreator, Node node) {
+    public static Nurse createNurseFromCreator(NurseCreator nurseCreator, Node node) {
         Objects.requireNonNull(nurseCreator);
         return new Nurse(nurseCreator.getFirstName(),
                 nurseCreator.getLastName(),
                 nurseCreator.getAddress(),
                 nurseCreator.getEmail(),
                 nurseCreator.getPhoneNumber(),
+                Objects.requireNonNull(node));
+    }
+    
+    public static DataManager createDataManagerFromCreator(DataManagerCreator dataManagerCreator, Node node) {
+        Objects.requireNonNull(dataManagerCreator);
+        return new DataManager(dataManagerCreator.getFirstName(),
+                dataManagerCreator.getLastName(),
+                dataManagerCreator.getAddress(),
+                dataManagerCreator.getEmail(),
+                dataManagerCreator.getPhoneNumber(),
                 Objects.requireNonNull(node));
     }
     
