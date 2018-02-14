@@ -35,4 +35,14 @@ public class MedicalStaffFactory {
                 Objects.requireNonNull(node));
     }
     
+    public static DataManager createDataManagerFromCreator(DataManagerCreator dataManagerCreator, Node node) {
+        Objects.requireNonNull(dataManagerCreator);
+        return new DataManager(dataManagerCreator.getFirstName(),
+                dataManagerCreator.getLastName(),
+                dataManagerCreator.getAddress(),
+                dataManagerCreator.getEmail(),
+                dataManagerCreator.getPhoneNumber(),
+                Objects.requireNonNull(node));
+    }
+    
 }

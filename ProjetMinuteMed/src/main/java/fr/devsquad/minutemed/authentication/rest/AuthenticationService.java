@@ -9,11 +9,14 @@ import fr.devsquad.minutemed.arborescence.domain.*;
 import fr.devsquad.minutemed.arborescence.repository.*;
 import fr.devsquad.minutemed.authentication.domain.*;
 import fr.devsquad.minutemed.authentication.repository.AuthenticationRepository;
+import fr.devsquad.minutemed.jwt.util.KeyGenerator;
 import fr.devsquad.minutemed.specialization.domain.*;
 import fr.devsquad.minutemed.specialization.repository.*;
 import fr.devsquad.minutemed.staff.domain.*;
 import fr.devsquad.minutemed.staff.domain.utils.*;
 import fr.devsquad.minutemed.staff.repository.StaffRepository;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -22,14 +25,24 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.security.Key;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.Context;
+import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
+import static javax.ws.rs.core.Response.Status.NOT_FOUND;
+import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
 import javax.ws.rs.core.UriInfo;
 
 /**
  *
- * @author myfou
+ * @author Enzo
  */
 @Path("/auth")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -49,6 +62,19 @@ public class AuthenticationService {
     @EJB
     private SpecializationRepository specializationRepository;
     
+    // ======================================
+    // =          Injection Points          =
+    // ======================================
+
+    @Context
+    private UriInfo uriInfo;
+
+    @Inject
+    private Logger logger;
+
+    @Inject
+    private KeyGenerator keyGenerator;
+    
     
     @POST
     @Path("/login")
@@ -57,10 +83,46 @@ public class AuthenticationService {
         @ApiResponse(code = 201, message = "You are login"),
         @ApiResponse(code = 400, message = "Invalid input")}
     )
-    public Response login() throws IOException {
-        System.out.println("POST");
-        
-        return Response.ok("{\"name\":login}").build();
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response authenticateUser(@FormParam("login") String login,
+                                     @FormParam("password") String password) {
+
+        try {
+
+            logger.info("#### login/password truc : " + login + "/" + password);
+
+            // Authenticate the user using the credentials provided
+            UserAccount user = authenticationRepository.Authenticate(login, password);
+            if (user == null)
+                throw new SecurityException("Invalid user/password");
+            
+            // Issue a token for the user
+            String token = issueToken(login, user.getIdAccount());
+
+            // Return the token on the response
+            return Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
+
+        } catch (Exception e) {
+            return Response.status(UNAUTHORIZED).build();
+        }
+    }
+
+    private String issueToken(String login, Long id) {
+        Key key = keyGenerator.generateKey();
+        String jwtToken = Jwts.builder()
+                .setSubject(id.toString())
+                .setIssuer(uriInfo.getAbsolutePath().toString())
+                .setIssuedAt(new Date())
+                .setExpiration(toDate(LocalDateTime.now().plusMinutes(15L)))
+                .signWith(SignatureAlgorithm.HS512, key)
+                .compact();
+        logger.info("#### generating token for a key : " + jwtToken + " - " + key);
+        return jwtToken;
+
+    }
+    
+    private Date toDate(LocalDateTime localDateTime) {
+        return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
     
     @POST
@@ -80,6 +142,48 @@ public class AuthenticationService {
     /////////////////////
     ////  DATA MANAGER
     ////////////////////
+    
+    @POST
+    @ApiOperation(value = "Create a user account", response = UserAccount.class)
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "The User Account is created."),
+        @ApiResponse(code = 409, message = "Username conflict")
+    })
+    @Path("/create")
+    public Response createDataManagerAccount(@NotNull UserAccount user) throws IOException {
+        System.out.println(user);
+        if(authenticationRepository.usernameAlreadyExist(user.getUsername())){
+            return Response.status(Response.Status.CONFLICT).entity("An account with this username already exist !").build();
+        }
+        
+        authenticationRepository.saveUserAccount1(user);
+
+        return Response.ok(user).build();
+    }
+    
+    
+    @POST
+    @ApiOperation(value = "Create a data manager account", response = UserAccount.class)
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "The User Account is created."),
+        @ApiResponse(code = 400, message = "Invalid input"),
+        @ApiResponse(code = 409, message = "Username conflict")}
+    )
+    @Path("/create/datamanager")
+    public Response createDataManagerAccount(@NotNull DataManagerCreator dataManagerCreator) throws IOException {
+        if(authenticationRepository.usernameAlreadyExist(dataManagerCreator.getUsername())){
+            return Response.status(Response.Status.CONFLICT).entity("An account with this username already exist !").build();
+        }
+        Node node = arborescenceRepository.findNode(dataManagerCreator.getIdNode(), Node.class);
+        if(node == null){
+            return Response.status(Response.Status.BAD_REQUEST).entity("Invalid Node !").build();
+        }
+        DataManager dataManager = MedicalStaffFactory.createDataManagerFromCreator(dataManagerCreator, node);
+        Long dataManagerID = staffRepository.saveMedicalStaff(dataManager);
+        UserAccount userAccount = authenticationRepository.saveDataManagerAccount(dataManagerID, dataManagerCreator);
+
+        return Response.ok("{\"userAccount\": " + userAccount + "}").build();
+    }
     
     @POST
     @ApiOperation(value = "Create a doctor account", response = UserAccount.class)
@@ -144,6 +248,21 @@ public class AuthenticationService {
         System.out.println("DELETE user");
         authenticationRepository.delete(idAccount);
         return Response.ok("{\"delete\":"+ idAccount +"}").build();
+    }
+    
+    @GET
+    @ApiOperation(value = "get all user account")
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "All the user account."),
+        @ApiResponse(code = 404, message = "Invalid input")}
+    )
+    public Response findAllUsers() {
+        
+        List<UserAccount> allUsers = authenticationRepository.findAllUsers();
+        if (allUsers == null)
+            return Response.status(NOT_FOUND).build();
+
+        return Response.ok(allUsers).build();
     }
      
 }

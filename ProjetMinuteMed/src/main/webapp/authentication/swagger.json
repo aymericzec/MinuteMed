@@ -12,6 +12,75 @@
   } ],
   "schemes" : [ "http", "https" ],
   "paths" : {
+    "/auth" : {
+      "get" : {
+        "tags" : [ "Authentication REST Endpoint" ],
+        "summary" : "get all user account",
+        "description" : "",
+        "operationId" : "findAllUsers",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "201" : {
+            "description" : "All the user account."
+          },
+          "404" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/auth/create" : {
+      "post" : {
+        "tags" : [ "Authentication REST Endpoint" ],
+        "summary" : "Create a user account",
+        "description" : "",
+        "operationId" : "createDataManagerAccount",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/UserAccount"
+            }
+          },
+          "201" : {
+            "description" : "The User Account is created."
+          },
+          "409" : {
+            "description" : "Username conflict"
+          }
+        }
+      }
+    },
+    "/auth/create/datamanager" : {
+      "post" : {
+        "tags" : [ "Authentication REST Endpoint" ],
+        "summary" : "Create a data manager account",
+        "description" : "",
+        "operationId" : "createDataManagerAccount",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/UserAccount"
+            }
+          },
+          "201" : {
+            "description" : "The User Account is created."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "409" : {
+            "description" : "Username conflict"
+          }
+        }
+      }
+    },
     "/auth/create/doctor" : {
       "post" : {
         "tags" : [ "Authentication REST Endpoint" ],
@@ -96,9 +165,20 @@
         "tags" : [ "Authentication REST Endpoint" ],
         "summary" : "login to the application",
         "description" : "",
-        "operationId" : "login",
-        "consumes" : [ "application/json" ],
+        "operationId" : "authenticateUser",
+        "consumes" : [ "application/x-www-form-urlencoded" ],
         "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "login",
+          "in" : "formData",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "password",
+          "in" : "formData",
+          "required" : false,
+          "type" : "string"
+        } ],
         "responses" : {
           "201" : {
             "description" : "You are login"

@@ -1,8 +1,10 @@
 package fr.devsquad.minutemed.authentication.repository;
 
+import fr.devsquad.minutemed.authentication.domain.DataManagerCreator;
 import fr.devsquad.minutemed.authentication.domain.DoctorCreator;
 import fr.devsquad.minutemed.authentication.domain.NurseCreator;
 import fr.devsquad.minutemed.authentication.domain.UserAccount;
+import fr.devsquad.minutemed.jwt.util.PasswordUtils;
 import fr.devsquad.minutemed.staff.domain.StaffEnum;
 import java.util.*;
 
@@ -22,8 +24,23 @@ public class AuthenticationRepository {
     @PersistenceContext(unitName = "APHPPU")
     private EntityManager em;
 
-    public List<UserAccount> list() {
-        return em.createNamedQuery("SELECT u FROM UserAccount u", UserAccount.class).getResultList();
+    public List<UserAccount> findAllUsers() {
+        return em.createNamedQuery(UserAccount.FIND_ALL_USER, UserAccount.class).getResultList();
+    }
+    
+    public UserAccount Authenticate(String username, String password) {
+        System.out.println("fr.devsquad.minutemed.authentication.repository.AuthenticationRepository.Authenticate()");
+        TypedQuery<UserAccount> qry = em.createQuery("SELECT u FROM UserAccount u WHERE u.username = :username", UserAccount.class);
+        List<UserAccount> tmp = qry.setParameter("username", username).getResultList();
+        
+        UserAccount user = tmp.isEmpty() ? null : tmp.get(0);
+        System.out.println("nb result : " + tmp.size());
+        if (null != user ) {
+            if (!PasswordUtils.digestPassword(password).equals(user.getPassword())) {
+                user = null;
+            }
+        }
+        return user;
     }
 
     public UserAccount find(Long id) {
@@ -50,9 +67,21 @@ public class AuthenticationRepository {
         return nurseAccount;
     }
     
+    public UserAccount saveDataManagerAccount(Long id, DataManagerCreator dataManagerCreator){
+        Objects.requireNonNull(dataManagerCreator);
+        UserAccount dataManagerAccount = new UserAccount(Objects.requireNonNull(id), dataManagerCreator.getUsername(), dataManagerCreator.getPassword(), StaffEnum.DATA_MANAGER);
+        saveUserAccount(dataManagerAccount);
+        return dataManagerAccount;
+    }
+    
     private Long saveUserAccount(UserAccount userAccount) {
         em.persist(userAccount);
         return userAccount.getIdAccount();
+    }
+    
+    public UserAccount saveUserAccount1(UserAccount userAccount) {
+        em.persist(userAccount);
+        return userAccount;
     }
 
     public void update(UserAccount userAccount) {
