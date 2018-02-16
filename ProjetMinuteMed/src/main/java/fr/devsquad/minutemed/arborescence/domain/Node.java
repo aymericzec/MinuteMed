@@ -5,8 +5,9 @@
  */
 package fr.devsquad.minutemed.arborescence.domain;
 
+import com.fasterxml.jackson.annotation.*;
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -38,6 +39,11 @@ public class Node implements Serializable {
     
     public String getFloor() {
         return floor;
+    }
+    
+    @JsonIgnore
+    public Set<NodeCU> getAccessibleNode(){
+        return Collections.emptySet();
     }
 
     

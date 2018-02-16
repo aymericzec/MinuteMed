@@ -22,6 +22,7 @@ public class StaffRepository {
     private EntityManager em;
     
     
+    
     public List<MedicalStaff> findAllMedicalStaffs(){
         TypedQuery<MedicalStaff> qry = em.createQuery("Select m FROM MedicalStaff m", MedicalStaff.class);
         return qry.getResultList();      
@@ -43,6 +44,10 @@ public class StaffRepository {
            //do nothing 
         }
         return result;
+    }
+    
+    public MedicalStaff findMedicalStaff(Long medicalStaffID){
+        return em.find(MedicalStaff.class, Objects.requireNonNull(medicalStaffID));
     }
     
     public <T extends MedicalStaff> Long saveMedicalStaff(T medicalStaff){

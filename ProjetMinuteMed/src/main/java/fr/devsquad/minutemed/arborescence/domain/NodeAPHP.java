@@ -5,11 +5,10 @@
  */
 package fr.devsquad.minutemed.arborescence.domain;
 
-import java.util.List;
-import java.util.Objects;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import fr.devsquad.minutemed.arborescence.domain.Node;
+import java.util.*;
+import java.util.stream.*;
+import javax.persistence.*;
 
 /**
  *
@@ -22,16 +21,27 @@ public class NodeAPHP extends Node {
     private final static String FLOOR = "APHP";
     
     @OneToMany(mappedBy = "father")
-    private List<NodeHospital> hospitals;
+    private Set<NodeHospital> hospitals;
 
     public NodeAPHP() {
         super(FLOOR);
     }
 
-    public NodeAPHP(List<NodeHospital> hospitals) {
+    public NodeAPHP(Set<NodeHospital> hospitals) {
         super(FLOOR);
         this.hospitals = Objects.requireNonNull(hospitals);
     }
     
+    public boolean addHospital(NodeHospital hospital){
+        return hospitals.add(Objects.requireNonNull(hospital));
+    }
+    
+    @Override
+    public Set<NodeCU> getAccessibleNode(){
+        return hospitals.stream()
+                .map(hospital -> hospital.getAccessibleNode())
+                .flatMap(cus -> cus.stream())
+                .collect(Collectors.toSet());
+    }
     
 }

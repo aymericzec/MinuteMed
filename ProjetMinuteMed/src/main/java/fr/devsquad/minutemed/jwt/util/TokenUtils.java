@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.Objects;
+import java.util.logging.*;
 import static org.jvnet.hk2.osgiadapter.Logger.logger;
 
 /**
@@ -20,7 +21,16 @@ import static org.jvnet.hk2.osgiadapter.Logger.logger;
  */
 public class TokenUtils {
     
-    public static String issueToken(KeyGenerator keyGenerator, String login, Long id, String path) {
+
+    
+    public static Long decryptIdFromToken(String jwt, KeyGenerator keyGenerator){
+        Key key = Objects.requireNonNull(keyGenerator).generateKey();
+        String idStr = Jwts.parser().setSigningKey(key).parseClaimsJws(jwt).getBody().getSubject();
+        return Long.parseLong(idStr);
+    }
+    
+    
+    public static String issueToken(Logger logger, KeyGenerator keyGenerator, String login, Long id, String path) {
         Key key = Objects.requireNonNull(keyGenerator).generateKey();
         String jwtToken = Jwts.builder()
                 .setSubject(id.toString())

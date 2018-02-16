@@ -15,7 +15,7 @@ public class MedicalStaffFactory {
 
     public static Doctor createDoctorFromCreator(DoctorCreator doctorCreator, Node node, Specialization specialization) {
         Objects.requireNonNull(doctorCreator);
-        return new Doctor(Objects.requireNonNull(specialization),
+        return new Doctor(specialization,
                 doctorCreator.getFirstName(),
                 doctorCreator.getLastName(),
                 doctorCreator.getAddress(),

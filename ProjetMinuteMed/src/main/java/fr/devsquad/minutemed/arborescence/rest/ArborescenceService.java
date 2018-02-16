@@ -1,35 +1,34 @@
 package fr.devsquad.minutemed.arborescence.rest;
 
 import fr.devsquad.minutemed.arborescence.domain.*;
+import fr.devsquad.minutemed.arborescence.domain.Node;
 import fr.devsquad.minutemed.arborescence.repository.*;
 import fr.devsquad.minutemed.jwt.filter.JWTNeeded;
-import fr.devsquad.minutemed.staff.domain.StaffEnum;
+import fr.devsquad.minutemed.jwt.util.*;
+import fr.devsquad.minutemed.staff.domain.*;
+import fr.devsquad.minutemed.staff.repository.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import java.util.List;
+import java.util.*;
+import java.util.stream.*;
 import javax.ejb.*;
+import javax.inject.*;
 import javax.validation.constraints.NotNull;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.*;
+import javax.ws.rs.core.*;
 
 @Path("/nodes")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@JWTNeeded(groups = {StaffEnum.DATA_MANAGER})
+//@JWTNeeded(groups = {StaffEnum.DATA_MANAGER, StaffEnum.DOCTOR})
 @Api("Arborescence REST Endpoint")
 public class ArborescenceService {
     
     @EJB
     private ArborescenceRepository repository;
-    
+   
     
     ///////////////
     //// POST ////
@@ -62,13 +61,21 @@ public class ArborescenceService {
     )
     @Path("/APHP/hospitals")
     public Response createHospital(@NotNull NodeHospital hospital) {
-        if(hospital.getFather() == null){
+        NodeAPHP aphp = hospital.getFather();
+        if(aphp == null){
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("The APHP node is required in the Hospital node !")
                     .build();
         }
-        Long id = repository.saveNode(hospital);
-        return Response.ok("{\"idHospitalCreated\":"+ id +"}").build();
+        //Long id = repository.saveNode(hospital);
+        /*if(!aphp.addHospital(hospital)){
+            repository.removeNode(hospital);
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("This Hospital already exist in the APHP !")
+                    .build();           
+        }
+        repository.refreshNode(aphp);*/
+        return Response.ok("{\"idHospitalCreated\":"+ aphp.getIdNode() +"}").build();
     }
     
     @POST
@@ -92,6 +99,13 @@ public class ArborescenceService {
                     .build();    
         }
         Long id = repository.saveNode(pole);
+        if(!hospital.addPole(pole)){
+            repository.removeNode(pole);
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("This Pole already exist in the Hospital !")
+                    .build();           
+        }
+        repository.refreshNode(hospital);
         return Response.ok("{\"idPoleCreated\":"+ id +"}").build();
     }
     
@@ -121,6 +135,13 @@ public class ArborescenceService {
                     .build(); 
         }
         Long id = repository.saveNode(service);
+        if(!pole.addService(service)){
+            repository.removeNode(service);
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("This Service already exist in the Pole !")
+                    .build();           
+        }
+        repository.refreshNode(pole);
         return Response.ok("{\"idServiceCreated\":"+ id +"}").build();
     }
     
@@ -156,6 +177,13 @@ public class ArborescenceService {
                     .build(); 
         }
         Long id = repository.saveNode(hu);
+        if(!service.addHospitalUnit(hu)){
+            repository.removeNode(hu);
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("This Hospital Unit already exist in the Service !")
+                    .build();           
+        }
+        repository.refreshNode(service);
         return Response.ok("{\"idHUCreated\":"+ id +"}").build();
     }
     
@@ -196,6 +224,13 @@ public class ArborescenceService {
                     .build(); 
         }
         Long id = repository.saveNode(cu);
+        if(!hospitalUnit.addCareUnit(cu)){
+            repository.removeNode(cu);
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("This Care Unit already exist in the Hospital Unit !")
+                    .build();           
+        }
+        repository.refreshNode(hospitalUnit);
         return Response.ok("{\"idCUCreated\":"+ id +"}").build();
     }
     
@@ -204,6 +239,19 @@ public class ArborescenceService {
     //// GET /////
     /////////////
     
+    @GET
+    @Path("/APHP")
+    @ApiOperation(value = "Get the APHP.", response = NodeAPHP.class)
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "All Hospitals are returned."),
+        @ApiResponse(code = 400, message = "Invalid input"),
+        @ApiResponse(code = 404, message = "Hospitals not found")}
+    )
+    public Response getAPHP() {
+        
+        NodeAPHP aphp = repository.findNode(1L, NodeAPHP.class);
+        return Response.ok(aphp).build();
+    }
     
     @GET
     @Path("/APHP/hospitals")
@@ -338,4 +386,33 @@ public class ArborescenceService {
         NodeCU cu = repository.findNode(idCU, NodeCU.class);
         return Response.ok(cu).build();
     }
+    
+    
+    
+    @EJB
+    private StaffRepository staffRepository;
+    
+    @Inject
+    private KeyGenerator keyGenerator;
+    
+    @GET
+    @ApiOperation(value = "Get all accessible Care Units.", response = NodeCU.class, responseContainer = "List")
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "All accessible Care Units are returned."),
+        @ApiResponse(code = 400, message = "Invalid input")}
+    )
+    @JWTNeeded(groups = {StaffEnum.DOCTOR})
+    public Response getAccessibleCareUnits(@Context HttpHeaders headers) {
+        List<String> authorizations = headers.getRequestHeader(HttpHeaders.AUTHORIZATION);
+        authorizations.stream().forEach(System.out::println);
+        System.out.println("getAccessibleCareUnits");
+        String authorization = authorizations.get(0);
+        String token = authorization.substring("Bearer".length()).trim();
+        MedicalStaff user = staffRepository.findMedicalStaff(TokenUtils.decryptIdFromToken(token, keyGenerator));
+        Set<NodeCU> careUnits = repository.findNode(user.getNode().getIdNode(), Node.class).getAccessibleNode();
+        return Response.ok(careUnits).build();
+    }
+    
+    
+    
 }

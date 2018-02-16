@@ -7,6 +7,7 @@ package fr.devsquad.minutemed.arborescence.domain;
 
 import java.util.*;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 /**
  *
@@ -18,17 +19,18 @@ public class NodeHU extends Node {
     
     private final static String FLOOR = "HOSPITAL_UNIT";
   
+    @NotNull
     @ManyToOne
     private NodeService father;
     
     @OneToMany(mappedBy = "father")
-    private List<NodeCU> careUnits;
+    private Set<NodeCU> careUnits;
 
     public NodeHU() {
         super(FLOOR);
     }
 
-    public NodeHU(NodeService father, List<NodeCU> careUnits) {
+    public NodeHU(NodeService father, Set<NodeCU> careUnits) {
         this.father = Objects.requireNonNull(father);
         this.careUnits = Objects.requireNonNull(careUnits);
     }
@@ -39,6 +41,15 @@ public class NodeHU extends Node {
     
     public void setFather(NodeService service){
         this.father = Objects.requireNonNull(service);
+    }
+    
+    public boolean addCareUnit(NodeCU cu){
+        return careUnits.add(Objects.requireNonNull(cu));
+    }
+    
+    @Override
+    public Set<NodeCU> getAccessibleNode(){
+        return careUnits;
     }
     
 }

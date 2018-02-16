@@ -2,9 +2,8 @@ package fr.devsquad.minutemed.jwt.filter;
 
 import fr.devsquad.minutemed.authentication.domain.UserAccount;
 import fr.devsquad.minutemed.authentication.repository.AuthenticationRepository;
-import fr.devsquad.minutemed.jwt.util.KeyGenerator;
+import fr.devsquad.minutemed.jwt.util.*;
 import fr.devsquad.minutemed.staff.domain.StaffEnum;
-import io.jsonwebtoken.Jwts;
 
 
 import javax.annotation.Priority;
@@ -15,7 +14,6 @@ import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -101,12 +99,8 @@ public class JWTFilter implements ContainerRequestFilter {
         String token = authorizationHeader.substring("Bearer".length()).trim();
 
         try {
-
-            // Validate the token
-            Key key = keyGenerator.generateKey();
-            //Jwts.parser().setSigningKey(key).parseClaimsJws(token);
-            String idStr = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
-            Long id = Long.parseLong(idStr);
+    
+            Long id = TokenUtils.decryptIdFromToken(token, keyGenerator);
 
             UserAccount user = authenticationRepository.find(id);
             //if user id don't exist

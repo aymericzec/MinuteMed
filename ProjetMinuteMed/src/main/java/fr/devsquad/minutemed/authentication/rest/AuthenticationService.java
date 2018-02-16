@@ -17,8 +17,6 @@ import fr.devsquad.minutemed.specialization.repository.*;
 import fr.devsquad.minutemed.staff.domain.*;
 import fr.devsquad.minutemed.staff.domain.utils.*;
 import fr.devsquad.minutemed.staff.repository.StaffRepository;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -27,10 +25,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
-import java.security.Key;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -99,7 +93,7 @@ public class AuthenticationService {
                 throw new SecurityException("Invalid user/password");
             
             // Issue a token for the user
-            String token = TokenUtils.issueToken(keyGenerator, login, user.getIdAccount(), uriInfo.getAbsolutePath().toString());
+            String token = TokenUtils.issueToken(logger, keyGenerator, login, user.getIdAccount(), uriInfo.getAbsolutePath().toString());
 
             // Return the token on the response
             return Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
@@ -178,20 +172,25 @@ public class AuthenticationService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 409, message = "Username conflict")}
     )
-    @JWTNeeded(groups = {StaffEnum.DATA_MANAGER})
+    @JWTNeeded(groups = {StaffEnum.DATA_MANAGER, StaffEnum.DOCTOR})
     @Path("/create/doctor")
     public Response createDoctorAccount(@NotNull DoctorCreator doctorCreator) throws IOException {
+        System.out.println("OKOK1");
         if(authenticationRepository.usernameAlreadyExist(doctorCreator.getUsername())){
             return Response.status(Response.Status.CONFLICT).entity("An account with this username already exist !").build();
         }
-        Specialization specialization = specializationRepository.findByStaffName(doctorCreator.getSpecialization());
-        if(specialization == null){
-            return Response.status(Response.Status.BAD_REQUEST).entity("Invalid Node !").build();
+        Specialization specialization = null;
+        if(doctorCreator.getSpecialization() != null){
+            specialization = specializationRepository.findByStaffName(doctorCreator.getSpecialization());
+            if(specialization == null){
+                return Response.status(Response.Status.BAD_REQUEST).entity("Invalid Node !").build();
+            }
         }
         Node node = arborescenceRepository.findNode(doctorCreator.getIdNode(), Node.class);
         if(node == null){
             return Response.status(Response.Status.BAD_REQUEST).entity("Invalid Node !").build();
         }
+        System.out.println("OKOK");
         Doctor doctor = MedicalStaffFactory.createDoctorFromCreator(doctorCreator, node, specialization);
         Long doctorID = staffRepository.saveMedicalStaff(doctor);
         UserAccount userAccount = authenticationRepository.saveDoctorAccount(doctorID, doctorCreator);

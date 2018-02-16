@@ -18,7 +18,6 @@ public class Doctor extends MedicalStaff implements Serializable {
     
     private static final String STATUS = "DOCTOR";
     
-    @NotNull
     @OneToOne
     private Specialization specialization;
     
@@ -30,7 +29,7 @@ public class Doctor extends MedicalStaff implements Serializable {
     public Doctor(Specialization specialization, String firstName, String lastName, String address, String email, String phoneNumber, Node node) {
         super(STATUS, Objects.requireNonNull(firstName), Objects.requireNonNull(lastName), Objects.requireNonNull(address),
                 Objects.requireNonNull(email), Objects.requireNonNull(phoneNumber), Objects.requireNonNull(node));
-        this.specialization = Objects.requireNonNull(specialization);
+        this.specialization = specialization;
     }
     
 

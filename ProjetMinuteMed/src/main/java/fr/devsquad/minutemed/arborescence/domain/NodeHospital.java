@@ -5,9 +5,10 @@
  */
 package fr.devsquad.minutemed.arborescence.domain;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.*;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 /**
  *
@@ -19,17 +20,18 @@ public class NodeHospital extends Node {
     
     private final static String FLOOR = "HOSPITAL";
     
+    @NotNull
     @ManyToOne
     private NodeAPHP father;
     
     @OneToMany(mappedBy = "father")
-    private List<NodePole> poles;
+    private Set<NodePole> poles;
 
     public NodeHospital() {
         super(FLOOR);
     }
 
-    public NodeHospital(NodeAPHP father, List<NodePole> poles) {
+    public NodeHospital(NodeAPHP father, Set<NodePole> poles) {
         super(FLOOR);
         this.father = Objects.requireNonNull(father);
         this.poles = Objects.requireNonNull(poles);
@@ -41,6 +43,18 @@ public class NodeHospital extends Node {
     
     public void setFather(NodeAPHP aphp){
         this.father = Objects.requireNonNull(aphp);
+    }
+    
+    public boolean addPole(NodePole pole){
+        return poles.add(Objects.requireNonNull(pole));
+    }
+    
+    @Override
+    public Set<NodeCU> getAccessibleNode(){
+        return poles.stream()
+                .map(pole -> pole.getAccessibleNode())
+                .flatMap(cus -> cus.stream())
+                .collect(Collectors.toSet());
     }
     
 }

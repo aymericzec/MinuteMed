@@ -215,7 +215,59 @@
         }
       }
     },
+    "/nodes" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get all accessible Care Units.",
+        "description" : "",
+        "operationId" : "getAccessibleCareUnits",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/NodeCU"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All accessible Care Units are returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
     "/nodes/APHP" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get the APHP.",
+        "description" : "",
+        "operationId" : "getAPHP",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/NodeAPHP"
+            }
+          },
+          "201" : {
+            "description" : "All Hospitals are returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Hospitals not found"
+          }
+        }
+      },
       "post" : {
         "tags" : [ "Arborescence REST Endpoint" ],
         "summary" : "Create the APHP",
@@ -1777,7 +1829,7 @@
     },
     "Doctor" : {
       "type" : "object",
-      "required" : [ "address", "email", "firstName", "lastName", "node", "phoneNumber", "specialization", "status" ],
+      "required" : [ "address", "email", "firstName", "lastName", "node", "phoneNumber", "status" ],
       "properties" : {
         "idMedicalStaff" : {
           "type" : "integer",
@@ -2006,7 +2058,7 @@
     },
     "NodeCU" : {
       "type" : "object",
-      "required" : [ "floor" ],
+      "required" : [ "father", "floor" ],
       "properties" : {
         "idNode" : {
           "type" : "integer",
@@ -2022,7 +2074,7 @@
     },
     "NodeHU" : {
       "type" : "object",
-      "required" : [ "floor" ],
+      "required" : [ "father", "floor" ],
       "properties" : {
         "idNode" : {
           "type" : "integer",
@@ -2038,7 +2090,7 @@
     },
     "NodeHospital" : {
       "type" : "object",
-      "required" : [ "floor" ],
+      "required" : [ "father", "floor" ],
       "properties" : {
         "idNode" : {
           "type" : "integer",
@@ -2054,7 +2106,7 @@
     },
     "NodePole" : {
       "type" : "object",
-      "required" : [ "floor" ],
+      "required" : [ "father", "floor" ],
       "properties" : {
         "idNode" : {
           "type" : "integer",
@@ -2070,7 +2122,7 @@
     },
     "NodeService" : {
       "type" : "object",
-      "required" : [ "floor" ],
+      "required" : [ "father", "floor" ],
       "properties" : {
         "idNode" : {
           "type" : "integer",

@@ -7,6 +7,7 @@ package fr.devsquad.minutemed.arborescence.repository;
 
 import fr.devsquad.minutemed.arborescence.domain.utils.NodeFloorSupplier;
 import fr.devsquad.minutemed.arborescence.domain.*;
+import fr.devsquad.minutemed.arborescence.domain.utils.*;
 import java.util.*;
 import javax.ejb.Stateless;
 import javax.persistence.*;
@@ -59,6 +60,15 @@ public class ArborescenceRepository {
             // do nothing
         }
         return result;
+    }
+    
+    
+    public <T extends Node> void refreshNode(T node){
+        em.refresh(Objects.requireNonNull(node));
+    }
+    
+    public <T extends Node> void removeNode(T node){
+        em.remove(Objects.requireNonNull(node));
     }
     
 }

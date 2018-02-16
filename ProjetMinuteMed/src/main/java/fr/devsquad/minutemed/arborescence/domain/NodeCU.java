@@ -5,9 +5,9 @@
  */
 package fr.devsquad.minutemed.arborescence.domain;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 /**
  *
@@ -19,6 +19,7 @@ public class NodeCU extends Node {
     
     private final static String FLOOR = "CARE_UNIT";
     
+    @NotNull
     @ManyToOne
     private NodeHU father;
 

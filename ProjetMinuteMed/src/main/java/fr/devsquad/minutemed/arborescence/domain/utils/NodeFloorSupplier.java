@@ -13,6 +13,7 @@ import fr.devsquad.minutemed.arborescence.domain.NodeHospital;
 import fr.devsquad.minutemed.arborescence.domain.NodePole;
 import fr.devsquad.minutemed.arborescence.domain.NodeService;
 import java.util.*;
+import java.util.Map.Entry;
 
 /**
  *
@@ -34,6 +35,6 @@ public class NodeFloorSupplier {
     
     public static <T extends Node> String getFloor(Class<T> clazz){
         return FLOOR_SUPPLIER.getOrDefault(Objects.requireNonNull(clazz), "NULL");
-    }
+    }    
     
 }
