@@ -12,7 +12,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.*;
-import java.util.stream.*;
 import javax.ejb.*;
 import javax.inject.*;
 import javax.validation.constraints.NotNull;
@@ -22,7 +21,7 @@ import javax.ws.rs.core.*;
 @Path("/nodes")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-//@JWTNeeded(groups = {StaffEnum.DATA_MANAGER, StaffEnum.DOCTOR})
+@JWTNeeded(groups = {StaffEnum.DATA_MANAGER, StaffEnum.DOCTOR})
 @Api("Arborescence REST Endpoint")
 public class ArborescenceService {
     
@@ -67,14 +66,14 @@ public class ArborescenceService {
                     .entity("The APHP node is required in the Hospital node !")
                     .build();
         }
-        //Long id = repository.saveNode(hospital);
-        /*if(!aphp.addHospital(hospital)){
+        Long id = repository.saveNode(hospital);
+        if(!aphp.addHospital(hospital)){
             repository.removeNode(hospital);
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("This Hospital already exist in the APHP !")
                     .build();           
         }
-        repository.refreshNode(aphp);*/
+        repository.refreshNode(aphp);
         return Response.ok("{\"idHospitalCreated\":"+ aphp.getIdNode() +"}").build();
     }
     
