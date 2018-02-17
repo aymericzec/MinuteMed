@@ -14,10 +14,10 @@ import javax.validation.constraints.*;
  * @author thomas
  */
 @Entity
-@DiscriminatorValue("HOSPITAL_UNIT")
+@DiscriminatorValue("HUNIT")
 public class NodeHU extends Node {
     
-    private final static String FLOOR = "HOSPITAL_UNIT";
+    private final static String FLOOR = "HUNIT";
   
     @NotNull
     @ManyToOne
@@ -30,9 +30,9 @@ public class NodeHU extends Node {
         super(FLOOR);
     }
 
-    public NodeHU(NodeService father, Set<NodeCU> careUnits) {
+    public NodeHU(NodeService father) {
         this.father = Objects.requireNonNull(father);
-        this.careUnits = Objects.requireNonNull(careUnits);
+        this.careUnits = new HashSet<>();
     }
     
     public NodeService getFather(){

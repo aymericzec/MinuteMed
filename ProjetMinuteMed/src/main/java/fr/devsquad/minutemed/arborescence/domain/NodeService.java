@@ -5,7 +5,6 @@
  */
 package fr.devsquad.minutemed.arborescence.domain;
 
-import fr.devsquad.minutemed.arborescence.domain.Node;
 import java.util.*;
 import java.util.stream.*;
 import javax.persistence.*;
@@ -32,10 +31,10 @@ public class NodeService extends Node {
         super(FLOOR);
     }
 
-    public NodeService(NodePole father, Set<NodeHU> hospitalUnits) {
+    public NodeService(NodePole father) {
         super(FLOOR);
         this.father = Objects.requireNonNull(father);
-        this.hospitalUnits = Objects.requireNonNull(hospitalUnits);
+        this.hospitalUnits = new HashSet<>();
     }
     
     public NodePole getFather(){

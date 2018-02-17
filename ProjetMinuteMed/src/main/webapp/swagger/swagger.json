@@ -205,6 +205,12 @@
         "operationId" : "logout",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "required" : false,
+          "type" : "string"
+        } ],
         "responses" : {
           "201" : {
             "description" : "You are logout"
@@ -223,6 +229,12 @@
         "operationId" : "getAccessibleCareUnits",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "required" : false,
+          "type" : "string"
+        } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
@@ -313,22 +325,6 @@
             "description" : "Hospitals not found"
           }
         }
-      },
-      "post" : {
-        "tags" : [ "Arborescence REST Endpoint" ],
-        "summary" : "Create an Hospital",
-        "description" : "",
-        "operationId" : "createHospital",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "responses" : {
-          "201" : {
-            "description" : "The Hospital is created."
-          },
-          "400" : {
-            "description" : "Invalid input"
-          }
-        }
       }
     },
     "/nodes/APHP/hospitals/{idHospital}" : {
@@ -398,32 +394,6 @@
           },
           "404" : {
             "description" : "Poles not found"
-          }
-        }
-      },
-      "post" : {
-        "tags" : [ "Arborescence REST Endpoint" ],
-        "summary" : "Create a Pole",
-        "description" : "",
-        "operationId" : "createPole",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "idHospital",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        } ],
-        "responses" : {
-          "201" : {
-            "description" : "The Pole is created."
-          },
-          "400" : {
-            "description" : "Invalid input."
-          },
-          "404" : {
-            "description" : "Unknow node."
           }
         }
       }
@@ -507,38 +477,6 @@
           },
           "404" : {
             "description" : "Services not found"
-          }
-        }
-      },
-      "post" : {
-        "tags" : [ "Arborescence REST Endpoint" ],
-        "summary" : "Create a Service",
-        "description" : "",
-        "operationId" : "createService",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "idHospital",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "idPole",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        } ],
-        "responses" : {
-          "201" : {
-            "description" : "The Service is created."
-          },
-          "400" : {
-            "description" : "Invalid input."
-          },
-          "404" : {
-            "description" : "Unknow node."
           }
         }
       }
@@ -694,44 +632,6 @@
             "description" : "Hospital Units not found"
           }
         }
-      },
-      "post" : {
-        "tags" : [ "Arborescence REST Endpoint" ],
-        "summary" : "Create a Hospital Unit",
-        "description" : "",
-        "operationId" : "createHospitalUnit",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "idHospital",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "idPole",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "idService",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        } ],
-        "responses" : {
-          "201" : {
-            "description" : "The Hospital Unit is created."
-          },
-          "400" : {
-            "description" : "Invalid input"
-          },
-          "404" : {
-            "description" : "Unknow node."
-          }
-        }
       }
     },
     "/nodes/APHP/hospitals/{idHospital}/poles/{idPole}/services/{idService}/hUnits/{idHU}" : {
@@ -841,7 +741,152 @@
         }
       }
     },
-    "/nodes/APHP/hospitals/{idHospital}/poles/{idPole}/services/{idService}/hUnits/{idHU}/cUnits" : {
+    "/nodes/APHP/{idAPHP}/hospitals" : {
+      "post" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Create an Hospital",
+        "description" : "",
+        "operationId" : "createHospital",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The Hospital is created."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/nodes/APHP/{idAPHP}/hospitals/{idHospital}/poles" : {
+      "post" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Create a Pole",
+        "description" : "",
+        "operationId" : "createPole",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idHospital",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The Pole is created."
+          },
+          "400" : {
+            "description" : "Invalid input."
+          },
+          "404" : {
+            "description" : "Unknow node."
+          }
+        }
+      }
+    },
+    "/nodes/APHP/{idAPHP}/hospitals/{idHospital}/poles/{idPole}/services" : {
+      "post" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Create a Service",
+        "description" : "",
+        "operationId" : "createService",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idHospital",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idPole",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The Service is created."
+          },
+          "400" : {
+            "description" : "Invalid input."
+          },
+          "404" : {
+            "description" : "Unknow node."
+          }
+        }
+      }
+    },
+    "/nodes/APHP/{idAPHP}/hospitals/{idHospital}/poles/{idPole}/services/{idService}/hUnits" : {
+      "post" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Create a Hospital Unit",
+        "description" : "",
+        "operationId" : "createHospitalUnit",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idHospital",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idPole",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idService",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The Hospital Unit is created."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Unknow node."
+          }
+        }
+      }
+    },
+    "/nodes/APHP/{idAPHP}/hospitals/{idHospital}/poles/{idPole}/services/{idService}/hUnits/{idHU}/cUnits" : {
       "post" : {
         "tags" : [ "Arborescence REST Endpoint" ],
         "summary" : "Create a Care Unit",
@@ -850,6 +895,12 @@
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
           "name" : "idHospital",
           "in" : "path",
           "required" : true,

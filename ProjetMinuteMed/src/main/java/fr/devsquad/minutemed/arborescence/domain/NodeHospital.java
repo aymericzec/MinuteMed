@@ -31,11 +31,12 @@ public class NodeHospital extends Node {
         super(FLOOR);
     }
 
-    public NodeHospital(NodeAPHP father, Set<NodePole> poles) {
+    public NodeHospital(NodeAPHP father) {
         super(FLOOR);
         this.father = Objects.requireNonNull(father);
-        this.poles = Objects.requireNonNull(poles);
+        this.poles = new HashSet<>();
     }
+
     
     public NodeAPHP getFather(){
         return father;

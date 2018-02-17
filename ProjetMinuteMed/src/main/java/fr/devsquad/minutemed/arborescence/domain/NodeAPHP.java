@@ -5,7 +5,6 @@
  */
 package fr.devsquad.minutemed.arborescence.domain;
 
-import fr.devsquad.minutemed.arborescence.domain.Node;
 import java.util.*;
 import java.util.stream.*;
 import javax.persistence.*;
