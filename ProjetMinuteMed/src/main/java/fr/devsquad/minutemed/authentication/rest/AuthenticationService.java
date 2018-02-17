@@ -31,6 +31,7 @@ import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
@@ -67,9 +68,9 @@ public class AuthenticationService {
 
     @Inject
     private Logger logger;
-
+        
     @Inject
-    private KeyGenerator keyGenerator;
+    private TokenUtils tokenUtils;
     
     
     @POST
@@ -93,7 +94,7 @@ public class AuthenticationService {
                 throw new SecurityException("Invalid user/password");
             
             // Issue a token for the user
-            String token = TokenUtils.issueToken(logger, keyGenerator, login, user.getIdAccount(), uriInfo.getAbsolutePath().toString());
+            String token = tokenUtils.issueToken(login, user.getIdAccount(), uriInfo.getAbsolutePath().toString());
 
             // Return the token on the response
             return Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
@@ -111,10 +112,12 @@ public class AuthenticationService {
         @ApiResponse(code = 400, message = "Invalid input")}
     )
     @Path("/logout")
-    public Response logout() throws IOException {
-        System.out.println("POST");
+    public Response logout(@HeaderParam(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+        String token = authorizationHeader.substring("Bearer".length()).trim();
+        tokenUtils.removeToken(token);
         
-        return Response.ok("{\"name\":logout}").build();
+        System.out.println(token);
+        return Response.ok(token).build();
     }
     
     

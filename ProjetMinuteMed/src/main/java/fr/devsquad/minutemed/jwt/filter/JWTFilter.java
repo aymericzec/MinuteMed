@@ -47,7 +47,7 @@ public class JWTFilter implements ContainerRequestFilter {
     private Logger logger;
 
     @Inject
-    private KeyGenerator keyGenerator;
+    private TokenUtils tokenUtils;
     
     @Context
     ResourceInfo resourceInfo;
@@ -100,7 +100,7 @@ public class JWTFilter implements ContainerRequestFilter {
 
         try {
     
-            Long id = TokenUtils.decryptIdFromToken(token, keyGenerator);
+            Long id = tokenUtils.decryptIdFromToken(token);
 
             UserAccount user = authenticationRepository.find(id);
             //if user id don't exist

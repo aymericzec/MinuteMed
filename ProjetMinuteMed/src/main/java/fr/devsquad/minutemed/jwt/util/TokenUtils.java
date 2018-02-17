@@ -5,32 +5,49 @@
  */
 package fr.devsquad.minutemed.jwt.util;
 
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.security.Key;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.logging.*;
-import static org.jvnet.hk2.osgiadapter.Logger.logger;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 /**
  *
  * @author thomas
  */
+@ApplicationScoped
 public class TokenUtils {
     
 
+    private List<String> validJWTTokens = new ArrayList();
     
-    public static Long decryptIdFromToken(String jwt, KeyGenerator keyGenerator){
-        Key key = Objects.requireNonNull(keyGenerator).generateKey();
-        String idStr = Jwts.parser().setSigningKey(key).parseClaimsJws(jwt).getBody().getSubject();
+    @Inject
+    private Logger logger;
+
+    @Inject
+    private KeyGenerator keyGenerator;
+    
+    
+    public Long decryptIdFromToken(String token){
+        if (!this.validJWTTokens.contains(token)) {
+          throw new RuntimeException("Token is not valid anymore");
+        }
+        
+        Key key = keyGenerator.generateKey();
+        String idStr = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
         return Long.parseLong(idStr);
     }
     
     
-    public static String issueToken(Logger logger, KeyGenerator keyGenerator, String login, Long id, String path) {
+    public String issueToken(String login, Long id, String path) {
         Key key = Objects.requireNonNull(keyGenerator).generateKey();
         String jwtToken = Jwts.builder()
                 .setSubject(id.toString())
@@ -40,8 +57,25 @@ public class TokenUtils {
                 .signWith(SignatureAlgorithm.HS512, key)
                 .compact();
         logger.info("#### generating token for a key : " + jwtToken + " - " + key);
+        
+        this.validJWTTokens.add(jwtToken);
+        
         return jwtToken;
 
+    }
+    
+    public void valid(String token) {
+        
+
+        JwtParser signed = Jwts.parser().setSigningKey(System.getProperty("JWT-KEY"));
+
+        String username = signed.parseClaimsJws(token).getBody().getSubject();
+        
+        logger.info("Request is JWT-sigend with user: " + username);
+    }
+
+    public void removeToken(String token) {
+        this.validJWTTokens.remove(token);
     }
     
     private static Date toDate(LocalDateTime localDateTime) {

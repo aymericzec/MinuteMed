@@ -27,7 +27,12 @@ public class ArborescenceService {
     
     @EJB
     private ArborescenceRepository repository;
+    
+    @EJB
+    private StaffRepository staffRepository;
    
+    @Inject
+    private TokenUtils tokenUtils;
     
     ///////////////
     //// POST ////
@@ -386,13 +391,7 @@ public class ArborescenceService {
         return Response.ok(cu).build();
     }
     
-    
-    
-    @EJB
-    private StaffRepository staffRepository;
-    
-    @Inject
-    private KeyGenerator keyGenerator;
+
     
     @GET
     @ApiOperation(value = "Get all accessible Care Units.", response = NodeCU.class, responseContainer = "List")
@@ -407,7 +406,7 @@ public class ArborescenceService {
         System.out.println("getAccessibleCareUnits");
         String authorization = authorizations.get(0);
         String token = authorization.substring("Bearer".length()).trim();
-        MedicalStaff user = staffRepository.findMedicalStaff(TokenUtils.decryptIdFromToken(token, keyGenerator));
+        MedicalStaff user = staffRepository.findMedicalStaff(tokenUtils.decryptIdFromToken(token));
         Set<NodeCU> careUnits = repository.findNode(user.getNode().getIdNode(), Node.class).getAccessibleNode();
         return Response.ok(careUnits).build();
     }
