@@ -67,7 +67,7 @@ export class AuthService {
         if (!this.jwt) {
           return undefined;
         }
-          
+
 
         return this.jwt;
 

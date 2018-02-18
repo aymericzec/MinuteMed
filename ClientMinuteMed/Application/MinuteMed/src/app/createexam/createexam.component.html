@@ -89,50 +89,44 @@
           </ul>-->
         </div>
 
-        <div class="col-sm-9 col-md-10  main">
-          <h2 class="sub-header">Examens de Vieira Noro Kévin </h2><br>
-          <div class="table-responsive">
-              <table class="table table-striped">
-                  <tbody>
-                    <tr>
-                        <td>
-                            <label>Date:</label>
-                            <input>
-                        </td>
-                        <td>
-                            <button routerLink="/consultexam">Filtrer</button>
+        <div class="col-sm-8 col-md-8  main">
+          <h2 class="sub-header">Création d'un examen</h2><br>
+            <div class="container">
+                <form>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Médecin Demandeur:</label>
+                      <div class="col-sm-5">
+                        <input  class="form-control" disabled="disabled" placeholder="Zecchini Aymeric">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Date de Création:</label>
+                        <div class="col-sm-5">
+                          <input  class="form-control" disabled="disabled" placeholder="18/02/2018">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                          <label class="col-sm-2 col-form-label">Motif:</label>
+                          <div class="col-sm-5">
+                              <input  class="form-control">
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label class="col-sm-2 col-form-label">Description:</label>
+                          <div class="col-sm-5">
+                            <textarea  class="form-control" rows="5"></textarea>
+                          </div>
+                      </div>
 
-                        </td>
-                        <td>
-                          <button routerLink="/createexam">Créer Examen</button>
-                        </td>
-                      </tr>
-                    </tbody>
-              </table>
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Description</th>
-                  <th>Demandé par</th>
-                  <th>Réalisé par</th>
-                  <th>Effectué à</th>
-                  <th>Etat</th>
+                    <div class="form-group row">
+                      <div class="col-sm-10">
+                        <button type="submit" class="btn btn-primary">Créer</button>
+                        <button type="submit" class="btn btn-primary">Enregistrer en Brouillon</button>
+                      </div>
+                    </div>
+                  </form>
 
-                </tr>
-              </thead>
-              <tbody>
-                <tr >
-                  <td>14/02/2016</td>
-                  <td>Radiologie du fémur</td>
-                  <td>Zecchini</td>
-                  <td>en attente</td>
-                  <td>en attente</td>
-                  <td>crée</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+            </div> <!-- /container -->
         </div>
       </div>
     </div>
