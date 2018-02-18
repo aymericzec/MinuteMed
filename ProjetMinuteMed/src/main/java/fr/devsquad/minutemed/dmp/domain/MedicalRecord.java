@@ -42,7 +42,7 @@ public class MedicalRecord implements Serializable {
     
     @NotNull
     @ManyToOne
-    private NodeCU cu;
+    private NodeCU careUnit;
 
     
     public MedicalRecord() {
@@ -58,7 +58,7 @@ public class MedicalRecord implements Serializable {
         this.phoneNumber = Objects.requireNonNull(phoneNumber);
         this.birthday = Objects.requireNonNull(birthday);
         this.gender = Objects.requireNonNull(gender);
-        this.cu = Objects.requireNonNull(cu);
+        this.careUnit = Objects.requireNonNull(cu);
     }
 
     public long getIdMedicalRecord() {
@@ -98,11 +98,11 @@ public class MedicalRecord implements Serializable {
     }
     
     public NodeCU getCU() {
-        return cu;
+        return careUnit;
     }
     
     public void setCU(NodeCU cu) {
-        this.cu = Objects.requireNonNull(cu);
+        this.careUnit = Objects.requireNonNull(cu);
     } 
 
 }

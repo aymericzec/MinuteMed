@@ -10,7 +10,6 @@ import fr.devsquad.minutemed.arborescence.repository.*;
 import fr.devsquad.minutemed.authentication.domain.*;
 import fr.devsquad.minutemed.authentication.repository.AuthenticationRepository;
 import fr.devsquad.minutemed.jwt.filter.JWTNeeded;
-import fr.devsquad.minutemed.jwt.util.KeyGenerator;
 import fr.devsquad.minutemed.jwt.util.TokenUtils;
 import fr.devsquad.minutemed.specialization.domain.*;
 import fr.devsquad.minutemed.specialization.repository.*;
@@ -99,7 +98,7 @@ public class AuthenticationService {
             // Return the token on the response
             return Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
 
-        } catch (Exception e) {
+        } catch (SecurityException e) {
             return Response.status(UNAUTHORIZED).build();
         }
     }

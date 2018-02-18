@@ -6,6 +6,8 @@
 package fr.devsquad.minutemed.arborescence.domain;
 
 import com.fasterxml.jackson.annotation.*;
+import fr.devsquad.minutemed.arborescence.domain.utils.*;
+import fr.devsquad.minutemed.dmp.domain.*;
 import java.io.Serializable;
 import java.util.*;
 import javax.persistence.*;
@@ -18,7 +20,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorValue("ROOT") //DTYPE
-public class Node implements Serializable {
+public abstract class Node implements Serializable {
             
     @Id @GeneratedValue
     private Long idNode;
@@ -42,9 +44,10 @@ public class Node implements Serializable {
     }
     
     @JsonIgnore
-    public Set<NodeCU> getAccessibleNode(){
-        return Collections.emptySet();
-    }
+    public abstract Set<Node> getAccessibleNode(NodeEnum stopFloor);
+    
+    @JsonIgnore
+    public abstract Set<MedicalRecord> getMedicalRecords();
 
     
 }

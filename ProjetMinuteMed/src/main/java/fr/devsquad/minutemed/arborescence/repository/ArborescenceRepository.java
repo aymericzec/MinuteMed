@@ -36,14 +36,6 @@ public class ArborescenceRepository {
     }
     
     
-    public <T extends Node> List<T> findNodesWithFatherId(Class<T> clazz, Long fatherId) {
-        Objects.requireNonNull(clazz);
-        Objects.requireNonNull(fatherId);
-        TypedQuery<T> qry = em.createNamedQuery("Select n FROM Node n WHERE n.father_idnode = :fatherId AND n.floor = :floor", clazz);
-        return qry.setParameter("fatherId", fatherId).setParameter("floor", NodeFloorSupplier.getFloor(clazz)).getResultList();
-    }
-    
-    
     public <T extends Node> Long saveNode(T node){
         em.persist(node);
         return node.getIdNode();
@@ -64,7 +56,9 @@ public class ArborescenceRepository {
     
     
     public <T extends Node> void refreshNode(T node){
-        em.refresh(Objects.requireNonNull(node));
+        Objects.requireNonNull(node);
+        em.merge(node);
+        em.refresh(node);
     }
     
     public <T extends Node> void removeNode(T node){
