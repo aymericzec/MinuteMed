@@ -17,8 +17,8 @@ public class DataManagerCreator extends AbstractUserCreator {
         super();
     }
     
-    public DataManagerCreator(String username, String password, String firstName, String lastName, String adress, String email, String phoneNumber, long idNode) {
-        super(StaffEnum.DATA_MANAGER.name(), username, password, firstName, lastName, adress, email, phoneNumber, idNode);
+    public DataManagerCreator(String username, String password, String firstName, String lastName, String adress, String email, String phoneNumber, long idNode, String floorNode) {
+        super(StaffEnum.DATA_MANAGER.name(), username, password, firstName, lastName, adress, email, phoneNumber, idNode, floorNode);
     }
     
 }

@@ -5,7 +5,9 @@
  */
 package fr.devsquad.minutemed.arborescence.domain;
 
-import fr.devsquad.minutemed.arborescence.domain.Node;
+import com.fasterxml.jackson.databind.annotation.*;
+import fr.devsquad.minutemed.arborescence.domain.utils.*;
+import fr.devsquad.minutemed.dmp.domain.*;
 import java.util.*;
 import java.util.stream.*;
 import javax.persistence.*;
@@ -19,23 +21,24 @@ import javax.validation.constraints.*;
 @DiscriminatorValue("POLE")
 public class NodePole extends Node {
     
-    private final static String FLOOR = "POLE";
+    private final static NodeEnum FLOOR = NodeEnum.POLE;
     
     @NotNull
     @ManyToOne
+    @JsonSerialize(using = CustomNodeSerializer.class)
     private NodeHospital father;
     
     @OneToMany(mappedBy = "father")
     private Set<NodeService> services;
 
     public NodePole() {
-        super(FLOOR);
+        super(FLOOR.name());
     }
 
-    public NodePole(NodeHospital father, Set<NodeService> services) {
-        super(FLOOR);
+    public NodePole(NodeHospital father) {
+        super(FLOOR.name());
         this.father = Objects.requireNonNull(father);
-        this.services = Objects.requireNonNull(services);
+        this.services = new HashSet<>();
     }
     
     public NodeHospital getFather(){
@@ -51,11 +54,24 @@ public class NodePole extends Node {
     }
     
     @Override
-    public Set<NodeCU> getAccessibleNode(){
+    public Set<Node> getAccessibleNode(NodeEnum stopFloor){    
+        Objects.requireNonNull(stopFloor);
+        Set<Node> nodes = new HashSet<>();
+        if(stopFloor.compareTo(FLOOR) > 0){
+            nodes.addAll(services); 
+            nodes.addAll(services.stream()
+                            .map(service -> service.getAccessibleNode(stopFloor))
+                            .flatMap(Set::stream)
+                            .collect(Collectors.toSet()));
+        }
+        return Collections.unmodifiableSet(nodes);
+    }
+
+    @Override
+    public Set<MedicalRecord> getMedicalRecords() {
         return services.stream()
-                .map(service -> service.getAccessibleNode())
-                .flatMap(cus -> cus.stream())
-                .collect(Collectors.toSet());   
+            .flatMap(service -> service.getMedicalRecords().stream())
+            .collect(Collectors.toSet());
     }
     
 }

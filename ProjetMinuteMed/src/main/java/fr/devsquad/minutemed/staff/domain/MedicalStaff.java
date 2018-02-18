@@ -33,7 +33,7 @@ public class MedicalStaff implements Serializable {
     private String phoneNumber;   
     
     @NotNull
-    @OneToOne
+    @ManyToOne
     private Node node;
     
    

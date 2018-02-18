@@ -21,20 +21,21 @@ import java.util.Map.Entry;
  */
 public class NodeFloorSupplier {
     
-    private static final Map<Class<? extends Node>, String> FLOOR_SUPPLIER = new HashMap<Class<? extends Node>, String>();
+    private static final Map<Class<? extends Node>, NodeEnum> FLOOR_SUPPLIER = new HashMap<Class<? extends Node>, NodeEnum>();
     static
     {
-        FLOOR_SUPPLIER.put(Node.class, "ROOT");
-        FLOOR_SUPPLIER.put(NodeAPHP.class, "APHP");
-        FLOOR_SUPPLIER.put(NodeHospital.class, "HOSPITAL");
-        FLOOR_SUPPLIER.put(NodePole.class, "POLE");
-        FLOOR_SUPPLIER.put(NodeService.class, "SERVICE");
-        FLOOR_SUPPLIER.put(NodeHU.class, "HOSPITAL_UNIT");
-        FLOOR_SUPPLIER.put(NodeCU.class, "CARE_UNIT");
+        FLOOR_SUPPLIER.put(Node.class, NodeEnum.ROOT);
+        FLOOR_SUPPLIER.put(NodeAPHP.class, NodeEnum.APHP);
+        FLOOR_SUPPLIER.put(NodeHospital.class, NodeEnum.HOSPITAL);
+        FLOOR_SUPPLIER.put(NodePole.class, NodeEnum.POLE);
+        FLOOR_SUPPLIER.put(NodeService.class, NodeEnum.SERVICE);
+        FLOOR_SUPPLIER.put(NodeHU.class, NodeEnum.HOSPITAL_UNIT);
+        FLOOR_SUPPLIER.put(NodeCU.class, NodeEnum.CARE_UNIT);
     }
     
     public static <T extends Node> String getFloor(Class<T> clazz){
-        return FLOOR_SUPPLIER.getOrDefault(Objects.requireNonNull(clazz), "NULL");
+        NodeEnum emun = FLOOR_SUPPLIER.get(Objects.requireNonNull(clazz));
+        return emun == null ? null : emun.name();
     }    
     
 }

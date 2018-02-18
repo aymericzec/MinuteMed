@@ -14,11 +14,9 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.*;
 import javax.ejb.EJB;
-import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -119,7 +117,7 @@ public class StaffService {
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "All Doctors are returned.")}
     )
-    @JWTNeeded(groups = {StaffEnum.DATA_MANAGER})
+    //@JWTNeeded(groups = {StaffEnum.DATA_MANAGER})
     public Response getAllDoctors() {
         System.out.println("GET getAllDoctors()");
         

@@ -38,30 +38,6 @@
         }
       }
     },
-    "/auth/create" : {
-      "post" : {
-        "tags" : [ "Authentication REST Endpoint" ],
-        "summary" : "Create a user account",
-        "description" : "",
-        "operationId" : "createUserAccount",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/UserAccount"
-            }
-          },
-          "201" : {
-            "description" : "The User Account is created."
-          },
-          "409" : {
-            "description" : "Username conflict"
-          }
-        }
-      }
-    },
     "/auth/create/datamanager" : {
       "post" : {
         "tags" : [ "Authentication REST Endpoint" ],
@@ -205,36 +181,15 @@
         "operationId" : "logout",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "required" : false,
+          "type" : "string"
+        } ],
         "responses" : {
           "201" : {
             "description" : "You are logout"
-          },
-          "400" : {
-            "description" : "Invalid input"
-          }
-        }
-      }
-    },
-    "/nodes" : {
-      "get" : {
-        "tags" : [ "Arborescence REST Endpoint" ],
-        "summary" : "Get all accessible Care Units.",
-        "description" : "",
-        "operationId" : "getAccessibleCareUnits",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/NodeCU"
-              }
-            }
-          },
-          "201" : {
-            "description" : "All accessible Care Units are returned."
           },
           "400" : {
             "description" : "Invalid input"
@@ -290,9 +245,151 @@
         "tags" : [ "Arborescence REST Endpoint" ],
         "summary" : "Get all Hospitals of the APHP.",
         "description" : "",
+        "operationId" : "getAllHospitals",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/NodeHospital"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All Hospitals are returned."
+          },
+          "404" : {
+            "description" : "APHP not found"
+          }
+        }
+      }
+    },
+    "/nodes/APHP/hospitals/poles" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get all Poles of the APHP.",
+        "description" : "",
+        "operationId" : "getAllPoles",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/NodePole"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All Poles are returned."
+          },
+          "404" : {
+            "description" : "APHP not found"
+          }
+        }
+      }
+    },
+    "/nodes/APHP/hospitals/poles/services" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get all Services of the APHP.",
+        "description" : "",
+        "operationId" : "getAllServices",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/NodeService"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All Services are returned."
+          },
+          "404" : {
+            "description" : "APHP not found"
+          }
+        }
+      }
+    },
+    "/nodes/APHP/hospitals/poles/services/hUnits" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get all Hospital Units of the APHP.",
+        "description" : "",
+        "operationId" : "getAllHospitalUnits",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/NodeHU"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All Hospital Units are returned."
+          },
+          "404" : {
+            "description" : "APHP not found"
+          }
+        }
+      }
+    },
+    "/nodes/APHP/hospitals/poles/services/hUnits/cUnits" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get all Care Units of the APHP.",
+        "description" : "",
+        "operationId" : "getAllCareUnits",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/NodeCU"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All Care Units are returned."
+          },
+          "404" : {
+            "description" : "APHP not found"
+          }
+        }
+      }
+    },
+    "/nodes/APHP/{idAPHP}/hospitals" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get all Hospitals of the APHP.",
+        "description" : "",
         "operationId" : "getHospitals",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
@@ -321,6 +418,13 @@
         "operationId" : "createHospital",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
         "responses" : {
           "201" : {
             "description" : "The Hospital is created."
@@ -331,7 +435,7 @@
         }
       }
     },
-    "/nodes/APHP/hospitals/{idHospital}" : {
+    "/nodes/APHP/{idAPHP}/hospitals/{idHospital}" : {
       "get" : {
         "tags" : [ "Arborescence REST Endpoint" ],
         "summary" : "Get a specific Hospital.",
@@ -340,6 +444,12 @@
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
           "name" : "idHospital",
           "in" : "path",
           "required" : true,
@@ -365,7 +475,7 @@
         }
       }
     },
-    "/nodes/APHP/hospitals/{idHospital}/poles" : {
+    "/nodes/APHP/{idAPHP}/hospitals/{idHospital}/poles" : {
       "get" : {
         "tags" : [ "Arborescence REST Endpoint" ],
         "summary" : "Get all Poles of an Hospital.",
@@ -374,6 +484,12 @@
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
           "name" : "idHospital",
           "in" : "path",
           "required" : true,
@@ -409,6 +525,12 @@
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
           "name" : "idHospital",
           "in" : "path",
           "required" : true,
@@ -428,7 +550,7 @@
         }
       }
     },
-    "/nodes/APHP/hospitals/{idHospital}/poles/{idPole}" : {
+    "/nodes/APHP/{idAPHP}/hospitals/{idHospital}/poles/{idPole}" : {
       "get" : {
         "tags" : [ "Arborescence REST Endpoint" ],
         "summary" : "Get a specific Pole.",
@@ -437,6 +559,12 @@
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
           "name" : "idHospital",
           "in" : "path",
           "required" : true,
@@ -468,7 +596,7 @@
         }
       }
     },
-    "/nodes/APHP/hospitals/{idHospital}/poles/{idPole}/services" : {
+    "/nodes/APHP/{idAPHP}/hospitals/{idHospital}/poles/{idPole}/services" : {
       "get" : {
         "tags" : [ "Arborescence REST Endpoint" ],
         "summary" : "Get all Services of a Pole.",
@@ -477,6 +605,12 @@
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
           "name" : "idHospital",
           "in" : "path",
           "required" : true,
@@ -518,6 +652,12 @@
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
           "name" : "idHospital",
           "in" : "path",
           "required" : true,
@@ -543,7 +683,7 @@
         }
       }
     },
-    "/nodes/APHP/hospitals/{idHospital}/poles/{idPole}/services/{idService}" : {
+    "/nodes/APHP/{idAPHP}/hospitals/{idHospital}/poles/{idPole}/services/{idService}" : {
       "get" : {
         "tags" : [ "Arborescence REST Endpoint" ],
         "summary" : "Get a specific Service.",
@@ -552,6 +692,12 @@
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
           "name" : "idHospital",
           "in" : "path",
           "required" : true,
@@ -589,65 +735,7 @@
         }
       }
     },
-    "/nodes/APHP/hospitals/{idHospital}/poles/{idPole}/services/{idService}/HUnits/{idHU}/CUnits/{idCU}" : {
-      "get" : {
-        "tags" : [ "Arborescence REST Endpoint" ],
-        "summary" : "Get a specific Care Unit.",
-        "description" : "",
-        "operationId" : "getCareUnit",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "idHospital",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "idPole",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "idService",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "idHU",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "idCU",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/NodeCU"
-            }
-          },
-          "201" : {
-            "description" : "The Care Unit is returned."
-          },
-          "400" : {
-            "description" : "Invalid input"
-          },
-          "404" : {
-            "description" : "Care Unit not found"
-          }
-        }
-      }
-    },
-    "/nodes/APHP/hospitals/{idHospital}/poles/{idPole}/services/{idService}/hUnits" : {
+    "/nodes/APHP/{idAPHP}/hospitals/{idHospital}/poles/{idPole}/services/{idService}/hUnits" : {
       "get" : {
         "tags" : [ "Arborescence REST Endpoint" ],
         "summary" : "Get all Hospital Units of a Service.",
@@ -656,6 +744,12 @@
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
           "name" : "idHospital",
           "in" : "path",
           "required" : true,
@@ -703,6 +797,12 @@
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
           "name" : "idHospital",
           "in" : "path",
           "required" : true,
@@ -734,7 +834,7 @@
         }
       }
     },
-    "/nodes/APHP/hospitals/{idHospital}/poles/{idPole}/services/{idService}/hUnits/{idHU}" : {
+    "/nodes/APHP/{idAPHP}/hospitals/{idHospital}/poles/{idPole}/services/{idService}/hUnits/{idHU}" : {
       "get" : {
         "tags" : [ "Arborescence REST Endpoint" ],
         "summary" : "Get a specific Hospital Unit.",
@@ -743,6 +843,12 @@
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
           "name" : "idHospital",
           "in" : "path",
           "required" : true,
@@ -786,7 +892,7 @@
         }
       }
     },
-    "/nodes/APHP/hospitals/{idHospital}/poles/{idPole}/services/{idService}/hUnits/{idHU}/CUnits" : {
+    "/nodes/APHP/{idAPHP}/hospitals/{idHospital}/poles/{idPole}/services/{idService}/hUnits/{idHU}/cUnits" : {
       "get" : {
         "tags" : [ "Arborescence REST Endpoint" ],
         "summary" : "Get all Care Units of a Hospital Unit.",
@@ -795,6 +901,12 @@
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
           "name" : "idHospital",
           "in" : "path",
           "required" : true,
@@ -839,9 +951,7 @@
             "description" : "Care Units not found"
           }
         }
-      }
-    },
-    "/nodes/APHP/hospitals/{idHospital}/poles/{idPole}/services/{idService}/hUnits/{idHU}/cUnits" : {
+      },
       "post" : {
         "tags" : [ "Arborescence REST Endpoint" ],
         "summary" : "Create a Care Unit",
@@ -850,6 +960,12 @@
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
           "name" : "idHospital",
           "in" : "path",
           "required" : true,
@@ -883,6 +999,70 @@
           },
           "404" : {
             "description" : "Unknow node."
+          }
+        }
+      }
+    },
+    "/nodes/APHP/{idAPHP}/hospitals/{idHospital}/poles/{idPole}/services/{idService}/hUnits/{idHU}/cUnits/{idCU}" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get a specific Care Unit.",
+        "description" : "",
+        "operationId" : "getCareUnit",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idHospital",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idPole",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idService",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idHU",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idCU",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/NodeCU"
+            }
+          },
+          "201" : {
+            "description" : "The Care Unit is returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Care Unit not found"
           }
         }
       }
@@ -1964,7 +2144,7 @@
     },
     "MedicalRecord" : {
       "type" : "object",
-      "required" : [ "address", "birthday", "cu", "email", "firstName", "gender", "lastName", "phoneNumber", "ss" ],
+      "required" : [ "address", "birthday", "email", "firstName", "gender", "lastName", "phoneNumber", "ss" ],
       "properties" : {
         "idMedicalRecord" : {
           "type" : "integer",

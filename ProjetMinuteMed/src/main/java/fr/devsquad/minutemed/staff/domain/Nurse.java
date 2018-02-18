@@ -15,16 +15,21 @@ public class Nurse extends MedicalStaff implements Serializable{
 
     public static final String FIND_ALL_NURSE = "Nurse.findAllNurse";
     
-    private static final String STATUS = "NURSE";
+    private static final StaffEnum STATUS = StaffEnum.NURSE;
     
     
     public Nurse() {
-        super(STATUS);
+        super(STATUS.name());
     }
     
     public Nurse(String firstName, String lastName, String address, String email, String phoneNumber, Node node) { 
-        super(STATUS, Objects.requireNonNull(firstName), Objects.requireNonNull(lastName), Objects.requireNonNull(address),
-                Objects.requireNonNull(email), Objects.requireNonNull(phoneNumber), Objects.requireNonNull(node));
+        super(STATUS.name(),
+                Objects.requireNonNull(firstName),
+                Objects.requireNonNull(lastName),
+                Objects.requireNonNull(address),
+                Objects.requireNonNull(email),
+                Objects.requireNonNull(phoneNumber),
+                Objects.requireNonNull(node));
     }
     
    

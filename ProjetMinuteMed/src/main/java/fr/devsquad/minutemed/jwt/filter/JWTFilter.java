@@ -47,7 +47,7 @@ public class JWTFilter implements ContainerRequestFilter {
     private Logger logger;
 
     @Inject
-    private KeyGenerator keyGenerator;
+    private TokenUtils tokenUtils;
     
     @Context
     ResourceInfo resourceInfo;
@@ -72,13 +72,10 @@ public class JWTFilter implements ContainerRequestFilter {
             Arrays.stream(methodAnnot.groups()).map(group -> group.name()).forEach(groups::add);
         }
         
-        
-        System.out.println("Check groups");
         if(groups.isEmpty()){
             requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
             return;
         }
-        System.out.println("groups size : "+ groups.size());
         CheckToken(requestContext, groups);
     }
     
@@ -100,7 +97,7 @@ public class JWTFilter implements ContainerRequestFilter {
 
         try {
     
-            Long id = TokenUtils.decryptIdFromToken(token, keyGenerator);
+            Long id = tokenUtils.decryptIdFromToken(token);
 
             UserAccount user = authenticationRepository.find(id);
             //if user id don't exist

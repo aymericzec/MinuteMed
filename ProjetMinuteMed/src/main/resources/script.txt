@@ -17,3 +17,36 @@ GET : /nodes/hospitals
 
 4) Get a specific Hospital node
 GET : /nodes/hospitals/{id_hospital_node}
+
+
+Ceate a Nurse
+POST : /auth/create/nurse
+{
+    "username":"esadaoui",
+    "password":"pwd",
+    "firstName":"Enzo",
+    "lastName" : "SADAOUI",
+    "address":"8 rue Truc",
+    "email":"enzo@gmail.com",
+    "phoneNumber":"0123456789",
+    "idNode":1352,
+    "floorNode":"HOSPITAL_UNIT"
+}
+
+
+Create a MedicalRecord :
+POST : /records
+{
+    "ss":"01234567899984653",
+    "birthday":"11/08/1995",
+    "firstName":"Enzo",
+    "lastName" : "SADAOUI",
+    "address":"8 rue Truc",
+    "email":"enzo@gmail.com",
+    "phoneNumber":"0123456789",
+    "gender":"M",
+    "cu":{
+        "idNode": 1551,
+        "floor": "CARE_UNIT"
+    }
+}

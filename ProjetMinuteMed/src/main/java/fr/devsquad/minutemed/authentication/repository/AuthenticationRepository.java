@@ -14,15 +14,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.*;
 
-/**
- * Manages interactions with the database.
- * Created by jefferson on 11/11/2017.
- */
+
 @Stateless
 public class AuthenticationRepository {
 
     @PersistenceContext(unitName = "APHPPU")
     private EntityManager em;
+    
 
     public List<UserAccount> findAllUsers() {
         return em.createNamedQuery(UserAccount.FIND_ALL_USER, UserAccount.class).getResultList();
@@ -46,6 +44,7 @@ public class AuthenticationRepository {
     public UserAccount find(Long id) {
         return em.find(UserAccount.class, id);
     }
+    
     
     public boolean usernameAlreadyExist(String username){
         TypedQuery<UserAccount> qry = em.createQuery("SELECT u FROM UserAccount u WHERE u.username = :username", UserAccount.class);
@@ -77,11 +76,6 @@ public class AuthenticationRepository {
     private Long saveUserAccount(UserAccount userAccount) {
         em.persist(userAccount);
         return userAccount.getIdAccount();
-    }
-    
-    public UserAccount saveUserAccount1(UserAccount userAccount) {
-        em.persist(userAccount);
-        return userAccount;
     }
 
     public void update(UserAccount userAccount) {

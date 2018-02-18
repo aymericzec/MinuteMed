@@ -5,6 +5,9 @@
  */
 package fr.devsquad.minutemed.arborescence.domain;
 
+import com.fasterxml.jackson.databind.annotation.*;
+import fr.devsquad.minutemed.arborescence.domain.utils.*;
+import fr.devsquad.minutemed.dmp.domain.*;
 import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -17,19 +20,24 @@ import javax.validation.constraints.*;
 @DiscriminatorValue("CARE_UNIT")
 public class NodeCU extends Node {
     
-    private final static String FLOOR = "CARE_UNIT";
+    private final static NodeEnum FLOOR = NodeEnum.CARE_UNIT;
     
     @NotNull
     @ManyToOne
+    @JsonSerialize(using = CustomNodeSerializer.class)
     private NodeHU father;
+    
+    @OneToMany(mappedBy = "careUnit")
+    private Set<MedicalRecord> medicalRecords;
 
     public NodeCU() {
-        super(FLOOR);
+        super(FLOOR.name());
     }
 
     public NodeCU(NodeHU father) {
-        super(FLOOR);
+        super(FLOOR.name());
         this.father = Objects.requireNonNull(father);
+        this.medicalRecords = new HashSet<>();
     }
     
     public NodeHU getFather(){
@@ -38,6 +46,21 @@ public class NodeCU extends Node {
     
     public void setFather(NodeHU hu){
         this.father = Objects.requireNonNull(hu);
+    }
+    
+    @Override
+    public Set<MedicalRecord> getMedicalRecords(){
+        return medicalRecords;
+    }
+
+    @Override
+    public Set<Node> getAccessibleNode(NodeEnum stopFloor){    
+        Objects.requireNonNull(stopFloor);
+        Set<Node> nodes = new HashSet<>();
+        if(stopFloor.compareTo(FLOOR) > 0){
+            nodes.add(this);
+        }
+        return Collections.unmodifiableSet(nodes);
     }
     
 }
