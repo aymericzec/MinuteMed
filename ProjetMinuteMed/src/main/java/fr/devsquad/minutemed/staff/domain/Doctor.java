@@ -16,18 +16,18 @@ public class Doctor extends MedicalStaff implements Serializable {
 
     public static final String FIND_ALL_DOCTOR = "Doctor.findAllDoctor";
     
-    private static final String STATUS = "DOCTOR";
+    private static final StaffEnum STATUS = StaffEnum.DOCTOR;
     
     @OneToOne
     private Specialization specialization;
     
  
     public Doctor() {
-        super(STATUS);
+        super(STATUS.name());
     }
 
     public Doctor(Specialization specialization, String firstName, String lastName, String address, String email, String phoneNumber, Node node) {
-        super(STATUS, Objects.requireNonNull(firstName), Objects.requireNonNull(lastName), Objects.requireNonNull(address),
+        super(STATUS.name(), Objects.requireNonNull(firstName), Objects.requireNonNull(lastName), Objects.requireNonNull(address),
                 Objects.requireNonNull(email), Objects.requireNonNull(phoneNumber), Objects.requireNonNull(node));
         this.specialization = specialization;
     }

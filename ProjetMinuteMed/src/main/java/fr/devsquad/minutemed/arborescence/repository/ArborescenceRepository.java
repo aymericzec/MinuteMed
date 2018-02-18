@@ -7,7 +7,6 @@ package fr.devsquad.minutemed.arborescence.repository;
 
 import fr.devsquad.minutemed.arborescence.domain.utils.NodeFloorSupplier;
 import fr.devsquad.minutemed.arborescence.domain.*;
-import fr.devsquad.minutemed.arborescence.domain.utils.*;
 import java.util.*;
 import javax.ejb.Stateless;
 import javax.persistence.*;
@@ -48,6 +47,19 @@ public class ArborescenceRepository {
         TypedQuery<T> qry = em.createQuery("SELECT n FROM Node n WHERE n.idNode = :id AND n.floor = :floor", clazz);
         try{
             result = qry.setParameter("id", nodeID).setParameter("floor", NodeFloorSupplier.getFloor(clazz)).getSingleResult();
+        } catch (NoResultException nre){
+            // do nothing
+        }
+        return result;
+    }
+    
+    public <T extends Node> T findNodeWithFloor(Long nodeID, Class<T> clazz, String floor){
+        Objects.requireNonNull(clazz);
+        Objects.requireNonNull(floor);
+        T result = null;
+        TypedQuery<T> qry = em.createQuery("SELECT n FROM Node n WHERE n.idNode = :id AND n.floor = :floor", clazz);
+        try{
+            result = qry.setParameter("id", nodeID).setParameter("floor", floor).getSingleResult();
         } catch (NoResultException nre){
             // do nothing
         }

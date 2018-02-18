@@ -14,21 +14,22 @@ import java.util.Objects;
  */
 abstract class AbstractUserCreator implements Serializable{
 
-    public String type;
-    public String username;
-    public String password; //encrypted password
-    public String firstName;
-    public String lastName;
-    public String address;
-    public String email;
-    public String phoneNumber;
-    public long idNode;
+    private String type;
+    private String username;
+    private String password; //encrypted password
+    private String firstName;
+    private String lastName;
+    private String address;
+    private String email;
+    private String phoneNumber;
+    private long idNode;
+    private String floorNode;
 
     
     public AbstractUserCreator(){}
     
     public AbstractUserCreator(String type, String username, String password, String firstName, String lastName,
-            String address, String email, String phoneNumber, long idNode) {
+            String address, String email, String phoneNumber, long idNode, String floorNode) {
         this.username = Objects.requireNonNull(username);
         this.password = Objects.requireNonNull(password);
         this.type = Objects.requireNonNull(type);
@@ -38,10 +39,28 @@ abstract class AbstractUserCreator implements Serializable{
         this.email = Objects.requireNonNull(email);
         this.phoneNumber = Objects.requireNonNull(phoneNumber);
         this.idNode = idNode;
+        this.floorNode = Objects.requireNonNull(floorNode);
+    }
+    
+    //to debug
+    @Override
+    public String toString(){
+        return username + ", " + password + ", " + type + ", " + firstName + ", " + lastName + ", " +address + ", " + email + ", " + phoneNumber + ", " + idNode + ", " + floorNode;
+    }
+    
+
+    /**
+     * @return the type
+     */
+    public String getType() {
+        return type;
     }
 
-    public String getAddress() {
-        return address;
+    /**
+     * @param type the type to set
+     */
+    public void setType(String type) {
+        this.type = type;
     }
 
     /**
@@ -55,7 +74,7 @@ abstract class AbstractUserCreator implements Serializable{
      * @param username the username to set
      */
     public void setUsername(String username) {
-        this.username = Objects.requireNonNull(username);
+        this.username = username;
     }
 
     /**
@@ -69,21 +88,7 @@ abstract class AbstractUserCreator implements Serializable{
      * @param password the password to set
      */
     public void setPassword(String password) {
-        this.password = Objects.requireNonNull(password);
-    }
-
-    /**
-     * @return the type
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * @param type the type to set
-     */
-    public void setType(String type) {
-        this.type = Objects.requireNonNull(type);
+        this.password = password;
     }
 
     /**
@@ -97,7 +102,7 @@ abstract class AbstractUserCreator implements Serializable{
      * @param firstName the firstName to set
      */
     public void setFirstName(String firstName) {
-        this.firstName = Objects.requireNonNull(firstName);
+        this.firstName = firstName;
     }
 
     /**
@@ -111,14 +116,21 @@ abstract class AbstractUserCreator implements Serializable{
      * @param lastName the lastName to set
      */
     public void setLastName(String lastName) {
-        this.lastName = Objects.requireNonNull(lastName);
+        this.lastName = lastName;
+    }
+
+    /**
+     * @return the address
+     */
+    public String getAddress() {
+        return address;
     }
 
     /**
      * @param address the address to set
      */
     public void setAddress(String address) {
-        this.address = Objects.requireNonNull(address);
+        this.address = address;
     }
 
     /**
@@ -132,7 +144,7 @@ abstract class AbstractUserCreator implements Serializable{
      * @param email the email to set
      */
     public void setEmail(String email) {
-        this.email = Objects.requireNonNull(email);
+        this.email = email;
     }
 
     /**
@@ -146,7 +158,7 @@ abstract class AbstractUserCreator implements Serializable{
      * @param phoneNumber the phoneNumber to set
      */
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = Objects.requireNonNull(phoneNumber);
+        this.phoneNumber = phoneNumber;
     }
 
     /**
@@ -162,5 +174,21 @@ abstract class AbstractUserCreator implements Serializable{
     public void setIdNode(long idNode) {
         this.idNode = idNode;
     }
+
+    /**
+     * @return the floorNode
+     */
+    public String getFloorNode() {
+        return floorNode;
+    }
+
+    /**
+     * @param floorNode the floorNode to set
+     */
+    public void setFloorNode(String floorNode) {
+        this.floorNode = floorNode;
+    }
+    
+    
     
 }

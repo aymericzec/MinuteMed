@@ -1,12 +1,11 @@
 package fr.devsquad.minutemed.dmp.repository;
 
 import fr.devsquad.minutemed.dmp.domain.MedicalRecord;
+import java.util.*;
 
 import javax.ejb.NoSuchEntityException;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.List;
+import javax.persistence.*;
 
 /**
  * Manages interactions with the database.
@@ -24,6 +23,13 @@ public class MedicalRecordRepository {
 
     public MedicalRecord find(Long id) {
         return em.find(MedicalRecord.class, id);
+    }
+    
+    public MedicalRecord findBySS(String ss) {
+        Objects.requireNonNull(ss);
+        TypedQuery<MedicalRecord> qry = em.createQuery("SELECT m FROM MedicalRecord m WHERE m.ss = :ss",MedicalRecord.class);
+        List<MedicalRecord> records = qry.setParameter("ss", ss).getResultList();
+        return records.isEmpty() ? null : records.get(0);
     }
 
     public Long save(MedicalRecord medicalRecord) {

@@ -59,9 +59,13 @@ public class MedicalRecordService {
     )
     @JWTNeeded(groups = {StaffEnum.DOCTOR})
     public Response createMedicalRecord(@NotNull MedicalRecord medicalRecord) {
+        if(medicalRecordRepository.findBySS(medicalRecord.getSs()) != null){
+            return Response.status(Response.Status.CONFLICT).entity("This MedicalRecord already exist !").build();
+        }
         Long id = medicalRecordRepository.save(medicalRecord);
-        return Response.ok("{\"idMedicalRecord\":"+ id +"}").build();
+        return Response.status(Response.Status.CREATED).entity("{\"idMedicalRecord\":"+ id +"}").build();
     }
+    
     
     @POST
     @Path("{idRecord}/exams")
@@ -276,6 +280,7 @@ public class MedicalRecordService {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 404, message = "Medical Record or Diagnostic not found")}
     )
+    @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
     public Response getDiagnostic(@PathParam("idRecord") Long idRecord, @PathParam("idDiagnostic") Long idDiagnostic) {
         Diagnostic diagnostic = diagnosticRepository.find(idDiagnostic);
         return Response.ok(diagnostic).build();

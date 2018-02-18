@@ -72,13 +72,10 @@ public class JWTFilter implements ContainerRequestFilter {
             Arrays.stream(methodAnnot.groups()).map(group -> group.name()).forEach(groups::add);
         }
         
-        
-        System.out.println("Check groups");
         if(groups.isEmpty()){
             requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
             return;
         }
-        System.out.println("groups size : "+ groups.size());
         CheckToken(requestContext, groups);
     }
     

@@ -23,7 +23,7 @@ import javax.inject.Inject;
  *
  * @author thomas
  */
-@ApplicationScoped
+//@ApplicationScoped
 public class TokenUtils {
     
 

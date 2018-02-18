@@ -38,30 +38,6 @@
         }
       }
     },
-    "/auth/create" : {
-      "post" : {
-        "tags" : [ "Authentication REST Endpoint" ],
-        "summary" : "Create a user account",
-        "description" : "",
-        "operationId" : "createUserAccount",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/UserAccount"
-            }
-          },
-          "201" : {
-            "description" : "The User Account is created."
-          },
-          "409" : {
-            "description" : "Username conflict"
-          }
-        }
-      }
-    },
     "/auth/create/datamanager" : {
       "post" : {
         "tags" : [ "Authentication REST Endpoint" ],

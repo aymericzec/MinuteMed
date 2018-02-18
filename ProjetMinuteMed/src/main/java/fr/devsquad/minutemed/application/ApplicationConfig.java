@@ -6,6 +6,7 @@ import fr.devsquad.minutemed.authentication.rest.AuthenticationService;
 import fr.devsquad.minutemed.dmp.rest.MedicalRecordService;
 import fr.devsquad.minutemed.jwt.filter.JWTFilter;
 import fr.devsquad.minutemed.jwt.rest.EchoEndpoint;
+import fr.devsquad.minutemed.staff.rest.*;
 
 import org.glassfish.jersey.jackson.JacksonFeature;
 
@@ -25,6 +26,7 @@ public class ApplicationConfig extends Application {
         c.add(ArborescenceService.class);
         c.add(MedicalRecordService.class);
         c.add(AuthenticationService.class);
+        c.add((StaffService.class));
         c.add(EchoEndpoint.class);
         c.add(CORSFilter.class);
         c.add(JWTFilter.class);
