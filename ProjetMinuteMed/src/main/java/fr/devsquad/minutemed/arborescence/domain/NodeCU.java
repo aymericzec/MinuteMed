@@ -34,8 +34,8 @@ public class NodeCU extends Node {
         super(FLOOR.name());
     }
 
-    public NodeCU(NodeHU father) {
-        super(FLOOR.name());
+    public NodeCU(NodeHU father, String name) {
+        super(FLOOR.name(), Objects.requireNonNull(name));
         this.father = Objects.requireNonNull(father);
         this.medicalRecords = new HashSet<>();
     }

@@ -29,6 +29,7 @@ public class CustomNodeSerializer extends StdSerializer<Node> {
     public void serialize(Node t, JsonGenerator jg, SerializerProvider sp) throws IOException {
         jg.writeStartObject();
         jg.writeNumberField("id", t.getIdNode());
+        jg.writeStringField("name", t.getName());
         jg.writeEndObject();
     }
     

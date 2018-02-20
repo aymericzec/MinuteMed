@@ -138,7 +138,7 @@ public class AuthenticationService {
         if(authenticationRepository.usernameAlreadyExist(dataManagerCreator.getUsername())){
             return Response.status(Response.Status.CONFLICT).entity("An account with this username already exist !").build();
         }
-        Node node = arborescenceRepository.findNode(dataManagerCreator.getIdNode(), Node.class);
+        Node node = arborescenceRepository.findNodeWithFloor(dataManagerCreator.getIdNode(), Node.class, dataManagerCreator.getFloorNode());
         if(node == null){
             return Response.status(Response.Status.BAD_REQUEST).entity("Invalid Node !").build();
         }

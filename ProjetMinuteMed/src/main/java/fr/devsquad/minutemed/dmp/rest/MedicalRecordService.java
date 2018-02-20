@@ -1,5 +1,6 @@
 package fr.devsquad.minutemed.dmp.rest;
 
+import fr.devsquad.minutemed.arborescence.domain.Node;
 import fr.devsquad.minutemed.dmp.domain.Dosage;
 import fr.devsquad.minutemed.dmp.domain.Diagnostic;
 import fr.devsquad.minutemed.dmp.domain.Prescription;
@@ -13,12 +14,17 @@ import fr.devsquad.minutemed.dmp.repository.PrescriptionRepository;
 import fr.devsquad.minutemed.dmp.repository.ReportDosageRepository;
 import fr.devsquad.minutemed.dmp.repository.ResultExamRepository;
 import fr.devsquad.minutemed.jwt.filter.JWTNeeded;
+import fr.devsquad.minutemed.jwt.util.TokenUtils;
+import fr.devsquad.minutemed.staff.domain.MedicalStaff;
 import fr.devsquad.minutemed.staff.domain.StaffEnum;
+import fr.devsquad.minutemed.staff.repository.StaffRepository;
 import io.swagger.annotations.*;
 import java.util.*;
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.validation.constraints.*;
 import javax.ws.rs.*;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -43,6 +49,12 @@ public class MedicalRecordService {
     private ResultExamRepository resultExamRepository;
     @EJB
     private ReportDosageRepository reportDosageRepository;
+    
+    @EJB
+    private StaffRepository staffRepository;
+    
+    @Inject
+    private TokenUtils tokenUtils;
     
     //Example URL with params : 
     //http://localhost:8080/ProjetMinuteMed/api/records/4/dosages/5
@@ -205,13 +217,17 @@ public class MedicalRecordService {
     
     
     @GET
-    @ApiOperation(value = "Get all Medical Records.", response = MedicalRecord.class, responseContainer = "List")
+    @ApiOperation(value = "Get all Medical Records.", response = MedicalRecord.class, responseContainer = "Set")
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "All the Medical Records are returned.")}
     )
     @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
-    public Response getAllMedicalRecord() {
-        List<MedicalRecord> medicalRecords = medicalRecordRepository.list();
+    public Response getAllMedicalRecord(@HeaderParam(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+        String token = authorizationHeader.substring("Bearer".length()).trim();
+        Long id = tokenUtils.decryptIdFromToken(token);
+        MedicalStaff doctor = staffRepository.findMedicalStaff(id);
+        Node node = doctor.getNode();
+        Set<MedicalRecord> medicalRecords = node.getMedicalRecords();
         return Response.ok(medicalRecords).build();
     }
     

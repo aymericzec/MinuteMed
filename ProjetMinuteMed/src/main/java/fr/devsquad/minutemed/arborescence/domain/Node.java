@@ -28,11 +28,20 @@ public abstract class Node implements Serializable {
     @NotNull
     private String floor;
     
+    @NotNull
+    private String name;
+    
     
     public Node() { }
     
     public Node(String floor) {
         this.floor = Objects.requireNonNull(floor);
+        this.name = Objects.requireNonNull(floor);
+    }
+    
+    public Node(String floor, String name) {
+        this.floor = Objects.requireNonNull(floor);
+        this.name = Objects.requireNonNull(name);
     }
     
     public long getIdNode() {
@@ -42,6 +51,11 @@ public abstract class Node implements Serializable {
     public String getFloor() {
         return floor;
     }
+    
+    public String getName() {
+        return name;
+    }
+    
     
     @JsonIgnore
     public abstract Set<Node> getAccessibleNode(NodeEnum stopFloor);

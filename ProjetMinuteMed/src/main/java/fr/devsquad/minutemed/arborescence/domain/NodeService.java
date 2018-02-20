@@ -35,8 +35,8 @@ public class NodeService extends Node {
         super(FLOOR.name());
     }
 
-    public NodeService(NodePole father) {
-        super(FLOOR.name());
+    public NodeService(NodePole father, String name) {
+        super(FLOOR.name(), Objects.requireNonNull(name));
         this.father = Objects.requireNonNull(father);
         this.hospitalUnits = new HashSet<>();
     }

@@ -35,8 +35,8 @@ public class NodeHospital extends Node {
         super(FLOOR.name());
     }
 
-    public NodeHospital(NodeAPHP father) {
-        super(FLOOR.name());
+    public NodeHospital(NodeAPHP father, String name) {
+        super(FLOOR.name(), Objects.requireNonNull(name));
         this.father = Objects.requireNonNull(father);
         this.poles = new HashSet<>();
     }

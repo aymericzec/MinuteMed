@@ -36,8 +36,8 @@ public class NodeHU extends Node {
         super(FLOOR.name());
     }
 
-    public NodeHU(NodeService father) {
-        super(FLOOR.name());
+    public NodeHU(NodeService father, String name) {
+        super(FLOOR.name(), Objects.requireNonNull(name));
         this.father = Objects.requireNonNull(father);
         this.careUnits = new HashSet<>();
     }

@@ -4,13 +4,14 @@ import fr.devsquad.minutemed.arborescence.domain.*;
 import fr.devsquad.minutemed.arborescence.domain.utils.*;
 import fr.devsquad.minutemed.arborescence.repository.*;
 import fr.devsquad.minutemed.jwt.filter.JWTNeeded;
-import fr.devsquad.minutemed.staff.domain.*;
+import fr.devsquad.minutemed.staff.domain.StaffEnum;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.*;
 import javax.ejb.*;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.*;
@@ -38,10 +39,10 @@ public class ArborescenceService {
         @ApiResponse(code = 400, message = "Invalid input")}
     )
     @Path("/APHP")
-    public Response createAPHP() {
-        NodeAPHP aphp = repository.findNode(51L, NodeAPHP.class);
-        if(aphp == null){
-            Long id = repository.saveNode(new NodeAPHP());
+    public Response createAPHP(@NotNull String name) {
+        List<NodeAPHP> aphps = repository.findNodes(NodeAPHP.class);
+        if(aphps.isEmpty()){
+            Long id = repository.saveNode(new NodeAPHP(name));
             return Response.ok("{\"idAPHPCreated\":"+ id +"}").build();
         }
         return Response.status(Response.Status.CONFLICT)
@@ -56,7 +57,7 @@ public class ArborescenceService {
         @ApiResponse(code = 400, message = "Invalid input")}
     )
     @Path("/APHP/{idAPHP}/hospitals")
-    public Response createHospital(@PathParam("idAPHP") Long idAPHP) {
+    public Response createHospital(@PathParam("idAPHP") Long idAPHP, @NotNull String name) {
         NodeAPHP aphp = repository.findNode(idAPHP, NodeAPHP.class);
         if(aphp == null){
             return Response.status(Response.Status.BAD_REQUEST)
@@ -64,7 +65,7 @@ public class ArborescenceService {
                     .build();
         }
         System.out.println(aphp.getIdNode());
-        NodeHospital hospital = new NodeHospital(aphp);
+        NodeHospital hospital = new NodeHospital(aphp, name);
         Long id = repository.saveNode(hospital);
         System.out.println(id);
         if(!aphp.addHospital(hospital)){
@@ -85,7 +86,7 @@ public class ArborescenceService {
         @ApiResponse(code = 404, message = "Unknow node.")}
     )
     @Path("/APHP/{idAPHP}/hospitals/{idHospital}/poles")
-    public Response createPole(@PathParam("idAPHP") Long idAPHP, @PathParam("idHospital") Long idHospital) {
+    public Response createPole(@PathParam("idAPHP") Long idAPHP, @PathParam("idHospital") Long idHospital, String name) {
         NodeHospital hospital = repository.findNode(idHospital, NodeHospital.class);
         if(hospital == null){
             return Response.status(Response.Status.BAD_REQUEST)
@@ -97,7 +98,7 @@ public class ArborescenceService {
                     .entity("The idAPHP param is not equal to the father id !")
                     .build();            
         }
-        NodePole pole = new NodePole(hospital);
+        NodePole pole = new NodePole(hospital, name);
         Long id = repository.saveNode(pole);
         if(!hospital.addPole(pole)){
             repository.removeNode(pole);
@@ -105,7 +106,6 @@ public class ArborescenceService {
                     .entity("This Pole already exist in the Hospital !")
                     .build();           
         }
-        //repository.refreshNode(hospital);
         return Response.ok("{\"idPoleCreated\":"+ id +"}").build();
     }
     
@@ -118,7 +118,7 @@ public class ArborescenceService {
         @ApiResponse(code = 404, message = "Unknow node.")}
     )
     @Path("/APHP/{idAPHP}/hospitals/{idHospital}/poles/{idPole}/services")
-    public Response createService(@PathParam("idAPHP") Long idAPHP, @PathParam("idHospital") Long idHospital, @PathParam("idPole") Long idPole) {
+    public Response createService(@PathParam("idAPHP") Long idAPHP, @PathParam("idHospital") Long idHospital, @PathParam("idPole") Long idPole, @NotNull String name) {
         NodePole pole = repository.findNode(idPole, NodePole.class);
         if(pole == null){
             return Response.status(Response.Status.BAD_REQUEST)
@@ -140,7 +140,7 @@ public class ArborescenceService {
                     .entity("The idAPHP param is not equal to the father id !")
                     .build(); 
         }
-        NodeService service = new NodeService(pole);
+        NodeService service = new NodeService(pole, name);
         Long id = repository.saveNode(service);
         if(!pole.addService(service)){
             repository.removeNode(service);
@@ -148,7 +148,6 @@ public class ArborescenceService {
                     .entity("This Service already exist in the Pole !")
                     .build();           
         }
-        //repository.refreshNode(pole);
         return Response.ok("{\"idServiceCreated\":"+ id +"}").build();
     }
     
@@ -162,7 +161,7 @@ public class ArborescenceService {
     )
     @Path("/APHP/{idAPHP}/hospitals/{idHospital}/poles/{idPole}/services/{idService}/hUnits")
     public Response createHospitalUnit(@PathParam("idAPHP") Long idAPHP, @PathParam("idHospital") Long idHospital,
-            @PathParam("idPole") Long idPole, @PathParam("idService") Long idService) {
+            @PathParam("idPole") Long idPole, @PathParam("idService") Long idService, @NotNull String name) {
         NodeService service = repository.findNode(idService, NodeService.class);
         if(service == null){
             return Response.status(Response.Status.BAD_REQUEST)
@@ -189,7 +188,7 @@ public class ArborescenceService {
                     .entity("The idAPHP param is not equal to the father id !")
                     .build(); 
         }
-        NodeHU hu = new NodeHU(service);
+        NodeHU hu = new NodeHU(service, name);
         Long id = repository.saveNode(hu);
         if(!service.addHospitalUnit(hu)){
             repository.removeNode(hu);
@@ -211,7 +210,7 @@ public class ArborescenceService {
     )
     @Path("/APHP/{idAPHP}/hospitals/{idHospital}/poles/{idPole}/services/{idService}/hUnits/{idHU}/cUnits")
     public Response createCareUnit(@PathParam("idAPHP") Long idAPHP, @PathParam("idHospital") Long idHospital,
-            @PathParam("idPole") Long idPole, @PathParam("idService") Long idService, @PathParam("idHU") Long idHU) {
+            @PathParam("idPole") Long idPole, @PathParam("idService") Long idService, @PathParam("idHU") Long idHU, @NotNull String name) {
         NodeHU hospitalUnit = repository.findNode(idHU, NodeHU.class);
         if(hospitalUnit == null){
             return Response.status(Response.Status.BAD_REQUEST)
@@ -243,7 +242,7 @@ public class ArborescenceService {
                     .entity("The idAPHP param is not equal to the father id !")
                     .build(); 
         }
-        NodeCU cu = new NodeCU(hospitalUnit);
+        NodeCU cu = new NodeCU(hospitalUnit, name);
         Long id = repository.saveNode(cu);
         if(!hospitalUnit.addCareUnit(cu)){
             repository.removeNode(cu);
@@ -251,7 +250,6 @@ public class ArborescenceService {
                     .entity("This Care Unit already exist in the Hospital Unit !")
                     .build();           
         }
-        //repository.refreshNode(hospitalUnit);
         return Response.ok("{\"idCUCreated\":"+ id +"}").build();
     }
     

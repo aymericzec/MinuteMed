@@ -24,13 +24,13 @@ public class NodeAPHP extends Node {
     @OneToMany(mappedBy = "father")
     private Set<NodeHospital> hospitals;
 
+
     public NodeAPHP() {
         super(FLOOR.name());
     }
-
-    public NodeAPHP(Set<NodeHospital> hospitals) {
-        super(FLOOR.name());
-        this.hospitals = Objects.requireNonNull(hospitals);
+    
+    public NodeAPHP(String name) {
+        super(FLOOR.name(), Objects.requireNonNull(name));
     }
     
     public boolean addHospital(NodeHospital hospital){
