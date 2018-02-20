@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { MinuteMedRouter } from './app.routes';
+import {ButtonModule} from 'primeng/button';
+import {ScheduleModule} from 'primeng/schedule';
 
 
 import { AppComponent } from './app.component';
@@ -20,6 +22,9 @@ import { PosologieComponent } from './posologie/posologie.component';
 import { ConsultposologieComponent } from './consultposologie/consultposologie.component';
 import { PrescriptionComponent } from './prescription/prescription.component';
 import { ConsultprescriptionComponent } from './consultprescription/consultprescription.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { LeftnavbardoctorComponent } from './leftnavbardoctor/leftnavbardoctor.component';
+
 
 
 @NgModule({
@@ -38,13 +43,16 @@ import { ConsultprescriptionComponent } from './consultprescription/consultpresc
     PosologieComponent,
     ConsultposologieComponent,
     PrescriptionComponent,
-    ConsultprescriptionComponent
+    ConsultprescriptionComponent,
+    NavBarComponent,
+    LeftnavbardoctorComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     RouterModule,
     MinuteMedRouter,
+    ButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

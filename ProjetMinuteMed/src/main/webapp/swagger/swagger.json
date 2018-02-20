@@ -2079,12 +2079,12 @@
           "type" : "boolean",
           "default" : false
         },
-        "lastReport" : {
-          "$ref" : "#/definitions/DosageReport"
-        },
         "id" : {
           "type" : "integer",
           "format" : "int64"
+        },
+        "lastReport" : {
+          "$ref" : "#/definitions/DosageReport"
         }
       }
     },
