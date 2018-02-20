@@ -2,7 +2,6 @@ import { Injectable, Optional, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpResponse, HttpRequest } from '@angular/common/http';
-import 'rxjs/Rx';
 
 @Injectable()
 export class AuthService {
@@ -21,7 +20,7 @@ export class AuthService {
 
 
     // Retrieve the object from storage
-    let retrievedObject = localStorage.getItem('jwt');
+    const retrievedObject = localStorage.getItem('jwt');
     this._jwt = retrievedObject;
     return this._jwt;
   }
@@ -78,6 +77,11 @@ export class AuthService {
 
     // return undefined;
   }*/
+
+  login(token: string): void {
+    console.log('Save token :', token);
+    this.jwt = token;
+  }
 
   logout(): void {
     this.jwt = undefined;
