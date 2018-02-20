@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, NgModule } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AuthenticationRESTEndpointService } from '../../apis/services/authentication-restendpoint.service';
 
 import {AuthService} from '../auth.service';
 
@@ -18,16 +19,16 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  constructor(/*private router: Router,
+  constructor(private router: Router,
     private route: ActivatedRoute,
-  private authService: AuthService*/) {
+    private authServiceEndpoint: AuthenticationRESTEndpointService ) {
   }
 
 
   onSubmit() {
     console.log('submit : ' + this.mdUserName + ', ' + this.mdPassword);
-    /*this.authService
-      .login(this.mdUserName, this.mdPassword)
+    this.authServiceEndpoint
+      .authenticateUserResponse({password: this.mdPassword, login: this.mdUserName });/*
       .mergeMap(jwt => this.route.queryParams)
       .map(qp => qp['redirectTo'])
       .subscribe(redirectTo => {
@@ -36,7 +37,6 @@ export class LoginComponent implements OnInit {
           this.router.navigate(url);
         }
       });*/
-
     }
 
   }

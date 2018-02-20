@@ -4,8 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { MinuteMedRouter } from './app.routes';
 import {ButtonModule} from 'primeng/button';
-import {ScheduleModule} from 'primeng/schedule';
-
+import {
+  HttpClient, HttpRequest, HttpResponse, 
+  HttpHeaders, HttpParams, HttpHandler, HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -25,7 +26,10 @@ import { ConsultprescriptionComponent } from './consultprescription/consultpresc
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { LeftnavbardoctorComponent } from './leftnavbardoctor/leftnavbardoctor.component';
 
-
+import { AuthenticationRESTEndpointService } from '../apis/services/authentication-restendpoint.service';
+import { ApiConfiguration } from '../apis/api-configuration';
+import { AuthService } from './auth.service';
+import { AuthGuardService } from './auth.guard.service';
 
 @NgModule({
   declarations: [
@@ -53,8 +57,9 @@ import { LeftnavbardoctorComponent } from './leftnavbardoctor/leftnavbardoctor.c
     RouterModule,
     MinuteMedRouter,
     ButtonModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [ApiConfiguration, AuthenticationRESTEndpointService, AuthService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

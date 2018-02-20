@@ -1,8 +1,7 @@
 import { Injectable, Optional, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { BASE_PATH, COLLECTION_FORMATS } from './apis/variables';
-import { Http, Headers, RequestOptionsArgs, Response, URLSearchParams } from '@angular/http';
+import { HttpClient, HttpResponse, HttpRequest } from '@angular/common/http';
 import 'rxjs/Rx';
 
 @Injectable()
@@ -10,8 +9,8 @@ export class AuthService {
   private _jwt: string;
   protected basePath: string; // = 'http://conference.docker.localhost:90/conference-attendee/api/attendees/login';
 
-  constructor(private router: Router, private http: Http, @Inject(BASE_PATH) basePath: string) {
-    this.basePath = basePath + '/login';
+  constructor(private router: Router, private http: HttpClient) {
+    this.basePath = 'https:localhost:8080/ProjetMinuteMed/api/auth/login';
   }
 
   get jwt(): string {
@@ -43,14 +42,14 @@ export class AuthService {
   get isLoggedIn(): boolean {
     return this.jwt !== undefined;
   }
-
+/*
   login(login: string, password: string): Observable<any> {
 
     let headers: Headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     let body = `login=${login}&password=${password}`;
 
-    let requestOptions: RequestOptionsArgs = {
+    let requestOptions: HttpRequest = {
       headers: headers
     };
 
@@ -78,7 +77,7 @@ export class AuthService {
       });
 
     // return undefined;
-  }
+  }*/
 
   logout(): void {
     this.jwt = undefined;

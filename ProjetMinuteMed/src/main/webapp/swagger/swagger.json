@@ -1075,14 +1075,17 @@
         "operationId" : "getAllMedicalRecord",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "required" : false,
+          "type" : "string"
+        } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/MedicalRecord"
-              }
+              "$ref" : "#/definitions/MedicalRecord"
             }
           },
           "201" : {
@@ -2079,12 +2082,12 @@
           "type" : "boolean",
           "default" : false
         },
+        "lastReport" : {
+          "$ref" : "#/definitions/DosageReport"
+        },
         "id" : {
           "type" : "integer",
           "format" : "int64"
-        },
-        "lastReport" : {
-          "$ref" : "#/definitions/DosageReport"
         }
       }
     },
@@ -2212,20 +2215,23 @@
     },
     "Node" : {
       "type" : "object",
-      "required" : [ "floor" ],
+      "required" : [ "floor", "name" ],
       "properties" : {
         "idNode" : {
           "type" : "integer",
           "format" : "int64"
         },
         "floor" : {
+          "type" : "string"
+        },
+        "name" : {
           "type" : "string"
         }
       }
     },
     "NodeAPHP" : {
       "type" : "object",
-      "required" : [ "floor" ],
+      "required" : [ "floor", "name" ],
       "properties" : {
         "idNode" : {
           "type" : "integer",
@@ -2233,18 +2239,24 @@
         },
         "floor" : {
           "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
         }
       }
     },
     "NodeCU" : {
       "type" : "object",
-      "required" : [ "father", "floor" ],
+      "required" : [ "father", "floor", "name" ],
       "properties" : {
         "idNode" : {
           "type" : "integer",
           "format" : "int64"
         },
         "floor" : {
+          "type" : "string"
+        },
+        "name" : {
           "type" : "string"
         },
         "father" : {
@@ -2254,13 +2266,16 @@
     },
     "NodeHU" : {
       "type" : "object",
-      "required" : [ "father", "floor" ],
+      "required" : [ "father", "floor", "name" ],
       "properties" : {
         "idNode" : {
           "type" : "integer",
           "format" : "int64"
         },
         "floor" : {
+          "type" : "string"
+        },
+        "name" : {
           "type" : "string"
         },
         "father" : {
@@ -2270,13 +2285,16 @@
     },
     "NodeHospital" : {
       "type" : "object",
-      "required" : [ "father", "floor" ],
+      "required" : [ "father", "floor", "name" ],
       "properties" : {
         "idNode" : {
           "type" : "integer",
           "format" : "int64"
         },
         "floor" : {
+          "type" : "string"
+        },
+        "name" : {
           "type" : "string"
         },
         "father" : {
@@ -2286,13 +2304,16 @@
     },
     "NodePole" : {
       "type" : "object",
-      "required" : [ "father", "floor" ],
+      "required" : [ "father", "floor", "name" ],
       "properties" : {
         "idNode" : {
           "type" : "integer",
           "format" : "int64"
         },
         "floor" : {
+          "type" : "string"
+        },
+        "name" : {
           "type" : "string"
         },
         "father" : {
@@ -2302,13 +2323,16 @@
     },
     "NodeService" : {
       "type" : "object",
-      "required" : [ "father", "floor" ],
+      "required" : [ "father", "floor", "name" ],
       "properties" : {
         "idNode" : {
           "type" : "integer",
           "format" : "int64"
         },
         "floor" : {
+          "type" : "string"
+        },
+        "name" : {
           "type" : "string"
         },
         "father" : {

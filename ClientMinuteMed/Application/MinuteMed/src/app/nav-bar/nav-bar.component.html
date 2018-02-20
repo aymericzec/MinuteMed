@@ -17,7 +17,7 @@
         <li><a href="#">Planning</a></li>
         <li><a href="#">Messagerie</a></li>
         <li><a href="#">Profil</a></li>
-        <button pButton type="button" label="Logout" routerLink="/logout" class="ui-button-danger"></button>
+        <button pButton type="button" label="Logout" (click)="logout($event)" value="Click" id="logoutBtn" routerLink="/login" class="ui-button-danger"></button>
       </ul>
     </div>
   </div>
