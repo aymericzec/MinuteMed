@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, NgModule } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationRESTEndpointService } from '../../apis/services/authentication-restendpoint.service';
+import { HttpResponse } from '@angular/common/http';
 
 import {AuthService} from '../auth.service';
 
@@ -21,22 +22,21 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router,
     private route: ActivatedRoute,
-    private authServiceEndpoint: AuthenticationRESTEndpointService ) {
+    private authServiceEndpoint: AuthenticationRESTEndpointService,
+    private authService: AuthService ) {
   }
 
 
   onSubmit() {
-    console.log('submit : ' + this.mdUserName + ', ' + this.mdPassword);
     this.authServiceEndpoint
-      .authenticateUserResponse({password: this.mdPassword, login: this.mdUserName });/*
-      .mergeMap(jwt => this.route.queryParams)
-      .map(qp => qp['redirectTo'])
-      .subscribe(redirectTo => {
+      .authenticateUserResponse({password: this.mdPassword, login: this.mdUserName })
+      .subscribe(response => {     
+        this.authService.login(response.headers.get('Authorization'));
         if (this.authService.isLoggedIn) {
-          const url = redirectTo ? [redirectTo] : ['/'];
-          this.router.navigate(url);
+          this.router.navigate(['/home']);
         }
-      });*/
+      });
     }
 
   }
+

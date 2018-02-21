@@ -6,7 +6,6 @@
 package fr.devsquad.minutemed.arborescence.domain;
 
 import com.fasterxml.jackson.databind.annotation.*;
-import fr.devsquad.minutemed.arborescence.domain.Node;
 import fr.devsquad.minutemed.arborescence.domain.utils.*;
 import fr.devsquad.minutemed.dmp.domain.*;
 import java.util.*;

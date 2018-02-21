@@ -1864,6 +1864,39 @@
         }
       }
     },
+    "/staffs/me" : {
+      "get" : {
+        "tags" : [ "Staff REST Endpoint" ],
+        "summary" : "Get the current staff.",
+        "description" : "",
+        "operationId" : "getCurrentUser",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/MedicalStaff"
+            }
+          },
+          "201" : {
+            "description" : "The MedicalStaff is returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "MedicalStaff not exists"
+          }
+        }
+      }
+    },
     "/staffs/nurses" : {
       "get" : {
         "tags" : [ "Staff REST Endpoint" ],

@@ -6,6 +6,7 @@
 package fr.devsquad.minutemed.staff.rest;
 
 import fr.devsquad.minutemed.jwt.filter.JWTNeeded;
+import fr.devsquad.minutemed.jwt.util.TokenUtils;
 import fr.devsquad.minutemed.staff.domain.*;
 import fr.devsquad.minutemed.staff.repository.StaffRepository;
 import io.swagger.annotations.Api;
@@ -14,12 +15,15 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.*;
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -36,6 +40,9 @@ public class StaffService {
     
     @EJB
     private StaffRepository repository;
+    
+    @Inject
+    private TokenUtils tokenUtils;
     
     
     ///////////////
@@ -171,5 +178,23 @@ public class StaffService {
         return Response.ok(staff).build();
     }
     
+    @GET
+    @Path("/me")
+    @ApiOperation(value = "Get the current staff.", response = MedicalStaff.class)
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "The MedicalStaff is returned."),
+        @ApiResponse(code = 400, message = "Invalid input"),
+        @ApiResponse(code = 404, message = "MedicalStaff not exists")}
+    )
+    @JWTNeeded(groups = {StaffEnum.ALL})
+    public Response getCurrentUser(@HeaderParam(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+        String token = authorizationHeader.substring("Bearer".length()).trim();
+        Long id = tokenUtils.decryptIdFromToken(token);
+        MedicalStaff me = repository.findMedicalStaff(id);
+        if(me == null){
+            return Response.status(Response.Status.NOT_FOUND).entity("Bad id !").build();
+        }
+        return Response.status(Response.Status.OK).entity(me).build();
+    }
     
 }

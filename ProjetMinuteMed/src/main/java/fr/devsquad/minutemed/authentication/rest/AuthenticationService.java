@@ -35,6 +35,7 @@ import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
 import javax.ws.rs.core.UriInfo;
+import org.hibernate.validator.constraints.*;
 
 /**
  *
@@ -80,11 +81,12 @@ public class AuthenticationService {
         @ApiResponse(code = 400, message = "Invalid input")}
     )
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response authenticateUser(@FormParam("login") String login,
-                                     @FormParam("password") String password) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response authenticateUser(@FormParam("login") @NotEmpty String login,
+                                     @FormParam("password") @NotEmpty String password) {
         try {
 
-            logger.info("#### login/password truc : " + login + "/" + password);
+            logger.info("#### login/password : " + login + "/" + password);
 
             // Authenticate the user using the credentials provided
             UserAccount user = authenticationRepository.Authenticate(login, password);
@@ -95,14 +97,16 @@ public class AuthenticationService {
             String token = tokenUtils.issueToken(login, user.getIdAccount(), uriInfo.getAbsolutePath().toString());
 
             // Return the token on the response
-            return Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
+            return Response.ok()
+                    .header(AUTHORIZATION, "Bearer " + token)
+                    .build();
 
         } catch (SecurityException e) {
             return Response.status(UNAUTHORIZED).build();
         }
     }
 
-
+    //TO DO ENLEVER LE LOGOUT 
     @POST
     @ApiOperation(value = "logout to the application")
     @ApiResponses(value = {
@@ -113,7 +117,7 @@ public class AuthenticationService {
     @Path("/logout")
     public Response logout(@HeaderParam(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
         String token = authorizationHeader.substring("Bearer".length()).trim();
-        tokenUtils.removeToken(token);
+        //tokenUtils.removeToken(token);
         
         System.out.println(token);
         return Response.ok(token).build();

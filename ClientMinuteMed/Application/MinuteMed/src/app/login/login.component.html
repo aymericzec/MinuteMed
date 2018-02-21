@@ -71,7 +71,7 @@
       </div>
     </nav>
 
-    <form class="form-signin">
+    <form class="form-signin" (click)="onSubmit()">
       <h2 class="form-signin-heading">Connexion à l'APHP</h2>
       <label for="inputEmail" class="sr-only">Username or Email</label>
       <input  [(ngModel)]="mdUserName" name="username" #name="ngModel" class="form-control" placeholder="Username" required autofocus>
@@ -83,7 +83,7 @@
           <input type="checkbox" value="remember-me"> Remember me
         </label>
       </div>
-      <button class="btn btn-lg btn-primary btn-block" (click)="onSubmit($event)">Sign in</button>
+      <button class="btn btn-lg btn-primary btn-block" type="Submit">Sign in</button>
     </form>
 
   </body>

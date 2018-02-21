@@ -2,7 +2,6 @@ import { Injectable, Optional, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpResponse, HttpRequest } from '@angular/common/http';
-import 'rxjs/Rx';
 
 @Injectable()
 export class AuthService {
@@ -21,13 +20,14 @@ export class AuthService {
 
 
     // Retrieve the object from storage
-    let retrievedObject = localStorage.getItem('jwt');
+    const retrievedObject = localStorage.getItem('jwt');
     this._jwt = retrievedObject;
     return this._jwt;
   }
 
   set jwt(val: string) {
-
+    console.log("set jwt with : " + val);
+    
     if (!val) {
       localStorage.removeItem('jwt');
       this._jwt = undefined;
@@ -39,8 +39,8 @@ export class AuthService {
     this._jwt = val;
   }
 
-  get isLoggedIn(): boolean {
-    return this.jwt !== undefined;
+  get isLoggedIn(): boolean {    
+    return this.jwt !== undefined && this.jwt !== null;
   }
 /*
   login(login: string, password: string): Observable<any> {
@@ -78,6 +78,11 @@ export class AuthService {
 
     // return undefined;
   }*/
+
+  login(token: string): void {
+    console.log('Save token :', token);
+    this.jwt = token;
+  }
 
   logout(): void {
     this.jwt = undefined;
