@@ -218,7 +218,7 @@ export class AuthenticationRESTEndpointService extends BaseService {
       {
         headers: __headers,
         params: new HttpParams().set("login", params.login).set("password",params.password),
-        responseType: 'text'
+        responseType: 'json'
       });
 
     return this.http.request<any>(req).pipe(
@@ -227,7 +227,7 @@ export class AuthenticationRESTEndpointService extends BaseService {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
         
-        return _resp;//.clone({body: _body}) as HttpResponse<void>;
+        return _resp.clone({body: _body}) as HttpResponse<void>;
       })
     );
   }

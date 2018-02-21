@@ -13,6 +13,7 @@ import { MedicalStaff } from '../models/medical-staff';
 import { DataManager } from '../models/data-manager';
 import { Doctor } from '../models/doctor';
 import { Nurse } from '../models/nurse';
+import { AuthService } from '../../app/auth.service';
 
 @Injectable()
 export class StaffRESTEndpointService extends BaseService {
@@ -329,6 +330,36 @@ export class StaffRESTEndpointService extends BaseService {
       map(_r => _r.body)
     );
   }
+
+
+  /**
+   * @param idNurse undefined
+   */
+  getMe(authService: AuthService): Observable<HttpResponse<MedicalStaff>> {
+    let __headers = new HttpHeaders({"Authorization": authService.jwt});
+    let __body: any = null;
+
+    let req = new HttpRequest<MedicalStaff>(
+      "GET",
+      this.rootUrl + `/staffs/me`,
+      __body,
+      {
+        headers: __headers,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      filter(_r => _r instanceof HttpResponse),
+      map(_r => {
+        let _resp = _r as HttpResponse<MedicalStaff>;
+        let _body: MedicalStaff = null;
+        _body = _resp.body as MedicalStaff
+        return _resp.clone({body: _body}) as HttpResponse<MedicalStaff>;
+      })
+    );
+  }
+
+
 }
 
 export module StaffRESTEndpointService {

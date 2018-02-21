@@ -28,25 +28,15 @@ export class LoginComponent implements OnInit {
 
 
   onSubmit() {
-    console.log('submit : ' + this.mdUserName + ', ' + this.mdPassword);
     this.authServiceEndpoint
       .authenticateUserResponse({password: this.mdPassword, login: this.mdUserName })
-      .subscribe(response => {
-        response.headers.getAll('authorization');
-        this.authService.login(response.headers.get('authorization'));
+      .subscribe(response => {     
+        this.authService.login(response.headers.get('Authorization'));
         if (this.authService.isLoggedIn) {
-          this.router.navigate(['/']);
+          this.router.navigate(['/home']);
         }
       });
-      /*
-      .mergeMap(jwt => this.route.queryParams)
-      .map(qp => qp['redirectTo'])
-      .subscribe(redirectTo => {
-        if (this.authService.isLoggedIn) {
-          const url = redirectTo ? [redirectTo] : ['/'];
-          this.router.navigate(url);
-        }
-      });*/
     }
 
   }
+

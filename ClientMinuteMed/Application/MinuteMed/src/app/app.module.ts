@@ -26,7 +26,8 @@ import { ConsultprescriptionComponent } from './consultprescription/consultpresc
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { LeftnavbardoctorComponent } from './leftnavbardoctor/leftnavbardoctor.component';
 
-import { AuthenticationRESTEndpointService } from '../apis/services/authentication-restendpoint.service';
+import { AuthenticationRESTEndpointService, StaffRESTEndpointService, ArborescenceRESTEndpointService, 
+  MedicalRecordsRESTEndpointService, SpecializationsRESTEndpointService } from '../apis/services';
 import { ApiConfiguration } from '../apis/api-configuration';
 import { AuthService } from './auth.service';
 import { AuthGuardService } from './auth.guard.service';
@@ -59,7 +60,9 @@ import { AuthGuardService } from './auth.guard.service';
     ButtonModule,
     HttpClientModule
   ],
-  providers: [ApiConfiguration, AuthenticationRESTEndpointService, AuthService, AuthGuardService],
+  providers: [ApiConfiguration, AuthService, AuthGuardService, AuthenticationRESTEndpointService, 
+    StaffRESTEndpointService, ArborescenceRESTEndpointService, MedicalRecordsRESTEndpointService,
+    SpecializationsRESTEndpointService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
