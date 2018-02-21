@@ -81,6 +81,7 @@ public class AuthenticationService {
         @ApiResponse(code = 400, message = "Invalid input")}
     )
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response authenticateUser(@FormParam("login") @NotEmpty String login,
                                      @FormParam("password") @NotEmpty String password) {
         try {
@@ -105,7 +106,7 @@ public class AuthenticationService {
         }
     }
 
-
+    //TO DO ENLEVER LE LOGOUT 
     @POST
     @ApiOperation(value = "logout to the application")
     @ApiResponses(value = {
@@ -116,7 +117,7 @@ public class AuthenticationService {
     @Path("/logout")
     public Response logout(@HeaderParam(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
         String token = authorizationHeader.substring("Bearer".length()).trim();
-        tokenUtils.removeToken(token);
+        //tokenUtils.removeToken(token);
         
         System.out.println(token);
         return Response.ok(token).build();

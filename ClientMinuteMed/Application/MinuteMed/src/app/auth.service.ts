@@ -26,7 +26,8 @@ export class AuthService {
   }
 
   set jwt(val: string) {
-
+    console.log("set jwt with : " + val);
+    
     if (!val) {
       localStorage.removeItem('jwt');
       this._jwt = undefined;
@@ -38,8 +39,8 @@ export class AuthService {
     this._jwt = val;
   }
 
-  get isLoggedIn(): boolean {
-    return this.jwt !== undefined;
+  get isLoggedIn(): boolean {    
+    return this.jwt !== undefined && this.jwt !== null;
   }
 /*
   login(login: string, password: string): Observable<any> {

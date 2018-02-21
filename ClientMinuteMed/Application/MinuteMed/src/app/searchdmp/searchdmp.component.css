@@ -1,1 +1,25 @@
+h2 {
+  color:#0063af;
+}
 
+label {
+  color:#0063af;
+}
+
+thead {
+  color:#0063af;
+}
+
+.table-striped {
+  background-color: #ceeefb;
+  color:#0063af;
+}
+
+table {
+  border-style: 5px solid blue;
+  border-radius: 8px;
+}
+
+tr {
+  font-size: 16px;
+}
