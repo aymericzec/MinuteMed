@@ -1,3 +1,16 @@
-.decalage {
-  margin-bottom: 10%;
+#navbar-primary {
+  background-color: #02499A;
+}
+#navbar-primary .navbar-nav {
+  width: 100%;
+  text-align: left; 
+}
+#navbar-primary .navbar-nav > li {
+  display: inline-block;
+  float: none;
+  
+}
+#navbar-primary .navbar-nav > li > a {
+  padding-left: 30px;
+  padding-right: 30px;
 }

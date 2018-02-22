@@ -10,6 +10,12 @@ import { StaffRESTEndpointService } from '../../apis/services/staff-restendpoint
 })
 export class NavBarComponent implements OnInit {
 
+  NAVLIST: String[] = [
+    "Accueil",
+    "Test",
+    "Test"
+  ];
+
   me: MedicalStaff;
 
 
@@ -23,6 +29,7 @@ export class NavBarComponent implements OnInit {
       response => {          
         this.me = response.body;
     });
+
   }
 
 
