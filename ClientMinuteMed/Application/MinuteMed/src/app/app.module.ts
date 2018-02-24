@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { MinuteMedRouter } from './app.routes';
 import {ButtonModule} from 'primeng/button';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 import {
   HttpClient, HttpRequest, HttpResponse, 
   HttpHeaders, HttpParams, HttpHandler, HttpClientModule } from '@angular/common/http';

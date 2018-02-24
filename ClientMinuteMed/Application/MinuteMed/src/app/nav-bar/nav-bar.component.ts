@@ -3,18 +3,13 @@ import { AuthService } from '../auth.service';
 import { MedicalStaff } from '../../apis/models';
 import { StaffRESTEndpointService } from '../../apis/services/staff-restendpoint.service';
 
+
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit {
-
-  NAVLIST: String[] = [
-    "Accueil",
-    "Test",
-    "Test"
-  ];
 
   me: MedicalStaff;
 
