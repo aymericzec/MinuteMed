@@ -20,8 +20,8 @@ import { ConsultprescriptionComponent } from './consultprescription/consultpresc
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
-  { path: 'searchdmp', component: SearchDmpComponent, canActivate: [AuthGuardService] },
+  { path: 'home', component: HomeComponent, },
+  { path: 'searchdmp', component: SearchDmpComponent },
   { path: 'dmp', component: DmpComponent, canActivate: [AuthGuardService] },
   { path: 'exam', component: ExamComponent, canActivate: [AuthGuardService] },
   { path: 'createexam', component: CreateexamComponent, canActivate: [AuthGuardService] },
