@@ -1,55 +1,59 @@
-    <nav class="navbar navbar-expand-lg navbar-dark padding10" style="background-color: #02499A;">
-        <img  src="assets/aphp-logo-white.png" width="400" height="80" alt="">        
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse float-right" id="navbarNavDropdown">
-          <ul class="navbar-nav float-right">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Accueil</a>
-            </li>
-            <li *ngIf="me.status != 'DATA_MANAGER'" class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dossiers Médicaux
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="#">Créer un dossier médical</a>
-                <a class="dropdown-item" href="#">Rechercher un dossier médical</a>
-              </div>
-            </li>
-            <li *ngIf="me.status == 'DATA_MANAGER'" class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Gestion des noeuds
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Créer un noeud</a>
-                  <a class="dropdown-item" href="#">Voir l'arborescence</a>
-                </div>
-              </li>
-              <li *ngIf="me.status == 'DATA_MANAGER'" class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Gestion du personnel
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Créer un utilisateur</a>
-                    <a class="dropdown-item" href="#">Rechercher un utilisateur</a>
-                  </div>
-                </li>
-            <li *ngIf="me" class="nav-item dropdown active margeL50">
-                <a *ngIf="me.status == 'DOCTOR'" class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Docteur {{me.lastName}} {{me.firstName}}
-                </a>
-                <a *ngIf="me.status == 'NURSE'" class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Infirmier {{me.lastName}} {{me.firstName}}
-                  </a>
-                  <a div *ngIf="me.status == 'DATA_MANAGER'" class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Admin {{me.lastName}} {{me.firstName}}
-                    </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Voir Profil</a>
-                  <a class="dropdown-item" href="#">Déconnexion</a>
-                </div>
-              </li>
-          </ul>          
+<nav class="navbar navbar-expand-lg navbar-dark padding10" style="background-color: #02499A;">
+  <img src="assets/aphp-logo-white.png" width="400" height="80" alt="">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse float-right" id="navbarNavDropdown">
+    <ul class="navbar-nav float-right">
+      <li class="nav-item">
+        <a class="nav-link" href="#">Accueil</a>
+      </li>
+      <li *ngIf="me.status != 'DATA_MANAGER'" class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dossiers Médicaux
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#">Créer un dossier médical</a>
+          <a class="dropdown-item" href="searchdmp">Rechercher un dossier médical</a>
         </div>
-      </nav>
+      </li>
+      <li *ngIf="me.status == 'DATA_MANAGER'" class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Gestion des noeuds
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#">Créer un noeud</a>
+          <a class="dropdown-item" href="#">Voir l'arborescence</a>
+        </div>
+      </li>
+      <li *ngIf="me.status == 'DATA_MANAGER'" class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Gestion du personnel
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#">Créer un utilisateur</a>
+          <a class="dropdown-item" href="#">Rechercher un utilisateur</a>
+        </div>
+      </li>
+      <li *ngIf="me" class="nav-item dropdown active margeL50">
+        <a *ngIf="me.status == 'DOCTOR'" class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Docteur {{me.lastName}} {{me.firstName}}
+        </a>
+        <a *ngIf="me.status == 'NURSE'" class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Infirmier {{me.lastName}} {{me.firstName}}
+        </a>
+        <a div *ngIf="me.status == 'DATA_MANAGER'" class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Admin {{me.lastName}} {{me.firstName}}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#">Voir Profil</a>
+          <a class="dropdown-item" href="#">Déconnexion</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
