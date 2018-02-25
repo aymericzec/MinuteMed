@@ -8,11 +8,6 @@
     white-space: nowrap;
 }
 
-.nopadding {
-    padding: 0 !important;
-    margin: 0 !important;
- }
-
 .collapse > a, .hidden-sm-down {
     font-size: large;
 }
