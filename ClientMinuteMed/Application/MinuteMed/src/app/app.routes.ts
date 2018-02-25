@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { TestComponent } from './test/test.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuardService } from './auth.guard.service';
 import { SearchDmpComponent } from './searchdmp/searchdmp.component';
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path: 'consultposologie', component: ConsultposologieComponent},
   { path: 'prescription', component: PrescriptionComponent},
   { path: 'consultprescription', component: ConsultprescriptionComponent},
+  { path: 'test', component: TestComponent, canActivate: [AuthGuardService]},
 //  { path: 'ratings/:id', component: VoteComponent, canActivate: [AuthGuardService] }
 ];
 

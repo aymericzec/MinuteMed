@@ -33,6 +33,8 @@ import { AuthenticationRESTEndpointService, StaffRESTEndpointService, Arborescen
 import { ApiConfiguration } from '../apis/api-configuration';
 import { AuthService } from './auth.service';
 import { AuthGuardService } from './auth.guard.service';
+import { TestComponent } from './test/test.component';
+import { LeftbarComponent } from './leftbar/leftbar.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,8 @@ import { AuthGuardService } from './auth.guard.service';
     ConsultprescriptionComponent,
     NavBarComponent,
     LeftnavbardoctorComponent,
+    TestComponent,
+    LeftbarComponent,
   ],
   imports: [
     BrowserModule,

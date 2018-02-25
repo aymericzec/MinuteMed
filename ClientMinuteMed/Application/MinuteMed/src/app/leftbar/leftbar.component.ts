@@ -5,11 +5,11 @@ import { StaffRESTEndpointService } from '../../apis/services/staff-restendpoint
 
 
 @Component({
-  selector: 'app-nav-bar',
-  templateUrl: './nav-bar.component.html',
-  styleUrls: ['./nav-bar.component.css']
+  selector: 'app-leftbar',
+  templateUrl: './leftbar.component.html',
+  styleUrls: ['./leftbar.component.css']
 })
-export class NavBarComponent implements OnInit {
+export class LeftbarComponent implements OnInit {
 
   me: MedicalStaff;
 
@@ -24,13 +24,6 @@ export class NavBarComponent implements OnInit {
       response => {          
         this.me = response.body;
     });
-
-  }
-
-  logout() {
-    this.authService.logout();
-    console.log("logout");
-    
   }
 
 }
