@@ -335,8 +335,8 @@ export class StaffRESTEndpointService extends BaseService {
   /**
    * @param idNurse undefined
    */
-  getMe(authService: AuthService): Observable<HttpResponse<MedicalStaff>> {
-    let __headers = new HttpHeaders({"Authorization": authService.jwt});
+  getMe(): Observable<HttpResponse<MedicalStaff>> {
+    let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<MedicalStaff>(

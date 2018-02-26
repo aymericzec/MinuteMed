@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
       .authenticateUserResponse({password: this.mdPassword, login: this.mdUserName })
       .subscribe(response => {
         this.authService.login(response.headers.get('Authorization'));
-        if (this.authService.isLoggedIn) {
+        if (this.authService.isLoggedIn()) {
           this.router.navigate(['/home']);
         }
       });

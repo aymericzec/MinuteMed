@@ -20,8 +20,8 @@ export class NavBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.staffService.getMe(this.authService).subscribe(
-      response => {          
+    this.staffService.getMe().subscribe(
+      response => {
         this.me = response.body;
     });
 
@@ -29,8 +29,7 @@ export class NavBarComponent implements OnInit {
 
   logout() {
     this.authService.logout();
-    console.log("logout");
-    
+    console.log('logout');
   }
 
 }

@@ -7,7 +7,7 @@ import {ButtonModule} from 'primeng/button';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {
-  HttpClient, HttpRequest, HttpResponse, 
+  HttpClient, HttpRequest, HttpResponse, HTTP_INTERCEPTORS,
   HttpHeaders, HttpParams, HttpHandler, HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -29,13 +29,15 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import {TableModule} from 'primeng/table';
 
 
-import { AuthenticationRESTEndpointService, StaffRESTEndpointService, ArborescenceRESTEndpointService, 
+import { AuthenticationRESTEndpointService, StaffRESTEndpointService, ArborescenceRESTEndpointService,
   MedicalRecordsRESTEndpointService, SpecializationsRESTEndpointService } from '../apis/services';
 import { ApiConfiguration } from '../apis/api-configuration';
 import { AuthService } from './auth.service';
 import { AuthGuardService } from './auth.guard.service';
 import { TestComponent } from './test/test.component';
 import { LeftbarComponent } from './leftbar/leftbar.component';
+import {TokenInterceptor} from './token.interceptor';
+import {JwtInterceptor} from './jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -67,9 +69,19 @@ import { LeftbarComponent } from './leftbar/leftbar.component';
     HttpClientModule,
     TableModule
   ],
-  providers: [ApiConfiguration, AuthService, AuthGuardService, AuthenticationRESTEndpointService, 
+  providers: [ApiConfiguration, AuthService, AuthGuardService, AuthenticationRESTEndpointService,
     StaffRESTEndpointService, ArborescenceRESTEndpointService, MedicalRecordsRESTEndpointService,
-    SpecializationsRESTEndpointService],
+    SpecializationsRESTEndpointService,
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: JwtInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

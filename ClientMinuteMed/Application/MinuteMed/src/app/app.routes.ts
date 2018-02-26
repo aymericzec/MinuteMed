@@ -35,7 +35,6 @@ const routes: Routes = [
   { path: 'prescription', component: PrescriptionComponent, canActivate: [AuthGuardService]},
   { path: 'consultprescription', component: ConsultprescriptionComponent, canActivate: [AuthGuardService]},
   { path: 'test', component: TestComponent, canActivate: [AuthGuardService]},
-//  { path: 'ratings/:id', component: VoteComponent, canActivate: [AuthGuardService] }
 ];
 
 @NgModule({

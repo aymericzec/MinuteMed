@@ -20,8 +20,8 @@ export class LeftbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.staffService.getMe(this.authService).subscribe(
-      response => {          
+    this.staffService.getMe().subscribe(
+      response => {
         this.me = response.body;
     });
   }
