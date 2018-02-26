@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { visitValue } from '@angular/compiler/src/util';
-import { RouterLink } from '@angular/router';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { MedicalRecord } from '../../apis/models';
+import { MedicalRecordsRESTEndpointService } from '../../apis/services';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-searchdmp',
@@ -10,14 +12,30 @@ import { Router } from '@angular/router';
 })
 export class SearchDmpComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  loading: boolean;
 
-  ngOnInit() {
-  }
+    records: MedicalRecord[];
 
-  clickGoogle () {
-    console.log('Salut je rentre');
-    this.router.navigate(['/login']);
-  }
+    cols: any[];
+
+    constructor(private recordService: MedicalRecordsRESTEndpointService,
+                private authService: AuthService) { }
+
+    ngOnInit() {
+        this.loading = true;
+        setTimeout(() => {
+            this.recordService.getAllMedicalRecordResponse(this.authService.jwt).subscribe(response => {
+                this.records = response.body;
+            });
+            this.loading = false;
+        }, 1000);
+
+        this.cols = [
+            { field: 'ss', header: 'Num sécu' },
+            { field: 'firstName', header: 'Prenom' },
+            { field: 'lastName', header: 'Nom' },
+            { field: 'gender', header: 'Genre' }
+        ];
+    }
 
 }

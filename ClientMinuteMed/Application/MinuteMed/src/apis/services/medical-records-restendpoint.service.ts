@@ -28,7 +28,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
    * @param Authorization undefined
    * @return successful operation
    */
-   getAllMedicalRecordResponse(Authorization?: string): Observable<HttpResponse<MedicalRecord>> {
+   getAllMedicalRecordResponse(Authorization?: string): Observable<HttpResponse<MedicalRecord[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -47,9 +47,9 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: MedicalRecord = null;
-        _body = _resp.body as MedicalRecord
-        return _resp.clone({body: _body}) as HttpResponse<MedicalRecord>;
+        let _body: MedicalRecord[] = null;
+        _body = _resp.body as MedicalRecord[]
+        return _resp.clone({body: _body}) as HttpResponse<MedicalRecord[]>;
       })
     );
   }
@@ -58,7 +58,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
    * @param Authorization undefined
    * @return successful operation
    */
-   getAllMedicalRecord(Authorization?: string): Observable<MedicalRecord> {
+   getAllMedicalRecord(Authorization?: string): Observable<MedicalRecord[]> {
     return this.getAllMedicalRecordResponse(Authorization).pipe(
       map(_r => _r.body)
     );

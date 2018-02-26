@@ -1,92 +1,19 @@
 <app-nav-bar></app-nav-bar>
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-3 col-md-2 sidebar">
-      <ul class="nav nav-sidebar">
-        <li class="active">
-          <a href="#">Overview
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
-        <li>Docteur Zecchini Aymeric</li>
-        <br>
-        <li>Né le 02/03/1994</li>
-        <br>
-        <li>à Créteil(94)</li>
-        <br>
-        <li>Rattaché à l'Hôpital:
-          <br>
-          <a>Hopital Henry Mondor</a>
-        </li>
-        <br>
-        <li>Rattaché au Service:
-          <br>
-          <a>Radiologie</a>
-        </li>
-        <br>
-      </ul>
-    </div>
-    <div class="col-sm-9 col-md-10  main">
-      <h2 class="sub-header">Résultat de DMP</h2>
-      <div class="table-responsive">
-        <table class="table table-striped">
-          <tbody>
-            <tr (click)="clickGoogle()">
-              <td>
-                <label>Nom:</label>
-                <input>
-              </td>
-              <td>
-                <label>Prénom:</label>
-                <input/>
-              </td>
-              <td>
-                <label>SS:</label>
-                <input>
-              </td>
-              <td>
-                <button routerLink="/dmp">Filtrer</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Sécurité Sociale</th>
-              <th>Nom</th>
-              <th>Prénom</th>
-              <th>Naissance</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>19402546574896547</td>
-              <td>Aymeric</td>
-              <td>Zecchini</td>
-              <td>020394</td>
-            </tr>
-            <tr>
-              <td>1,002</td>
-              <td>amet</td>
-              <td>consectetur</td>
-              <td>adipiscing</td>
-            </tr>
-            <tr>
-              <td>1,001</td>
-              <td>Lorem</td>
-              <td>ipsum</td>
-              <td>dolor</td>
-            </tr>
-            <tr>
-              <td>1,002</td>
-              <td>amet</td>
-              <td>consectetur</td>
-              <td>adipiscing</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
+
+
+<p-table [columns]="cols" [value]="records" [paginator]="true" [rows]="10">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+        <th *ngFor="let col of columns">
+            {{col.header}}
+        </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr>
+        <td *ngFor="let col of columns">
+            {{rowData[col.field]}}
+        </td>
+    </tr>
+  </ng-template>
+</p-table>

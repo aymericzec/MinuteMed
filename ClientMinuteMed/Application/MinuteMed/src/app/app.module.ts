@@ -26,6 +26,8 @@ import { ConsultposologieComponent } from './consultposologie/consultposologie.c
 import { PrescriptionComponent } from './prescription/prescription.component';
 import { ConsultprescriptionComponent } from './consultprescription/consultprescription.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
+import {TableModule} from 'primeng/table';
+
 
 import { AuthenticationRESTEndpointService, StaffRESTEndpointService, ArborescenceRESTEndpointService, 
   MedicalRecordsRESTEndpointService, SpecializationsRESTEndpointService } from '../apis/services';
@@ -62,7 +64,8 @@ import { LeftbarComponent } from './leftbar/leftbar.component';
     RouterModule,
     MinuteMedRouter,
     ButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    TableModule
   ],
   providers: [ApiConfiguration, AuthService, AuthGuardService, AuthenticationRESTEndpointService, 
     StaffRESTEndpointService, ArborescenceRESTEndpointService, MedicalRecordsRESTEndpointService,
