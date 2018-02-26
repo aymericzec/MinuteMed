@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { MinuteMedRouter } from './app.routes';
 import {ButtonModule} from 'primeng/button';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 import {
   HttpClient, HttpRequest, HttpResponse, 
   HttpHeaders, HttpParams, HttpHandler, HttpClientModule } from '@angular/common/http';
@@ -31,6 +33,8 @@ import { AuthenticationRESTEndpointService, StaffRESTEndpointService, Arborescen
 import { ApiConfiguration } from '../apis/api-configuration';
 import { AuthService } from './auth.service';
 import { AuthGuardService } from './auth.guard.service';
+import { TestComponent } from './test/test.component';
+import { LeftbarComponent } from './leftbar/leftbar.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +55,8 @@ import { AuthGuardService } from './auth.guard.service';
     ConsultprescriptionComponent,
     NavBarComponent,
     LeftnavbardoctorComponent,
+    TestComponent,
+    LeftbarComponent,
   ],
   imports: [
     BrowserModule,
