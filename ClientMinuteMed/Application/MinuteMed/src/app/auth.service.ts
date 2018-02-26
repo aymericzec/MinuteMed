@@ -40,6 +40,11 @@ export class AuthService {
     this._jwt = val;
   }
 
+  isLoggedIn(): boolean {
+    return !(this.jwt === undefined || this.jwt == null);
+  }
+
+  /*
   getTokenExpirationDate(token: string): Date {
     const decoded = jwt_decode(token);
 
@@ -63,7 +68,7 @@ export class AuthService {
     }
     return !(date.valueOf() > new Date().valueOf());
   }
-
+  */
 
   login(token: string): void {
     console.log('Save token :', token);
