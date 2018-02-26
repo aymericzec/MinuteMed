@@ -26,7 +26,6 @@ import { ConsultposologieComponent } from './consultposologie/consultposologie.c
 import { PrescriptionComponent } from './prescription/prescription.component';
 import { ConsultprescriptionComponent } from './consultprescription/consultprescription.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { LeftnavbardoctorComponent } from './leftnavbardoctor/leftnavbardoctor.component';
 
 import { AuthenticationRESTEndpointService, StaffRESTEndpointService, ArborescenceRESTEndpointService, 
   MedicalRecordsRESTEndpointService, SpecializationsRESTEndpointService } from '../apis/services';
@@ -54,7 +53,6 @@ import { LeftbarComponent } from './leftbar/leftbar.component';
     PrescriptionComponent,
     ConsultprescriptionComponent,
     NavBarComponent,
-    LeftnavbardoctorComponent,
     TestComponent,
     LeftbarComponent,
   ],
