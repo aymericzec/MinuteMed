@@ -2,6 +2,7 @@ import { Injectable, Optional, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpResponse, HttpRequest } from '@angular/common/http';
+import * as jwt_decode from 'jwt-decode';
 
 @Injectable()
 export class AuthService {
@@ -26,8 +27,8 @@ export class AuthService {
   }
 
   set jwt(val: string) {
-    console.log("set jwt with : " + val);
-    
+    console.log('set jwt with : ' + val);
+
     if (!val) {
       localStorage.removeItem('jwt');
       this._jwt = undefined;
@@ -39,45 +40,30 @@ export class AuthService {
     this._jwt = val;
   }
 
-  get isLoggedIn(): boolean {    
-    return this.jwt !== undefined && this.jwt !== null;
+  getTokenExpirationDate(token: string): Date {
+    const decoded = jwt_decode(token);
+
+    if (decoded.exp === undefined) {
+      return null;
+    }
+
+    const date = new Date(0);
+    date.setUTCSeconds(decoded.exp);
+    return date;
   }
-/*
-  login(login: string, password: string): Observable<any> {
 
-    let headers: Headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    let body = `login=${login}&password=${password}`;
+  isTokenExpired(token?: string): boolean {
+    if (this.jwt === undefined || this.jwt == null) {
+      return false;
+    }
 
-    let requestOptions: HttpRequest = {
-      headers: headers
-    };
+    const date = this.getTokenExpirationDate(token);
+    if (date === undefined) {
+      return false;
+    }
+    return !(date.valueOf() > new Date().valueOf());
+  }
 
-    return this.http
-      .post(this.basePath, body, requestOptions)
-      .map((response: Response) => {
-        if (response.status !== 200) {
-          return undefined;
-        }
-        response.headers.getAll('authorization');
-
-        this.jwt = response.headers.get('authorization');
-
-        if (!this.jwt) {
-          return undefined;
-        }
-
-
-        return this.jwt;
-
-      })
-      .catch((error: any) => {
-        console.log(`An error has occured : ${error}`);
-        return undefined;
-      });
-
-    // return undefined;
-  }*/
 
   login(token: string): void {
     console.log('Save token :', token);

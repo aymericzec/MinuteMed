@@ -30,9 +30,9 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.authServiceEndpoint
       .authenticateUserResponse({password: this.mdPassword, login: this.mdUserName })
-      .subscribe(response => {     
+      .subscribe(response => {
         this.authService.login(response.headers.get('Authorization'));
-        if (this.authService.isLoggedIn) {
+        if (this.authService.isTokenExpired) {
           this.router.navigate(['/home']);
         }
       });
