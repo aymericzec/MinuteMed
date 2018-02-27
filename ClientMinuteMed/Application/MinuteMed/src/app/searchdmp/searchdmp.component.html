@@ -7,12 +7,18 @@
         <th *ngFor="let col of columns">
             {{col.header}}
         </th>
+        <th>
+            Action
+        </th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-columns="columns">
     <tr>
         <td *ngFor="let col of columns">
             {{rowData[col.field]}}
+        </td>
+        <td>
+            <button pButton type="button" icon="fa-search" iconPos="left" class="reasonButton" routerLink="/dmp/{{rowData.idMedicalRecord}}"></button>
         </td>
     </tr>
   </ng-template>

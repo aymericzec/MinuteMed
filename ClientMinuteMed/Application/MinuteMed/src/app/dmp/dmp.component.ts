@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { MedicalRecord } from '../../apis/models';
+import { MedicalRecordsRESTEndpointService } from '../../apis/services';
 
 @Component({
   selector: 'app-dmp',
@@ -7,9 +10,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DmpComponent implements OnInit {
 
-  constructor() { }
+  private record: MedicalRecord;
+
+  constructor(private recordService: MedicalRecordsRESTEndpointService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.initMedicalRecord();
+  }
+
+  initMedicalRecord(): void {
+    let id = this.route.snapshot.params["id"];
+    this.recordService.getMedicalRecord(id).subscribe(record => {
+      this.record = record;
+    });
   }
 
 }

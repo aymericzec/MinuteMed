@@ -17,6 +17,7 @@ import { ExamComponent } from './exam/exam.component';
 import { SearchDmpComponent } from './searchdmp/searchdmp.component';
 import { DmpComponent } from './dmp/dmp.component';
 import { CreateexamComponent } from './createexam/createexam.component';
+import { CreatedmpComponent } from './createdmp/createdmp.component';
 import { ConsultexamComponent } from './consultexam/consultexam.component';
 import { DiagnosticComponent } from './diagnostic/diagnostic.component';
 import { CreatediagnosticComponent } from './creatediagnostic/creatediagnostic.component';
@@ -47,6 +48,7 @@ import {JwtInterceptor} from './jwt.interceptor';
     ExamComponent,
     SearchDmpComponent,
     DmpComponent,
+    CreatedmpComponent,
     CreateexamComponent,
     ConsultexamComponent,
     DiagnosticComponent,

@@ -8,6 +8,7 @@ import { AuthGuardService } from './auth.guard.service';
 import { SearchDmpComponent } from './searchdmp/searchdmp.component';
 import { DmpComponent } from './dmp/dmp.component';
 import { ExamComponent } from './exam/exam.component';
+import { CreatedmpComponent } from './createdmp/createdmp.component';
 import { CreateexamComponent } from './createexam/createexam.component';
 import { ConsultexamComponent } from './consultexam/consultexam.component';
 import { DiagnosticComponent } from './diagnostic/diagnostic.component';
@@ -23,8 +24,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardService]},
   { path: 'searchdmp', component: SearchDmpComponent, canActivate: [AuthGuardService] },
-  { path: 'dmp', component: DmpComponent, canActivate: [AuthGuardService]},
+  { path: 'dmp/:id', component: DmpComponent, canActivate: [AuthGuardService]},
   { path: 'exam', component: ExamComponent, canActivate: [AuthGuardService]},
+  { path: 'createdmp', component: CreatedmpComponent, canActivate: [AuthGuardService] },
   { path: 'createexam', component: CreateexamComponent, canActivate: [AuthGuardService] },
   { path: 'consultexam', component: ConsultexamComponent, canActivate: [AuthGuardService] },
   { path: 'diagnostic', component: DiagnosticComponent, canActivate: [AuthGuardService] },
