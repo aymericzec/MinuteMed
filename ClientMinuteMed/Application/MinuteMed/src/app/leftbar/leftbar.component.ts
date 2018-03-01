@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { MedicalStaff } from '../../apis/models';
+import { MedicalStaff, MedicalRecord } from '../../apis/models';
 import { StaffRESTEndpointService } from '../../apis/services/staff-restendpoint.service';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -12,14 +13,15 @@ import { StaffRESTEndpointService } from '../../apis/services/staff-restendpoint
 export class LeftbarComponent implements OnInit {
 
   me: MedicalStaff;
-
+  idMedical: number;
 
   constructor(private authService: AuthService,
-    private staffService: StaffRESTEndpointService) {
+    private staffService: StaffRESTEndpointService, private route: ActivatedRoute) {
 
   }
 
   ngOnInit() {
+    this.idMedical = this.route.snapshot.params['id'];
     this.staffService.getMe().subscribe(
       response => {
         this.me = response.body;

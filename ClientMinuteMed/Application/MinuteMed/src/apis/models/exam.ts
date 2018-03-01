@@ -19,5 +19,5 @@ export interface Exam {
 
   draft: boolean;
 
-  doctorAskExamination?: Doctor;
+  doctor?: Doctor;
 }

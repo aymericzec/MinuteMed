@@ -27,7 +27,7 @@ const routes: Routes = [
   { path: 'dmp/:id', component: DmpComponent, canActivate: [AuthGuardService]},
   { path: 'exam', component: ExamComponent, canActivate: [AuthGuardService]},
   { path: 'createdmp', component: CreatedmpComponent, canActivate: [AuthGuardService] },
-  { path: 'createexam', component: CreateexamComponent, canActivate: [AuthGuardService] },
+  { path: 'dmp/:id/createexam', component: CreateexamComponent, canActivate: [AuthGuardService] },
   { path: 'consultexam', component: ConsultexamComponent, canActivate: [AuthGuardService] },
   { path: 'diagnostic', component: DiagnosticComponent, canActivate: [AuthGuardService] },
   { path: 'creatediagnostic', component: CreatediagnosticComponent, canActivate: [AuthGuardService]},
