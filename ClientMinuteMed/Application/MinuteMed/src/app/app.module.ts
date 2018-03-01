@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MinuteMedRouter } from './app.routes';
 import {ButtonModule} from 'primeng/button';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { DatePipe } from '@angular/common';
 
 import {
   HttpClient, HttpRequest, HttpResponse, HTTP_INTERCEPTORS,
@@ -39,6 +40,7 @@ import { TestComponent } from './test/test.component';
 import { LeftbarComponent } from './leftbar/leftbar.component';
 import {TokenInterceptor} from './token.interceptor';
 import {JwtInterceptor} from './jwt.interceptor';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +63,7 @@ import {JwtInterceptor} from './jwt.interceptor';
     NavBarComponent,
     TestComponent,
     LeftbarComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,

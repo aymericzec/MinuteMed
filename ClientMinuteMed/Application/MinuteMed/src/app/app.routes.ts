@@ -18,25 +18,27 @@ import { PosologieComponent } from './posologie/posologie.component';
 import { ConsultposologieComponent } from './consultposologie/consultposologie.component';
 import { PrescriptionComponent } from './prescription/prescription.component';
 import { ConsultprescriptionComponent } from './consultprescription/consultprescription.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
+  { path: '', redirectTo: 'home' , pathMatch: 'full', canActivate: [AuthGuardService] },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardService]},
   { path: 'searchdmp', component: SearchDmpComponent, canActivate: [AuthGuardService] },
-  { path: 'dmp/:id', component: DmpComponent, canActivate: [AuthGuardService]},
-  { path: 'exam', component: ExamComponent, canActivate: [AuthGuardService]},
+  { path: 'dmp/:id', component: DmpComponent, canActivate: [AuthGuardService] },
+  { path: 'exams', component: ExamComponent, canActivate: [AuthGuardService]},
   { path: 'createdmp', component: CreatedmpComponent, canActivate: [AuthGuardService] },
   { path: 'dmp/:id/createexam', component: CreateexamComponent, canActivate: [AuthGuardService] },
+  { path: 'dmp/:id/creatediagnostic', component: CreatediagnosticComponent, canActivate: [AuthGuardService] },
   { path: 'consultexam', component: ConsultexamComponent, canActivate: [AuthGuardService] },
-  { path: 'diagnostic', component: DiagnosticComponent, canActivate: [AuthGuardService] },
-  { path: 'creatediagnostic', component: CreatediagnosticComponent, canActivate: [AuthGuardService]},
+  { path: 'diagnostics', component: DiagnosticComponent, canActivate: [AuthGuardService] },
   { path: 'consultdiagnostic', component: ConsultdiagnosticComponent, canActivate: [AuthGuardService]},
-  { path: 'posologie', component: PosologieComponent, canActivate: [AuthGuardService]},
+  { path: 'posologies', component: PosologieComponent, canActivate: [AuthGuardService]},
   { path: 'consultposologie', component: ConsultposologieComponent, canActivate: [AuthGuardService]},
-  { path: 'prescription', component: PrescriptionComponent, canActivate: [AuthGuardService]},
+  { path: 'prescriptions', component: PrescriptionComponent, canActivate: [AuthGuardService]},
   { path: 'consultprescription', component: ConsultprescriptionComponent, canActivate: [AuthGuardService]},
   { path: 'test', component: TestComponent, canActivate: [AuthGuardService]},
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
