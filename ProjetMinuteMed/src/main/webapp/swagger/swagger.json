@@ -2115,12 +2115,12 @@
           "type" : "boolean",
           "default" : false
         },
-        "lastReport" : {
-          "$ref" : "#/definitions/DosageReport"
-        },
         "id" : {
           "type" : "integer",
           "format" : "int64"
+        },
+        "lastReport" : {
+          "$ref" : "#/definitions/DosageReport"
         }
       }
     },
@@ -2148,11 +2148,14 @@
     },
     "Exam" : {
       "type" : "object",
-      "required" : [ "dateExam", "description", "draft", "medicalRecord", "resultExam", "title" ],
+      "required" : [ "dateExam", "description", "doctor", "draft", "medicalRecord", "resultExam", "title" ],
       "properties" : {
         "idExam" : {
           "type" : "integer",
           "format" : "int64"
+        },
+        "doctor" : {
+          "$ref" : "#/definitions/Doctor"
         },
         "medicalRecord" : {
           "$ref" : "#/definitions/MedicalRecord"
@@ -2172,9 +2175,6 @@
         "draft" : {
           "type" : "boolean",
           "default" : false
-        },
-        "doctorAskExamination" : {
-          "$ref" : "#/definitions/Doctor"
         }
       }
     },
