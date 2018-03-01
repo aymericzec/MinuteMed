@@ -23,6 +23,7 @@ export class SearchDmpComponent implements OnInit {
 
     ngOnInit() {
         this.loading = true;
+
         setTimeout(() => {
             this.recordService.getAllMedicalRecordResponse(this.authService.jwt).subscribe(response => {
                 this.records = response.body;
@@ -31,6 +32,7 @@ export class SearchDmpComponent implements OnInit {
         }, 1000);
 
         this.cols = [
+            { field: 'idMedicalRecord', header: 'Identifiant' },
             { field: 'ss', header: 'Num sécu' },
             { field: 'firstName', header: 'Prenom' },
             { field: 'lastName', header: 'Nom' },

@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 import javax.persistence.TypedQuery;
-
 @Stateless
 public class ExamRepository {
 
@@ -16,7 +15,7 @@ public class ExamRepository {
     private EntityManager em;
 
     public List<Exam> list(Long idMedicalRecord) {
-        TypedQuery<Exam> tq = em.createQuery("SELECT e FROM Exam e WHERE e.medicalRecord = :idMedicalRecord AND e.draft = :draft", Exam.class);
+        TypedQuery<Exam> tq = em.createQuery("SELECT e FROM Exam e WHERE e.medicalRecord.idMedicalRecord = :idMedicalRecord AND e.draft = :draft", Exam.class);
         return tq.setParameter("idMedicalRecord", idMedicalRecord).setParameter("draft", false).getResultList();
     }
 

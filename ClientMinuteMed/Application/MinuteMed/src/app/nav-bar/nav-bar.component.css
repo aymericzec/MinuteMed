@@ -3,6 +3,10 @@
   font-size:large;
 }
 
+.nav-link {
+  font-size: 22px;
+}
+
 .dropdown-item {
   font-size:large;
 }

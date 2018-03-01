@@ -25,7 +25,7 @@
   <li><a href="#contact">Contact</a></li> 
 -->
 
-
+<!--
 <form class="form-signin" (click)="onSubmit()">
   <h2 class="form-signin-heading">Connexion à l'APHP</h2>
   <label for="inputEmail" class="sr-only">Username or Email</label>
@@ -41,3 +41,41 @@
   </div>
   <button class="btn btn-lg btn-primary btn-block" type="Submit">Sign in</button>
 </form>
+-->
+<div id="content">
+  <p><img src="assets/BanniereAPHP.png"/></p>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Connexion à l'APHP</h3>
+          </div>
+          <div class="panel-body">
+            <form class="form-signin" (click)="onSubmit()">
+              <fieldset>
+                <div class="form-group">
+                  <input [(ngModel)]="mdUserName" name="username" #name="ngModel" class="form-control" placeholder="E-mail" name="email" type="text" required>
+                </div>
+                <div class="form-group">
+                  <input [(ngModel)]="mdPassword" name="password" #name="ngModel" class="form-control" placeholder="Password" name="password" type="password" value="" required>
+                </div>
+                <!--<div class="checkbox">
+                  <label>
+                    <input name="remember" type="checkbox" value="Remember Me"> Remember Me
+                  </label>
+                </div>-->
+                <div class="wrapper">
+                  <span class="group-btn">     
+                    <button class="btn btn-primary btn-md" type="Submit">login <i class="fa fa-sign-in"></i></button>
+                  </span>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
