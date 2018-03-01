@@ -10,49 +10,25 @@
       <!-- ici mettre -->
       <h2 class="sub-header">Diagnostiques de Vieira Noro Kévin </h2>
       <br>
-      <div class="table-responsive">
-        <table class="table table-striped">
-          <tbody>
+      <p-table [columns]="cols" [value]="diagnosticsTmp" [paginator]="true" [rows]="10">
+          <ng-template pTemplate="header" let-columns>
             <tr>
-              <td>
-                <label>Date:</label>
-                <input>
-              </td>
-              <td>
-                <button routerLink="/consultexam">Filtrer</button>
-
-              </td>
-              <td>
-                <button routerLink="/creatediagnostic">Créer Diagnostic</button>
-              </td>
+                <th *ngFor="let col of columns">
+                    {{col.header}}
+                </th>
             </tr>
-          </tbody>
-        </table>
-        <table class="table table-striped">
-          <thead>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
             <tr>
-              <th>Date</th>
-              <th>Description</th>
-              <th>Demandé par</th>
-              <th>Réalisé par</th>
-              <th>Effectué à</th>
-              <th>Etat</th>
-
+                <td *ngFor="let col of columns" >
+                    {{rowData[col.field]}}
+                </td>
+                <td>
+                    <button pButton type="button" icon="fa-search" iconPos="left" class="reasonButton" routerLink="/dmp/{{rowData.idMedicalRecord}}"></button>
+                </td>
             </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>14/02/2016</td>
-              <td>Radiologie du fémur</td>
-              <td>Zecchini</td>
-              <td>en attente</td>
-              <td>en attente</td>
-              <td>crée</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <!-- ici mettre -->
+          </ng-template>
+        </p-table>
     </main>
   </div>
 </div>

@@ -17,7 +17,7 @@ public class DiagnosticRepository {
     private EntityManager em;
 
     public List<Diagnostic> list(Long idMedicalRecord) {
-        TypedQuery<Diagnostic> tq = em.createQuery("SELECT d FROM Diagnostic d WHERE d.medicalRecord = :idMedicalRecord AND d.draft = :draft", Diagnostic.class);
+        TypedQuery<Diagnostic> tq = em.createQuery("SELECT d FROM Diagnostic d WHERE d.medicalRecord.idMedicalRecord = :idMedicalRecord AND d.draft = :draft", Diagnostic.class);
         return tq.setParameter("idMedicalRecord", idMedicalRecord).setParameter("draft", false).getResultList();
     }
 
