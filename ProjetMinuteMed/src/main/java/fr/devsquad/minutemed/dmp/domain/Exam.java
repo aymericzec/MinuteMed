@@ -60,10 +60,10 @@ public class Exam implements Serializable {
         return title;
     }
     
-    public Doctor getDoctorAskExamination () {
+    public Doctor getDoctor () {
          return doctor;
     }
- 
+    
     public MedicalRecord getMedicalRecord () {
          return medicalRecord;
     }

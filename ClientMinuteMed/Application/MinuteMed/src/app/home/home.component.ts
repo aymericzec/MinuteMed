@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 import 'fullcalendar';
+import 'fullcalendar/dist/fullcalendar.css';
 
 @Component({
   selector: 'app-home',

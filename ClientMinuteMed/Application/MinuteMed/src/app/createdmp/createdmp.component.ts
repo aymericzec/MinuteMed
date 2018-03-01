@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MedicalRecordsRESTEndpointService } from '../../apis/services';
+import { MedicalRecord } from '../../apis/models';
 
 @Component({
   selector: 'app-createdmp',
@@ -6,10 +8,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./createdmp.component.css']
 })
 export class CreatedmpComponent implements OnInit {
+  mr: MedicalRecord;
 
-  constructor() { }
+
+
+  constructor(private medicalService: MedicalRecordsRESTEndpointService) { }
 
   ngOnInit() {
+
   }
 
+  createDMP () {
+
+  }
 }

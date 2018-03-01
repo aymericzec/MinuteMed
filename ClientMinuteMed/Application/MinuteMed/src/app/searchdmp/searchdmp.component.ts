@@ -23,6 +23,7 @@ export class SearchDmpComponent implements OnInit {
 
     ngOnInit() {
         this.loading = true;
+
         setTimeout(() => {
             this.recordService.getAllMedicalRecordResponse(this.authService.jwt).subscribe(response => {
                 this.records = response.body;
