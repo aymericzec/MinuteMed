@@ -20,7 +20,7 @@ export class ExamComponent implements OnInit {
   ngOnInit() {
       this.medicalService.getExamsResponse(1).subscribe(response => {
           this.exams = response.body;
-          this.exams.forEach(e => e.doctor = e.doctor.firstName + " " + e.doctor.lastName);
+          //this.exams.forEach(e => e.doctor = e.doctor.firstName + " " + e.doctor.lastName);
       });
 
       this.cols = [
