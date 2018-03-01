@@ -4,6 +4,19 @@ h2 {
 
 li {
   list-style:none;
+  font-size: 18px;
+}
+
+/*.col-lg-6 { 
+  margin-left: 100px;
+}*/
+
+.form-group {
+  font-size: 18px;
+}
+
+.form-control {
+  font-size: 18px;
 }
 
 .nopadding {
@@ -31,4 +44,8 @@ li {
        -o-transition-property: width;
           transition-property: width;
 
+}
+
+.btn {
+  font-size: 20px;
 }

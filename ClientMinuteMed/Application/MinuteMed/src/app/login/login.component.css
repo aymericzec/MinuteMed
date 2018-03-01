@@ -1,6 +1,39 @@
 
-.form-signin {
+/*.form-signin {
   max-width: 300px;
   padding-top: 10em;
   margin: 0 auto;
+}*/
+
+#content {
+  background-image: url("../../assets/login.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.container {
+  margin-top: 50px;
+  padding-bottom: 100px;
+}
+
+p {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.panel-title {
+  font-size: 22px;
+  text-align: center;
+}
+
+.form-control {
+  font-size: 20px;
+}
+
+.btn {
+  font-size: 22px;
+}
+
+.wrapper {
+    text-align: center;
 }

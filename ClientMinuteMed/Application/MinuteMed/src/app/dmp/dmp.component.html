@@ -7,7 +7,7 @@
         <a href="#sidebar" data-toggle="collapse"><i class="fa fa-navicon fa-lg"></i></a>
         <hr>
     <h2 class="sub-header">Dossier Médical de {{record.firstName | uppercase}} {{record.lastName | uppercase}}</h2>
-      <div class="col-lg-4">
+      <div class="col-lg-5">
         <img class="img-circle" src="assets/history.png" alt="Generic placeholder image" width="140" height="140">
         <h2>Historique</h2>
         <ul>
@@ -27,56 +27,61 @@
         <div class="container">
           <form>
             <div class="form-group row">
+<<<<<<< HEAD
+              <label class="col-sm-5 col-form-label">ID Dossier:</label>
+              <div class="col-sm-6">
+=======
               <label class="col-sm-3 col-form-label">ID Dossier:</label>
               <div class="col-sm-3">
+>>>>>>> 419376a43ab2617d70296fbf0ad5bdc20f7083f1
                 <input class="form-control" disabled="disabled" value={{record.idMedicalRecord}}>
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-2 col-form-label">Sécurité Sociale:</label>
-              <div class="col-sm-3">
+              <label class="col-sm-5 col-form-label">Sécurité Sociale:</label>
+              <div class="col-sm-6">
                 <input class="form-control" disabled="disabled" value={{record.ss}}>
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-2 col-form-label">Nom:</label>
-              <div class="col-sm-3">
+              <label class="col-sm-5 col-form-label">Nom:</label>
+              <div class="col-sm-6">
                 <input class="form-control" disabled="disabled" value={{record.lastName}}>
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-2 col-form-label">Prénom:</label>
-              <div class="col-sm-3">
+              <label class="col-sm-5 col-form-label">Prénom:</label>
+              <div class="col-sm-6">
                 <input class="form-control" disabled="disabled" value={{record.firstName}}>
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-2 col-form-label">Sexe:</label>
-              <div class="col-sm-3">
+              <label class="col-sm-5 col-form-label">Sexe:</label>
+              <div class="col-sm-6">
                 <input class="form-control" disabled="disabled" value={{record.gender}}>
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-2 col-form-label">Adresse:</label>
-              <div class="col-sm-3">
+              <label class="col-sm-5 col-form-label">Adresse:</label>
+              <div class="col-sm-6">
                 <textarea class="form-control">{{record.address}}</textarea>
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-2 col-form-label">Téléphone:</label>
-              <div class="col-sm-3">
+              <label class="col-sm-5 col-form-label">Téléphone:</label>
+              <div class="col-sm-6">
                 <input class="form-control" value={{record.phoneNumber}}>
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-2 col-form-label">Email:</label>
-              <div class="col-sm-3">
+              <label class="col-sm-5 col-form-label">Email:</label>
+              <div class="col-sm-6">
                 <input class="form-control" value={{record.email}}>
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-2 col-form-label">Unité Affecté:</label>
-              <div class="col-sm-3">
+              <label class="col-sm-5 col-form-label">Unité Affecté:</label>
+              <div class="col-sm-6">
                 <input class="form-control"  disabled="disabled" value={{record.cu.name}}>
               </div>
             </div>
