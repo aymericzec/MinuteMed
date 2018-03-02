@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MedicalStaff } from '../../apis/models';
+import { StaffRESTEndpointService } from '../../apis/services/staff-restendpoint.service';
 import * as $ from 'jquery';
 import 'fullcalendar';
 import 'fullcalendar/dist/fullcalendar.css';
@@ -10,11 +12,16 @@ import 'fullcalendar/dist/fullcalendar.css';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  me : MedicalStaff;
+
+  constructor(private staffService: StaffRESTEndpointService) { }
 
   ngOnInit() {
+    this.staffService.getMe().subscribe(
+      response => {
+        this.me = response.body;
+    });
   }
-
 }
 
 $(function() {
