@@ -34,7 +34,7 @@ const routes: Routes = [
   { path: 'consultdiagnostic', component: ConsultdiagnosticComponent, canActivate: [AuthGuardService]},
   { path: 'posologie', component: PosologieComponent, canActivate: [AuthGuardService]},
   { path: 'consultposologie', component: ConsultposologieComponent, canActivate: [AuthGuardService]},
-  { path: 'prescription', component: PrescriptionComponent, canActivate: [AuthGuardService]},
+  { path: 'dmp/:id/prescriptions', component: PrescriptionComponent, canActivate: [AuthGuardService]},
   { path: 'consultprescription', component: ConsultprescriptionComponent, canActivate: [AuthGuardService]},
   { path: 'test', component: TestComponent, canActivate: [AuthGuardService]},
 ];
