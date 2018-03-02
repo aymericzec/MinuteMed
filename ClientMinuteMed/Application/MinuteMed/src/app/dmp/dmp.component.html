@@ -6,7 +6,7 @@
     <main class="col-md-9 col-xs-11 p-l-2 p-t-2">
         <a href="#sidebar" data-toggle="collapse"><i class="fa fa-navicon fa-lg"></i></a>
         <hr>
-    <h2 class="sub-header">Dossier Médical de {{record.firstName | uppercase}} {{record.lastName | uppercase}}</h2>
+    <h2 *ngIf="record != null" class="sub-header">Dossier Médical de {{record.firstName | uppercase}} {{record.lastName | uppercase}}</h2>
       <div class="col-lg-5">
         <img class="img-circle" src="assets/history.png" alt="Generic placeholder image" width="140" height="140">
         <h2>Historique</h2>
@@ -22,7 +22,7 @@
         <textarea class="form-control">Rien de grave à signaler</textarea>
       </div>
       <!-- /.col-lg-4 -->
-      <div class="col-lg-6">
+      <div *ngIf="record != null" class="col-lg-6">
         <h2>Données sociodémographique</h2>
         <div class="container">
           <form>

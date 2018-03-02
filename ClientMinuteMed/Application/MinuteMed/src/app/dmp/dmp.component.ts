@@ -19,7 +19,7 @@ export class DmpComponent implements OnInit {
   }
 
   initMedicalRecord(): void {
-    let id = this.route.snapshot.params["id"];
+    const id = this.route.snapshot.params['id'];
     this.recordService.getMedicalRecord(id).subscribe(record => {
       this.record = record;
     });
