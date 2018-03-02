@@ -28,14 +28,14 @@ const routes: Routes = [
   { path: 'dmp/:id/exams', component: ExamComponent, canActivate: [AuthGuardService]},
   { path: 'createdmp', component: CreatedmpComponent, canActivate: [AuthGuardService] },
   { path: 'dmp/:id/createexam', component: CreateexamComponent, canActivate: [AuthGuardService] },
-  { path: 'consultexam', component: ConsultexamComponent, canActivate: [AuthGuardService] },
+  { path: 'dmp/:id/exams/:idExam', component: ConsultexamComponent, canActivate: [AuthGuardService] },
   { path: 'dmp/:id/diagnostics', component: DiagnosticComponent, canActivate: [AuthGuardService] },
   { path: 'creatediagnostic', component: CreatediagnosticComponent, canActivate: [AuthGuardService]},
-  { path: 'consultdiagnostic', component: ConsultdiagnosticComponent, canActivate: [AuthGuardService]},
+  { path: 'dmp/:id/diagnostics/:idDiagnostic', component: ConsultdiagnosticComponent, canActivate: [AuthGuardService]},
   { path: 'dmp/:id/posologies', component: PosologieComponent, canActivate: [AuthGuardService]},
-  { path: 'consultposologie', component: ConsultposologieComponent, canActivate: [AuthGuardService]},
+  { path: 'dmp/:id/posologies/:idPosologie', component: ConsultposologieComponent, canActivate: [AuthGuardService]},
   { path: 'dmp/:id/prescriptions', component: PrescriptionComponent, canActivate: [AuthGuardService]},
-  { path: 'consultprescription', component: ConsultprescriptionComponent, canActivate: [AuthGuardService]},
+  { path: 'dmp/:id/prescriptions/:idPrescription', component: ConsultprescriptionComponent, canActivate: [AuthGuardService]},
   { path: 'test', component: TestComponent, canActivate: [AuthGuardService]},
 ];
 

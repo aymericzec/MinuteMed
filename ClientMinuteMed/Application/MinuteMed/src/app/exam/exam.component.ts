@@ -16,15 +16,16 @@ export class ExamComponent implements OnInit {
   colsDoctor: any;
   exams: Exam[];
   examsTmp: any[][];
+  id: number;
   constructor(private medicalService: MedicalRecordsRESTEndpointService,
      private authService: AuthService,
      private staffService: StaffRESTEndpointService,
      private route: ActivatedRoute) { }
 
   ngOnInit() {
-      const id = this.route.snapshot.params['id'];
-      console.log(id);
-      this.medicalService.getExamsResponse(id).subscribe(response => {
+      this.id = this.route.snapshot.params['id'];
+
+      this.medicalService.getExamsResponse(this.id).subscribe(response => {
           this.exams = response.body;
           this.examsTmp = [];
 

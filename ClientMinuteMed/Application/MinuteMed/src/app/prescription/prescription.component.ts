@@ -16,15 +16,17 @@ export class PrescriptionComponent implements OnInit {
   colsDoctor: any;
   prescriptions: Prescription[];
   prescriptionsTmp: any[][];
+  id: number;
+
   constructor(private medicalService: MedicalRecordsRESTEndpointService,
      private authService: AuthService,
      private staffService: StaffRESTEndpointService,
      private route: ActivatedRoute) { }
 
   ngOnInit() {
-      const id = this.route.snapshot.params['id'];
-      console.log(id);
-      this.medicalService.getPrescriptions(id).subscribe(response => {
+      this.id = this.route.snapshot.params['id'];
+
+      this.medicalService.getPrescriptions(this.id).subscribe(response => {
           this.prescriptions = response;
           this.prescriptionsTmp = [];
 
@@ -59,13 +61,5 @@ export class PrescriptionComponent implements OnInit {
         { field: 'idDiagnostic', header: 'Diagnostic rattaché' },
       ];
   }
-
-  /*
-  <th>Date</th>
-  <th>Description</th>
-  <th>Demandé par</th>
-  <th>Réalisé par</th>
-  <th>Effectué à</th>
-  <th>Etat</th>*/
 
 }
