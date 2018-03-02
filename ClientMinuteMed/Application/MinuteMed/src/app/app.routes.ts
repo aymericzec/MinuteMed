@@ -32,7 +32,7 @@ const routes: Routes = [
   { path: 'dmp/:id/diagnostics', component: DiagnosticComponent, canActivate: [AuthGuardService] },
   { path: 'creatediagnostic', component: CreatediagnosticComponent, canActivate: [AuthGuardService]},
   { path: 'consultdiagnostic', component: ConsultdiagnosticComponent, canActivate: [AuthGuardService]},
-  { path: 'posologie', component: PosologieComponent, canActivate: [AuthGuardService]},
+  { path: 'dmp/:id/posologies', component: PosologieComponent, canActivate: [AuthGuardService]},
   { path: 'consultposologie', component: ConsultposologieComponent, canActivate: [AuthGuardService]},
   { path: 'dmp/:id/prescriptions', component: PrescriptionComponent, canActivate: [AuthGuardService]},
   { path: 'consultprescription', component: ConsultprescriptionComponent, canActivate: [AuthGuardService]},
