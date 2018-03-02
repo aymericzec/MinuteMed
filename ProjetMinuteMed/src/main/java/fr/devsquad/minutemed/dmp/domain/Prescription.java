@@ -51,7 +51,7 @@ public class Prescription implements Serializable {
         this.body = Objects.requireNonNull(body);
         this.draft = true;
     }
-
+    
     public long getIdPrescription() {
         return idPrescription;
     }

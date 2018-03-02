@@ -19,7 +19,7 @@ public class DosageRepository {
     private EntityManager em;
 
     public List<Dosage> list(Long idMedicalRecord) {
-        TypedQuery<Dosage> tq = em.createQuery("SELECT d FROM Dosage d WHERE d.medicalRecord = :idMedicalRecord AND d.draft = :draft", Dosage.class);
+        TypedQuery<Dosage> tq = em.createQuery("SELECT d FROM Dosage d WHERE d.medicalRecord.idMedicalRecord = :idMedicalRecord AND d.draft = :draft", Dosage.class);
         return tq.setParameter("idMedicalRecord", idMedicalRecord).setParameter("draft", false).getResultList();
     }
 

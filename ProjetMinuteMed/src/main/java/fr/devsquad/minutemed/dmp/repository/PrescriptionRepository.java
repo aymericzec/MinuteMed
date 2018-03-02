@@ -17,7 +17,7 @@ public class PrescriptionRepository {
     private EntityManager em;
 
     public List<Prescription> list(Long idMedicalRecord) {
-        TypedQuery<Prescription> tq = em.createQuery("SELECT p FROM Prescription p WHERE p.medicalRecord = :idMedicalRecord AND p.draft = :draft", Prescription.class);
+        TypedQuery<Prescription> tq = em.createQuery("SELECT p FROM Prescription p WHERE p.medicalRecord.idMedicalRecord = :idMedicalRecord AND p.draft = :draft", Prescription.class);
         return tq.setParameter("idMedicalRecord", idMedicalRecord).setParameter("draft", false).getResultList();
     }
 
