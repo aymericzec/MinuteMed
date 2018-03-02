@@ -15,15 +15,16 @@ export class PosologieComponent implements OnInit {
   colsDoctor: any;
   dosages: Dosage[];
   dosagesTmp: any[][];
+  id: number;
   constructor(private medicalService: MedicalRecordsRESTEndpointService,
      private authService: AuthService,
      private staffService: StaffRESTEndpointService,
      private route: ActivatedRoute) { }
 
   ngOnInit() {
-      const id = this.route.snapshot.params['id'];
-      console.log(id);
-      this.medicalService.getAllDosagesResponse(id).subscribe(response => {
+      this.id = this.route.snapshot.params['id'];
+
+      this.medicalService.getAllDosagesResponse(this.id).subscribe(response => {
           this.dosages = response.body;
           this.dosagesTmp = [];
 

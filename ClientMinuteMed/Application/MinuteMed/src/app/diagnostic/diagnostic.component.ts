@@ -14,15 +14,16 @@ export class DiagnosticComponent implements OnInit {
   cols: any;
   diagnostics: Diagnostic[];
   diagnosticsTmp: any[][];
+  id: number;
   constructor(private medicalService: MedicalRecordsRESTEndpointService,
      private authService: AuthService,
      private staffService: StaffRESTEndpointService,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
-      const id = this.route.snapshot.params['id'];
+      this.id = this.route.snapshot.params['id'];
 
-      this.medicalService.getDiagnosticsResponse(id).subscribe(response => {
+      this.medicalService.getDiagnosticsResponse(this.id).subscribe(response => {
           this.diagnostics = response.body;
           this.diagnosticsTmp = [];
 
@@ -36,8 +37,8 @@ export class DiagnosticComponent implements OnInit {
             tat['dateExam'] = this.diagnostics[_i].creationDate;
             tat.push('title');
             tat['title'] = this.diagnostics[_i].title;
-            tat.push('diagnostic');
-            tat['diagnostic'] = this.diagnostics[_i].idDiagnostic;
+            tat.push('identifiant');
+            tat['identifiant'] = this.diagnostics[_i].idDiagnostic;
 
             this.diagnosticsTmp.push(tat);
           }
@@ -45,10 +46,12 @@ export class DiagnosticComponent implements OnInit {
 
       this.cols = [
         { field: 'dateExam', header: 'Date de Création ' },
-        { field: 'diagnostic', header: 'Identifiant' },
+        { field: 'identifiant', header: 'Identifiant' },
         { field: 'title', header: 'Titre' },
         { field: 'nameDoctor', header: 'Docteur' },
       ];
   }
+
+
 
 }
