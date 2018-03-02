@@ -7,10 +7,15 @@
 
       <div id="left-menu">
         <p id="doctor"><img src="assets/doctor.png"/></p><br>
-        <p>- Docteur SANCHEZ Julien</p>
-        <p>- Née le 23/04/1973</p>
-        <p>- Affecté à l'Hôpital Henri Mondor</p>
-        <p>- Service réanimation</p>
+        <p>
+          <a *ngIf="me.status == 'DOCTOR'">- Docteur {{me.lastName}} {{me.firstName}}</a>
+          <a *ngIf="me.status == 'NURSE'">- Infirmier {{me.lastName}} {{me.firstName}}</a>
+        </p>
+        <p>- {{me.node.name}}</p>
+        <p>- Née le {{me.birthday}}</p>
+        <p>- {{me.address}}</p>
+        <p>- {{me.phoneNumber}}</p>
+        <p>- {{me.email}}</p>
       </div>
 
       <div id="text-content">
