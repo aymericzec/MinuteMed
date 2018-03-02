@@ -88,6 +88,7 @@ public class MedicalRecordService {
     )
     @JWTNeeded(groups = {StaffEnum.DOCTOR})
     public Response createExam(@PathParam("idRecord") Long idRecord, @NotNull Exam exam) {
+        System.out.println(exam);
         Long id = examRepository.save(exam);
         return Response.ok("{\"idExam\":"+ id +"}").build();
     }

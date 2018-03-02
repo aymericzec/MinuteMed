@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MedicalStaff, MedicalRecord, Exam } from '../../apis/models';
+import { MedicalStaff, MedicalRecord, Exam, ResultExam, Doctor } from '../../apis/models';
 import { AuthService } from '../auth.service';
-import { StaffRESTEndpointService, MedicalRecordsRESTEndpointService } from '../../apis/services';
+import { StaffRESTEndpointService, MedicalRecordsRESTEndpointService, ArborescenceRESTEndpointService } from '../../apis/services';
 import { RouterLinkActive, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -15,30 +15,56 @@ export class CreateexamComponent implements OnInit {
   today: Date;
   md: MedicalRecord;
   idDmp: number;
+  title: string;
+  description: string;
+  dateToday: string;
 
   constructor(private authService: AuthService,
     private staffService: StaffRESTEndpointService,
     private medicalService: MedicalRecordsRESTEndpointService, private route: ActivatedRoute) {}
 
   ngOnInit() {
+    this.idDmp = this.route.snapshot.params['id'];
+
     this.staffService.getMe().subscribe(
       response => {
         this.me = response.body;
     });
 
-    this.medicalService.getMedicalRecord(2).subscribe(
+    this.medicalService.getMedicalRecord(this.idDmp).subscribe(
       response => {
         this.md = response;
     });
 
     this.today = new Date();
-
-    this.idDmp = this.route.snapshot.params['id'];
   }
 
   onSubmitCreate() {
     console.log('Salut ' + this.idDmp);
-    this.medicalService.createExam(this.idDmp);
+    class ExamImpl implements Exam {
+      idExam?: number;
+      medicalRecord: MedicalRecord;
+      title: string;
+      description: string;
+      dateExam: string;
+      resultExam: ResultExam;
+      draft: boolean;
+      doctor?: Doctor;
+      constructor(mr: MedicalRecord, title: string, description: string, dateExam: string, draft: boolean, doctor: Doctor) {
+        this.medicalRecord = mr;
+        this.title = title;
+        this.description = description;
+        this.dateExam = dateExam;
+        this.draft = draft;
+        this.doctor = doctor;
+      }
+    }
+
+    console.log(this.dateToday);
+    const e = new ExamImpl(this.md, this.title, this.description, '12/03/2017', false, this.me);
+
+    console.log(e);
+    this.medicalService.createExam(this.idDmp, e).subscribe();
   }
 
 }

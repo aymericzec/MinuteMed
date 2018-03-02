@@ -597,7 +597,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param idRecord undefined
    */
-   createExam(idRecord: number): Observable<void> {
+   createExam(idRecord: number, exam: Exam): Observable<void> {
     return this.createExamResponse(idRecord).pipe(
       map(_r => _r.body)
     );

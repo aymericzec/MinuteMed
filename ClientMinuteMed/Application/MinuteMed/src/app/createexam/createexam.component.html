@@ -15,25 +15,25 @@
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">Médecin Demandeur:</label>
             <div class="col-sm-5">
-              <input class="form-control" disabled="disabled" placeholder="{{me.lastName}} {{me.firstName}}">
+              <input class="form-control" disabled="disabled" value="{{me.lastName}} {{me.firstName}}">
             </div>
           </div>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">Date de Création:</label>
             <div class="col-sm-5">
-              <input class="form-control" disabled="disabled" placeholder="{{today | date:'dd/MM/yyyy'}}">
+              <input class="form-control" [(ngModel)]="dateToday" name="dateToday" #name="ngModel" disabled="disabled" value="{{today | date:'dd/MM/yyyy'}}">
             </div>
           </div>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">Motif:</label>
             <div class="col-sm-5">
-              <input class="form-control">
+              <input class="form-control" [(ngModel)]="title" name="title" #name="ngModel">
             </div>
           </div>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">Description:</label>
             <div class="col-sm-5">
-              <textarea class="form-control" rows="5"></textarea>
+              <textarea class="form-control" rows="5" [(ngModel)]="description" name="description" #name="ngModel"></textarea>
             </div>
           </div>
 
