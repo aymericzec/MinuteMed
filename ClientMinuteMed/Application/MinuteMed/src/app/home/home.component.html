@@ -6,7 +6,10 @@
       <!--<div id='calendar'></div>-->
 
       <div id="left-menu">
-        <p id="doctor"><img src="assets/doctor.png"/></p><br>
+        <p id="doctor">
+          <a *ngIf="me.gender == 'M'"><img src="assets/doctor.png"/></a>
+          <a *ngIf="me.gender == 'F'"><img src="assets/nurse.png"/></a>
+        </p><br>
         <p>
           <a *ngIf="me.status == 'DOCTOR'">- Docteur {{me.lastName}} {{me.firstName}}</a>
           <a *ngIf="me.status == 'NURSE'">- Infirmier {{me.lastName}} {{me.firstName}}</a>
