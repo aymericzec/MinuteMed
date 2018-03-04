@@ -47,7 +47,7 @@ public class ExamDTO implements Serializable {
         this.title = Objects.requireNonNull(title);
         this.description = Objects.requireNonNull(description);
         this.dateExam = Objects.requireNonNull(dateExam);
-        this.resultExam = Objects.requireNonNull(resultExam);
+        this.resultExam = resultExam;
         this.draft = draft;
     }
     
@@ -68,9 +68,11 @@ public class ExamDTO implements Serializable {
         Objects.requireNonNull(medicalRecordRepository);
         Doctor doctor = staffRepository.findMedicalStaff(doctorId, Doctor.class);
         MedicalRecord record = medicalRecordRepository.find(medicalRecordId);
-        ResultExam resExam = this.resultExam.toResultExam(staffRepository);
         Exam exam = new Exam(title, description, dateExam, doctor, record);
-        exam.setResultExam(resExam);
+        if(this.resultExam != null){
+            ResultExam resExam = this.resultExam.toResultExam(staffRepository);
+            exam.setResultExam(resExam);
+        }
         return exam;
     }
     

@@ -61,7 +61,7 @@ public class DosageDTO implements Serializable {
         this.body = Objects.requireNonNull(body);
         this.beginDosage = Objects.requireNonNull(beginDosage);
         this.endDosage = Objects.requireNonNull(endDosage);
-        this.reports = Objects.requireNonNull(reports);
+        this.reports = reports;
         this.draft = draft;
     }
     
@@ -88,8 +88,10 @@ public class DosageDTO implements Serializable {
         MedicalStaff creator = staffRepository.findMedicalStaff(creatorId);
         Diagnostic diagnostic = diagnosticRepository.find(diagnosticId);
         Dosage dosage = new Dosage(title, creator, record, creationDate, diagnostic, body, beginDosage, endDosage);
-        List<DosageReport> rs = reports.stream().map(dto -> dto.toDosageReport(staffRepository, dosage)).collect(Collectors.toList());
-        rs.stream().forEach(dosage::addReport);
+        if(reports != null){
+            List<DosageReport> rs = reports.stream().map(dto -> dto.toDosageReport(staffRepository, dosage)).collect(Collectors.toList());
+            rs.stream().forEach(dosage::addReport);
+        }
         return dosage;
     }
     
