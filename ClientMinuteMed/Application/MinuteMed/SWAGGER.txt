@@ -1,0 +1,3 @@
+node_modules\.bin\ng-swagger-gen -i swagger.json
+
+prendre le fichier authentication-restendpoint.service et le mettre à la place du nouveau

@@ -48,7 +48,7 @@ export class CreateexamComponent implements OnInit {
       };
 
     console.log(exam);
-    //this.medicalService.createExam(this.idDmp, exam).subscribe( __ => {console.log('Exam created with success !'); });
+    this.medicalService.createExam(this.idDmp, exam).subscribe( __ => {console.log('Exam created with success !'); });
   }
 
 }
