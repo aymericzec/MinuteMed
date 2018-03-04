@@ -229,7 +229,7 @@ public class MedicalRecordService {
     
     
     @GET
-    @ApiOperation(value = "Get all Medical Records.", response = MedicalRecordDTO.class, responseContainer = "Set")
+    @ApiOperation(value = "Get all Medical Records.", response = MedicalRecordDTO.class, responseContainer = "List")
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "All the Medical Records are returned.")}
     )
@@ -239,7 +239,7 @@ public class MedicalRecordService {
         Long id = tokenUtils.decryptIdFromToken(token);
         MedicalStaff doctor = staffRepository.findMedicalStaff(id);
         Node node = doctor.getNode();
-        Set<MedicalRecordDTO> medicalRecords = node.getMedicalRecords().stream().map(MedicalRecordDTO::create).collect(Collectors.toSet());
+        List<MedicalRecordDTO> medicalRecords = node.getMedicalRecords().stream().map(MedicalRecordDTO::create).collect(Collectors.toList());
         return Response.ok(medicalRecords).build();
     }
     
