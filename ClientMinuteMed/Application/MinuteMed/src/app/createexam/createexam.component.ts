@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MedicalStaff, MedicalRecordDTO, ExamDTO, ResultExamDTO, Doctor } from '../api/models';
 import { AuthService } from '../auth.service';
 import { StaffRESTEndpointService, MedicalRecordsRESTEndpointService, ArborescenceRESTEndpointService } from '../api/services';
-import { RouterLinkActive, ActivatedRoute } from '@angular/router';
+import { RouterLinkActive, ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-createexam',
@@ -18,11 +18,13 @@ export class CreateexamComponent implements OnInit {
   title: string;
   description: string;
   dateToday: string;
+  test: string;
 
   constructor(private authService: AuthService,
     private staffService: StaffRESTEndpointService,
     private medicalService: MedicalRecordsRESTEndpointService,
-    private route: ActivatedRoute) {}
+    private route: ActivatedRoute,
+    private router: Router) {}
 
   ngOnInit() {
     this.idDmp = this.route.snapshot.params['id'];
@@ -43,13 +45,16 @@ export class CreateexamComponent implements OnInit {
         'medicalRecordId' : this.md.id,
         'title': this.title,
         'description': this.description,
-        'dateExam': this.today.toString(), // TODO: formatter les dates
+        'dateExam': this.today.toString(),
         'draft': false,
         'doctorId': this.me.idMedicalStaff
       };
 
-    console.log(exam);
-    this.medicalService.createExamResponse(this.idDmp, exam).subscribe( response => { console.log(response.status); });
+    this.medicalService.createExamResponse(this.idDmp, exam).subscribe( response => {
+      if (response.status === 201) {
+        this.router.navigate(['/record/' + 1 + '/exams/' + JSON.parse(response.body)['idExam']]);
+      }
+    });
   }
 
 }

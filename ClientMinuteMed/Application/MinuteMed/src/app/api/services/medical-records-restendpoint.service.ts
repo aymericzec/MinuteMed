@@ -568,7 +568,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param idRecord undefined
    */
-   createExamResponse(idRecord: number, exam:ExamDTO): Observable<HttpResponse<void>> {
+   createExamResponse(idRecord: number, exam:ExamDTO): Observable<HttpResponse<string>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: ExamDTO = exam;
@@ -587,9 +587,9 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: void = null;
+        let _body: string = _resp.body;
 
-        return _resp.clone({body: _body}) as HttpResponse<void>;
+        return _resp.clone({body: _body}) as HttpResponse<string>;
       })
     );
   }
@@ -597,7 +597,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param idRecord undefined
    */
-   createExam(idRecord: number, exam:ExamDTO): Observable<void> {
+   createExam(idRecord: number, exam:ExamDTO): Observable<string> {
     return this.createExamResponse(idRecord, exam).pipe(
       map(_r => _r.body)
     );

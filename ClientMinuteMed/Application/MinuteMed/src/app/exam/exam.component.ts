@@ -27,16 +27,15 @@ export class ExamComponent implements OnInit {
 
       this.medicalService.getExamsResponse(this.id).subscribe(response => {
           this.exams = response.body;
-          console.log(response.body);
           this.examsTmp = [];
 
           for (let _i = 0; _i < this.exams.length; _i++) {
-            this.staffService.getDoctor(this.exams[_i].doctorId).subscribe(responseDoctor => {
+            this.staffService.getMedicalStaff(this.exams[_i].doctorId).subscribe(responseDoctor => {
               let tat: any;
               tat = [];
 
               tat.push('nameDoctor');
-              tat['nameDoctor'] = responseDoctor.firstName + ' ' + responseDoctor.lastName;
+              tat['nameDoctor'] = responseDoctor.firstname + ' ' + responseDoctor.lastname;
 
               tat.push('dateExam');
               tat['dateExam'] = this.exams[_i].dateExam;
@@ -50,11 +49,11 @@ export class ExamComponent implements OnInit {
               tat['description'] = this.exams[_i].description;
               tat.push('description');
 
-              /*
+
               if (isNull(this.exams[_i].resultExam)) {
                 tat['examinator'] = 'Pas encore réalisé';
                 tat['dateExaminator'] = '??/??/????';
-              } else {
+              }/* else {
 
                 tat['examinator'] = this.exams[_i].resultExam.examinator.lastName + ' ' + this.exams[_i].resultExam.examinator.firstName;
                 tat['dateExaminator'] = this.exams[_i].resultExam.examDate;
