@@ -13,6 +13,8 @@ export interface MedicalRecordDTO {
 
   address?: string;
 
+  cityBorn?: string;
+
   birthday?: string;
 
   gender?: string;

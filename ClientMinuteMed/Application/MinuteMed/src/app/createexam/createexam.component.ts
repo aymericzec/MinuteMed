@@ -39,7 +39,8 @@ export class CreateexamComponent implements OnInit {
   }
 
   onSubmitCreate() {
-    const exam: ExamDTO = {'medicalRecordId' : this.md.id,
+    const exam: ExamDTO = {
+        'medicalRecordId' : this.md.id,
         'title': this.title,
         'description': this.description,
         'dateExam': this.today.toString(), // TODO: formatter les dates
@@ -48,7 +49,7 @@ export class CreateexamComponent implements OnInit {
       };
 
     console.log(exam);
-    this.medicalService.createExam(this.idDmp, exam).subscribe( __ => {console.log('Exam created with success !'); });
+    this.medicalService.createExamResponse(this.idDmp, exam).subscribe( response => { console.log(response.status); });
   }
 
 }

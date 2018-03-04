@@ -1,8 +1,9 @@
 /* tslint:disable */
 import { Injectable } from '@angular/core';
 import {
-  HttpClient, HttpRequest, HttpResponse, 
-  HttpHeaders, HttpParams } from '@angular/common/http';
+  HttpClient, HttpRequest, HttpResponse,
+  HttpHeaders, HttpParams
+} from '@angular/common/http';
 import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { Observable } from 'rxjs/Observable';
@@ -15,6 +16,7 @@ import { NodePole } from '../models/node-pole';
 import { NodeService } from '../models/node-service';
 import { NodeHU } from '../models/node-hu';
 import { NodeCU } from '../models/node-cu';
+import { NodeDTO } from '../models/node-dto';
 
 @Injectable()
 export class ArborescenceRESTEndpointService extends BaseService {
@@ -25,10 +27,43 @@ export class ArborescenceRESTEndpointService extends BaseService {
     super(config, http);
   }
 
+
+  getCurrentNodeResponse(): Observable<HttpResponse<NodeDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    let req = new HttpRequest<any>(
+      "GET",
+      this.rootUrl + `/nodes/current`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      filter(_r => _r instanceof HttpResponse),
+      map(_r => {
+        let _resp = _r as HttpResponse<any>;
+        let _body: NodeDTO = null;
+        _body = _resp.body as NodeDTO
+        return _resp.clone({ body: _body }) as HttpResponse<NodeDTO>;
+      })
+    );
+  }
+
+  getCurrentNode(): Observable<NodeDTO> {
+    return this.getCurrentNodeResponse().pipe(
+      map(_r => _r.body)
+    );
+  }
+
+
   /**
    * @return successful operation
    */
-   getAPHPResponse(): Observable<HttpResponse<NodeAPHP>> {
+  getAPHPResponse(): Observable<HttpResponse<NodeAPHP>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -48,7 +83,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
         let _resp = _r as HttpResponse<any>;
         let _body: NodeAPHP = null;
         _body = _resp.body as NodeAPHP
-        return _resp.clone({body: _body}) as HttpResponse<NodeAPHP>;
+        return _resp.clone({ body: _body }) as HttpResponse<NodeAPHP>;
       })
     );
   }
@@ -56,7 +91,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
   /**
    * @return successful operation
    */
-   getAPHP(): Observable<NodeAPHP> {
+  getAPHP(): Observable<NodeAPHP> {
     return this.getAPHPResponse().pipe(
       map(_r => _r.body)
     );
@@ -81,8 +116,8 @@ export class ArborescenceRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-        
-        return _resp.clone({body: _body}) as HttpResponse<void>;
+
+        return _resp.clone({ body: _body }) as HttpResponse<void>;
       })
     );
   }
@@ -96,7 +131,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
   /**
    * @return successful operation
    */
-   getAllHospitalsResponse(): Observable<HttpResponse<NodeHospital[]>> {
+  getAllHospitalsResponse(): Observable<HttpResponse<NodeHospital[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -116,7 +151,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
         let _resp = _r as HttpResponse<any>;
         let _body: NodeHospital[] = null;
         _body = _resp.body as NodeHospital[]
-        return _resp.clone({body: _body}) as HttpResponse<NodeHospital[]>;
+        return _resp.clone({ body: _body }) as HttpResponse<NodeHospital[]>;
       })
     );
   }
@@ -124,7 +159,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
   /**
    * @return successful operation
    */
-   getAllHospitals(): Observable<NodeHospital[]> {
+  getAllHospitals(): Observable<NodeHospital[]> {
     return this.getAllHospitalsResponse().pipe(
       map(_r => _r.body)
     );
@@ -133,7 +168,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
   /**
    * @return successful operation
    */
-   getAllPolesResponse(): Observable<HttpResponse<NodePole[]>> {
+  getAllPolesResponse(): Observable<HttpResponse<NodePole[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -153,7 +188,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
         let _resp = _r as HttpResponse<any>;
         let _body: NodePole[] = null;
         _body = _resp.body as NodePole[]
-        return _resp.clone({body: _body}) as HttpResponse<NodePole[]>;
+        return _resp.clone({ body: _body }) as HttpResponse<NodePole[]>;
       })
     );
   }
@@ -161,7 +196,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
   /**
    * @return successful operation
    */
-   getAllPoles(): Observable<NodePole[]> {
+  getAllPoles(): Observable<NodePole[]> {
     return this.getAllPolesResponse().pipe(
       map(_r => _r.body)
     );
@@ -170,7 +205,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
   /**
    * @return successful operation
    */
-   getAllServicesResponse(): Observable<HttpResponse<NodeService[]>> {
+  getAllServicesResponse(): Observable<HttpResponse<NodeService[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -190,7 +225,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
         let _resp = _r as HttpResponse<any>;
         let _body: NodeService[] = null;
         _body = _resp.body as NodeService[]
-        return _resp.clone({body: _body}) as HttpResponse<NodeService[]>;
+        return _resp.clone({ body: _body }) as HttpResponse<NodeService[]>;
       })
     );
   }
@@ -198,7 +233,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
   /**
    * @return successful operation
    */
-   getAllServices(): Observable<NodeService[]> {
+  getAllServices(): Observable<NodeService[]> {
     return this.getAllServicesResponse().pipe(
       map(_r => _r.body)
     );
@@ -207,7 +242,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
   /**
    * @return successful operation
    */
-   getAllHospitalUnitsResponse(): Observable<HttpResponse<NodeHU[]>> {
+  getAllHospitalUnitsResponse(): Observable<HttpResponse<NodeHU[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -227,7 +262,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
         let _resp = _r as HttpResponse<any>;
         let _body: NodeHU[] = null;
         _body = _resp.body as NodeHU[]
-        return _resp.clone({body: _body}) as HttpResponse<NodeHU[]>;
+        return _resp.clone({ body: _body }) as HttpResponse<NodeHU[]>;
       })
     );
   }
@@ -235,7 +270,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
   /**
    * @return successful operation
    */
-   getAllHospitalUnits(): Observable<NodeHU[]> {
+  getAllHospitalUnits(): Observable<NodeHU[]> {
     return this.getAllHospitalUnitsResponse().pipe(
       map(_r => _r.body)
     );
@@ -244,7 +279,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
   /**
    * @return successful operation
    */
-   getAllCareUnitsResponse(): Observable<HttpResponse<NodeCU[]>> {
+  getAllCareUnitsResponse(): Observable<HttpResponse<NodeCU[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -264,7 +299,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
         let _resp = _r as HttpResponse<any>;
         let _body: NodeCU[] = null;
         _body = _resp.body as NodeCU[]
-        return _resp.clone({body: _body}) as HttpResponse<NodeCU[]>;
+        return _resp.clone({ body: _body }) as HttpResponse<NodeCU[]>;
       })
     );
   }
@@ -272,7 +307,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
   /**
    * @return successful operation
    */
-   getAllCareUnits(): Observable<NodeCU[]> {
+  getAllCareUnits(): Observable<NodeCU[]> {
     return this.getAllCareUnitsResponse().pipe(
       map(_r => _r.body)
     );
@@ -282,7 +317,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    * @param idAPHP undefined
    * @return successful operation
    */
-   getHospitalsResponse(idAPHP: number): Observable<HttpResponse<NodeHospital[]>> {
+  getHospitalsResponse(idAPHP: number): Observable<HttpResponse<NodeHospital[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -303,7 +338,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
         let _resp = _r as HttpResponse<any>;
         let _body: NodeHospital[] = null;
         _body = _resp.body as NodeHospital[]
-        return _resp.clone({body: _body}) as HttpResponse<NodeHospital[]>;
+        return _resp.clone({ body: _body }) as HttpResponse<NodeHospital[]>;
       })
     );
   }
@@ -312,7 +347,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    * @param idAPHP undefined
    * @return successful operation
    */
-   getHospitals(idAPHP: number): Observable<NodeHospital[]> {
+  getHospitals(idAPHP: number): Observable<NodeHospital[]> {
     return this.getHospitalsResponse(idAPHP).pipe(
       map(_r => _r.body)
     );
@@ -321,7 +356,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
   /**
    * @param idAPHP undefined
    */
-   createHospitalResponse(idAPHP: number): Observable<HttpResponse<void>> {
+  createHospitalResponse(idAPHP: number): Observable<HttpResponse<void>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -341,8 +376,8 @@ export class ArborescenceRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-        
-        return _resp.clone({body: _body}) as HttpResponse<void>;
+
+        return _resp.clone({ body: _body }) as HttpResponse<void>;
       })
     );
   }
@@ -350,7 +385,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
   /**
    * @param idAPHP undefined
    */
-   createHospital(idAPHP: number): Observable<void> {
+  createHospital(idAPHP: number): Observable<void> {
     return this.createHospitalResponse(idAPHP).pipe(
       map(_r => _r.body)
     );
@@ -365,7 +400,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * @return successful operation
    */
-   getHospitalResponse(params: ArborescenceRESTEndpointService.GetHospitalParams): Observable<HttpResponse<NodeHospital>> {
+  getHospitalResponse(params: ArborescenceRESTEndpointService.GetHospitalParams): Observable<HttpResponse<NodeHospital>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -387,7 +422,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
         let _resp = _r as HttpResponse<any>;
         let _body: NodeHospital = null;
         _body = _resp.body as NodeHospital
-        return _resp.clone({body: _body}) as HttpResponse<NodeHospital>;
+        return _resp.clone({ body: _body }) as HttpResponse<NodeHospital>;
       })
     );
   }
@@ -401,7 +436,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * @return successful operation
    */
-   getHospital(params: ArborescenceRESTEndpointService.GetHospitalParams): Observable<NodeHospital> {
+  getHospital(params: ArborescenceRESTEndpointService.GetHospitalParams): Observable<NodeHospital> {
     return this.getHospitalResponse(params).pipe(
       map(_r => _r.body)
     );
@@ -416,7 +451,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * @return successful operation
    */
-   getPolesResponse(params: ArborescenceRESTEndpointService.GetPolesParams): Observable<HttpResponse<NodePole[]>> {
+  getPolesResponse(params: ArborescenceRESTEndpointService.GetPolesParams): Observable<HttpResponse<NodePole[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -438,7 +473,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
         let _resp = _r as HttpResponse<any>;
         let _body: NodePole[] = null;
         _body = _resp.body as NodePole[]
-        return _resp.clone({body: _body}) as HttpResponse<NodePole[]>;
+        return _resp.clone({ body: _body }) as HttpResponse<NodePole[]>;
       })
     );
   }
@@ -452,7 +487,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * @return successful operation
    */
-   getPoles(params: ArborescenceRESTEndpointService.GetPolesParams): Observable<NodePole[]> {
+  getPoles(params: ArborescenceRESTEndpointService.GetPolesParams): Observable<NodePole[]> {
     return this.getPolesResponse(params).pipe(
       map(_r => _r.body)
     );
@@ -465,7 +500,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * - `idAPHP`:
    */
-   createPoleResponse(params: ArborescenceRESTEndpointService.CreatePoleParams): Observable<HttpResponse<void>> {
+  createPoleResponse(params: ArborescenceRESTEndpointService.CreatePoleParams): Observable<HttpResponse<void>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -486,8 +521,8 @@ export class ArborescenceRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-        
-        return _resp.clone({body: _body}) as HttpResponse<void>;
+
+        return _resp.clone({ body: _body }) as HttpResponse<void>;
       })
     );
   }
@@ -499,7 +534,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * - `idAPHP`:
    */
-   createPole(params: ArborescenceRESTEndpointService.CreatePoleParams): Observable<void> {
+  createPole(params: ArborescenceRESTEndpointService.CreatePoleParams): Observable<void> {
     return this.createPoleResponse(params).pipe(
       map(_r => _r.body)
     );
@@ -516,7 +551,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * @return successful operation
    */
-   getPoleResponse(params: ArborescenceRESTEndpointService.GetPoleParams): Observable<HttpResponse<NodePole>> {
+  getPoleResponse(params: ArborescenceRESTEndpointService.GetPoleParams): Observable<HttpResponse<NodePole>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -539,7 +574,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
         let _resp = _r as HttpResponse<any>;
         let _body: NodePole = null;
         _body = _resp.body as NodePole
-        return _resp.clone({body: _body}) as HttpResponse<NodePole>;
+        return _resp.clone({ body: _body }) as HttpResponse<NodePole>;
       })
     );
   }
@@ -555,7 +590,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * @return successful operation
    */
-   getPole(params: ArborescenceRESTEndpointService.GetPoleParams): Observable<NodePole> {
+  getPole(params: ArborescenceRESTEndpointService.GetPoleParams): Observable<NodePole> {
     return this.getPoleResponse(params).pipe(
       map(_r => _r.body)
     );
@@ -572,7 +607,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * @return successful operation
    */
-   getServicesResponse(params: ArborescenceRESTEndpointService.GetServicesParams): Observable<HttpResponse<NodeService[]>> {
+  getServicesResponse(params: ArborescenceRESTEndpointService.GetServicesParams): Observable<HttpResponse<NodeService[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -595,7 +630,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
         let _resp = _r as HttpResponse<any>;
         let _body: NodeService[] = null;
         _body = _resp.body as NodeService[]
-        return _resp.clone({body: _body}) as HttpResponse<NodeService[]>;
+        return _resp.clone({ body: _body }) as HttpResponse<NodeService[]>;
       })
     );
   }
@@ -611,7 +646,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * @return successful operation
    */
-   getServices(params: ArborescenceRESTEndpointService.GetServicesParams): Observable<NodeService[]> {
+  getServices(params: ArborescenceRESTEndpointService.GetServicesParams): Observable<NodeService[]> {
     return this.getServicesResponse(params).pipe(
       map(_r => _r.body)
     );
@@ -626,7 +661,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * - `idAPHP`:
    */
-   createServiceResponse(params: ArborescenceRESTEndpointService.CreateServiceParams): Observable<HttpResponse<void>> {
+  createServiceResponse(params: ArborescenceRESTEndpointService.CreateServiceParams): Observable<HttpResponse<void>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -648,8 +683,8 @@ export class ArborescenceRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-        
-        return _resp.clone({body: _body}) as HttpResponse<void>;
+
+        return _resp.clone({ body: _body }) as HttpResponse<void>;
       })
     );
   }
@@ -663,7 +698,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * - `idAPHP`:
    */
-   createService(params: ArborescenceRESTEndpointService.CreateServiceParams): Observable<void> {
+  createService(params: ArborescenceRESTEndpointService.CreateServiceParams): Observable<void> {
     return this.createServiceResponse(params).pipe(
       map(_r => _r.body)
     );
@@ -682,7 +717,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * @return successful operation
    */
-   getServiceResponse(params: ArborescenceRESTEndpointService.GetServiceParams): Observable<HttpResponse<NodeService>> {
+  getServiceResponse(params: ArborescenceRESTEndpointService.GetServiceParams): Observable<HttpResponse<NodeService>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -706,7 +741,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
         let _resp = _r as HttpResponse<any>;
         let _body: NodeService = null;
         _body = _resp.body as NodeService
-        return _resp.clone({body: _body}) as HttpResponse<NodeService>;
+        return _resp.clone({ body: _body }) as HttpResponse<NodeService>;
       })
     );
   }
@@ -724,7 +759,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * @return successful operation
    */
-   getService(params: ArborescenceRESTEndpointService.GetServiceParams): Observable<NodeService> {
+  getService(params: ArborescenceRESTEndpointService.GetServiceParams): Observable<NodeService> {
     return this.getServiceResponse(params).pipe(
       map(_r => _r.body)
     );
@@ -743,7 +778,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * @return successful operation
    */
-   getHospitalUnitsResponse(params: ArborescenceRESTEndpointService.GetHospitalUnitsParams): Observable<HttpResponse<NodeHU[]>> {
+  getHospitalUnitsResponse(params: ArborescenceRESTEndpointService.GetHospitalUnitsParams): Observable<HttpResponse<NodeHU[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -767,7 +802,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
         let _resp = _r as HttpResponse<any>;
         let _body: NodeHU[] = null;
         _body = _resp.body as NodeHU[]
-        return _resp.clone({body: _body}) as HttpResponse<NodeHU[]>;
+        return _resp.clone({ body: _body }) as HttpResponse<NodeHU[]>;
       })
     );
   }
@@ -785,7 +820,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * @return successful operation
    */
-   getHospitalUnits(params: ArborescenceRESTEndpointService.GetHospitalUnitsParams): Observable<NodeHU[]> {
+  getHospitalUnits(params: ArborescenceRESTEndpointService.GetHospitalUnitsParams): Observable<NodeHU[]> {
     return this.getHospitalUnitsResponse(params).pipe(
       map(_r => _r.body)
     );
@@ -802,7 +837,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * - `idAPHP`:
    */
-   createHospitalUnitResponse(params: ArborescenceRESTEndpointService.CreateHospitalUnitParams): Observable<HttpResponse<void>> {
+  createHospitalUnitResponse(params: ArborescenceRESTEndpointService.CreateHospitalUnitParams): Observable<HttpResponse<void>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -825,8 +860,8 @@ export class ArborescenceRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-        
-        return _resp.clone({body: _body}) as HttpResponse<void>;
+
+        return _resp.clone({ body: _body }) as HttpResponse<void>;
       })
     );
   }
@@ -842,7 +877,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * - `idAPHP`:
    */
-   createHospitalUnit(params: ArborescenceRESTEndpointService.CreateHospitalUnitParams): Observable<void> {
+  createHospitalUnit(params: ArborescenceRESTEndpointService.CreateHospitalUnitParams): Observable<void> {
     return this.createHospitalUnitResponse(params).pipe(
       map(_r => _r.body)
     );
@@ -863,7 +898,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * @return successful operation
    */
-   getHospitalUnitResponse(params: ArborescenceRESTEndpointService.GetHospitalUnitParams): Observable<HttpResponse<NodeHU>> {
+  getHospitalUnitResponse(params: ArborescenceRESTEndpointService.GetHospitalUnitParams): Observable<HttpResponse<NodeHU>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -888,7 +923,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
         let _resp = _r as HttpResponse<any>;
         let _body: NodeHU = null;
         _body = _resp.body as NodeHU
-        return _resp.clone({body: _body}) as HttpResponse<NodeHU>;
+        return _resp.clone({ body: _body }) as HttpResponse<NodeHU>;
       })
     );
   }
@@ -908,7 +943,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * @return successful operation
    */
-   getHospitalUnit(params: ArborescenceRESTEndpointService.GetHospitalUnitParams): Observable<NodeHU> {
+  getHospitalUnit(params: ArborescenceRESTEndpointService.GetHospitalUnitParams): Observable<NodeHU> {
     return this.getHospitalUnitResponse(params).pipe(
       map(_r => _r.body)
     );
@@ -929,7 +964,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * @return successful operation
    */
-   getCareUnitsResponse(params: ArborescenceRESTEndpointService.GetCareUnitsParams): Observable<HttpResponse<NodeCU[]>> {
+  getCareUnitsResponse(params: ArborescenceRESTEndpointService.GetCareUnitsParams): Observable<HttpResponse<NodeCU[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -954,7 +989,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
         let _resp = _r as HttpResponse<any>;
         let _body: NodeCU[] = null;
         _body = _resp.body as NodeCU[]
-        return _resp.clone({body: _body}) as HttpResponse<NodeCU[]>;
+        return _resp.clone({ body: _body }) as HttpResponse<NodeCU[]>;
       })
     );
   }
@@ -974,7 +1009,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * @return successful operation
    */
-   getCareUnits(params: ArborescenceRESTEndpointService.GetCareUnitsParams): Observable<NodeCU[]> {
+  getCareUnits(params: ArborescenceRESTEndpointService.GetCareUnitsParams): Observable<NodeCU[]> {
     return this.getCareUnitsResponse(params).pipe(
       map(_r => _r.body)
     );
@@ -993,7 +1028,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * - `idAPHP`:
    */
-   createCareUnitResponse(params: ArborescenceRESTEndpointService.CreateCareUnitParams): Observable<HttpResponse<void>> {
+  createCareUnitResponse(params: ArborescenceRESTEndpointService.CreateCareUnitParams): Observable<HttpResponse<void>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -1017,8 +1052,8 @@ export class ArborescenceRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-        
-        return _resp.clone({body: _body}) as HttpResponse<void>;
+
+        return _resp.clone({ body: _body }) as HttpResponse<void>;
       })
     );
   }
@@ -1036,7 +1071,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * - `idAPHP`:
    */
-   createCareUnit(params: ArborescenceRESTEndpointService.CreateCareUnitParams): Observable<void> {
+  createCareUnit(params: ArborescenceRESTEndpointService.CreateCareUnitParams): Observable<void> {
     return this.createCareUnitResponse(params).pipe(
       map(_r => _r.body)
     );
@@ -1059,7 +1094,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * @return successful operation
    */
-   getCareUnitResponse(params: ArborescenceRESTEndpointService.GetCareUnitParams): Observable<HttpResponse<NodeCU>> {
+  getCareUnitResponse(params: ArborescenceRESTEndpointService.GetCareUnitParams): Observable<HttpResponse<NodeCU>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -1085,7 +1120,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
         let _resp = _r as HttpResponse<any>;
         let _body: NodeCU = null;
         _body = _resp.body as NodeCU
-        return _resp.clone({body: _body}) as HttpResponse<NodeCU>;
+        return _resp.clone({ body: _body }) as HttpResponse<NodeCU>;
       })
     );
   }
@@ -1107,7 +1142,7 @@ export class ArborescenceRESTEndpointService extends BaseService {
    *
    * @return successful operation
    */
-   getCareUnit(params: ArborescenceRESTEndpointService.GetCareUnitParams): Observable<NodeCU> {
+  getCareUnit(params: ArborescenceRESTEndpointService.GetCareUnitParams): Observable<NodeCU> {
     return this.getCareUnitResponse(params).pipe(
       map(_r => _r.body)
     );
@@ -1119,7 +1154,7 @@ export module ArborescenceRESTEndpointService {
   /**
    * Parameters for getHospital
    */
-   export interface GetHospitalParams {
+  export interface GetHospitalParams {
 
     idHospital: number;
 
@@ -1129,7 +1164,7 @@ export module ArborescenceRESTEndpointService {
   /**
    * Parameters for getPoles
    */
-   export interface GetPolesParams {
+  export interface GetPolesParams {
 
     idHospital: number;
 
@@ -1139,7 +1174,7 @@ export module ArborescenceRESTEndpointService {
   /**
    * Parameters for createPole
    */
-   export interface CreatePoleParams {
+  export interface CreatePoleParams {
 
     idHospital: number;
 
@@ -1149,7 +1184,7 @@ export module ArborescenceRESTEndpointService {
   /**
    * Parameters for getPole
    */
-   export interface GetPoleParams {
+  export interface GetPoleParams {
 
     idPole: number;
 
@@ -1161,7 +1196,7 @@ export module ArborescenceRESTEndpointService {
   /**
    * Parameters for getServices
    */
-   export interface GetServicesParams {
+  export interface GetServicesParams {
 
     idPole: number;
 
@@ -1173,7 +1208,7 @@ export module ArborescenceRESTEndpointService {
   /**
    * Parameters for createService
    */
-   export interface CreateServiceParams {
+  export interface CreateServiceParams {
 
     idPole: number;
 
@@ -1185,7 +1220,7 @@ export module ArborescenceRESTEndpointService {
   /**
    * Parameters for getService
    */
-   export interface GetServiceParams {
+  export interface GetServiceParams {
 
     idService: number;
 
@@ -1199,7 +1234,7 @@ export module ArborescenceRESTEndpointService {
   /**
    * Parameters for getHospitalUnits
    */
-   export interface GetHospitalUnitsParams {
+  export interface GetHospitalUnitsParams {
 
     idService: number;
 
@@ -1213,7 +1248,7 @@ export module ArborescenceRESTEndpointService {
   /**
    * Parameters for createHospitalUnit
    */
-   export interface CreateHospitalUnitParams {
+  export interface CreateHospitalUnitParams {
 
     idService: number;
 
@@ -1227,7 +1262,7 @@ export module ArborescenceRESTEndpointService {
   /**
    * Parameters for getHospitalUnit
    */
-   export interface GetHospitalUnitParams {
+  export interface GetHospitalUnitParams {
 
     idService: number;
 
@@ -1243,7 +1278,7 @@ export module ArborescenceRESTEndpointService {
   /**
    * Parameters for getCareUnits
    */
-   export interface GetCareUnitsParams {
+  export interface GetCareUnitsParams {
 
     idService: number;
 
@@ -1259,7 +1294,7 @@ export module ArborescenceRESTEndpointService {
   /**
    * Parameters for createCareUnit
    */
-   export interface CreateCareUnitParams {
+  export interface CreateCareUnitParams {
 
     idService: number;
 
@@ -1275,7 +1310,7 @@ export module ArborescenceRESTEndpointService {
   /**
    * Parameters for getCareUnit
    */
-   export interface GetCareUnitParams {
+  export interface GetCareUnitParams {
 
     idService: number;
 

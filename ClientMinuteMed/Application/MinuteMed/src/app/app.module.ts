@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { MinuteMedRouter } from './app.routes';
 import {ButtonModule} from 'primeng/button';
+import {TreeModule} from 'primeng/tree';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 
@@ -72,7 +73,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     MinuteMedRouter,
     ButtonModule,
     HttpClientModule,
-    TableModule
+    TableModule,
+    TreeModule,
   ],
   providers: [ApiConfiguration, AuthService, AuthGuardService, AuthenticationRESTEndpointService,
     StaffRESTEndpointService, ArborescenceRESTEndpointService, MedicalRecordsRESTEndpointService,

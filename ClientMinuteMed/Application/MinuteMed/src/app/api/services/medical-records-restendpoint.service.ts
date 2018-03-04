@@ -64,11 +64,11 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
     );
   }
 
-  createMedicalRecordResponse(): Observable<HttpResponse<void>> {
+  createMedicalRecordResponse(record: MedicalRecordDTO): Observable<HttpResponse<void>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
-    let __body: any = null;
-    let req = new HttpRequest<any>(
+    let __body: MedicalRecordDTO = record;
+    let req = new HttpRequest<MedicalRecordDTO>(
       "POST",
       this.rootUrl + `/records`,
       __body,
@@ -78,7 +78,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
         responseType: 'text'
       });
 
-    return this.http.request<any>(req).pipe(
+    return this.http.request<MedicalRecordDTO>(req).pipe(
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
@@ -89,8 +89,8 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
     );
   }
 
-  createMedicalRecord(): Observable<void> {
-    return this.createMedicalRecordResponse().pipe(
+  createMedicalRecord(record: MedicalRecordDTO): Observable<void> {
+    return this.createMedicalRecordResponse(record).pipe(
       map(_r => _r.body)
     );
   }

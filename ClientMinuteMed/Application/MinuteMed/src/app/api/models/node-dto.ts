@@ -7,4 +7,6 @@ export interface NodeDTO {
   floor?: string;
 
   name?: string;
+
+  childrens?: NodeDTO[];
 }
