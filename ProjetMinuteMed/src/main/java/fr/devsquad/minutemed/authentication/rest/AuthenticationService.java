@@ -10,7 +10,7 @@ import fr.devsquad.minutemed.arborescence.repository.*;
 import fr.devsquad.minutemed.authentication.domain.*;
 import fr.devsquad.minutemed.authentication.repository.AuthenticationRepository;
 import fr.devsquad.minutemed.jwt.filter.JWTNeeded;
-import fr.devsquad.minutemed.jwt.util.TokenUtils;
+import fr.devsquad.minutemed.jwt.utils.TokenUtils;
 import fr.devsquad.minutemed.specialization.domain.*;
 import fr.devsquad.minutemed.specialization.repository.*;
 import fr.devsquad.minutemed.staff.domain.*;
@@ -178,7 +178,6 @@ public class AuthenticationService {
         if(node == null){
             return Response.status(Response.Status.BAD_REQUEST).entity("Invalid Node !").build();
         }
-        System.out.println("OKOK");
         Doctor doctor = MedicalStaffFactory.createDoctorFromCreator(doctorCreator, node, specialization);
         Long doctorID = staffRepository.saveMedicalStaff(doctor);
         UserAccount userAccount = authenticationRepository.saveDoctorAccount(doctorID, doctorCreator);

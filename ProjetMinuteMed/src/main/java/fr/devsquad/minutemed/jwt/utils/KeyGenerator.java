@@ -1,4 +1,4 @@
-package fr.devsquad.minutemed.jwt.util;
+package fr.devsquad.minutemed.jwt.utils;
 
 import java.security.Key;
 

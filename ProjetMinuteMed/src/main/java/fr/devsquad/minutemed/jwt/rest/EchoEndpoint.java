@@ -1,8 +1,8 @@
 package fr.devsquad.minutemed.jwt.rest;
 
 import fr.devsquad.minutemed.authentication.domain.UserAccount;
-import fr.devsquad.minutemed.jwt.util.KeyGenerator;
-import fr.devsquad.minutemed.jwt.util.SimpleKeyGenerator;
+import fr.devsquad.minutemed.jwt.utils.KeyGenerator;
+import fr.devsquad.minutemed.jwt.utils.SimpleKeyGenerator;
 import fr.devsquad.minutemed.staff.domain.StaffEnum;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

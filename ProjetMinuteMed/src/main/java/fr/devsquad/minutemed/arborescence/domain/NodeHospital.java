@@ -25,7 +25,6 @@ public class NodeHospital extends Node {
     
     @NotNull
     @ManyToOne
-    @JsonSerialize(using = CustomNodeSerializer.class)
     private NodeAPHP father;
     
     @OneToMany(mappedBy = "father")

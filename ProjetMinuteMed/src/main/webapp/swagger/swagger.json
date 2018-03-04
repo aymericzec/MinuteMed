@@ -1085,7 +1085,7 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/MedicalRecord"
+              "$ref" : "#/definitions/MedicalRecordDTO"
             }
           },
           "201" : {
@@ -1129,7 +1129,7 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/MedicalRecord"
+              "$ref" : "#/definitions/MedicalRecordDTO"
             }
           },
           "201" : {
@@ -1191,7 +1191,7 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/definitions/Diagnostic"
+                "$ref" : "#/definitions/DiagnosticDTO"
               }
             }
           },
@@ -1255,7 +1255,7 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/Diagnostic"
+              "$ref" : "#/definitions/DiagnosticDTO"
             }
           },
           "201" : {
@@ -1323,7 +1323,7 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/definitions/Dosage"
+                "$ref" : "#/definitions/DosageDTO"
               }
             }
           },
@@ -1387,7 +1387,7 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/Dosage"
+              "$ref" : "#/definitions/DosageDTO"
             }
           },
           "201" : {
@@ -1455,7 +1455,7 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/definitions/Exam"
+                "$ref" : "#/definitions/ExamDTO"
               }
             }
           },
@@ -1519,7 +1519,7 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/Exam"
+              "$ref" : "#/definitions/ExamDTO"
             }
           },
           "201" : {
@@ -1587,7 +1587,7 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/definitions/Prescription"
+                "$ref" : "#/definitions/PrescriptionDTO"
               }
             }
           },
@@ -1651,7 +1651,7 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/Prescription"
+              "$ref" : "#/definitions/PrescriptionDTO"
             }
           },
           "201" : {
@@ -2014,19 +2014,20 @@
         }
       }
     },
-    "Diagnostic" : {
+    "DiagnosticDTO" : {
       "type" : "object",
-      "required" : [ "body", "creationDate", "creator", "draft", "medicalRecord", "title" ],
       "properties" : {
-        "idDiagnostic" : {
+        "id" : {
           "type" : "integer",
           "format" : "int64"
         },
-        "creator" : {
-          "$ref" : "#/definitions/Doctor"
+        "creatorId" : {
+          "type" : "integer",
+          "format" : "int64"
         },
-        "medicalRecord" : {
-          "$ref" : "#/definitions/MedicalRecord"
+        "medicalRecordId" : {
+          "type" : "integer",
+          "format" : "int64"
         },
         "title" : {
           "type" : "string"
@@ -2077,33 +2078,33 @@
         }
       }
     },
-    "Dosage" : {
+    "DosageDTO" : {
       "type" : "object",
-      "required" : [ "beginDosage", "body", "creationDate", "creator", "diagnostic", "draft", "endDosage", "medicalRecord", "reports", "title" ],
       "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "medicalRecordId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "creatorId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "diagnosticId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
         "title" : {
           "type" : "string"
-        },
-        "creator" : {
-          "$ref" : "#/definitions/Doctor"
-        },
-        "medicalRecord" : {
-          "$ref" : "#/definitions/MedicalRecord"
         },
         "creationDate" : {
           "type" : "string"
         },
-        "diagnostic" : {
-          "$ref" : "#/definitions/Diagnostic"
-        },
         "body" : {
           "type" : "string"
-        },
-        "reports" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/DosageReport"
-          }
         },
         "beginDosage" : {
           "type" : "string"
@@ -2111,54 +2112,55 @@
         "endDosage" : {
           "type" : "string"
         },
+        "reports" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/DosageReportDTO"
+          }
+        },
         "draft" : {
           "type" : "boolean",
           "default" : false
-        },
+        }
+      }
+    },
+    "DosageReportDTO" : {
+      "type" : "object",
+      "properties" : {
         "id" : {
           "type" : "integer",
           "format" : "int64"
         },
-        "lastReport" : {
-          "$ref" : "#/definitions/DosageReport"
-        }
-      }
-    },
-    "DosageReport" : {
-      "type" : "object",
-      "required" : [ "body", "creationDate", "dosage", "supervisor" ],
-      "properties" : {
-        "idReportDosage" : {
+        "supervisorId" : {
           "type" : "integer",
           "format" : "int64"
         },
-        "supervisor" : {
-          "$ref" : "#/definitions/MedicalStaff"
+        "dosageId" : {
+          "type" : "integer",
+          "format" : "int64"
         },
         "creationDate" : {
           "type" : "string"
         },
         "body" : {
           "type" : "string"
-        },
-        "dosage" : {
-          "$ref" : "#/definitions/Dosage"
         }
       }
     },
-    "Exam" : {
+    "ExamDTO" : {
       "type" : "object",
-      "required" : [ "dateExam", "description", "doctor", "draft", "medicalRecord", "resultExam", "title" ],
       "properties" : {
-        "idExam" : {
+        "id" : {
           "type" : "integer",
           "format" : "int64"
         },
-        "doctor" : {
-          "$ref" : "#/definitions/Doctor"
+        "doctorId" : {
+          "type" : "integer",
+          "format" : "int64"
         },
-        "medicalRecord" : {
-          "$ref" : "#/definitions/MedicalRecord"
+        "medicalRecordId" : {
+          "type" : "integer",
+          "format" : "int64"
         },
         "title" : {
           "type" : "string"
@@ -2170,7 +2172,7 @@
           "type" : "string"
         },
         "resultExam" : {
-          "$ref" : "#/definitions/ResultExam"
+          "$ref" : "#/definitions/ResultExamDTO"
         },
         "draft" : {
           "type" : "boolean",
@@ -2178,11 +2180,10 @@
         }
       }
     },
-    "MedicalRecord" : {
+    "MedicalRecordDTO" : {
       "type" : "object",
-      "required" : [ "address", "birthday", "email", "firstName", "gender", "lastName", "phoneNumber", "ss" ],
       "properties" : {
-        "idMedicalRecord" : {
+        "id" : {
           "type" : "integer",
           "format" : "int64"
         },
@@ -2210,8 +2211,8 @@
         "email" : {
           "type" : "string"
         },
-        "cu" : {
-          "$ref" : "#/definitions/NodeCU"
+        "careUnit" : {
+          "$ref" : "#/definitions/NodeDTO"
         }
       }
     },
@@ -2294,6 +2295,21 @@
         },
         "father" : {
           "$ref" : "#/definitions/NodeHU"
+        }
+      }
+    },
+    "NodeDTO" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "floor" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
         }
       }
     },
@@ -2404,22 +2420,24 @@
         }
       }
     },
-    "Prescription" : {
+    "PrescriptionDTO" : {
       "type" : "object",
-      "required" : [ "body", "creationDate", "draft", "medicalRecord", "prescriptor", "title" ],
       "properties" : {
-        "idPrescription" : {
+        "id" : {
           "type" : "integer",
           "format" : "int64"
         },
-        "prescriptor" : {
-          "$ref" : "#/definitions/Doctor"
+        "prescriptorId" : {
+          "type" : "integer",
+          "format" : "int64"
         },
-        "medicalRecord" : {
-          "$ref" : "#/definitions/MedicalRecord"
+        "medicalRecordId" : {
+          "type" : "integer",
+          "format" : "int64"
         },
-        "diagnostic" : {
-          "$ref" : "#/definitions/Diagnostic"
+        "diagnosticId" : {
+          "type" : "integer",
+          "format" : "int64"
         },
         "title" : {
           "type" : "string"
@@ -2436,28 +2454,22 @@
         }
       }
     },
-    "ResultExam" : {
+    "ResultExamDTO" : {
       "type" : "object",
-      "required" : [ "body", "examDate", "examinator" ],
       "properties" : {
-        "idResultExam" : {
+        "id" : {
           "type" : "integer",
           "format" : "int64"
         },
-        "examinator" : {
-          "$ref" : "#/definitions/Doctor"
+        "examinatorId" : {
+          "type" : "integer",
+          "format" : "int64"
         },
         "examDate" : {
           "type" : "string"
         },
         "body" : {
           "type" : "string"
-        },
-        "files" : {
-          "type" : "array",
-          "items" : {
-            "type" : "string"
-          }
         }
       }
     },

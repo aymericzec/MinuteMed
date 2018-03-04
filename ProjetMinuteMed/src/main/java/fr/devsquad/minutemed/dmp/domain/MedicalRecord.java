@@ -14,7 +14,7 @@ public class MedicalRecord implements Serializable {
     public static final String FIND_ALL_MEDICAL_RECORD = "MedicalRecord.findAllMedicalRecord";
     
     @Id @GeneratedValue
-    private long idMedicalRecord;
+    private Long idMedicalRecord;
     
     @NotNull
     private String ss;

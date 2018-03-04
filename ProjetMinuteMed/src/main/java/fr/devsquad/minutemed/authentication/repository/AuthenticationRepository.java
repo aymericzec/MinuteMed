@@ -4,7 +4,7 @@ import fr.devsquad.minutemed.authentication.domain.DataManagerCreator;
 import fr.devsquad.minutemed.authentication.domain.DoctorCreator;
 import fr.devsquad.minutemed.authentication.domain.NurseCreator;
 import fr.devsquad.minutemed.authentication.domain.UserAccount;
-import fr.devsquad.minutemed.jwt.util.PasswordUtils;
+import fr.devsquad.minutemed.jwt.utils.PasswordUtils;
 import fr.devsquad.minutemed.staff.domain.StaffEnum;
 import java.util.*;
 

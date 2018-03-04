@@ -25,7 +25,6 @@ public class NodePole extends Node {
     
     @NotNull
     @ManyToOne
-    @JsonSerialize(using = CustomNodeSerializer.class)
     private NodeHospital father;
     
     @OneToMany(mappedBy = "father")

@@ -2,6 +2,7 @@ package fr.devsquad.minutemed.dmp.domain;
 
 import static fr.devsquad.minutemed.dmp.domain.ResultExam.FIND_ALL_RESULT_EXAM;
 import fr.devsquad.minutemed.staff.domain.Doctor;
+import fr.devsquad.minutemed.staff.domain.MedicalStaff;
 import java.io.Serializable;
 import java.util.*;
 import javax.persistence.*;
@@ -17,7 +18,7 @@ public class ResultExam implements Serializable {
     
     @NotNull
     @ManyToOne
-    private Doctor examinator;
+    private MedicalStaff examinator;
     
     @NotNull
     private String examDate;
@@ -31,7 +32,7 @@ public class ResultExam implements Serializable {
     
     public ResultExam() { }
 
-    public ResultExam(Doctor examinator, String examDate, String body) {
+    public ResultExam(MedicalStaff examinator, String examDate, String body) {
         this.examinator = Objects.requireNonNull(examinator);
         this.examDate = Objects.requireNonNull(examDate);
         this.body = Objects.requireNonNull(body);
@@ -41,7 +42,7 @@ public class ResultExam implements Serializable {
         return idResultExam;
     }
 
-    public Doctor getExaminator() {
+    public MedicalStaff getExaminator() {
         return examinator;
     }
 

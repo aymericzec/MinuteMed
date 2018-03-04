@@ -33,8 +33,9 @@ public class DosageReport implements Serializable {
     
     public DosageReport () { }
 
-    public DosageReport(MedicalStaff supervisor, String creationDate, String body) {
+    public DosageReport(MedicalStaff supervisor, Dosage dosage, String creationDate, String body) {
         this.supervisor = Objects.requireNonNull(supervisor);
+        this.dosage = Objects.requireNonNull(dosage);
         this.creationDate = Objects.requireNonNull(creationDate);
         this.body = Objects.requireNonNull(body);
     }

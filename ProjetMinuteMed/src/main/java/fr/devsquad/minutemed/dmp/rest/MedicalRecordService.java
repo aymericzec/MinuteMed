@@ -1,11 +1,12 @@
 package fr.devsquad.minutemed.dmp.rest;
 
 import fr.devsquad.minutemed.arborescence.domain.Node;
-import fr.devsquad.minutemed.dmp.domain.Dosage;
-import fr.devsquad.minutemed.dmp.domain.Diagnostic;
-import fr.devsquad.minutemed.dmp.domain.Prescription;
-import fr.devsquad.minutemed.dmp.domain.MedicalRecord;
-import fr.devsquad.minutemed.dmp.domain.Exam;
+import fr.devsquad.minutemed.arborescence.repository.ArborescenceRepository;
+import fr.devsquad.minutemed.dmp.domain.dto.DiagnosticDTO;
+import fr.devsquad.minutemed.dmp.domain.dto.DosageDTO;
+import fr.devsquad.minutemed.dmp.domain.dto.ExamDTO;
+import fr.devsquad.minutemed.dmp.domain.dto.MedicalRecordDTO;
+import fr.devsquad.minutemed.dmp.domain.dto.PrescriptionDTO;
 import fr.devsquad.minutemed.dmp.repository.DiagnosticRepository;
 import fr.devsquad.minutemed.dmp.repository.DosageRepository;
 import fr.devsquad.minutemed.dmp.repository.ExamRepository;
@@ -14,12 +15,13 @@ import fr.devsquad.minutemed.dmp.repository.PrescriptionRepository;
 import fr.devsquad.minutemed.dmp.repository.ReportDosageRepository;
 import fr.devsquad.minutemed.dmp.repository.ResultExamRepository;
 import fr.devsquad.minutemed.jwt.filter.JWTNeeded;
-import fr.devsquad.minutemed.jwt.util.TokenUtils;
+import fr.devsquad.minutemed.jwt.utils.TokenUtils;
 import fr.devsquad.minutemed.staff.domain.MedicalStaff;
 import fr.devsquad.minutemed.staff.domain.StaffEnum;
 import fr.devsquad.minutemed.staff.repository.StaffRepository;
 import io.swagger.annotations.*;
 import java.util.*;
+import java.util.stream.Collectors;
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.validation.constraints.*;
@@ -37,16 +39,25 @@ public class MedicalRecordService {
     
     @EJB
     private MedicalRecordRepository medicalRecordRepository;
+    
+    @EJB
+    private ArborescenceRepository arborescenceRepository;
+    
     @EJB
     private ExamRepository examRepository;
+    
     @EJB
     private DiagnosticRepository diagnosticRepository;
+    
     @EJB
     private PrescriptionRepository prescriptionRepository;
+    
     @EJB
     private DosageRepository dosageRepository;
+    
     @EJB
     private ResultExamRepository resultExamRepository;
+    
     @EJB
     private ReportDosageRepository reportDosageRepository;
     
@@ -63,18 +74,19 @@ public class MedicalRecordService {
     //// POST
     /////////////////////////
     
+    
     @POST
     @ApiOperation(value = "Create a medical record")
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "The Medical Record is created !"),
         @ApiResponse(code = 400, message = "Invalid input")}
     )
-    @JWTNeeded(groups = {StaffEnum.DOCTOR})
-    public Response createMedicalRecord(@NotNull MedicalRecord medicalRecord) {
+    @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
+    public Response createMedicalRecord(@NotNull MedicalRecordDTO medicalRecord) {
         if(medicalRecordRepository.findBySS(medicalRecord.getSs()) != null){
             return Response.status(Response.Status.CONFLICT).entity("This MedicalRecord already exist !").build();
         }
-        Long id = medicalRecordRepository.save(medicalRecord);
+        Long id = medicalRecordRepository.save(medicalRecord.toMedicalRecord(arborescenceRepository));
         return Response.status(Response.Status.CREATED).entity("{\"idMedicalRecord\":"+ id +"}").build();
     }
     
@@ -86,11 +98,10 @@ public class MedicalRecordService {
         @ApiResponse(code = 201, message = "The Exam is created !"),
         @ApiResponse(code = 400, message = "Invalid input")}
     )
-    @JWTNeeded(groups = {StaffEnum.DOCTOR})
-    public Response createExam(@PathParam("idRecord") Long idRecord, @NotNull Exam exam) {
-        System.out.println(exam);
-        Long id = examRepository.save(exam);
-        return Response.ok("{\"idExam\":"+ id +"}").build();
+    @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
+    public Response createExam(@PathParam("idRecord") Long idRecord, @NotNull ExamDTO exam) {
+        Long id = examRepository.save(exam.toExam(staffRepository, medicalRecordRepository));
+        return Response.status(Response.Status.CREATED).entity("{\"idExam\":"+ id +"}").build();
     }
     
     @POST
@@ -100,10 +111,10 @@ public class MedicalRecordService {
         @ApiResponse(code = 201, message = "The Diagnostic is created !"),
         @ApiResponse(code = 400, message = "Invalid input")}
     )
-    @JWTNeeded(groups = {StaffEnum.DOCTOR})
-    public Response createDiagnostic(@PathParam("idRecord") Long idRecord, @NotNull Diagnostic diagnostic) {
-        Long id = diagnosticRepository.save(diagnostic);
-        return Response.ok("{\"idDiagnostic\":"+ id +"}").build();
+    @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
+    public Response createDiagnostic(@PathParam("idRecord") Long idRecord, @NotNull DiagnosticDTO diagnostic) {
+        Long id = diagnosticRepository.save(diagnostic.toDiagnostic(staffRepository, medicalRecordRepository));
+        return Response.status(Response.Status.CREATED).entity("{\"idDiagnostic\":"+ id +"}").build();
     }
     
     @POST
@@ -113,10 +124,10 @@ public class MedicalRecordService {
         @ApiResponse(code = 201, message = "The Prescription is created !"),
         @ApiResponse(code = 400, message = "Invalid input")}
     )
-    @JWTNeeded(groups = {StaffEnum.DOCTOR})
-    public Response createPrescription(@PathParam("idRecord") Long idRecord, @NotNull Prescription prescription) {
-        Long id = prescriptionRepository.save(prescription);
-        return Response.ok("{\"idPrescription\":"+ id +"}").build();
+    @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
+    public Response createPrescription(@PathParam("idRecord") Long idRecord, @NotNull PrescriptionDTO prescription) {
+        Long id = prescriptionRepository.save(prescription.toPrescription(staffRepository, medicalRecordRepository, diagnosticRepository));
+        return Response.status(Response.Status.CREATED).entity("{\"idPrescription\":"+ id +"}").build();
     }
     
     @POST
@@ -126,10 +137,10 @@ public class MedicalRecordService {
         @ApiResponse(code = 201, message = "The Dosage is created !"),
         @ApiResponse(code = 400, message = "Invalid input")}
     )
-    @JWTNeeded(groups = {StaffEnum.DOCTOR})
-    public Response createDosage(@PathParam("idRecord") Long idRecord, @NotNull Dosage dosage) {
-        Long id = dosageRepository.save(dosage);
-        return Response.ok("{\"idDosage\":"+ id +"}").build();
+    @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
+    public Response createDosage(@PathParam("idRecord") Long idRecord, @NotNull DosageDTO dosage) {
+        Long id = dosageRepository.save(dosage.toDosage(staffRepository, medicalRecordRepository, diagnosticRepository));
+        return Response.status(Response.Status.CREATED).entity("{\"idDosage\":"+ id +"}").build();
     }
     
     
@@ -218,7 +229,7 @@ public class MedicalRecordService {
     
     
     @GET
-    @ApiOperation(value = "Get all Medical Records.", response = MedicalRecord.class, responseContainer = "Set")
+    @ApiOperation(value = "Get all Medical Records.", response = MedicalRecordDTO.class, responseContainer = "Set")
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "All the Medical Records are returned.")}
     )
@@ -228,13 +239,13 @@ public class MedicalRecordService {
         Long id = tokenUtils.decryptIdFromToken(token);
         MedicalStaff doctor = staffRepository.findMedicalStaff(id);
         Node node = doctor.getNode();
-        Set<MedicalRecord> medicalRecords = node.getMedicalRecords();
+        Set<MedicalRecordDTO> medicalRecords = node.getMedicalRecords().stream().map(MedicalRecordDTO::create).collect(Collectors.toSet());
         return Response.ok(medicalRecords).build();
     }
     
     @GET
     @Path("{idRecord}")
-    @ApiOperation(value = "Get a specific Medical Record.", response = MedicalRecord.class)
+    @ApiOperation(value = "Get a specific Medical Record.", response = MedicalRecordDTO.class)
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "The Medical Record is returned."),
         @ApiResponse(code = 400, message = "Invalid input"),
@@ -242,13 +253,13 @@ public class MedicalRecordService {
     )
     @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
     public Response getMedicalRecord(@PathParam("idRecord") Long idRecord) {
-        MedicalRecord m = medicalRecordRepository.find(idRecord);
+        MedicalRecordDTO m = MedicalRecordDTO.create(medicalRecordRepository.find(idRecord));
         return Response.ok(m).build();
     }
     
     @GET
     @Path("{idRecord}/exams")
-    @ApiOperation(value = "Get all Exams associated with a Medical Record.", response = Exam.class, responseContainer = "List")
+    @ApiOperation(value = "Get all Exams associated with a Medical Record.", response = ExamDTO.class, responseContainer = "List")
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "All the Exams are returned."),
         @ApiResponse(code = 400, message = "Invalid input"),
@@ -256,13 +267,13 @@ public class MedicalRecordService {
     )
     @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
     public Response getExams(@PathParam("idRecord") Long idRecord) {
-        List<Exam> exams = examRepository.list(idRecord);
+        List<ExamDTO> exams = examRepository.list(idRecord).stream().map(ExamDTO::create).collect(Collectors.toList());
         return Response.ok(exams).build();
     }
     
     @GET
     @Path("{idRecord}/exams/{idExam}")
-    @ApiOperation(value = "Get a specific Exam associated with a Medical Record.", response = Exam.class)
+    @ApiOperation(value = "Get a specific Exam associated with a Medical Record.", response = ExamDTO.class)
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "The Exam is returned."),
         @ApiResponse(code = 400, message = "Invalid input"),
@@ -270,13 +281,13 @@ public class MedicalRecordService {
     )
     @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
     public Response getExam(@PathParam("idRecord") Long idRecord, @PathParam("idExam") Long idExam) {
-        Exam exam = examRepository.find(idExam);
+        ExamDTO exam = ExamDTO.create(examRepository.find(idExam));
         return Response.ok(exam).build();
     }
     
     @GET
     @Path("{idRecord}/diagnostics")
-    @ApiOperation(value = "Get all Diagnostics associated with a Medical Record.", response = Diagnostic.class, responseContainer = "List")
+    @ApiOperation(value = "Get all Diagnostics associated with a Medical Record.", response = DiagnosticDTO.class, responseContainer = "List")
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "All the Diagnostics are returned."),
         @ApiResponse(code = 400, message = "Invalid input"),
@@ -284,14 +295,14 @@ public class MedicalRecordService {
     )
     @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
     public Response getDiagnostics(@PathParam("idRecord") Long idRecord) {
-        List<Diagnostic> diagnostics = diagnosticRepository.list(idRecord);
+        List<DiagnosticDTO> diagnostics = diagnosticRepository.list(idRecord).stream().map(DiagnosticDTO::create).collect(Collectors.toList());
         return Response.ok(diagnostics).build();
     }
     
     
     @GET
     @Path("{idRecord}/diagnostics/{idDiagnostic}")
-    @ApiOperation(value = "Get a specific Diagnostic associated with a Medical Record.", response = Diagnostic.class)
+    @ApiOperation(value = "Get a specific Diagnostic associated with a Medical Record.", response = DiagnosticDTO.class)
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "The Diagnostic is returned."),
         @ApiResponse(code = 400, message = "Invalid input"),
@@ -299,13 +310,13 @@ public class MedicalRecordService {
     )
     @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
     public Response getDiagnostic(@PathParam("idRecord") Long idRecord, @PathParam("idDiagnostic") Long idDiagnostic) {
-        Diagnostic diagnostic = diagnosticRepository.find(idDiagnostic);
+        DiagnosticDTO diagnostic = DiagnosticDTO.create(diagnosticRepository.find(idDiagnostic));
         return Response.ok(diagnostic).build();
     }
     
     @GET
     @Path("{idRecord}/prescriptions")
-    @ApiOperation(value = "Get all Prescriptions associated with a Medical Record.", response = Prescription.class, responseContainer = "List")
+    @ApiOperation(value = "Get all Prescriptions associated with a Medical Record.", response = PrescriptionDTO.class, responseContainer = "List")
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "All the Prescriptions are returned."),
         @ApiResponse(code = 400, message = "Invalid input"),
@@ -313,13 +324,13 @@ public class MedicalRecordService {
     )
     @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
     public Response getPrescriptions(@PathParam("idRecord") Long idRecord) {
-        List<Prescription> prescriptions = prescriptionRepository.list(idRecord);
+        List<PrescriptionDTO> prescriptions = prescriptionRepository.list(idRecord).stream().map(PrescriptionDTO::create).collect(Collectors.toList());
         return Response.ok(prescriptions).build();
     }
     
     @GET
     @Path("{idRecord}/prescriptions/{idPrescription}")
-    @ApiOperation(value = "Get a specific Prescription associated with a Medical Record.", response = Prescription.class)
+    @ApiOperation(value = "Get a specific Prescription associated with a Medical Record.", response = PrescriptionDTO.class)
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "The Prescription is returned."),
         @ApiResponse(code = 400, message = "Invalid input"),
@@ -327,13 +338,13 @@ public class MedicalRecordService {
     )
     @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
     public Response getPrescription(@PathParam("idRecord") Long idRecord, @PathParam("idPrescription") Long idPrescription) {
-        Prescription prescription = prescriptionRepository.find(idPrescription);
+        PrescriptionDTO prescription = PrescriptionDTO.create(prescriptionRepository.find(idPrescription));
         return Response.ok(prescription).build();
     }
     
     @GET
     @Path("{idRecord}/dosages")
-    @ApiOperation(value = "Get all Dosages associated with a Medical Record.", response = Dosage.class, responseContainer = "List")
+    @ApiOperation(value = "Get all Dosages associated with a Medical Record.", response = DosageDTO.class, responseContainer = "List")
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "All the Dosages are returned."),
         @ApiResponse(code = 400, message = "Invalid input"),
@@ -341,13 +352,13 @@ public class MedicalRecordService {
     )
     @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
     public Response getAllDosages(@PathParam("idRecord") Long idRecord) {
-        List<Dosage> dosages = dosageRepository.list(idRecord);
+        List<DosageDTO> dosages = dosageRepository.list(idRecord).stream().map(DosageDTO::create).collect(Collectors.toList());
         return Response.ok(dosages).build();
     }
     
     @GET
     @Path("{idRecord}/dosages/{idDosage}")
-    @ApiOperation(value = "Get a specific Dosage associated with a Medical Record.", response = Dosage.class)
+    @ApiOperation(value = "Get a specific Dosage associated with a Medical Record.", response = DosageDTO.class)
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "The Dosage is returned."),
         @ApiResponse(code = 400, message = "Invalid input"),
@@ -355,7 +366,7 @@ public class MedicalRecordService {
     ) 
     @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
     public Response getDosage(@PathParam("idRecord") Long idRecord, @PathParam("idDosage") Long idDosage) {
-        Dosage dosage = dosageRepository.find(idDosage);
+        DosageDTO dosage = DosageDTO.create(dosageRepository.find(idDosage));
         return Response.ok(dosage).build();
     }  
 

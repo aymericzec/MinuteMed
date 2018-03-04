@@ -25,7 +25,6 @@ public class NodeHU extends Node {
   
     @NotNull
     @ManyToOne
-    @JsonSerialize(using = CustomNodeSerializer.class)
     private NodeService father;
     
     @OneToMany(mappedBy = "father")

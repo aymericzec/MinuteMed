@@ -1,6 +1,6 @@
 package fr.devsquad.minutemed.authentication.domain;
 
-import fr.devsquad.minutemed.jwt.util.PasswordUtils;
+import fr.devsquad.minutemed.jwt.utils.PasswordUtils;
 import fr.devsquad.minutemed.staff.domain.StaffEnum;
 import java.io.Serializable;
 import java.util.*;

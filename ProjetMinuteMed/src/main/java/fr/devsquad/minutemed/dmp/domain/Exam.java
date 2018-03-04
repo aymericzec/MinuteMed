@@ -33,7 +33,6 @@ public class Exam implements Serializable {
     @NotNull
     private String dateExam;
     
-    @NotNull
     @OneToOne
     private ResultExam resultExam;
     

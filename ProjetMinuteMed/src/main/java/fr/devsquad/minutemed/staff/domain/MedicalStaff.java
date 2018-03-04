@@ -1,6 +1,9 @@
 package fr.devsquad.minutemed.staff.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import fr.devsquad.minutemed.arborescence.domain.*;
+import fr.devsquad.minutemed.arborescence.domain.utils.CustomNodeDeserializer;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.*;
@@ -34,6 +37,7 @@ public class MedicalStaff implements Serializable {
     
     @NotNull
     @ManyToOne
+    @JsonDeserialize(contentUsing = CustomNodeDeserializer.class)
     private Node node;
     
    

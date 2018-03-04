@@ -24,7 +24,6 @@ public class NodeCU extends Node {
     
     @NotNull
     @ManyToOne
-    @JsonSerialize(using = CustomNodeSerializer.class)
     private NodeHU father;
     
     @OneToMany(mappedBy = "careUnit")
@@ -61,6 +60,30 @@ public class NodeCU extends Node {
             nodes.add(this);
         }
         return Collections.unmodifiableSet(nodes);
+    }
+    
+    public boolean isUnder(Node node){
+        Objects.requireNonNull(node);
+        Long id = node.getIdNode();
+        if(id == this.getIdNode()){
+            return true;
+        }
+        if(id == this.father.getIdNode()){
+            return true;
+        }
+        if(id == this.father.getFather().getIdNode()){
+            return true;
+        }
+        if(id == this.father.getFather().getFather().getIdNode()){
+            return true;
+        }
+        if(id == this.father.getFather().getFather().getFather().getIdNode()){
+            return true;
+        }
+        if(id == this.father.getFather().getFather().getFather().getFather().getIdNode()){
+            return true;
+        }
+        return false;
     }
     
 }

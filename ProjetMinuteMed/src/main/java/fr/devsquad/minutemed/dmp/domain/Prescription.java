@@ -2,6 +2,7 @@ package fr.devsquad.minutemed.dmp.domain;
 
 import static fr.devsquad.minutemed.dmp.domain.Prescription.FIND_ALL_PRESCRIPTION;
 import fr.devsquad.minutemed.staff.domain.Doctor;
+import fr.devsquad.minutemed.staff.domain.MedicalStaff;
 import java.io.Serializable;
 import java.util.*;
 import javax.persistence.*;
@@ -18,7 +19,7 @@ public class Prescription implements Serializable {
     
     @NotNull
     @ManyToOne
-    private Doctor prescriptor;
+    private MedicalStaff prescriptor;
     
     @NotNull
     @ManyToOne
@@ -42,7 +43,7 @@ public class Prescription implements Serializable {
     
     public Prescription() { }
     
-    public Prescription(String title, Doctor prescriptor, MedicalRecord medicalRecord, String creationDate, Diagnostic diagnostic, String body) {
+    public Prescription(String title, MedicalStaff prescriptor, MedicalRecord medicalRecord, String creationDate, Diagnostic diagnostic, String body) {
         this.title = Objects.requireNonNull(title);
         this.prescriptor = Objects.requireNonNull(prescriptor);
         this.medicalRecord = Objects.requireNonNull(medicalRecord);
@@ -60,7 +61,7 @@ public class Prescription implements Serializable {
         return title;
     }
 
-    public Doctor getPrescriptor() {
+    public MedicalStaff getPrescriptor() {
         return prescriptor;
     }
 
@@ -79,6 +80,7 @@ public class Prescription implements Serializable {
     public String getBody() {
         return body;
     }
+    
 
     public boolean isDraft() {
         return draft;

@@ -1,4 +1,4 @@
-package fr.devsquad.minutemed.jwt.util;
+package fr.devsquad.minutemed.jwt.utils;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;

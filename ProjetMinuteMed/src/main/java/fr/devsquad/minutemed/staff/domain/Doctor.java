@@ -38,7 +38,7 @@ public class Doctor extends MedicalStaff implements Serializable {
     }
  
     public void setSpecialization(Specialization specialization){
-        this.specialization = Objects.requireNonNull(specialization);
+        this.specialization = specialization;
     }
 
     @Override

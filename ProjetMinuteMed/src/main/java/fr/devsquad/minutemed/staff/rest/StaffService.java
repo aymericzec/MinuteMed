@@ -6,7 +6,7 @@
 package fr.devsquad.minutemed.staff.rest;
 
 import fr.devsquad.minutemed.jwt.filter.JWTNeeded;
-import fr.devsquad.minutemed.jwt.util.TokenUtils;
+import fr.devsquad.minutemed.jwt.utils.TokenUtils;
 import fr.devsquad.minutemed.staff.domain.*;
 import fr.devsquad.minutemed.staff.repository.StaffRepository;
 import io.swagger.annotations.Api;

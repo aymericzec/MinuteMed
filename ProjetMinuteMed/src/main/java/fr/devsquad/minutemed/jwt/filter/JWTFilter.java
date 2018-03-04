@@ -1,8 +1,8 @@
 package fr.devsquad.minutemed.jwt.filter;
 
+import fr.devsquad.minutemed.jwt.utils.TokenUtils;
 import fr.devsquad.minutemed.authentication.domain.UserAccount;
 import fr.devsquad.minutemed.authentication.repository.AuthenticationRepository;
-import fr.devsquad.minutemed.jwt.util.*;
 import fr.devsquad.minutemed.staff.domain.StaffEnum;
 
 
@@ -81,10 +81,10 @@ public class JWTFilter implements ContainerRequestFilter {
     
     private void CheckToken(ContainerRequestContext requestContext, List<String> groups) throws NotAuthorizedException {
         Objects.requireNonNull(groups);
-        logger.info("FILTER");
+        //logger.info("FILTER");
         // Get the HTTP Authorization header from the request
         String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-        logger.info("#### authorizationHeader : " + authorizationHeader);
+        //logger.info("#### authorizationHeader : " + authorizationHeader);
 
         // Check if the HTTP Authorization header is present and formatted correctly
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
@@ -109,7 +109,7 @@ public class JWTFilter implements ContainerRequestFilter {
                 throw new Exception(); 
             }
 
-            logger.info("#### valid token : " + token);
+            //logger.info("#### valid token : " + token);
 
         } catch (Exception e) {
             logger.severe("#### invalid token : " + token);

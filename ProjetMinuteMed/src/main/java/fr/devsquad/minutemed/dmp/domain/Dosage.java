@@ -1,7 +1,6 @@
 package fr.devsquad.minutemed.dmp.domain;
 
 import static fr.devsquad.minutemed.dmp.domain.Dosage.FIND_ALL_DOSAGE;
-import fr.devsquad.minutemed.staff.domain.Doctor;
 import fr.devsquad.minutemed.staff.domain.MedicalStaff;
 import java.io.Serializable;
 import java.util.*;
@@ -21,7 +20,7 @@ public class Dosage implements Serializable {
     
     @NotNull
     @ManyToOne
-    private Doctor creator;
+    private MedicalStaff creator;
     
     @NotNull
     @ManyToOne
@@ -55,7 +54,7 @@ public class Dosage implements Serializable {
         
     }
     
-    public Dosage (String title, Doctor creator, MedicalRecord medicalRecord, String creationDate, Diagnostic diagnostic, String body, String beginDosage, String endDosage) {
+    public Dosage (String title, MedicalStaff creator, MedicalRecord medicalRecord, String creationDate, Diagnostic diagnostic, String body, String beginDosage, String endDosage) {
         this.title = Objects.requireNonNull(title);
         this.creator = Objects.requireNonNull(creator);
         this.creationDate = Objects.requireNonNull(creationDate);
@@ -75,7 +74,7 @@ public class Dosage implements Serializable {
         return idDosage;
     }
 
-    public Doctor getCreator() {
+    public MedicalStaff getCreator() {
         return creator;
     }
 
@@ -119,11 +118,8 @@ public class Dosage implements Serializable {
         return reports.isEmpty() ? null : reports.get(reports.size() - 1);
     }
     
-    public void addReport (MedicalStaff staff, String creationDate, String body) {
-        DosageReport reportDosage = new DosageReport(Objects.requireNonNull(staff),
-                Objects.requireNonNull(creationDate),
-                Objects.requireNonNull(body));
-        reports.add(reportDosage);
+    public void addReport (DosageReport report) {
+        reports.add(Objects.requireNonNull(report));
     }
     
 }

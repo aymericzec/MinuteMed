@@ -2,6 +2,7 @@ package fr.devsquad.minutemed.dmp.domain;
 
 import static fr.devsquad.minutemed.dmp.domain.Diagnostic.FIND_ALL_DIAGNOSTIC;
 import fr.devsquad.minutemed.staff.domain.Doctor;
+import fr.devsquad.minutemed.staff.domain.MedicalStaff;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.*;
@@ -18,7 +19,7 @@ public class Diagnostic implements Serializable {
     
     @NotNull
     @ManyToOne
-    private Doctor creator;
+    private MedicalStaff creator;
     
     @NotNull
     @ManyToOne
@@ -39,7 +40,7 @@ public class Diagnostic implements Serializable {
     
     public Diagnostic() { }
     
-    public Diagnostic(String title, Doctor creator, MedicalRecord medicalRecord, String creationDate, String body) {
+    public Diagnostic(String title, MedicalStaff creator, MedicalRecord medicalRecord, String creationDate, String body) {
         this.title = Objects.requireNonNull(title);
         this.body = Objects.requireNonNull(body);
         this.creator = Objects.requireNonNull(creator);
@@ -60,7 +61,7 @@ public class Diagnostic implements Serializable {
         return creationDate;
     }
 
-    public Doctor getCreator() {
+    public MedicalStaff getCreator() {
         return creator;
     }
 
