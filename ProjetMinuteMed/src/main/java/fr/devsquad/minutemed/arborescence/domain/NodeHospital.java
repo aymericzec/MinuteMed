@@ -54,14 +54,14 @@ public class NodeHospital extends Node {
     }
     
     @Override
-    public Set<Node> getAccessibleNode(NodeEnum stopFloor){    
+    public Set<Node> getAccessibleNodes(NodeEnum stopFloor){    
         Objects.requireNonNull(stopFloor);
         Set<Node> nodes = new HashSet<>();
         System.out.println(stopFloor.compareTo(FLOOR));
         if(stopFloor.compareTo(FLOOR) > 0){
             nodes.addAll(poles); 
             nodes.addAll(poles.stream()
-                            .map(pole -> pole.getAccessibleNode(stopFloor))
+                            .map(pole -> pole.getAccessibleNodes(stopFloor))
                             .flatMap(Set::stream)
                             .collect(Collectors.toSet()));
         }
@@ -73,6 +73,11 @@ public class NodeHospital extends Node {
         return poles.stream()
             .flatMap(pole -> pole.getMedicalRecords().stream())
             .collect(Collectors.toSet());
+    }
+    
+    @Override
+    public Set<Node> getChildrens() {
+        return Collections.unmodifiableSet(poles);
     }
     
 }

@@ -1,16 +1,21 @@
 package fr.devsquad.minutemed.arborescence.rest;
 
 import fr.devsquad.minutemed.arborescence.domain.*;
+import fr.devsquad.minutemed.arborescence.domain.dto.NodeDTO;
 import fr.devsquad.minutemed.arborescence.domain.utils.*;
 import fr.devsquad.minutemed.arborescence.repository.*;
 import fr.devsquad.minutemed.jwt.filter.JWTNeeded;
+import fr.devsquad.minutemed.jwt.utils.TokenUtils;
+import fr.devsquad.minutemed.staff.domain.MedicalStaff;
 import fr.devsquad.minutemed.staff.domain.StaffEnum;
+import fr.devsquad.minutemed.staff.repository.StaffRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.*;
 import javax.ejb.*;
+import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.Path;
@@ -25,6 +30,12 @@ public class ArborescenceService {
     
     @EJB
     private ArborescenceRepository repository;
+    
+    @EJB
+    private StaffRepository staffRepository;
+    
+    @Inject
+    private TokenUtils tokenUtils;
     
     
     ///////////////
@@ -250,7 +261,7 @@ public class ArborescenceService {
                     .entity("This Care Unit already exist in the Hospital Unit !")
                     .build();           
         }
-        return Response.ok("{\"idCUCreated\":"+ id +"}").build();
+        return Response.status(Response.Status.CREATED).entity("{\"idCUCreated\":"+ id +"}").build();
     }
     
     
@@ -271,7 +282,7 @@ public class ArborescenceService {
         if(aphps.isEmpty()){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.status(Response.Status.FOUND).entity(aphps.get(0)).build();
+        return Response.status(Response.Status.OK).entity(aphps.get(0)).build();
     }
     
     @GET
@@ -287,7 +298,7 @@ public class ArborescenceService {
         if(aphp == null){
             return Response.status(Response.Status.NOT_FOUND).entity("This idAPHP is not good !").build();
         }
-        return Response.status(Response.Status.FOUND).entity(aphp.getAccessibleNode(NodeEnum.HOSPITAL)).build();
+        return Response.status(Response.Status.OK).entity(aphp.getAccessibleNodes(NodeEnum.HOSPITAL)).build();
     }
     
     @GET
@@ -306,7 +317,7 @@ public class ArborescenceService {
         if(hospital.getFather().getIdNode() != idAPHP){
             return Response.status(Response.Status.NOT_FOUND).entity("This idAPHP is not good !").build();
         }
-        return Response.status(Response.Status.FOUND).entity(hospital).build();
+        return Response.status(Response.Status.OK).entity(hospital).build();
     }
     
     @GET
@@ -325,7 +336,7 @@ public class ArborescenceService {
         if(hospital.getFather().getIdNode() != idAPHP){
             return Response.status(Response.Status.NOT_FOUND).entity("This idAPHP is not good !").build();
         }
-        return Response.status(Response.Status.FOUND).entity(hospital.getAccessibleNode(NodeEnum.POLE)).build();
+        return Response.status(Response.Status.OK).entity(hospital.getAccessibleNodes(NodeEnum.POLE)).build();
     }
     
     @GET
@@ -346,7 +357,7 @@ public class ArborescenceService {
         if(pole.getFather().getFather().getIdNode() != idAPHP){
             return Response.status(Response.Status.NOT_FOUND).entity("This idAPHP is not good !").build();
         }
-        return Response.status(Response.Status.FOUND).entity(pole).build();
+        return Response.status(Response.Status.OK).entity(pole).build();
     }
     
     @GET
@@ -369,7 +380,7 @@ public class ArborescenceService {
         if(pole.getFather().getFather().getIdNode() != idAPHP){
             return Response.status(Response.Status.NOT_FOUND).entity("This idAPHP is not good !").build();
         }
-        return Response.status(Response.Status.FOUND).entity(pole.getAccessibleNode(NodeEnum.SERVICE)).build();
+        return Response.status(Response.Status.OK).entity(pole.getAccessibleNodes(NodeEnum.SERVICE)).build();
     }
     
     @GET
@@ -396,7 +407,7 @@ public class ArborescenceService {
         if(service.getFather().getFather().getFather().getIdNode() != idAPHP){
             return Response.status(Response.Status.NOT_FOUND).entity("This idAPHP is not good !").build();
         }
-        return Response.status(Response.Status.FOUND).entity(service).build();
+        return Response.status(Response.Status.OK).entity(service).build();
     }
     
     @GET
@@ -423,7 +434,7 @@ public class ArborescenceService {
         if(service.getFather().getFather().getFather().getIdNode() != idAPHP){
             return Response.status(Response.Status.NOT_FOUND).entity("This idAPHP is not good !").build();
         }
-        return Response.ok(service.getAccessibleNode(NodeEnum.HOSPITAL_UNIT)).build();
+        return Response.ok(service.getAccessibleNodes(NodeEnum.HOSPITAL_UNIT)).build();
     }
     
     @GET
@@ -454,7 +465,7 @@ public class ArborescenceService {
         if(hu.getFather().getFather().getFather().getFather().getIdNode() != idAPHP){
             return Response.status(Response.Status.NOT_FOUND).entity("This idAPHP is not good !").build();
         }
-        return Response.status(Response.Status.FOUND).entity(hu).build();
+        return Response.status(Response.Status.OK).entity(hu).build();
     }
     
     @GET
@@ -485,7 +496,7 @@ public class ArborescenceService {
         if(hu.getFather().getFather().getFather().getFather().getIdNode() != idAPHP){
             return Response.status(Response.Status.NOT_FOUND).entity("This idAPHP is not good !").build();
         }
-        return Response.status(Response.Status.FOUND).entity(hu.getAccessibleNode(NodeEnum.CARE_UNIT)).build();
+        return Response.status(Response.Status.OK).entity(hu.getAccessibleNodes(NodeEnum.CARE_UNIT)).build();
     }
     
     @GET
@@ -520,7 +531,7 @@ public class ArborescenceService {
         if(cu.getFather().getFather().getFather().getFather().getFather().getIdNode() != idAPHP){
             return Response.status(Response.Status.NOT_FOUND).entity("This idAPHP is not good !").build();
         }
-        return Response.status(Response.Status.FOUND).entity(cu).build();
+        return Response.status(Response.Status.OK).entity(cu).build();
     } 
     
     
@@ -537,7 +548,7 @@ public class ArborescenceService {
             return Response.status(Response.Status.NOT_FOUND).entity("APHP not found !").build();
         }
         NodeAPHP aphp = aphps.get(0);
-        return Response.status(Response.Status.FOUND).entity(aphp.getAccessibleNode(NodeEnum.HOSPITAL)).build();
+        return Response.status(Response.Status.OK).entity(aphp.getAccessibleNodes(NodeEnum.HOSPITAL)).build();
     }
     
     
@@ -554,7 +565,7 @@ public class ArborescenceService {
             return Response.status(Response.Status.NOT_FOUND).entity("APHP not found !").build();
         }
         NodeAPHP aphp = aphps.get(0);
-        return Response.status(Response.Status.FOUND).entity(aphp.getAccessibleNode(NodeEnum.POLE)).build();
+        return Response.status(Response.Status.OK).entity(aphp.getAccessibleNodes(NodeEnum.POLE)).build();
     }
     
     
@@ -571,7 +582,7 @@ public class ArborescenceService {
             return Response.status(Response.Status.NOT_FOUND).entity("APHP not found !").build();
         }
         NodeAPHP aphp = aphps.get(0);
-        return Response.status(Response.Status.FOUND).entity(aphp.getAccessibleNode(NodeEnum.SERVICE)).build();
+        return Response.status(Response.Status.OK).entity(aphp.getAccessibleNodes(NodeEnum.SERVICE)).build();
     }
     
     
@@ -588,7 +599,7 @@ public class ArborescenceService {
             return Response.status(Response.Status.NOT_FOUND).entity("APHP not found !").build();
         }
         NodeAPHP aphp = aphps.get(0);
-        return Response.status(Response.Status.FOUND).entity(aphp.getAccessibleNode(NodeEnum.HOSPITAL_UNIT)).build();
+        return Response.status(Response.Status.OK).entity(aphp.getAccessibleNodes(NodeEnum.HOSPITAL_UNIT)).build();
     }
     
     
@@ -605,7 +616,25 @@ public class ArborescenceService {
             return Response.status(Response.Status.NOT_FOUND).entity("APHP not found !").build();
         }
         NodeAPHP aphp = aphps.get(0);
-        return Response.status(Response.Status.FOUND).entity(aphp.getAccessibleNode(NodeEnum.CARE_UNIT)).build();
+        return Response.status(Response.Status.OK).entity(aphp.getAccessibleNodes(NodeEnum.CARE_UNIT)).build();
     }
+    
+    
+    @GET
+    @Path("/current")
+    @ApiOperation(value = "Get current node.", response = NodeDTO.class)
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "All Care Units are returned."),
+        @ApiResponse(code = 404, message = "APHP not found")}
+    )
+    @JWTNeeded(groups = {StaffEnum.ALL})
+    public Response getCurrentNode(@HeaderParam(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+        String token = authorizationHeader.substring("Bearer".length()).trim();
+        Long id = tokenUtils.decryptIdFromToken(token);
+        MedicalStaff staff = staffRepository.findMedicalStaff(id);
+        NodeDTO currentDTO = NodeDTO.create(staff.getNode());
+        return Response.status(Response.Status.OK).entity(currentDTO).build();
+    }
+    
     
 }

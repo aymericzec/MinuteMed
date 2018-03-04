@@ -38,13 +38,13 @@ public class NodeAPHP extends Node {
     }
     
     @Override
-    public Set<Node> getAccessibleNode(NodeEnum stopFloor){    
+    public Set<Node> getAccessibleNodes(NodeEnum stopFloor){    
         Objects.requireNonNull(stopFloor);
         Set<Node> nodes = new HashSet<>();
         if(stopFloor.compareTo(FLOOR) > 0){
             nodes.addAll(hospitals); 
             nodes.addAll(hospitals.stream()
-                            .map(hospital -> hospital.getAccessibleNode(stopFloor))
+                            .map(hospital -> hospital.getAccessibleNodes(stopFloor))
                             .flatMap(Set::stream)
                             .collect(Collectors.toSet()));
         }
@@ -56,6 +56,11 @@ public class NodeAPHP extends Node {
         return hospitals.stream()
             .flatMap(hospital -> hospital.getMedicalRecords().stream())
             .collect(Collectors.toSet());
+    }
+
+    @Override
+    public Set<Node> getChildrens() {
+        return Collections.unmodifiableSet(hospitals);
     }
     
 }

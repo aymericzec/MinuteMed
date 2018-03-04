@@ -58,7 +58,10 @@ public abstract class Node implements Serializable {
     
     
     @JsonIgnore
-    public abstract Set<Node> getAccessibleNode(NodeEnum stopFloor);
+    public abstract Set<Node> getAccessibleNodes(NodeEnum stopFloor);
+    
+    @JsonIgnore
+    public abstract Set<Node> getChildrens();
     
     @JsonIgnore
     public abstract Set<MedicalRecord> getMedicalRecords();

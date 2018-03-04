@@ -1067,6 +1067,36 @@
         }
       }
     },
+    "/nodes/current" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get current node.",
+        "description" : "",
+        "operationId" : "getCurrentNode",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/NodeDTO"
+            }
+          },
+          "201" : {
+            "description" : "All Care Units are returned."
+          },
+          "404" : {
+            "description" : "APHP not found"
+          }
+        }
+      }
+    },
     "/records" : {
       "get" : {
         "tags" : [ "MedicalRecords REST Endpoint" ],
@@ -2236,6 +2266,9 @@
         "address" : {
           "type" : "string"
         },
+        "cityBorn" : {
+          "type" : "string"
+        },
         "birthday" : {
           "type" : "string"
         },
@@ -2369,6 +2402,12 @@
         },
         "name" : {
           "type" : "string"
+        },
+        "childrens" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/NodeDTO"
+          }
         }
       }
     },

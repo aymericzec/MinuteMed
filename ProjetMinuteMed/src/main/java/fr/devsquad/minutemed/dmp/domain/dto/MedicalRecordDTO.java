@@ -29,6 +29,8 @@ public class MedicalRecordDTO implements Serializable {
     
     private String address;
     
+    private String cityBorn;
+    
     private String birthday;
     
     private String gender;
@@ -43,12 +45,13 @@ public class MedicalRecordDTO implements Serializable {
     public MedicalRecordDTO(){}
 
     
-    public MedicalRecordDTO(long id, String ss, String firstName, String lastName, String address, String birthday, String gender, String phoneNumber, String email, NodeDTO careUnit) {
+    public MedicalRecordDTO(long id, String ss, String firstName, String lastName, String address, String cityBorn, String birthday, String gender, String phoneNumber, String email, NodeDTO careUnit) {
         this.id = id;
         this.ss = Objects.requireNonNull(ss);
         this.firstName = Objects.requireNonNull(firstName);
         this.lastName = Objects.requireNonNull(lastName);
         this.address = Objects.requireNonNull(address);
+        this.cityBorn = Objects.requireNonNull(cityBorn);
         this.birthday = Objects.requireNonNull(birthday);
         this.gender = Objects.requireNonNull(gender);
         this.phoneNumber = Objects.requireNonNull(phoneNumber);
@@ -64,6 +67,7 @@ public class MedicalRecordDTO implements Serializable {
                 medicalRecord.getFirstName(),
                 medicalRecord.getLastName(),
                 medicalRecord.getAddress(),
+                medicalRecord.getCityBorn(),
                 medicalRecord.getBirthday(),
                 medicalRecord.getGender(),
                 medicalRecord.getPhoneNumber(),
@@ -75,7 +79,7 @@ public class MedicalRecordDTO implements Serializable {
     public MedicalRecord toMedicalRecord(ArborescenceRepository arborescenceRepository){
         Objects.requireNonNull(arborescenceRepository);
         NodeCU node = arborescenceRepository.findNode(this.careUnit.getId(), NodeCU.class);
-        MedicalRecord record = new MedicalRecord(ss, firstName, lastName, address, email, phoneNumber, birthday, gender, node);
+        MedicalRecord record = new MedicalRecord(ss, firstName, lastName, address, email, phoneNumber, cityBorn, birthday, gender, node);
         return record;
     }
     
@@ -221,5 +225,15 @@ public class MedicalRecordDTO implements Serializable {
     public void setCareUnit(NodeDTO careUnit) {
         this.careUnit = careUnit;
     }
+
+    public String getCityBorn() {
+        return cityBorn;
+    }
+
+    public void setCityBorn(String cityBorn) {
+        this.cityBorn = cityBorn;
+    }
+    
+    
     
 }

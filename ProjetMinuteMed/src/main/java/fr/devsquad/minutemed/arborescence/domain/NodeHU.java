@@ -53,7 +53,7 @@ public class NodeHU extends Node {
     }
     
     @Override
-    public Set<Node> getAccessibleNode(NodeEnum stopFloor){    
+    public Set<Node> getAccessibleNodes(NodeEnum stopFloor){    
         Objects.requireNonNull(stopFloor);
         Set<Node> nodes = new HashSet<>();
         if(stopFloor.compareTo(FLOOR) > 0){
@@ -67,6 +67,11 @@ public class NodeHU extends Node {
         return careUnits.stream()
                 .flatMap(cu -> cu.getMedicalRecords().stream())
                 .collect(Collectors.toSet());
+    }
+    
+    @Override
+    public Set<Node> getChildrens() {
+        return Collections.unmodifiableSet(careUnits);
     }
     
 }

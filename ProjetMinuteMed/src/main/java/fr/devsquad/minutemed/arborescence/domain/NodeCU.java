@@ -53,7 +53,7 @@ public class NodeCU extends Node {
     }
 
     @Override
-    public Set<Node> getAccessibleNode(NodeEnum stopFloor){    
+    public Set<Node> getAccessibleNodes(NodeEnum stopFloor){    
         Objects.requireNonNull(stopFloor);
         Set<Node> nodes = new HashSet<>();
         if(stopFloor.compareTo(FLOOR) > 0){
@@ -84,6 +84,11 @@ public class NodeCU extends Node {
             return true;
         }
         return false;
+    }
+    
+    @Override
+    public Set<Node> getChildrens() {
+        return Collections.emptySet();
     }
     
 }

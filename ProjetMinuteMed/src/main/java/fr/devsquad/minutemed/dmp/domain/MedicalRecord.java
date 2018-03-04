@@ -29,6 +29,9 @@ public class MedicalRecord implements Serializable {
     private String address;
     
     @NotNull
+    private String cityBorn;
+    
+    @NotNull
     private String birthday;
     
     @NotNull
@@ -49,13 +52,14 @@ public class MedicalRecord implements Serializable {
 
     }
 
-    public MedicalRecord(String ss, String firstName, String lastName, String address, String email, String phoneNumber, String birthday, String gender, NodeCU careUnit) {
+    public MedicalRecord(String ss, String firstName, String lastName, String address, String email, String phoneNumber, String cityBorn, String birthday, String gender, NodeCU careUnit) {
         this.ss = Objects.requireNonNull(ss);
         this.firstName = Objects.requireNonNull(firstName);
         this.lastName = Objects.requireNonNull(lastName);
         this.address = Objects.requireNonNull(address);
         this.email = Objects.requireNonNull(email);
         this.phoneNumber = Objects.requireNonNull(phoneNumber);
+        this.cityBorn = Objects.requireNonNull(cityBorn);
         this.birthday = Objects.requireNonNull(birthday);
         this.gender = Objects.requireNonNull(gender);
         this.careUnit = Objects.requireNonNull(careUnit);
@@ -104,5 +108,13 @@ public class MedicalRecord implements Serializable {
     public void setCU(NodeCU careUnit) {
         this.careUnit = Objects.requireNonNull(careUnit);
     } 
+    
+    public String getCityBorn(){
+        return cityBorn;
+    }
+    
+    public void setCityBorn(String cityBorn){
+        this.cityBorn = Objects.requireNonNull(cityBorn);
+    }
 
 }

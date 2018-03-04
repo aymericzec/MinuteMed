@@ -8,7 +8,10 @@ package fr.devsquad.minutemed.arborescence.domain.dto;
 import fr.devsquad.minutemed.arborescence.domain.Node;
 import fr.devsquad.minutemed.arborescence.repository.ArborescenceRepository;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -22,6 +25,9 @@ public class NodeDTO implements Serializable {
     
     private String name;
     
+    private List<NodeDTO> childrens = new ArrayList<>();
+  
+    
     public NodeDTO(){}
     
     public NodeDTO(long id, String floor, String name){
@@ -32,7 +38,10 @@ public class NodeDTO implements Serializable {
     
     public static NodeDTO create(Node node){
         Objects.requireNonNull(node);
-        return new NodeDTO(node.getIdNode(), node.getFloor(), node.getName());
+        List<NodeDTO> accessibles = node.getChildrens().stream().map(NodeDTO::create).collect(Collectors.toList());
+        NodeDTO dto = new NodeDTO(node.getIdNode(), node.getFloor(), node.getName());
+        dto.setChildrens(accessibles);
+        return dto;
     }
     
     public Node toNode(ArborescenceRepository arborescenceRepository){
@@ -82,6 +91,16 @@ public class NodeDTO implements Serializable {
      */
     public void setName(String name) {
         this.name = name;
+    }
+    
+    
+    public List<NodeDTO> getChildrens() {
+        return childrens;
+    }
+    
+
+    public void setChildrens(List<NodeDTO> childrens) {
+        this.childrens = childrens;
     }
     
 }
