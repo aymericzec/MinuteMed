@@ -5,6 +5,7 @@
  */
 package fr.devsquad.minutemed.staff.rest;
 
+import fr.devsquad.minutemed.dmp.domain.dto.MedicalStaffDTO;
 import fr.devsquad.minutemed.jwt.filter.JWTNeeded;
 import fr.devsquad.minutemed.jwt.utils.TokenUtils;
 import fr.devsquad.minutemed.staff.domain.*;
@@ -195,6 +196,28 @@ public class StaffService {
             return Response.status(Response.Status.NOT_FOUND).entity("Bad id !").build();
         }
         return Response.status(Response.Status.OK).entity(me).build();
+    }
+    
+    @GET
+    @Path("/medicalStaff/{idMedicalStaff}")
+    @ApiOperation(value = "Get little information about a medical staff.", response = MedicalStaffDTO.class)
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "The MedicalStaff is returned."),
+        @ApiResponse(code = 400, message = "Invalid input"),
+        @ApiResponse(code = 404, message = "MedicalStaff not exists")}
+    )
+    @JWTNeeded(groups = {StaffEnum.ALL})
+    public Response getMedicalStaff(@HeaderParam(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+        String token = authorizationHeader.substring("Bearer".length()).trim();
+        Long id = tokenUtils.decryptIdFromToken(token);
+        MedicalStaff ms = repository.findMedicalStaff(id);
+        if(ms == null){
+            return Response.status(Response.Status.NOT_FOUND).entity("Bad id !").build();
+        }
+        
+        MedicalStaffDTO msDto = MedicalStaffDTO.create(ms);
+        
+        return Response.status(Response.Status.OK).entity(msDto).build();
     }
     
 }

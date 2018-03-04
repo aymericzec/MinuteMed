@@ -54,9 +54,6 @@ public class ResultExamDTO implements Serializable {
         return new ResultExam(examinator, examDate, body);
     }
    
-    
-    
-    
     public long getId() {
         return id;
     }

@@ -31,33 +31,34 @@ export class ExamComponent implements OnInit {
           this.examsTmp = [];
 
           for (let _i = 0; _i < this.exams.length; _i++) {
-            let tat: any;
-            tat = [];
+            this.staffService.getDoctor(this.exams[_i].doctorId).subscribe(responseDoctor => {
+              let tat: any;
+              tat = [];
 
-            // tat.push('nameDoctor');
-            // tat['nameDoctor'] = this.exams[_i].doctor.firstName + ' ' + this.exams[_i].doctor.lastName;
+              tat.push('nameDoctor');
+              tat['nameDoctor'] = responseDoctor.firstName + ' ' + responseDoctor.lastName;
 
-            tat.push('dateExam');
-            tat['dateExam'] = this.exams[_i].dateExam;
+              tat.push('dateExam');
+              tat['dateExam'] = this.exams[_i].dateExam;
 
-            tat.push('title');
-            tat['title'] = this.exams[_i].title;
+              tat.push('title');
+              tat['title'] = this.exams[_i].title;
 
-            tat.push('identifiant');
-            tat['identifiant'] = this.exams[_i].id;
+              tat.push('identifiant');
+              tat['identifiant'] = this.exams[_i].id;
 
-            tat['description'] = this.exams[_i].description;
-            tat.push('description');
+              tat['description'] = this.exams[_i].description;
+              tat.push('description');
 
-            // if (isNull(this.exams[_i].resultExam)) {
+              // if (isNull(this.exams[_i].resultExam)) {
             //   tat['examinator'] = 'Pas encore réalisé';
             //   tat['dateExaminator'] = '??/??/????';
             // } else {
             //   tat['examinator'] = this.exams[_i].resultExam.examinator.lastName + ' ' + this.exams[_i].resultExam.examinator.firstName;
             //   tat['dateExaminator'] = this.exams[_i].resultExam.examDate;
             // }
-
             this.examsTmp.push(tat);
+            });
           }
       });
 

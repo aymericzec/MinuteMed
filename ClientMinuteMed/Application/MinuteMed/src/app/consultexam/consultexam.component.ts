@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MedicalRecordsRESTEndpointService } from '../../apis/services';
+import { MedicalRecordsRESTEndpointService, StaffRESTEndpointService } from '../../apis/services';
 import { AuthService } from '../auth.service';
-import { ExamDTO } from '../../apis/models';
+import { ExamDTO, Doctor } from '../../apis/models';
 import { ActivatedRoute } from '@angular/router';
 import { isNull } from 'util';
 
@@ -14,9 +14,11 @@ export class ConsultexamComponent implements OnInit {
   exams: ExamDTO[];
   cols: any[];
   exam: ExamDTO;
+  doctorCreate: Doctor;
 
   constructor(private medicalService: MedicalRecordsRESTEndpointService,
-    private authService: AuthService, private route: ActivatedRoute) { }
+    private authService: AuthService, private route: ActivatedRoute,
+    private staffService: StaffRESTEndpointService ) { }
 
   ngOnInit() {
     const idDmp = this.route.snapshot.params['id'];
@@ -24,6 +26,11 @@ export class ConsultexamComponent implements OnInit {
 
     this.medicalService.getExam({'idRecord': idDmp, 'idExam': idExam}).subscribe(e => {
       this.exam = e;
+
+      this.staffService.getDoctor(e.doctorId).subscribe(response => {
+        this.doctorCreate = response;
+      });
+
     });
   }
 }

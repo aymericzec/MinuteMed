@@ -267,9 +267,7 @@ public class MedicalRecordService {
     )
     @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
     public Response getExams(@PathParam("idRecord") Long idRecord) {
-        System.out.println("TOTOTOTOTO " + idRecord);
         List<ExamDTO> exams = examRepository.list(idRecord).stream().map(ExamDTO::create).collect(Collectors.toList());
-        System.out.println("Taille: " + exams.size());
         return Response.ok(exams).build();
     }
     
