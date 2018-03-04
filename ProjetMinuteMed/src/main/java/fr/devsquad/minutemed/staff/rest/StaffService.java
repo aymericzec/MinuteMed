@@ -207,9 +207,8 @@ public class StaffService {
         @ApiResponse(code = 404, message = "MedicalStaff not exists")}
     )
     @JWTNeeded(groups = {StaffEnum.ALL})
-    public Response getMedicalStaff(@HeaderParam(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
-        String token = authorizationHeader.substring("Bearer".length()).trim();
-        Long id = tokenUtils.decryptIdFromToken(token);
+    public Response getMedicalStaff(@PathParam("idMedicalStaff") Long idMedicalStaff) {
+        Long id = idMedicalStaff;
         MedicalStaff ms = repository.findMedicalStaff(id);
         if(ms == null){
             return Response.status(Response.Status.NOT_FOUND).entity("Bad id !").build();
