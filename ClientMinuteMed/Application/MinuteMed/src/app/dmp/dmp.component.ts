@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MedicalRecordDTO } from '../../apis/models';
-import { MedicalRecordsRESTEndpointService } from '../../apis/services';
+import { MedicalRecordDTO } from '../api/models';
+import { MedicalRecordsRESTEndpointService } from '../api/services';
 
 @Component({
   selector: 'app-dmp',

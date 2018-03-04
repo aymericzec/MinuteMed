@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { MedicalStaff } from '../../apis/models';
-import { StaffRESTEndpointService } from '../../apis/services/staff-restendpoint.service';
+import { MedicalStaff } from '../api/models';
+import { StaffRESTEndpointService } from '../api/services/staff-restendpoint.service';
 
 
 @Component({
@@ -20,7 +20,7 @@ export class NavBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.staffService.getMe().subscribe(
+    this.staffService.getCurrentUserResponse().subscribe(
       response => {
         this.me = response.body;
     });

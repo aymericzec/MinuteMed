@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { isNull } from 'util';
 import { ActivatedRoute } from '@angular/router';
-import { StaffRESTEndpointService, MedicalRecordsRESTEndpointService } from '../../apis/services';
+import { StaffRESTEndpointService, MedicalRecordsRESTEndpointService } from '../api/services';
 import { AuthService } from '../auth.service';
-import { PrescriptionDTO } from '../../apis/models';
+import { PrescriptionDTO } from '../api/models';
 
 @Component({
   selector: 'app-prescription',

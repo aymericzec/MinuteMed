@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { MedicalRecordsRESTEndpointService } from '../../apis/services';
-import { PrescriptionDTO } from '../../apis/models';
+import { MedicalRecordsRESTEndpointService } from '../api/services';
+import { PrescriptionDTO } from '../api/models';
 
 @Component({
   selector: 'app-consultprescription',

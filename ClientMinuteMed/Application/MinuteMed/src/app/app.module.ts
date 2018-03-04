@@ -32,8 +32,8 @@ import {TableModule} from 'primeng/table';
 
 
 import { AuthenticationRESTEndpointService, StaffRESTEndpointService, ArborescenceRESTEndpointService,
-  MedicalRecordsRESTEndpointService, SpecializationsRESTEndpointService } from '../apis/services';
-import { ApiConfiguration } from '../apis/api-configuration';
+  MedicalRecordsRESTEndpointService, SpecializationsRESTEndpointService } from './api/services';
+import { ApiConfiguration } from './api/api-configuration';
 import { AuthService } from './auth.service';
 import { AuthGuardService } from './auth.guard.service';
 import { TestComponent } from './test/test.component';

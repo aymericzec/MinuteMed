@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { StaffRESTEndpointService, MedicalRecordsRESTEndpointService } from '../../apis/services';
+import { StaffRESTEndpointService, MedicalRecordsRESTEndpointService } from '../api//services';
 import { AuthService } from '../auth.service';
-import { PrescriptionDTO, DosageDTO } from '../../apis/models';
+import { PrescriptionDTO, DosageDTO } from '../api/models';
 
 @Component({
   selector: 'app-posologie',

@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, NgModule } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthenticationRESTEndpointService } from '../../apis/services/authentication-restendpoint.service';
+import { AuthenticationRESTEndpointService } from '../api/services/authentication-restendpoint.service';
 import { HttpResponse } from '@angular/common/http';
 
 import {AuthService} from '../auth.service';

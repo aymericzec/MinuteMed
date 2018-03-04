@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MedicalStaff, MedicalRecordDTO, ExamDTO, ResultExamDTO, Doctor } from '../../apis/models';
+import { MedicalStaff, MedicalRecordDTO, ExamDTO, ResultExamDTO, Doctor } from '../api/models';
 import { AuthService } from '../auth.service';
-import { StaffRESTEndpointService, MedicalRecordsRESTEndpointService, ArborescenceRESTEndpointService } from '../../apis/services';
+import { StaffRESTEndpointService, MedicalRecordsRESTEndpointService, ArborescenceRESTEndpointService } from '../api/services';
 import { RouterLinkActive, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -27,7 +27,7 @@ export class CreateexamComponent implements OnInit {
   ngOnInit() {
     this.idDmp = this.route.snapshot.params['id'];
 
-    this.staffService.getMe().subscribe(
+    this.staffService.getCurrentUserResponse().subscribe(
       response => {
         this.me = response.body;
     });
@@ -48,7 +48,7 @@ export class CreateexamComponent implements OnInit {
       };
 
     console.log(exam);
-    this.medicalService.createExam(this.idDmp, exam).subscribe( __ => {console.log('Exam created with success !'); });
+    //this.medicalService.createExam(this.idDmp, exam).subscribe( __ => {console.log('Exam created with success !'); });
   }
 
 }

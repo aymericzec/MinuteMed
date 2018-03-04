@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { visitValue } from '@angular/compiler/src/util';
 import { Router, RouterLink } from '@angular/router';
-import { MedicalRecordDTO } from '../../apis/models';
-import { MedicalRecordsRESTEndpointService } from '../../apis/services';
+import { MedicalRecordDTO } from '../api/models';
+import { MedicalRecordsRESTEndpointService } from '../api/services';
 import { AuthService } from '../auth.service';
 
 @Component({

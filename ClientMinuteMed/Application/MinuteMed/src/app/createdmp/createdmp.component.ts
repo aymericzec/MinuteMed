@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MedicalRecordsRESTEndpointService, ArborescenceRESTEndpointService, StaffRESTEndpointService } from '../../apis/services';
-import { MedicalRecordDTO, MedicalStaff } from '../../apis/models';
+import { MedicalRecordsRESTEndpointService, ArborescenceRESTEndpointService, StaffRESTEndpointService } from '../api/services';
+import { MedicalRecordDTO, MedicalStaff } from '../api/models';
 
 @Component({
   selector: 'app-createdmp',
@@ -19,7 +19,7 @@ export class CreatedmpComponent implements OnInit {
 
   ngOnInit() {
 
-    this.staffService.getMe().subscribe(
+    this.staffService.getCurrentUserResponse().subscribe(
       response => {
         this.me = response.body;
     });
