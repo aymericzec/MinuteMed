@@ -257,14 +257,14 @@ export class StaffRESTEndpointService extends BaseService {
   }
 
   /**
-   * @param Authorization undefined
+   * @param idMedicalStaff undefined
    * @return successful operation
    */
-   getMedicalStaffResponse(Authorization?: string): Observable<HttpResponse<MedicalStaffDTO>> {
+   getMedicalStaffResponse(idMedicalStaff: number): Observable<HttpResponse<MedicalStaffDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (Authorization != null) __headers = __headers.set("Authorization", Authorization.toString());
+
     let req = new HttpRequest<any>(
       "GET",
       this.rootUrl + `/staffs/medicalStaff/${idMedicalStaff}`,
@@ -287,11 +287,11 @@ export class StaffRESTEndpointService extends BaseService {
   }
 
   /**
-   * @param Authorization undefined
+   * @param idMedicalStaff undefined
    * @return successful operation
    */
-   getMedicalStaff(Authorization?: string): Observable<MedicalStaffDTO> {
-    return this.getMedicalStaffResponse(Authorization).pipe(
+   getMedicalStaff(idMedicalStaff: number): Observable<MedicalStaffDTO> {
+    return this.getMedicalStaffResponse(idMedicalStaff).pipe(
       map(_r => _r.body)
     );
   }

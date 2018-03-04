@@ -31,9 +31,6 @@ export class ExamComponent implements OnInit {
           this.examsTmp = [];
 
           for (let _i = 0; _i < this.exams.length; _i++) {
-            this.staffService.getMedicalStaff().subscribe(x => {
-
-            });
             this.staffService.getDoctor(this.exams[_i].doctorId).subscribe(responseDoctor => {
               let tat: any;
               tat = [];
