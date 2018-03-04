@@ -1,7 +1,7 @@
 <app-nav-bar></app-nav-bar>
 
-<div class="container-fluid">
-  <div class="row">
+<div class="container-fluid" *ngIf="examsTmp != null">
+  <div class="row" >
     <app-leftbar class="collapse in col-md-2 nopadding" id="sidebar"></app-leftbar>
     <main class="col-md-9 col-xs-11 p-l-2 p-t-2">
       <a href="#sidebar" data-toggle="collapse">
@@ -24,7 +24,7 @@
                   {{rowData[col.field]}}
               </td>
               <td>
-                  <button pButton type="button" icon="fa-search" iconPos="left" class="reasonButton" routerLink="/dmp/{{this.id}}/exams/{{rowData.identifiant}}"></button>
+                  <button pButton type="button" icon="fa-search" iconPos="left" class="reasonButton" routerLink="/record/{{this.id}}/exams/{{rowData.identifiant}}"></button>
               </td>
           </tr>
         </ng-template>
@@ -32,5 +32,3 @@
     </main>
   </div>
 </div>
-
-{{exams | json}}

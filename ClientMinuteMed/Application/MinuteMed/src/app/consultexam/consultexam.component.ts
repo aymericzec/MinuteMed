@@ -11,7 +11,6 @@ import { isNull } from 'util';
   styleUrls: ['./consultexam.component.css']
 })
 export class ConsultexamComponent implements OnInit {
-  exams: ExamDTO[];
   cols: any[];
   exam: ExamDTO;
   doctorCreate: Doctor;
@@ -26,7 +25,7 @@ export class ConsultexamComponent implements OnInit {
 
     this.medicalService.getExam({'idRecord': idDmp, 'idExam': idExam}).subscribe(e => {
       this.exam = e;
-
+      console.log(this.exam.description);
       this.staffService.getDoctor(e.doctorId).subscribe(response => {
         this.doctorCreate = response;
       });

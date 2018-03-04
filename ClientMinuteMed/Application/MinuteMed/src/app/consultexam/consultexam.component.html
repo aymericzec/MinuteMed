@@ -8,7 +8,7 @@
             <div class="col-lg-6">
               <img class="img-circle" src="assets/examen.jpg" alt="Generic placeholder image" width="140" height="140">
               <h2>Demande:</h2>
-              <div class="container">
+              <div class="container" *ngIf="exam != null">
                   <form>
                       <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Médecin Demandeur:</label>
