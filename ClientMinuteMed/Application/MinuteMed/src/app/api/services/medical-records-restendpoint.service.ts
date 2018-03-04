@@ -1,7 +1,7 @@
 /* tslint:disable */
 import { Injectable } from '@angular/core';
 import {
-  HttpClient, HttpRequest, HttpResponse, 
+  HttpClient, HttpRequest, HttpResponse,
   HttpHeaders, HttpParams } from '@angular/common/http';
 import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
@@ -83,7 +83,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-        
+
         return _resp.clone({body: _body}) as HttpResponse<void>;
       })
     );
@@ -158,7 +158,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-        
+
         return _resp.clone({body: _body}) as HttpResponse<void>;
       })
     );
@@ -236,7 +236,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-        
+
         return _resp.clone({body: _body}) as HttpResponse<void>;
       })
     );
@@ -254,9 +254,9 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.GetDiagnosticParams` containing the following parameters:
    *
-   * - `idRecord`: 
+   * - `idRecord`:
    *
-   * - `idDiagnostic`: 
+   * - `idDiagnostic`:
    *
    * @return successful operation
    */
@@ -290,9 +290,9 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.GetDiagnosticParams` containing the following parameters:
    *
-   * - `idRecord`: 
+   * - `idRecord`:
    *
-   * - `idDiagnostic`: 
+   * - `idDiagnostic`:
    *
    * @return successful operation
    */
@@ -305,7 +305,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.DeleteDiagnosticParams` containing the following parameters:
    *
-   * - `idRecord`: 
+   * - `idRecord`:
    *
    * - `idDiagnostic`:
    */
@@ -330,7 +330,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-        
+
         return _resp.clone({body: _body}) as HttpResponse<void>;
       })
     );
@@ -339,7 +339,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.DeleteDiagnosticParams` containing the following parameters:
    *
-   * - `idRecord`: 
+   * - `idRecord`:
    *
    * - `idDiagnostic`:
    */
@@ -412,7 +412,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-        
+
         return _resp.clone({body: _body}) as HttpResponse<void>;
       })
     );
@@ -430,9 +430,9 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.GetDosageParams` containing the following parameters:
    *
-   * - `idRecord`: 
+   * - `idRecord`:
    *
-   * - `idDosage`: 
+   * - `idDosage`:
    *
    * @return successful operation
    */
@@ -466,9 +466,9 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.GetDosageParams` containing the following parameters:
    *
-   * - `idRecord`: 
+   * - `idRecord`:
    *
-   * - `idDosage`: 
+   * - `idDosage`:
    *
    * @return successful operation
    */
@@ -481,7 +481,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.DeleteDosageParams` containing the following parameters:
    *
-   * - `idRecord`: 
+   * - `idRecord`:
    *
    * - `idDosage`:
    */
@@ -506,7 +506,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-        
+
         return _resp.clone({body: _body}) as HttpResponse<void>;
       })
     );
@@ -515,7 +515,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.DeleteDosageParams` containing the following parameters:
    *
-   * - `idRecord`: 
+   * - `idRecord`:
    *
    * - `idDosage`:
    */
@@ -568,10 +568,10 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param idRecord undefined
    */
-   createExamResponse(idRecord: number): Observable<HttpResponse<void>> {
+   createExamResponse(idRecord: number, exam:ExamDTO): Observable<HttpResponse<void>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
-    let __body: any = null;
+    let __body: ExamDTO = exam;
 
     let req = new HttpRequest<any>(
       "POST",
@@ -588,7 +588,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-        
+
         return _resp.clone({body: _body}) as HttpResponse<void>;
       })
     );
@@ -597,8 +597,8 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param idRecord undefined
    */
-   createExam(idRecord: number): Observable<void> {
-    return this.createExamResponse(idRecord).pipe(
+   createExam(idRecord: number, exam:ExamDTO): Observable<void> {
+    return this.createExamResponse(idRecord, exam).pipe(
       map(_r => _r.body)
     );
   }
@@ -606,9 +606,9 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.GetExamParams` containing the following parameters:
    *
-   * - `idRecord`: 
+   * - `idRecord`:
    *
-   * - `idExam`: 
+   * - `idExam`:
    *
    * @return successful operation
    */
@@ -642,9 +642,9 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.GetExamParams` containing the following parameters:
    *
-   * - `idRecord`: 
+   * - `idRecord`:
    *
-   * - `idExam`: 
+   * - `idExam`:
    *
    * @return successful operation
    */
@@ -657,7 +657,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.DeleteExamParams` containing the following parameters:
    *
-   * - `idRecord`: 
+   * - `idRecord`:
    *
    * - `idExam`:
    */
@@ -682,7 +682,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-        
+
         return _resp.clone({body: _body}) as HttpResponse<void>;
       })
     );
@@ -691,7 +691,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.DeleteExamParams` containing the following parameters:
    *
-   * - `idRecord`: 
+   * - `idRecord`:
    *
    * - `idExam`:
    */
@@ -764,7 +764,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-        
+
         return _resp.clone({body: _body}) as HttpResponse<void>;
       })
     );
@@ -782,9 +782,9 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.GetPrescriptionParams` containing the following parameters:
    *
-   * - `idRecord`: 
+   * - `idRecord`:
    *
-   * - `idPrescription`: 
+   * - `idPrescription`:
    *
    * @return successful operation
    */
@@ -818,9 +818,9 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.GetPrescriptionParams` containing the following parameters:
    *
-   * - `idRecord`: 
+   * - `idRecord`:
    *
-   * - `idPrescription`: 
+   * - `idPrescription`:
    *
    * @return successful operation
    */
@@ -833,7 +833,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.DeletePrescriptionParams` containing the following parameters:
    *
-   * - `idRecord`: 
+   * - `idRecord`:
    *
    * - `idPrescription`:
    */
@@ -858,7 +858,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-        
+
         return _resp.clone({body: _body}) as HttpResponse<void>;
       })
     );
@@ -867,7 +867,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.DeletePrescriptionParams` containing the following parameters:
    *
-   * - `idRecord`: 
+   * - `idRecord`:
    *
    * - `idPrescription`:
    */
