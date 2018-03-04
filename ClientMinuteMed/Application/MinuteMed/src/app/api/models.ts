@@ -6,6 +6,7 @@ export { DosageReportDTO } from './models/dosage-report-dto';
 export { ExamDTO } from './models/exam-dto';
 export { MedicalRecordDTO } from './models/medical-record-dto';
 export { MedicalStaff } from './models/medical-staff';
+export { MedicalStaffDTO } from './models/medical-staff-dto';
 export { Node } from './models/node';
 export { NodeAPHP } from './models/node-aphp';
 export { NodeCU } from './models/node-cu';

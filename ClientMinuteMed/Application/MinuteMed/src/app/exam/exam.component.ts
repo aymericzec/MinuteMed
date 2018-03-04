@@ -31,6 +31,9 @@ export class ExamComponent implements OnInit {
           this.examsTmp = [];
 
           for (let _i = 0; _i < this.exams.length; _i++) {
+            this.staffService.getMedicalStaff().subscribe(x => {
+
+            });
             this.staffService.getDoctor(this.exams[_i].doctorId).subscribe(responseDoctor => {
               let tat: any;
               tat = [];
@@ -50,7 +53,8 @@ export class ExamComponent implements OnInit {
               tat['description'] = this.exams[_i].description;
               tat.push('description');
 
-             /* if (isNull(this.exams[_i].resultExam)) {
+              /*
+              if (isNull(this.exams[_i].resultExam)) {
                 tat['examinator'] = 'Pas encore réalisé';
                 tat['dateExaminator'] = '??/??/????';
               } else {

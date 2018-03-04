@@ -12,6 +12,7 @@ import { filter } from 'rxjs/operators/filter';
 import { MedicalStaff } from '../models/medical-staff';
 import { DataManager } from '../models/data-manager';
 import { Doctor } from '../models/doctor';
+import { MedicalStaffDTO } from '../models/medical-staff-dto';
 import { Nurse } from '../models/nurse';
 
 @Injectable()
@@ -251,6 +252,46 @@ export class StaffRESTEndpointService extends BaseService {
    */
    getCurrentUser(Authorization?: string): Observable<MedicalStaff> {
     return this.getCurrentUserResponse(Authorization).pipe(
+      map(_r => _r.body)
+    );
+  }
+
+  /**
+   * @param Authorization undefined
+   * @return successful operation
+   */
+   getMedicalStaffResponse(Authorization?: string): Observable<HttpResponse<MedicalStaffDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    if (Authorization != null) __headers = __headers.set("Authorization", Authorization.toString());
+    let req = new HttpRequest<any>(
+      "GET",
+      this.rootUrl + `/staffs/medicalStaff/${idMedicalStaff}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      filter(_r => _r instanceof HttpResponse),
+      map(_r => {
+        let _resp = _r as HttpResponse<any>;
+        let _body: MedicalStaffDTO = null;
+        _body = _resp.body as MedicalStaffDTO
+        return _resp.clone({body: _body}) as HttpResponse<MedicalStaffDTO>;
+      })
+    );
+  }
+
+  /**
+   * @param Authorization undefined
+   * @return successful operation
+   */
+   getMedicalStaff(Authorization?: string): Observable<MedicalStaffDTO> {
+    return this.getMedicalStaffResponse(Authorization).pipe(
       map(_r => _r.body)
     );
   }
