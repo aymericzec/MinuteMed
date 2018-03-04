@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MedicalRecordsRESTEndpointService, StaffRESTEndpointService } from '../../apis/services';
+import { MedicalRecordsRESTEndpointService, StaffRESTEndpointService } from '../api/services';
 import { AuthService } from '../auth.service';
 import { ActivatedRoute } from '@angular/router';
-import { DiagnosticDTO } from '../../apis/models';
+import { DiagnosticDTO } from '../api/models';
 
 @Component({
   selector: 'app-consultdiagnostic',
