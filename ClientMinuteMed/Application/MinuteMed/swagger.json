@@ -1,0 +1,2512 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Gives all the details of the MinuteMed APIs",
+    "version" : "1.0.0",
+    "title" : "MinuteMedAPI"
+  },
+  "host" : "localhost:8080",
+  "basePath" : "/api",
+  "tags" : [ {
+    "name" : "Arborescence REST Endpoint"
+  }, {
+    "name" : "Authentication REST Endpoint"
+  }, {
+    "name" : "MedicalRecords REST Endpoint"
+  }, {
+    "name" : "Specializations REST Endpoint"
+  }, {
+    "name" : "Staff REST Endpoint"
+  } ],
+  "schemes" : [ "http", "https" ],
+  "paths" : {
+    "/auth" : {
+      "get" : {
+        "tags" : [ "Authentication REST Endpoint" ],
+        "summary" : "get all user account",
+        "description" : "",
+        "operationId" : "findAllUsers",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "201" : {
+            "description" : "All the user account."
+          },
+          "404" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/auth/create/datamanager" : {
+      "post" : {
+        "tags" : [ "Authentication REST Endpoint" ],
+        "summary" : "Create a data manager account",
+        "description" : "",
+        "operationId" : "createDataManagerAccount",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/UserAccount"
+            }
+          },
+          "201" : {
+            "description" : "The User Account is created."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "409" : {
+            "description" : "Username conflict"
+          }
+        }
+      }
+    },
+    "/auth/create/doctor" : {
+      "post" : {
+        "tags" : [ "Authentication REST Endpoint" ],
+        "summary" : "Create a doctor account",
+        "description" : "",
+        "operationId" : "createDoctorAccount",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/UserAccount"
+            }
+          },
+          "201" : {
+            "description" : "The User Account is created."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "409" : {
+            "description" : "Username conflict"
+          }
+        }
+      }
+    },
+    "/auth/create/nurse" : {
+      "post" : {
+        "tags" : [ "Authentication REST Endpoint" ],
+        "summary" : "Create a nurse account",
+        "description" : "",
+        "operationId" : "createNurseAccount",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/UserAccount"
+            }
+          },
+          "201" : {
+            "description" : "The User Account is created."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "409" : {
+            "description" : "Username conflict"
+          }
+        }
+      }
+    },
+    "/auth/delete/{idAccount}" : {
+      "delete" : {
+        "tags" : [ "Authentication REST Endpoint" ],
+        "summary" : "delete an user account",
+        "description" : "",
+        "operationId" : "deleteUser",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idAccount",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The User Account is deleted."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/auth/login" : {
+      "post" : {
+        "tags" : [ "Authentication REST Endpoint" ],
+        "summary" : "login to the application",
+        "description" : "",
+        "operationId" : "authenticateUser",
+        "consumes" : [ "application/x-www-form-urlencoded" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "login",
+          "in" : "formData",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "password",
+          "in" : "formData",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "You are login"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/auth/logout" : {
+      "post" : {
+        "tags" : [ "Authentication REST Endpoint" ],
+        "summary" : "logout to the application",
+        "description" : "",
+        "operationId" : "logout",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "You are logout"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/nodes/APHP" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get the APHP.",
+        "description" : "",
+        "operationId" : "getAPHP",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/NodeAPHP"
+            }
+          },
+          "201" : {
+            "description" : "All Hospitals are returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Hospitals not found"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Create the APHP",
+        "description" : "",
+        "operationId" : "createAPHP",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "201" : {
+            "description" : "The APHP is created."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/nodes/APHP/hospitals" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get all Hospitals of the APHP.",
+        "description" : "",
+        "operationId" : "getAllHospitals",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/NodeHospital"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All Hospitals are returned."
+          },
+          "404" : {
+            "description" : "APHP not found"
+          }
+        }
+      }
+    },
+    "/nodes/APHP/hospitals/poles" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get all Poles of the APHP.",
+        "description" : "",
+        "operationId" : "getAllPoles",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/NodePole"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All Poles are returned."
+          },
+          "404" : {
+            "description" : "APHP not found"
+          }
+        }
+      }
+    },
+    "/nodes/APHP/hospitals/poles/services" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get all Services of the APHP.",
+        "description" : "",
+        "operationId" : "getAllServices",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/NodeService"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All Services are returned."
+          },
+          "404" : {
+            "description" : "APHP not found"
+          }
+        }
+      }
+    },
+    "/nodes/APHP/hospitals/poles/services/hUnits" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get all Hospital Units of the APHP.",
+        "description" : "",
+        "operationId" : "getAllHospitalUnits",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/NodeHU"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All Hospital Units are returned."
+          },
+          "404" : {
+            "description" : "APHP not found"
+          }
+        }
+      }
+    },
+    "/nodes/APHP/hospitals/poles/services/hUnits/cUnits" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get all Care Units of the APHP.",
+        "description" : "",
+        "operationId" : "getAllCareUnits",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/NodeCU"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All Care Units are returned."
+          },
+          "404" : {
+            "description" : "APHP not found"
+          }
+        }
+      }
+    },
+    "/nodes/APHP/{idAPHP}/hospitals" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get all Hospitals of the APHP.",
+        "description" : "",
+        "operationId" : "getHospitals",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/NodeHospital"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All Hospitals are returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Hospitals not found"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Create an Hospital",
+        "description" : "",
+        "operationId" : "createHospital",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The Hospital is created."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/nodes/APHP/{idAPHP}/hospitals/{idHospital}" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get a specific Hospital.",
+        "description" : "",
+        "operationId" : "getHospital",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idHospital",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/NodeHospital"
+            }
+          },
+          "201" : {
+            "description" : "The Hospital is returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Hospital not found"
+          }
+        }
+      }
+    },
+    "/nodes/APHP/{idAPHP}/hospitals/{idHospital}/poles" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get all Poles of an Hospital.",
+        "description" : "",
+        "operationId" : "getPoles",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idHospital",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/NodePole"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All Poles are returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Poles not found"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Create a Pole",
+        "description" : "",
+        "operationId" : "createPole",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idHospital",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The Pole is created."
+          },
+          "400" : {
+            "description" : "Invalid input."
+          },
+          "404" : {
+            "description" : "Unknow node."
+          }
+        }
+      }
+    },
+    "/nodes/APHP/{idAPHP}/hospitals/{idHospital}/poles/{idPole}" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get a specific Pole.",
+        "description" : "",
+        "operationId" : "getPole",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idHospital",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idPole",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/NodePole"
+            }
+          },
+          "201" : {
+            "description" : "The Pole is returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Pole not found"
+          }
+        }
+      }
+    },
+    "/nodes/APHP/{idAPHP}/hospitals/{idHospital}/poles/{idPole}/services" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get all Services of a Pole.",
+        "description" : "",
+        "operationId" : "getServices",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idHospital",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idPole",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/NodeService"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All Services are returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Services not found"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Create a Service",
+        "description" : "",
+        "operationId" : "createService",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idHospital",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idPole",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The Service is created."
+          },
+          "400" : {
+            "description" : "Invalid input."
+          },
+          "404" : {
+            "description" : "Unknow node."
+          }
+        }
+      }
+    },
+    "/nodes/APHP/{idAPHP}/hospitals/{idHospital}/poles/{idPole}/services/{idService}" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get a specific Service.",
+        "description" : "",
+        "operationId" : "getService",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idHospital",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idPole",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idService",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/NodeService"
+            }
+          },
+          "201" : {
+            "description" : "The Service is returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Service not found"
+          }
+        }
+      }
+    },
+    "/nodes/APHP/{idAPHP}/hospitals/{idHospital}/poles/{idPole}/services/{idService}/hUnits" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get all Hospital Units of a Service.",
+        "description" : "",
+        "operationId" : "getHospitalUnits",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idHospital",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idPole",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idService",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/NodeHU"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All Hospital Units are returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Hospital Units not found"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Create a Hospital Unit",
+        "description" : "",
+        "operationId" : "createHospitalUnit",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idHospital",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idPole",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idService",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The Hospital Unit is created."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Unknow node."
+          }
+        }
+      }
+    },
+    "/nodes/APHP/{idAPHP}/hospitals/{idHospital}/poles/{idPole}/services/{idService}/hUnits/{idHU}" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get a specific Hospital Unit.",
+        "description" : "",
+        "operationId" : "getHospitalUnit",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idHospital",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idPole",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idService",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idHU",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/NodeHU"
+            }
+          },
+          "201" : {
+            "description" : "The Hospital Unit is returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Hospital Unit not found"
+          }
+        }
+      }
+    },
+    "/nodes/APHP/{idAPHP}/hospitals/{idHospital}/poles/{idPole}/services/{idService}/hUnits/{idHU}/cUnits" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get all Care Units of a Hospital Unit.",
+        "description" : "",
+        "operationId" : "getCareUnits",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idHospital",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idPole",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idService",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idHU",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/NodeCU"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All Care Units are returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Care Units not found"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Create a Care Unit",
+        "description" : "",
+        "operationId" : "createCareUnit",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idHospital",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idPole",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idService",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idHU",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The Care Unit is created."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Unknow node."
+          }
+        }
+      }
+    },
+    "/nodes/APHP/{idAPHP}/hospitals/{idHospital}/poles/{idPole}/services/{idService}/hUnits/{idHU}/cUnits/{idCU}" : {
+      "get" : {
+        "tags" : [ "Arborescence REST Endpoint" ],
+        "summary" : "Get a specific Care Unit.",
+        "description" : "",
+        "operationId" : "getCareUnit",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idAPHP",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idHospital",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idPole",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idService",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idHU",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idCU",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/NodeCU"
+            }
+          },
+          "201" : {
+            "description" : "The Care Unit is returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Care Unit not found"
+          }
+        }
+      }
+    },
+    "/records" : {
+      "get" : {
+        "tags" : [ "MedicalRecords REST Endpoint" ],
+        "summary" : "Get all Medical Records.",
+        "description" : "",
+        "operationId" : "getAllMedicalRecord",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/MedicalRecordDTO"
+            }
+          },
+          "201" : {
+            "description" : "All the Medical Records are returned."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "MedicalRecords REST Endpoint" ],
+        "summary" : "Create a medical record",
+        "description" : "",
+        "operationId" : "createMedicalRecord",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "201" : {
+            "description" : "The Medical Record is created !"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/records/{idRecord}" : {
+      "get" : {
+        "tags" : [ "MedicalRecords REST Endpoint" ],
+        "summary" : "Get a specific Medical Record.",
+        "description" : "",
+        "operationId" : "getMedicalRecord",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idRecord",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/MedicalRecordDTO"
+            }
+          },
+          "201" : {
+            "description" : "The Medical Record is returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Medical Record not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "MedicalRecords REST Endpoint" ],
+        "summary" : "Delete a Medical Record.",
+        "description" : "",
+        "operationId" : "deleteMedicalRecord",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idRecord",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The Medical Record is deleted."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Medical Record not found"
+          }
+        }
+      }
+    },
+    "/records/{idRecord}/diagnostics" : {
+      "get" : {
+        "tags" : [ "MedicalRecords REST Endpoint" ],
+        "summary" : "Get all Diagnostics associated with a Medical Record.",
+        "description" : "",
+        "operationId" : "getDiagnostics",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idRecord",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/DiagnosticDTO"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All the Diagnostics are returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Medical Record not found"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "MedicalRecords REST Endpoint" ],
+        "summary" : "Create a Diagnostic in the Medical Record associated",
+        "description" : "",
+        "operationId" : "createDiagnostic",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idRecord",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The Diagnostic is created !"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/records/{idRecord}/diagnostics/{idDiagnostic}" : {
+      "get" : {
+        "tags" : [ "MedicalRecords REST Endpoint" ],
+        "summary" : "Get a specific Diagnostic associated with a Medical Record.",
+        "description" : "",
+        "operationId" : "getDiagnostic",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idRecord",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idDiagnostic",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DiagnosticDTO"
+            }
+          },
+          "201" : {
+            "description" : "The Diagnostic is returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Medical Record or Diagnostic not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "MedicalRecords REST Endpoint" ],
+        "summary" : "Delete a Diagnostic.",
+        "description" : "",
+        "operationId" : "deleteDiagnostic",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idRecord",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idDiagnostic",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The Diagnostic is deleted."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Diagnostic not found"
+          }
+        }
+      }
+    },
+    "/records/{idRecord}/dosages" : {
+      "get" : {
+        "tags" : [ "MedicalRecords REST Endpoint" ],
+        "summary" : "Get all Dosages associated with a Medical Record.",
+        "description" : "",
+        "operationId" : "getAllDosages",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idRecord",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/DosageDTO"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All the Dosages are returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Medical Record not found"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "MedicalRecords REST Endpoint" ],
+        "summary" : "Create a Dosage in the Medical Record associated",
+        "description" : "",
+        "operationId" : "createDosage",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idRecord",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The Dosage is created !"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/records/{idRecord}/dosages/{idDosage}" : {
+      "get" : {
+        "tags" : [ "MedicalRecords REST Endpoint" ],
+        "summary" : "Get a specific Dosage associated with a Medical Record.",
+        "description" : "",
+        "operationId" : "getDosage",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idRecord",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idDosage",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DosageDTO"
+            }
+          },
+          "201" : {
+            "description" : "The Dosage is returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Medical Record or Dosage not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "MedicalRecords REST Endpoint" ],
+        "summary" : "Delete a Dosage.",
+        "description" : "",
+        "operationId" : "deleteDosage",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idRecord",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idDosage",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The Dosage is deleted."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Dosage not found"
+          }
+        }
+      }
+    },
+    "/records/{idRecord}/exams" : {
+      "get" : {
+        "tags" : [ "MedicalRecords REST Endpoint" ],
+        "summary" : "Get all Exams associated with a Medical Record.",
+        "description" : "",
+        "operationId" : "getExams",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idRecord",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/ExamDTO"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All the Exams are returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Medical Record not found"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "MedicalRecords REST Endpoint" ],
+        "summary" : "Create an Exam in the Medical Record associated",
+        "description" : "",
+        "operationId" : "createExam",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idRecord",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The Exam is created !"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/records/{idRecord}/exams/{idExam}" : {
+      "get" : {
+        "tags" : [ "MedicalRecords REST Endpoint" ],
+        "summary" : "Get a specific Exam associated with a Medical Record.",
+        "description" : "",
+        "operationId" : "getExam",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idRecord",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idExam",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ExamDTO"
+            }
+          },
+          "201" : {
+            "description" : "The Exam is returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Medical Record or Exam not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "MedicalRecords REST Endpoint" ],
+        "summary" : "Delete an Exam.",
+        "description" : "",
+        "operationId" : "deleteExam",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idRecord",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idExam",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The Exam is deleted."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Exam not found"
+          }
+        }
+      }
+    },
+    "/records/{idRecord}/prescriptions" : {
+      "get" : {
+        "tags" : [ "MedicalRecords REST Endpoint" ],
+        "summary" : "Get all Prescriptions associated with a Medical Record.",
+        "description" : "",
+        "operationId" : "getPrescriptions",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idRecord",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/PrescriptionDTO"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All the Prescriptions are returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Medical Record not found"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "MedicalRecords REST Endpoint" ],
+        "summary" : "Create a Prescription in the Medical Record associated",
+        "description" : "",
+        "operationId" : "createPrescription",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idRecord",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The Prescription is created !"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/records/{idRecord}/prescriptions/{idPrescription}" : {
+      "get" : {
+        "tags" : [ "MedicalRecords REST Endpoint" ],
+        "summary" : "Get a specific Prescription associated with a Medical Record.",
+        "description" : "",
+        "operationId" : "getPrescription",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idRecord",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idPrescription",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/PrescriptionDTO"
+            }
+          },
+          "201" : {
+            "description" : "The Prescription is returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Medical Record or Prescription not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "MedicalRecords REST Endpoint" ],
+        "summary" : "Delete a Prescription.",
+        "description" : "",
+        "operationId" : "deletePrescription",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idRecord",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "idPrescription",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The Prescription is deleted."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Prescription not found"
+          }
+        }
+      }
+    },
+    "/specializations" : {
+      "get" : {
+        "tags" : [ "Specializations REST Endpoint" ],
+        "summary" : "Get all specializations.",
+        "description" : "",
+        "operationId" : "getAllSpecializations",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Specialization"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All Specializations are returned."
+          }
+        }
+      }
+    },
+    "/staffs" : {
+      "get" : {
+        "tags" : [ "Staff REST Endpoint" ],
+        "summary" : "Get all staff.",
+        "description" : "",
+        "operationId" : "getAllStaffs",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/MedicalStaff"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All Staff Hospital are returned."
+          }
+        }
+      }
+    },
+    "/staffs/dataManagers/{idDataManager}" : {
+      "get" : {
+        "tags" : [ "Staff REST Endpoint" ],
+        "summary" : "Get a DataManager.",
+        "description" : "",
+        "operationId" : "getDatamanager",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idDataManager",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DataManager"
+            }
+          },
+          "201" : {
+            "description" : "The DataManager is returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "DataManager not exists"
+          }
+        }
+      }
+    },
+    "/staffs/doctors" : {
+      "get" : {
+        "tags" : [ "Staff REST Endpoint" ],
+        "summary" : "Get all doctor.",
+        "description" : "",
+        "operationId" : "getAllDoctors",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Doctor"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All Doctors are returned."
+          }
+        }
+      }
+    },
+    "/staffs/doctors/{idDoctor}" : {
+      "get" : {
+        "tags" : [ "Staff REST Endpoint" ],
+        "summary" : "Get a doctor.",
+        "description" : "",
+        "operationId" : "getDoctor",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idDoctor",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Doctor"
+            }
+          },
+          "201" : {
+            "description" : "The Doctor is returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Doctor not exists"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Staff REST Endpoint" ],
+        "summary" : "Delete a Doctor.",
+        "description" : "",
+        "operationId" : "deleteDoctor",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idDoctor",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The Doctor is deleted"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Doctor not found"
+          }
+        }
+      }
+    },
+    "/staffs/me" : {
+      "get" : {
+        "tags" : [ "Staff REST Endpoint" ],
+        "summary" : "Get the current staff.",
+        "description" : "",
+        "operationId" : "getCurrentUser",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/MedicalStaff"
+            }
+          },
+          "201" : {
+            "description" : "The MedicalStaff is returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "MedicalStaff not exists"
+          }
+        }
+      }
+    },
+    "/staffs/nurses" : {
+      "get" : {
+        "tags" : [ "Staff REST Endpoint" ],
+        "summary" : "Get all nurses.",
+        "description" : "",
+        "operationId" : "getAllNurses",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Nurse"
+              }
+            }
+          },
+          "201" : {
+            "description" : "All Nurses are returned."
+          }
+        }
+      }
+    },
+    "/staffs/nurses/{idNurse}" : {
+      "get" : {
+        "tags" : [ "Staff REST Endpoint" ],
+        "summary" : "Get a nurse.",
+        "description" : "",
+        "operationId" : "getNurse",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idNurse",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Nurse"
+            }
+          },
+          "201" : {
+            "description" : "The Nurse is returned."
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Nurse not exists"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Staff REST Endpoint" ],
+        "summary" : "Delete a Nurse.",
+        "description" : "",
+        "operationId" : "deleteNurse",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idNurse",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The Nurse is deleted"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Nurse not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "DataManager" : {
+      "type" : "object",
+      "required" : [ "address", "email", "firstName", "lastName", "node", "phoneNumber", "status" ],
+      "properties" : {
+        "idMedicalStaff" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "status" : {
+          "type" : "string"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "address" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "phoneNumber" : {
+          "type" : "string"
+        },
+        "node" : {
+          "$ref" : "#/definitions/Node"
+        }
+      }
+    },
+    "DiagnosticDTO" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "creatorId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "medicalRecordId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "creationDate" : {
+          "type" : "string"
+        },
+        "body" : {
+          "type" : "string"
+        },
+        "draft" : {
+          "type" : "boolean",
+          "default" : false
+        }
+      }
+    },
+    "Doctor" : {
+      "type" : "object",
+      "required" : [ "address", "email", "firstName", "lastName", "node", "phoneNumber", "status" ],
+      "properties" : {
+        "idMedicalStaff" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "status" : {
+          "type" : "string"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "address" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "phoneNumber" : {
+          "type" : "string"
+        },
+        "node" : {
+          "$ref" : "#/definitions/Node"
+        },
+        "specialization" : {
+          "$ref" : "#/definitions/Specialization"
+        }
+      }
+    },
+    "DosageDTO" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "medicalRecordId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "creatorId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "diagnosticId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "creationDate" : {
+          "type" : "string"
+        },
+        "body" : {
+          "type" : "string"
+        },
+        "beginDosage" : {
+          "type" : "string"
+        },
+        "endDosage" : {
+          "type" : "string"
+        },
+        "reports" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/DosageReportDTO"
+          }
+        },
+        "draft" : {
+          "type" : "boolean",
+          "default" : false
+        }
+      }
+    },
+    "DosageReportDTO" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "supervisorId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "dosageId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "creationDate" : {
+          "type" : "string"
+        },
+        "body" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ExamDTO" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "doctorId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "medicalRecordId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "dateExam" : {
+          "type" : "string"
+        },
+        "resultExam" : {
+          "$ref" : "#/definitions/ResultExamDTO"
+        },
+        "draft" : {
+          "type" : "boolean",
+          "default" : false
+        }
+      }
+    },
+    "MedicalRecordDTO" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "ss" : {
+          "type" : "string"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "address" : {
+          "type" : "string"
+        },
+        "birthday" : {
+          "type" : "string"
+        },
+        "gender" : {
+          "type" : "string"
+        },
+        "phoneNumber" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "careUnit" : {
+          "$ref" : "#/definitions/NodeDTO"
+        }
+      }
+    },
+    "MedicalStaff" : {
+      "type" : "object",
+      "required" : [ "address", "email", "firstName", "lastName", "node", "phoneNumber", "status" ],
+      "properties" : {
+        "idMedicalStaff" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "status" : {
+          "type" : "string"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "address" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "phoneNumber" : {
+          "type" : "string"
+        },
+        "node" : {
+          "$ref" : "#/definitions/Node"
+        }
+      }
+    },
+    "Node" : {
+      "type" : "object",
+      "required" : [ "floor", "name" ],
+      "properties" : {
+        "idNode" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "floor" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
+    "NodeAPHP" : {
+      "type" : "object",
+      "required" : [ "floor", "name" ],
+      "properties" : {
+        "idNode" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "floor" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
+    "NodeCU" : {
+      "type" : "object",
+      "required" : [ "father", "floor", "name" ],
+      "properties" : {
+        "idNode" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "floor" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "father" : {
+          "$ref" : "#/definitions/NodeHU"
+        }
+      }
+    },
+    "NodeDTO" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "floor" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
+    "NodeHU" : {
+      "type" : "object",
+      "required" : [ "father", "floor", "name" ],
+      "properties" : {
+        "idNode" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "floor" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "father" : {
+          "$ref" : "#/definitions/NodeService"
+        }
+      }
+    },
+    "NodeHospital" : {
+      "type" : "object",
+      "required" : [ "father", "floor", "name" ],
+      "properties" : {
+        "idNode" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "floor" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "father" : {
+          "$ref" : "#/definitions/NodeAPHP"
+        }
+      }
+    },
+    "NodePole" : {
+      "type" : "object",
+      "required" : [ "father", "floor", "name" ],
+      "properties" : {
+        "idNode" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "floor" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "father" : {
+          "$ref" : "#/definitions/NodeHospital"
+        }
+      }
+    },
+    "NodeService" : {
+      "type" : "object",
+      "required" : [ "father", "floor", "name" ],
+      "properties" : {
+        "idNode" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "floor" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "father" : {
+          "$ref" : "#/definitions/NodePole"
+        }
+      }
+    },
+    "Nurse" : {
+      "type" : "object",
+      "required" : [ "address", "email", "firstName", "lastName", "node", "phoneNumber", "status" ],
+      "properties" : {
+        "idMedicalStaff" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "status" : {
+          "type" : "string"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "address" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "phoneNumber" : {
+          "type" : "string"
+        },
+        "node" : {
+          "$ref" : "#/definitions/Node"
+        }
+      }
+    },
+    "PrescriptionDTO" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "prescriptorId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "medicalRecordId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "diagnosticId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "creationDate" : {
+          "type" : "string"
+        },
+        "body" : {
+          "type" : "string"
+        },
+        "draft" : {
+          "type" : "boolean",
+          "default" : false
+        }
+      }
+    },
+    "ResultExamDTO" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "examinatorId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "examDate" : {
+          "type" : "string"
+        },
+        "body" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Specialization" : {
+      "type" : "object",
+      "required" : [ "generalName", "staffName" ],
+      "properties" : {
+        "idSpecialization" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "generalName" : {
+          "type" : "string"
+        },
+        "staffName" : {
+          "type" : "string"
+        }
+      }
+    },
+    "UserAccount" : {
+      "type" : "object",
+      "required" : [ "password", "type", "username" ],
+      "properties" : {
+        "idAccount" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "username" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string"
+        },
+        "type" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}

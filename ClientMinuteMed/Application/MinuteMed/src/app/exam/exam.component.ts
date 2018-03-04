@@ -50,13 +50,14 @@ export class ExamComponent implements OnInit {
               tat['description'] = this.exams[_i].description;
               tat.push('description');
 
-              // if (isNull(this.exams[_i].resultExam)) {
-            //   tat['examinator'] = 'Pas encore réalisé';
-            //   tat['dateExaminator'] = '??/??/????';
-            // } else {
-            //   tat['examinator'] = this.exams[_i].resultExam.examinator.lastName + ' ' + this.exams[_i].resultExam.examinator.firstName;
-            //   tat['dateExaminator'] = this.exams[_i].resultExam.examDate;
-            // }
+             /* if (isNull(this.exams[_i].resultExam)) {
+                tat['examinator'] = 'Pas encore réalisé';
+                tat['dateExaminator'] = '??/??/????';
+              } else {
+
+                tat['examinator'] = this.exams[_i].resultExam.examinator.lastName + ' ' + this.exams[_i].resultExam.examinator.firstName;
+                tat['dateExaminator'] = this.exams[_i].resultExam.examDate;
+              }*/
             this.examsTmp.push(tat);
             });
           }
