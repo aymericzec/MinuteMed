@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Exam } from '../../apis/models';
+import { ExamDTO } from '../../apis/models';
 import { MedicalRecordsRESTEndpointService, StaffRESTEndpointService } from '../../apis/services';
 import { AuthService } from '../auth.service';
 import { isNull } from 'util';
@@ -14,7 +14,7 @@ export class ExamComponent implements OnInit {
 
   cols: any;
   colsDoctor: any;
-  exams: Exam[];
+  exams: ExamDTO[];
   examsTmp: any[][];
   id: number;
   constructor(private medicalService: MedicalRecordsRESTEndpointService,
@@ -33,8 +33,8 @@ export class ExamComponent implements OnInit {
             let tat: any;
             tat = [];
 
-            tat.push('nameDoctor');
-            tat['nameDoctor'] = this.exams[_i].doctor.firstName + ' ' + this.exams[_i].doctor.lastName;
+            // tat.push('nameDoctor');
+            // tat['nameDoctor'] = this.exams[_i].doctor.firstName + ' ' + this.exams[_i].doctor.lastName;
 
             tat.push('dateExam');
             tat['dateExam'] = this.exams[_i].dateExam;
@@ -43,18 +43,18 @@ export class ExamComponent implements OnInit {
             tat['title'] = this.exams[_i].title;
 
             tat.push('identifiant');
-            tat['identifiant'] = this.exams[_i].idExam;
+            tat['identifiant'] = this.exams[_i].id;
 
             tat['description'] = this.exams[_i].description;
             tat.push('description');
 
-            if (isNull(this.exams[_i].resultExam)) {
-              tat['examinator'] = 'Pas encore réalisé';
-              tat['dateExaminator'] = '??/??/????';
-            } else {
-              tat['examinator'] = this.exams[_i].resultExam.examinator.lastName + ' ' + this.exams[_i].resultExam.examinator.firstName;
-              tat['dateExaminator'] = this.exams[_i].resultExam.examDate;
-            }
+            // if (isNull(this.exams[_i].resultExam)) {
+            //   tat['examinator'] = 'Pas encore réalisé';
+            //   tat['dateExaminator'] = '??/??/????';
+            // } else {
+            //   tat['examinator'] = this.exams[_i].resultExam.examinator.lastName + ' ' + this.exams[_i].resultExam.examinator.firstName;
+            //   tat['dateExaminator'] = this.exams[_i].resultExam.examDate;
+            // }
 
             this.examsTmp.push(tat);
           }

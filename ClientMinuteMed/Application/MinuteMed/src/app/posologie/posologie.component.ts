@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { StaffRESTEndpointService, MedicalRecordsRESTEndpointService } from '../../apis/services';
 import { AuthService } from '../auth.service';
-import { Prescription, Dosage } from '../../apis/models';
+import { PrescriptionDTO, DosageDTO } from '../../apis/models';
 
 @Component({
   selector: 'app-posologie',
@@ -13,7 +13,7 @@ export class PosologieComponent implements OnInit {
 
   cols: any;
   colsDoctor: any;
-  dosages: Dosage[];
+  dosages: DosageDTO[];
   dosagesTmp: any[][];
   id: number;
   constructor(private medicalService: MedicalRecordsRESTEndpointService,
@@ -32,8 +32,8 @@ export class PosologieComponent implements OnInit {
             let tat: any;
             tat = [];
 
-            tat.push('nameDoctor');
-            tat['nameDoctor'] = this.dosages[_i].creator.firstName + ' ' + this.dosages[_i].creator.lastName;
+            // tat.push('nameDoctor');
+            // tat['nameDoctor'] = this.dosages[_i].creator.firstName + ' ' + this.dosages[_i].creator.lastName;
 
             tat.push('dateExam');
             tat['dateExam'] = this.dosages[_i].creationDate;
@@ -41,8 +41,8 @@ export class PosologieComponent implements OnInit {
             tat.push('title');
             tat['title'] = this.dosages[_i].title;
 
-            tat.push('idDiagnostic');
-            tat['idDiagnostic'] = this.dosages[_i].diagnostic.idDiagnostic;
+            // tat.push('idDiagnostic');
+            // tat['idDiagnostic'] = this.dosages[_i].diagnostic.idDiagnostic;
 
             tat.push('id');
             tat['id'] = this.dosages[_i].id;

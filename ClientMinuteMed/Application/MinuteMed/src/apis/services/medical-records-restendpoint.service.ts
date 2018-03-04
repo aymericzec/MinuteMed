@@ -1,7 +1,7 @@
 /* tslint:disable */
 import { Injectable } from '@angular/core';
 import {
-  HttpClient, HttpRequest, HttpResponse,
+  HttpClient, HttpRequest, HttpResponse, 
   HttpHeaders, HttpParams } from '@angular/common/http';
 import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
@@ -9,11 +9,11 @@ import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators/map';
 import { filter } from 'rxjs/operators/filter';
 
-import { MedicalRecord } from '../models/medical-record';
-import { Diagnostic } from '../models/diagnostic';
-import { Dosage } from '../models/dosage';
-import { Exam } from '../models/exam';
-import { Prescription } from '../models/prescription';
+import { MedicalRecordDTO } from '../models/medical-record-dto';
+import { DiagnosticDTO } from '../models/diagnostic-dto';
+import { DosageDTO } from '../models/dosage-dto';
+import { ExamDTO } from '../models/exam-dto';
+import { PrescriptionDTO } from '../models/prescription-dto';
 
 @Injectable()
 export class MedicalRecordsRESTEndpointService extends BaseService {
@@ -28,7 +28,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
    * @param Authorization undefined
    * @return successful operation
    */
-   getAllMedicalRecordResponse(Authorization?: string): Observable<HttpResponse<MedicalRecord[]>> {
+   getAllMedicalRecordResponse(Authorization?: string): Observable<HttpResponse<MedicalRecordDTO[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -47,9 +47,9 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: MedicalRecord[] = null;
-        _body = _resp.body as MedicalRecord[]
-        return _resp.clone({body: _body}) as HttpResponse<MedicalRecord[]>;
+        let _body: MedicalRecordDTO[] = null;
+        _body = _resp.body as MedicalRecordDTO[]
+        return _resp.clone({body: _body}) as HttpResponse<MedicalRecordDTO[]>;
       })
     );
   }
@@ -58,7 +58,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
    * @param Authorization undefined
    * @return successful operation
    */
-   getAllMedicalRecord(Authorization?: string): Observable<MedicalRecord[]> {
+   getAllMedicalRecords(Authorization?: string): Observable<MedicalRecordDTO[]> {
     return this.getAllMedicalRecordResponse(Authorization).pipe(
       map(_r => _r.body)
     );
@@ -83,7 +83,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-
+        
         return _resp.clone({body: _body}) as HttpResponse<void>;
       })
     );
@@ -99,7 +99,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
    * @param idRecord undefined
    * @return successful operation
    */
-   getMedicalRecordResponse(idRecord: number): Observable<HttpResponse<MedicalRecord>> {
+   getMedicalRecordResponse(idRecord: number): Observable<HttpResponse<MedicalRecordDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -118,9 +118,9 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: MedicalRecord = null;
-        _body = _resp.body as MedicalRecord
-        return _resp.clone({body: _body}) as HttpResponse<MedicalRecord>;
+        let _body: MedicalRecordDTO = null;
+        _body = _resp.body as MedicalRecordDTO
+        return _resp.clone({body: _body}) as HttpResponse<MedicalRecordDTO>;
       })
     );
   }
@@ -129,7 +129,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
    * @param idRecord undefined
    * @return successful operation
    */
-   getMedicalRecord(idRecord: number): Observable<MedicalRecord> {
+   getMedicalRecord(idRecord: number): Observable<MedicalRecordDTO> {
     return this.getMedicalRecordResponse(idRecord).pipe(
       map(_r => _r.body)
     );
@@ -158,7 +158,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-
+        
         return _resp.clone({body: _body}) as HttpResponse<void>;
       })
     );
@@ -177,7 +177,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
    * @param idRecord undefined
    * @return successful operation
    */
-   getDiagnosticsResponse(idRecord: number): Observable<HttpResponse<Diagnostic[]>> {
+   getDiagnosticsResponse(idRecord: number): Observable<HttpResponse<DiagnosticDTO[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -196,9 +196,9 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: Diagnostic[] = null;
-        _body = _resp.body as Diagnostic[]
-        return _resp.clone({body: _body}) as HttpResponse<Diagnostic[]>;
+        let _body: DiagnosticDTO[] = null;
+        _body = _resp.body as DiagnosticDTO[]
+        return _resp.clone({body: _body}) as HttpResponse<DiagnosticDTO[]>;
       })
     );
   }
@@ -207,7 +207,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
    * @param idRecord undefined
    * @return successful operation
    */
-   getDiagnostics(idRecord: number): Observable<Diagnostic[]> {
+   getDiagnostics(idRecord: number): Observable<DiagnosticDTO[]> {
     return this.getDiagnosticsResponse(idRecord).pipe(
       map(_r => _r.body)
     );
@@ -236,7 +236,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-
+        
         return _resp.clone({body: _body}) as HttpResponse<void>;
       })
     );
@@ -254,13 +254,13 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.GetDiagnosticParams` containing the following parameters:
    *
-   * - `idRecord`:
+   * - `idRecord`: 
    *
-   * - `idDiagnostic`:
+   * - `idDiagnostic`: 
    *
    * @return successful operation
    */
-   getDiagnosticResponse(params: MedicalRecordsRESTEndpointService.GetDiagnosticParams): Observable<HttpResponse<Diagnostic>> {
+   getDiagnosticResponse(params: MedicalRecordsRESTEndpointService.GetDiagnosticParams): Observable<HttpResponse<DiagnosticDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -280,9 +280,9 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: Diagnostic = null;
-        _body = _resp.body as Diagnostic
-        return _resp.clone({body: _body}) as HttpResponse<Diagnostic>;
+        let _body: DiagnosticDTO = null;
+        _body = _resp.body as DiagnosticDTO
+        return _resp.clone({body: _body}) as HttpResponse<DiagnosticDTO>;
       })
     );
   }
@@ -290,13 +290,13 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.GetDiagnosticParams` containing the following parameters:
    *
-   * - `idRecord`:
+   * - `idRecord`: 
    *
-   * - `idDiagnostic`:
+   * - `idDiagnostic`: 
    *
    * @return successful operation
    */
-   getDiagnostic(params: MedicalRecordsRESTEndpointService.GetDiagnosticParams): Observable<Diagnostic> {
+   getDiagnostic(params: MedicalRecordsRESTEndpointService.GetDiagnosticParams): Observable<DiagnosticDTO> {
     return this.getDiagnosticResponse(params).pipe(
       map(_r => _r.body)
     );
@@ -305,7 +305,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.DeleteDiagnosticParams` containing the following parameters:
    *
-   * - `idRecord`:
+   * - `idRecord`: 
    *
    * - `idDiagnostic`:
    */
@@ -330,7 +330,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-
+        
         return _resp.clone({body: _body}) as HttpResponse<void>;
       })
     );
@@ -339,7 +339,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.DeleteDiagnosticParams` containing the following parameters:
    *
-   * - `idRecord`:
+   * - `idRecord`: 
    *
    * - `idDiagnostic`:
    */
@@ -353,7 +353,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
    * @param idRecord undefined
    * @return successful operation
    */
-   getAllDosagesResponse(idRecord: number): Observable<HttpResponse<Dosage[]>> {
+   getAllDosagesResponse(idRecord: number): Observable<HttpResponse<DosageDTO[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -372,9 +372,9 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: Dosage[] = null;
-        _body = _resp.body as Dosage[]
-        return _resp.clone({body: _body}) as HttpResponse<Dosage[]>;
+        let _body: DosageDTO[] = null;
+        _body = _resp.body as DosageDTO[]
+        return _resp.clone({body: _body}) as HttpResponse<DosageDTO[]>;
       })
     );
   }
@@ -383,7 +383,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
    * @param idRecord undefined
    * @return successful operation
    */
-   getAllDosages(idRecord: number): Observable<Dosage[]> {
+   getAllDosages(idRecord: number): Observable<DosageDTO[]> {
     return this.getAllDosagesResponse(idRecord).pipe(
       map(_r => _r.body)
     );
@@ -412,7 +412,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-
+        
         return _resp.clone({body: _body}) as HttpResponse<void>;
       })
     );
@@ -430,13 +430,13 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.GetDosageParams` containing the following parameters:
    *
-   * - `idRecord`:
+   * - `idRecord`: 
    *
-   * - `idDosage`:
+   * - `idDosage`: 
    *
    * @return successful operation
    */
-   getDosageResponse(params: MedicalRecordsRESTEndpointService.GetDosageParams): Observable<HttpResponse<Dosage>> {
+   getDosageResponse(params: MedicalRecordsRESTEndpointService.GetDosageParams): Observable<HttpResponse<DosageDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -456,9 +456,9 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: Dosage = null;
-        _body = _resp.body as Dosage
-        return _resp.clone({body: _body}) as HttpResponse<Dosage>;
+        let _body: DosageDTO = null;
+        _body = _resp.body as DosageDTO
+        return _resp.clone({body: _body}) as HttpResponse<DosageDTO>;
       })
     );
   }
@@ -466,13 +466,13 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.GetDosageParams` containing the following parameters:
    *
-   * - `idRecord`:
+   * - `idRecord`: 
    *
-   * - `idDosage`:
+   * - `idDosage`: 
    *
    * @return successful operation
    */
-   getDosage(params: MedicalRecordsRESTEndpointService.GetDosageParams): Observable<Dosage> {
+   getDosage(params: MedicalRecordsRESTEndpointService.GetDosageParams): Observable<DosageDTO> {
     return this.getDosageResponse(params).pipe(
       map(_r => _r.body)
     );
@@ -481,7 +481,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.DeleteDosageParams` containing the following parameters:
    *
-   * - `idRecord`:
+   * - `idRecord`: 
    *
    * - `idDosage`:
    */
@@ -506,7 +506,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-
+        
         return _resp.clone({body: _body}) as HttpResponse<void>;
       })
     );
@@ -515,7 +515,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.DeleteDosageParams` containing the following parameters:
    *
-   * - `idRecord`:
+   * - `idRecord`: 
    *
    * - `idDosage`:
    */
@@ -529,7 +529,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
    * @param idRecord undefined
    * @return successful operation
    */
-   getExamsResponse(idRecord: number): Observable<HttpResponse<Exam[]>> {
+   getExamsResponse(idRecord: number): Observable<HttpResponse<ExamDTO[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -548,9 +548,9 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: Exam[] = null;
-        _body = _resp.body as Exam[]
-        return _resp.clone({body: _body}) as HttpResponse<Exam[]>;
+        let _body: ExamDTO[] = null;
+        _body = _resp.body as ExamDTO[]
+        return _resp.clone({body: _body}) as HttpResponse<ExamDTO[]>;
       })
     );
   }
@@ -559,7 +559,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
    * @param idRecord undefined
    * @return successful operation
    */
-   getExams(idRecord: number): Observable<Exam[]> {
+   getExams(idRecord: number): Observable<ExamDTO[]> {
     return this.getExamsResponse(idRecord).pipe(
       map(_r => _r.body)
     );
@@ -568,10 +568,10 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param idRecord undefined
    */
-   createExamResponse(idRecord: number): Observable<HttpResponse<void>> {
+   createExamResponse(idRecord: number, exam: ExamDTO): Observable<HttpResponse<void>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
-    let __body: any = null;
+    let __body: ExamDTO = exam;
 
     let req = new HttpRequest<any>(
       "POST",
@@ -588,7 +588,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-
+        
         return _resp.clone({body: _body}) as HttpResponse<void>;
       })
     );
@@ -597,8 +597,8 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param idRecord undefined
    */
-   createExam(idRecord: number, exam: Exam): Observable<void> {
-    return this.createExamResponse(idRecord).pipe(
+   createExam(idRecord: number, exam: ExamDTO): Observable<void> {
+    return this.createExamResponse(idRecord, exam).pipe(
       map(_r => _r.body)
     );
   }
@@ -606,13 +606,13 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.GetExamParams` containing the following parameters:
    *
-   * - `idRecord`:
+   * - `idRecord`: 
    *
-   * - `idExam`:
+   * - `idExam`: 
    *
    * @return successful operation
    */
-   getExamResponse(params: MedicalRecordsRESTEndpointService.GetExamParams): Observable<HttpResponse<Exam>> {
+   getExamResponse(params: MedicalRecordsRESTEndpointService.GetExamParams): Observable<HttpResponse<ExamDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -632,9 +632,9 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: Exam = null;
-        _body = _resp.body as Exam
-        return _resp.clone({body: _body}) as HttpResponse<Exam>;
+        let _body: ExamDTO = null;
+        _body = _resp.body as ExamDTO
+        return _resp.clone({body: _body}) as HttpResponse<ExamDTO>;
       })
     );
   }
@@ -642,13 +642,13 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.GetExamParams` containing the following parameters:
    *
-   * - `idRecord`:
+   * - `idRecord`: 
    *
-   * - `idExam`:
+   * - `idExam`: 
    *
    * @return successful operation
    */
-   getExam(params: MedicalRecordsRESTEndpointService.GetExamParams): Observable<Exam> {
+   getExam(params: MedicalRecordsRESTEndpointService.GetExamParams): Observable<ExamDTO> {
     return this.getExamResponse(params).pipe(
       map(_r => _r.body)
     );
@@ -657,7 +657,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.DeleteExamParams` containing the following parameters:
    *
-   * - `idRecord`:
+   * - `idRecord`: 
    *
    * - `idExam`:
    */
@@ -682,7 +682,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-
+        
         return _resp.clone({body: _body}) as HttpResponse<void>;
       })
     );
@@ -691,7 +691,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.DeleteExamParams` containing the following parameters:
    *
-   * - `idRecord`:
+   * - `idRecord`: 
    *
    * - `idExam`:
    */
@@ -705,7 +705,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
    * @param idRecord undefined
    * @return successful operation
    */
-   getPrescriptionsResponse(idRecord: number): Observable<HttpResponse<Prescription[]>> {
+   getPrescriptionsResponse(idRecord: number): Observable<HttpResponse<PrescriptionDTO[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -724,9 +724,9 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: Prescription[] = null;
-        _body = _resp.body as Prescription[]
-        return _resp.clone({body: _body}) as HttpResponse<Prescription[]>;
+        let _body: PrescriptionDTO[] = null;
+        _body = _resp.body as PrescriptionDTO[]
+        return _resp.clone({body: _body}) as HttpResponse<PrescriptionDTO[]>;
       })
     );
   }
@@ -735,7 +735,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
    * @param idRecord undefined
    * @return successful operation
    */
-   getPrescriptions(idRecord: number): Observable<Prescription[]> {
+   getPrescriptions(idRecord: number): Observable<PrescriptionDTO[]> {
     return this.getPrescriptionsResponse(idRecord).pipe(
       map(_r => _r.body)
     );
@@ -764,7 +764,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-
+        
         return _resp.clone({body: _body}) as HttpResponse<void>;
       })
     );
@@ -782,13 +782,13 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.GetPrescriptionParams` containing the following parameters:
    *
-   * - `idRecord`:
+   * - `idRecord`: 
    *
-   * - `idPrescription`:
+   * - `idPrescription`: 
    *
    * @return successful operation
    */
-   getPrescriptionResponse(params: MedicalRecordsRESTEndpointService.GetPrescriptionParams): Observable<HttpResponse<Prescription>> {
+   getPrescriptionResponse(params: MedicalRecordsRESTEndpointService.GetPrescriptionParams): Observable<HttpResponse<PrescriptionDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -808,9 +808,9 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: Prescription = null;
-        _body = _resp.body as Prescription
-        return _resp.clone({body: _body}) as HttpResponse<Prescription>;
+        let _body: PrescriptionDTO = null;
+        _body = _resp.body as PrescriptionDTO
+        return _resp.clone({body: _body}) as HttpResponse<PrescriptionDTO>;
       })
     );
   }
@@ -818,13 +818,13 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.GetPrescriptionParams` containing the following parameters:
    *
-   * - `idRecord`:
+   * - `idRecord`: 
    *
-   * - `idPrescription`:
+   * - `idPrescription`: 
    *
    * @return successful operation
    */
-   getPrescription(params: MedicalRecordsRESTEndpointService.GetPrescriptionParams): Observable<Prescription> {
+   getPrescription(params: MedicalRecordsRESTEndpointService.GetPrescriptionParams): Observable<PrescriptionDTO> {
     return this.getPrescriptionResponse(params).pipe(
       map(_r => _r.body)
     );
@@ -833,7 +833,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.DeletePrescriptionParams` containing the following parameters:
    *
-   * - `idRecord`:
+   * - `idRecord`: 
    *
    * - `idPrescription`:
    */
@@ -858,7 +858,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-
+        
         return _resp.clone({body: _body}) as HttpResponse<void>;
       })
     );
@@ -867,7 +867,7 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param params The `MedicalRecordsRESTEndpointService.DeletePrescriptionParams` containing the following parameters:
    *
-   * - `idRecord`:
+   * - `idRecord`: 
    *
    * - `idPrescription`:
    */

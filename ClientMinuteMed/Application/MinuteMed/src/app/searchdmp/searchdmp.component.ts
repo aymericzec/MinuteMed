@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { visitValue } from '@angular/compiler/src/util';
 import { Router, RouterLink } from '@angular/router';
-import { MedicalRecord } from '../../apis/models';
+import { MedicalRecordDTO } from '../../apis/models';
 import { MedicalRecordsRESTEndpointService } from '../../apis/services';
 import { AuthService } from '../auth.service';
 
@@ -14,7 +14,7 @@ export class SearchDmpComponent implements OnInit {
 
   loading: boolean;
 
-    records: MedicalRecord[];
+    records: MedicalRecordDTO[];
 
     cols: any[];
 

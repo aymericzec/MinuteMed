@@ -208,8 +208,10 @@ export class AuthenticationRESTEndpointService extends BaseService {
    * - `login`:
    */
    authenticateUserResponse(params: AuthenticationRESTEndpointService.AuthenticateUserParams): Observable<HttpResponse<void>> {
+    let __params = this.newParams();
     let __headers = new HttpHeaders({"Content-type":"application/x-www-form-urlencoded"});
     let __body: any = null;
+
 
     let req = new HttpRequest<any>(
       "POST",
@@ -218,7 +220,7 @@ export class AuthenticationRESTEndpointService extends BaseService {
       {
         headers: __headers,
         params: new HttpParams().set("login", params.login).set("password",params.password),
-        responseType: 'json'
+        responseType: 'text'
       });
 
     return this.http.request<any>(req).pipe(

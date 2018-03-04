@@ -1,6 +1,6 @@
 <app-nav-bar></app-nav-bar>
 
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="me != null">
   <div class="row">
     <app-leftbar class="collapse in col-md-2 nopadding" id="sidebar"></app-leftbar>
     <main class="col-md-9 col-xs-11 p-l-2 p-t-2">
@@ -21,7 +21,7 @@
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">Date de Création:</label>
             <div class="col-sm-5">
-              <input class="form-control" [(ngModel)]="dateToday" name="dateToday" #name="ngModel" disabled="disabled" value="{{today | date:'dd/MM/yyyy'}}">
+              <input class="form-control" disabled="disabled" value="{{today | date:'dd/MM/yyyy'}}">
             </div>
           </div>
           <div class="form-group row">

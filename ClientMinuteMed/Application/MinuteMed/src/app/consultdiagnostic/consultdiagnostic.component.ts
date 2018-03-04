@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MedicalRecordsRESTEndpointService, StaffRESTEndpointService } from '../../apis/services';
 import { AuthService } from '../auth.service';
 import { ActivatedRoute } from '@angular/router';
-import { Diagnostic } from '../../apis/models';
+import { DiagnosticDTO } from '../../apis/models';
 
 @Component({
   selector: 'app-consultdiagnostic',
@@ -11,7 +11,7 @@ import { Diagnostic } from '../../apis/models';
 })
 export class ConsultdiagnosticComponent implements OnInit {
 
-  diagnostic: Diagnostic;
+  diagnostic: DiagnosticDTO;
 
 
   constructor(private medicalService: MedicalRecordsRESTEndpointService,
@@ -23,19 +23,7 @@ export class ConsultdiagnosticComponent implements OnInit {
     const idDmp = this.route.snapshot.params['id'];
     const idDiag = this.route.snapshot.params['idDiagnostic'];
 
-    class Test implements MedicalRecordsRESTEndpointService.GetDiagnosticParams {
-      idRecord: number;
-      idDiagnostic: number;
-
-      constructor(idRecord: number, idDiagnostic: number) {
-        this.idDiagnostic = idDiagnostic;
-        this.idRecord = idRecord;
-      }
-    }
-
-    const lolo = new Test(idDmp, idDiag);
-
-    this.medicalService.getDiagnostic(lolo).subscribe(d => {
+    this.medicalService.getDiagnostic({'idRecord': idDmp, 'idDiagnostic': idDiag}).subscribe(d => {
       this.diagnostic = d;
     });
   }

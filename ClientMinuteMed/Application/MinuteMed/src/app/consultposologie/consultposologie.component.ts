@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Dosage } from '../../apis/models';
+import { DosageDTO } from '../../apis/models';
 import { MedicalRecordsRESTEndpointService } from '../../apis/services';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
@@ -10,30 +10,18 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./consultposologie.component.css']
 })
 export class ConsultposologieComponent implements OnInit {
-  dosages: Dosage[];
+  dosages: DosageDTO[];
   cols: any[];
-  dosage: Dosage;
+  dosage: DosageDTO;
 
   constructor(private medicalService: MedicalRecordsRESTEndpointService,
     private authService: AuthService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     const idDmp = this.route.snapshot.params['id'];
-    const iddosage = this.route.snapshot.params['idPosologie'];
+    const idDosage = this.route.snapshot.params['idPosologie'];
 
-    class Test implements MedicalRecordsRESTEndpointService.GetDosageParams {
-      idRecord: number;
-      idDosage: number;
-
-      constructor(idRecord: number, idDosage: number) {
-        this.idDosage = idDosage;
-        this.idRecord = idRecord;
-      }
-    }
-
-    const lolo = new Test(idDmp, iddosage);
-
-    this.medicalService.getDosage(lolo).subscribe(e => {
+    this.medicalService.getDosage({'idRecord': idDmp, 'idDosage': idDosage}).subscribe(e => {
       this.dosage = e;
     });
   }

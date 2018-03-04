@@ -3,7 +3,7 @@ import { isNull } from 'util';
 import { ActivatedRoute } from '@angular/router';
 import { StaffRESTEndpointService, MedicalRecordsRESTEndpointService } from '../../apis/services';
 import { AuthService } from '../auth.service';
-import { Prescription } from '../../apis/models';
+import { PrescriptionDTO } from '../../apis/models';
 
 @Component({
   selector: 'app-prescription',
@@ -14,7 +14,7 @@ export class PrescriptionComponent implements OnInit {
 
   cols: any;
   colsDoctor: any;
-  prescriptions: Prescription[];
+  prescriptions: PrescriptionDTO[];
   prescriptionsTmp: any[][];
   id: number;
 
@@ -34,8 +34,8 @@ export class PrescriptionComponent implements OnInit {
             let tat: any;
             tat = [];
 
-            tat.push('nameDoctor');
-            tat['nameDoctor'] = this.prescriptions[_i].prescriptor.firstName + ' ' + this.prescriptions[_i].prescriptor.lastName;
+            // tat.push('nameDoctor');
+            // tat['nameDoctor'] = this.prescriptions[_i].prescriptor.firstName + ' ' + this.prescriptions[_i].prescriptor.lastName;
 
             tat.push('dateExam');
             tat['dateExam'] = this.prescriptions[_i].creationDate;
@@ -43,11 +43,11 @@ export class PrescriptionComponent implements OnInit {
             tat.push('title');
             tat['title'] = this.prescriptions[_i].title;
 
-            tat.push('idDiagnostic');
-            tat['idDiagnostic'] = this.prescriptions[_i].diagnostic.idDiagnostic;
+            // tat.push('idDiagnostic');
+            // tat['idDiagnostic'] = this.prescriptions[_i].diagnostic.idDiagnostic;
 
             tat.push('id');
-            tat['id'] = this.prescriptions[_i].idPrescription;
+            tat['id'] = this.prescriptions[_i].id;
 
             this.prescriptionsTmp.push(tat);
           }

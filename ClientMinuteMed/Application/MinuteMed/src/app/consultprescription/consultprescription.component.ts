@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { MedicalRecordsRESTEndpointService } from '../../apis/services';
-import { Prescription } from '../../apis/models';
+import { PrescriptionDTO } from '../../apis/models';
 
 @Component({
   selector: 'app-consultprescription',
@@ -10,9 +10,9 @@ import { Prescription } from '../../apis/models';
   styleUrls: ['./consultprescription.component.css']
 })
 export class ConsultprescriptionComponent implements OnInit {
-  prescriptions: Prescription[];
+  prescriptions: PrescriptionDTO[];
   cols: any[];
-  prescription: Prescription;
+  prescription: PrescriptionDTO;
 
   constructor(private medicalService: MedicalRecordsRESTEndpointService,
     private authService: AuthService, private route: ActivatedRoute) { }
@@ -21,19 +21,7 @@ export class ConsultprescriptionComponent implements OnInit {
     const idDmp = this.route.snapshot.params['id'];
     const idPrescription = this.route.snapshot.params['idPrescription'];
 
-    class Test implements MedicalRecordsRESTEndpointService.GetPrescriptionParams {
-      idRecord: number;
-      idPrescription: number;
-
-      constructor(idRecord: number, idPrescript: number) {
-        this.idPrescription = idPrescript;
-        this.idRecord = idRecord;
-      }
-    }
-
-    const lolo = new Test(idDmp, idPrescription);
-
-    this.medicalService.getPrescription(lolo).subscribe(p => {
+    this.medicalService.getPrescription({'idRecord': idDmp, 'idPrescription': idPrescription}).subscribe(p => {
       this.prescription = p;
     });
   }

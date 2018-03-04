@@ -12,7 +12,7 @@ import 'fullcalendar/dist/fullcalendar.css';
 })
 export class HomeComponent implements OnInit {
 
-  me : MedicalStaff;
+  me: MedicalStaff;
 
   constructor(private staffService: StaffRESTEndpointService) { }
 

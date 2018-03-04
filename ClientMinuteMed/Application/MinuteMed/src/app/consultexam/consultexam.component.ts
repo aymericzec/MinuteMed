@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MedicalRecordsRESTEndpointService } from '../../apis/services';
 import { AuthService } from '../auth.service';
-import { Exam } from '../../apis/models';
+import { ExamDTO } from '../../apis/models';
 import { ActivatedRoute } from '@angular/router';
 import { isNull } from 'util';
 
@@ -11,9 +11,9 @@ import { isNull } from 'util';
   styleUrls: ['./consultexam.component.css']
 })
 export class ConsultexamComponent implements OnInit {
-  exams: Exam[];
+  exams: ExamDTO[];
   cols: any[];
-  exam: Exam;
+  exam: ExamDTO;
 
   constructor(private medicalService: MedicalRecordsRESTEndpointService,
     private authService: AuthService, private route: ActivatedRoute) { }
@@ -22,19 +22,7 @@ export class ConsultexamComponent implements OnInit {
     const idDmp = this.route.snapshot.params['id'];
     const idExam = this.route.snapshot.params['idExam'];
 
-    class Test implements MedicalRecordsRESTEndpointService.GetExamParams {
-      idRecord: number;
-      idExam: number;
-
-      constructor(idRecord: number, idExame: number) {
-        this.idExam = idExame;
-        this.idRecord = idRecord;
-      }
-    }
-
-    const lolo = new Test(idDmp, idExam);
-
-    this.medicalService.getExam(lolo).subscribe(e => {
+    this.medicalService.getExam({'idRecord': idDmp, 'idExam': idExam}).subscribe(e => {
       this.exam = e;
     });
   }

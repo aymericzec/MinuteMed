@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { MedicalStaff, MedicalRecord } from '../../apis/models';
+import { MedicalStaff, MedicalRecordDTO } from '../../apis/models';
 import { StaffRESTEndpointService } from '../../apis/services/staff-restendpoint.service';
 import { ActivatedRoute } from '@angular/router';
 

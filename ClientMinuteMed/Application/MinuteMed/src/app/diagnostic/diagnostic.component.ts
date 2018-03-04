@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Diagnostic } from '../../apis/models';
+import { DiagnosticDTO } from '../../apis/models';
 import { MedicalRecordsRESTEndpointService, StaffRESTEndpointService } from '../../apis/services';
 import { AuthService } from '../auth.service';
 import { ActivatedRoute } from '@angular/router';
@@ -12,12 +12,12 @@ import { ActivatedRoute } from '@angular/router';
 export class DiagnosticComponent implements OnInit {
 
   cols: any;
-  diagnostics: Diagnostic[];
+  diagnostics: DiagnosticDTO[];
   diagnosticsTmp: any[][];
   id: number;
   constructor(private medicalService: MedicalRecordsRESTEndpointService,
-     private authService: AuthService,
-     private staffService: StaffRESTEndpointService,
+    private authService: AuthService,
+    private staffService: StaffRESTEndpointService,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -31,14 +31,17 @@ export class DiagnosticComponent implements OnInit {
             let tat: any;
             tat = [];
 
-            tat.push('nameDoctor');
-            tat['nameDoctor'] = this.diagnostics[_i].creator.firstName + ' ' + this.diagnostics[_i].creator.lastName;
+            // tat.push('nameDoctor');
+            // tat['nameDoctor'] = this.diagnostics[_i].creator.firstName + ' ' + this.diagnostics[_i].creator.lastName;
+
             tat.push('dateExam');
             tat['dateExam'] = this.diagnostics[_i].creationDate;
+
             tat.push('title');
             tat['title'] = this.diagnostics[_i].title;
+
             tat.push('identifiant');
-            tat['identifiant'] = this.diagnostics[_i].idDiagnostic;
+            tat['identifiant'] = this.diagnostics[_i].id;
 
             this.diagnosticsTmp.push(tat);
           }

@@ -934,10 +934,6 @@ export class ArborescenceRESTEndpointService extends BaseService {
     let __headers = new HttpHeaders();
     let __body: any = null;
 
-
-
-
-
     let req = new HttpRequest<any>(
       "GET",
       this.rootUrl + `/nodes/APHP/${params.idAPHP}/hospitals/${params.idHospital}/poles/${params.idPole}/services/${params.idService}/hUnits/${params.idHU}/cUnits`,

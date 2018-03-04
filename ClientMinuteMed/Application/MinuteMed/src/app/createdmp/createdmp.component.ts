@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MedicalRecordsRESTEndpointService, ArborescenceRESTEndpointService, StaffRESTEndpointService } from '../../apis/services';
-import { MedicalRecord, MedicalStaff } from '../../apis/models';
+import { MedicalRecordDTO, MedicalStaff } from '../../apis/models';
 
 @Component({
   selector: 'app-createdmp',
@@ -9,7 +9,7 @@ import { MedicalRecord, MedicalStaff } from '../../apis/models';
 })
 export class CreatedmpComponent implements OnInit {
 
-  record: MedicalRecord;
+  record: MedicalRecordDTO;
   me: MedicalStaff;
   today = Date.now();
 
@@ -22,30 +22,6 @@ export class CreatedmpComponent implements OnInit {
     this.staffService.getMe().subscribe(
       response => {
         this.me = response.body;
-
-        class ParamsUnits implements ArborescenceRESTEndpointService.GetCareUnitsParams {
-          idService: number;
-          idPole: number;
-          idHospital: number;
-          idHU: number;
-          idCU: number;
-          idAPHP: number;
-
-          constructor(idService: number, idPole: number,  idHospital: number, idHU: number, idCU: number, idAPHP: number) {
-            this.idService = idService;
-            this.idPole = idPole;
-            this.idHospital = idHospital;
-            this.idHU = idHU;
-            this.idCU = idCU;
-            this.idAPHP = idAPHP;
-          }
-        }
-
-        const lolo = new ParamsUnits(1, 1, 1, 1, 1, 1);
-/*
-        this.hospitalService.getCareUnitsResponse(lolo).subscribe(x => {
-          console.log(x.body);
-        });*/
     });
 
 

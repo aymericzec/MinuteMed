@@ -13,7 +13,6 @@ import { MedicalStaff } from '../models/medical-staff';
 import { DataManager } from '../models/data-manager';
 import { Doctor } from '../models/doctor';
 import { Nurse } from '../models/nurse';
-import { AuthService } from '../../app/auth.service';
 
 @Injectable()
 export class StaffRESTEndpointService extends BaseService {
@@ -23,6 +22,32 @@ export class StaffRESTEndpointService extends BaseService {
   ) {
     super(config, http);
   }
+
+
+  getMe(): Observable<HttpResponse<MedicalStaff>> {
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<MedicalStaff>(
+      "GET",
+      this.rootUrl + `/staffs/me`,
+      __body,
+      {
+        headers: __headers,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      filter(_r => _r instanceof HttpResponse),
+      map(_r => {
+        let _resp = _r as HttpResponse<MedicalStaff>;
+        let _body: MedicalStaff = null;
+        _body = _resp.body as MedicalStaff
+        return _resp.clone({body: _body}) as HttpResponse<MedicalStaff>;
+      })
+    );
+}
+
 
   /**
    * @return successful operation
@@ -217,6 +242,46 @@ export class StaffRESTEndpointService extends BaseService {
   }
 
   /**
+   * @param Authorization undefined
+   * @return successful operation
+   */
+   getCurrentUserResponse(Authorization?: string): Observable<HttpResponse<MedicalStaff>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    if (Authorization != null) __headers = __headers.set("Authorization", Authorization.toString());
+    let req = new HttpRequest<any>(
+      "GET",
+      this.rootUrl + `/staffs/me`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      filter(_r => _r instanceof HttpResponse),
+      map(_r => {
+        let _resp = _r as HttpResponse<any>;
+        let _body: MedicalStaff = null;
+        _body = _resp.body as MedicalStaff
+        return _resp.clone({body: _body}) as HttpResponse<MedicalStaff>;
+      })
+    );
+  }
+
+  /**
+   * @param Authorization undefined
+   * @return successful operation
+   */
+   getCurrentUser(Authorization?: string): Observable<MedicalStaff> {
+    return this.getCurrentUserResponse(Authorization).pipe(
+      map(_r => _r.body)
+    );
+  }
+
+  /**
    * @return successful operation
    */
    getAllNursesResponse(): Observable<HttpResponse<Nurse[]>> {
@@ -330,36 +395,6 @@ export class StaffRESTEndpointService extends BaseService {
       map(_r => _r.body)
     );
   }
-
-
-  /**
-   * @param idNurse undefined
-   */
-  getMe(): Observable<HttpResponse<MedicalStaff>> {
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    let req = new HttpRequest<MedicalStaff>(
-      "GET",
-      this.rootUrl + `/staffs/me`,
-      __body,
-      {
-        headers: __headers,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      filter(_r => _r instanceof HttpResponse),
-      map(_r => {
-        let _resp = _r as HttpResponse<MedicalStaff>;
-        let _body: MedicalStaff = null;
-        _body = _resp.body as MedicalStaff
-        return _resp.clone({body: _body}) as HttpResponse<MedicalStaff>;
-      })
-    );
-  }
-
-
 }
 
 export module StaffRESTEndpointService {

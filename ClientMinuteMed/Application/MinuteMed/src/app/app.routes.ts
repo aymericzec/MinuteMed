@@ -18,9 +18,10 @@ import { PosologieComponent } from './posologie/posologie.component';
 import { ConsultposologieComponent } from './consultposologie/consultposologie.component';
 import { PrescriptionComponent } from './prescription/prescription.component';
 import { ConsultprescriptionComponent } from './consultprescription/consultprescription.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
+  { path: '', redirectTo: '/home', canActivate: [AuthGuardService], pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardService]},
   { path: 'searchdmp', component: SearchDmpComponent, canActivate: [AuthGuardService] },
@@ -37,6 +38,7 @@ const routes: Routes = [
   { path: 'dmp/:id/prescriptions', component: PrescriptionComponent, canActivate: [AuthGuardService]},
   { path: 'dmp/:id/prescriptions/:idPrescription', component: ConsultprescriptionComponent, canActivate: [AuthGuardService]},
   { path: 'test', component: TestComponent, canActivate: [AuthGuardService]},
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

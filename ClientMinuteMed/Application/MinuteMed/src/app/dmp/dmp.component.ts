@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MedicalRecord } from '../../apis/models';
+import { MedicalRecordDTO } from '../../apis/models';
 import { MedicalRecordsRESTEndpointService } from '../../apis/services';
 
 @Component({
@@ -10,7 +10,7 @@ import { MedicalRecordsRESTEndpointService } from '../../apis/services';
 })
 export class DmpComponent implements OnInit {
 
-  private record: MedicalRecord;
+  private record: MedicalRecordDTO;
 
   constructor(private recordService: MedicalRecordsRESTEndpointService, private route: ActivatedRoute) { }
 
