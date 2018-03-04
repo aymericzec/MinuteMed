@@ -32,7 +32,7 @@ export class SearchDmpComponent implements OnInit {
         }, 1000);
 
         this.cols = [
-            { field: 'idMedicalRecord', header: 'Identifiant' },
+            { field: 'id', header: 'Identifiant' },
             { field: 'ss', header: 'Num sécu' },
             { field: 'firstName', header: 'Prenom' },
             { field: 'lastName', header: 'Nom' },

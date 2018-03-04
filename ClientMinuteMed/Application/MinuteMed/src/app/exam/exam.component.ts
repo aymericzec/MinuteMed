@@ -27,6 +27,7 @@ export class ExamComponent implements OnInit {
 
       this.medicalService.getExamsResponse(this.id).subscribe(response => {
           this.exams = response.body;
+          console.log(response.body);
           this.examsTmp = [];
 
           for (let _i = 0; _i < this.exams.length; _i++) {

@@ -5,8 +5,8 @@
             <span class="hidden-sm-down">Examens</span>
         </a>
         <div class="collapse" id="menu1">
-            <a routerLink="/dmp/{{this.idMedical}}/createexam" class="list-group-item" data-parent="#menu1">Créer un examen</a>
-            <a routerLink="/dmp/{{this.idMedical}}/exams" class="list-group-item" data-parent="#menu1">Voir les examens</a>
+            <a routerLink="/record/{{this.idMedical}}/createexam" class="list-group-item" data-parent="#menu1">Créer un examen</a>
+            <a routerLink="/record/{{this.idMedical}}/exams" class="list-group-item" data-parent="#menu1">Voir les examens</a>
         </div>
 
         <a href="#menu2" class="list-group-item collapsed" data-toggle="collapse" data-parent="#sidebar" aria-expanded="false">
@@ -15,7 +15,7 @@
         </a>
         <div class="collapse" id="menu2">
             <a routerLink="#" class="list-group-item" data-parent="#menu2">Créer une posologie</a>
-            <a routerLink="/dmp/{{this.idMedical}}/posologies" class="list-group-item" data-parent="#menu2">Voir les posologies</a>
+            <a routerLink="/record/{{this.idMedical}}/posologies" class="list-group-item" data-parent="#menu2">Voir les posologies</a>
         </div>
 
         <a href="#menu3" class="list-group-item collapsed" data-toggle="collapse" data-parent="#sidebar" aria-expanded="false">
@@ -24,7 +24,7 @@
         </a>
         <div class="collapse" id="menu3">
             <a routerLink="/creatediagnostic" class="list-group-item" data-parent="#menu3">Créer un diagnostic</a>
-            <a routerLink="/dmp/{{this.idMedical}}/diagnostics" class="list-group-item" data-parent="#menu3">Voir les diagnostics</a>
+            <a routerLink="/record/{{this.idMedical}}/diagnostics" class="list-group-item" data-parent="#menu3">Voir les diagnostics</a>
         </div>
 
         <a href="#menu4" class="list-group-item collapsed" data-toggle="collapse" data-parent="#sidebar" aria-expanded="false">
@@ -33,7 +33,7 @@
         </a>
         <div class="collapse" id="menu4">
             <a routerLink="#" class="list-group-item" data-parent="#menu4">Créer une ordonnance</a>
-            <a routerLink="/dmp/{{this.idMedical}}/prescriptions" class="list-group-item" data-parent="#menu4">Voir les ordonnances</a>
+            <a routerLink="/record/{{this.idMedical}}/prescriptions" class="list-group-item" data-parent="#menu4">Voir les ordonnances</a>
         </div>
 
     </div>

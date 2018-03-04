@@ -53,7 +53,19 @@ public class ExamDTO implements Serializable {
     
     public static ExamDTO create(Exam exam){
         Objects.requireNonNull(exam);
-        return new ExamDTO(exam.getIdExam(),
+        
+        if (exam.getResultExam() == null) {
+             return new ExamDTO(exam.getIdExam(),
+                exam.getDoctor().getIdMedicalStaff(),
+                exam.getMedicalRecord().getIdMedicalRecord(),
+                exam.getTitle(),
+                exam.getDescription(),
+                exam.getDateExam(),
+                null,
+                exam.getDraft());
+        }
+        else {
+             return new ExamDTO(exam.getIdExam(),
                 exam.getDoctor().getIdMedicalStaff(),
                 exam.getMedicalRecord().getIdMedicalRecord(),
                 exam.getTitle(),
@@ -61,7 +73,9 @@ public class ExamDTO implements Serializable {
                 exam.getDateExam(),
                 ResultExamDTO.create(exam.getResultExam()),
                 exam.getDraft());
+        }
     }
+       
     
     public Exam toExam(StaffRepository staffRepository, MedicalRecordRepository medicalRecordRepository){
         Objects.requireNonNull(staffRepository);

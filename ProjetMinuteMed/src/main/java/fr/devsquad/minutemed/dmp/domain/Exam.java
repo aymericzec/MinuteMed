@@ -48,7 +48,7 @@ public class Exam implements Serializable {
         this.dateExam = Objects.requireNonNull(dateExam);
         this.doctor = Objects.requireNonNull(doctor);
         this.medicalRecord = Objects.requireNonNull(medicalRecord);
-        this.draft = true;
+        this.draft = false;
     }
     
     public long getIdExam() {
