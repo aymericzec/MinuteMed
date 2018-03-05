@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { MedicalStaff, MedicalRecordDTO, ExamDTO, ResultExamDTO, Doctor } from '../api/models';
+import { ExamDTO, MedicalRecordDTO, MedicalStaff } from '../api/models';
+import { Router, ActivatedRoute } from '@angular/router';
+import { MedicalRecordsRESTEndpointService, StaffRESTEndpointService } from '../api/services';
 import { AuthService } from '../auth.service';
-import { StaffRESTEndpointService, MedicalRecordsRESTEndpointService, ArborescenceRESTEndpointService } from '../api/services';
-import { RouterLinkActive, ActivatedRoute, Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
+import * as moment from 'moment';
 
 @Component({
-  selector: 'app-createexam',
-  templateUrl: './createexam.component.html',
-  styleUrls: ['./createexam.component.css']
+  selector: 'app-create-exam',
+  templateUrl: './create-exam.component.html',
+  styleUrls: ['./create-exam.component.css']
 })
-export class CreateexamComponent implements OnInit {
-
+export class CreateExamComponent implements OnInit {
   me: MedicalStaff;
   today = Date.now();
   md: MedicalRecordDTO;
@@ -18,7 +19,6 @@ export class CreateexamComponent implements OnInit {
   title: string;
   description: string;
   dateToday: string;
-  test: string;
 
   constructor(private authService: AuthService,
     private staffService: StaffRESTEndpointService,
@@ -45,7 +45,7 @@ export class CreateexamComponent implements OnInit {
         'medicalRecordId' : this.md.id,
         'title': this.title,
         'description': this.description,
-        'dateExam': this.today.toString(),
+        'dateExam': moment().locale('fr').format('L'),
         'draft': false,
         'doctorId': this.me.idMedicalStaff
       };
@@ -56,5 +56,6 @@ export class CreateexamComponent implements OnInit {
       }
     });
   }
+
 
 }
