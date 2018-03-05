@@ -21,8 +21,6 @@ import { DmpComponent } from './dmp/dmp.component';
 import { CreatedmpComponent } from './createdmp/createdmp.component';
 import { PosologieComponent } from './posologie/posologie.component';
 import { ConsultposologieComponent } from './consultposologie/consultposologie.component';
-import { PrescriptionComponent } from './prescription/prescription.component';
-import { ConsultprescriptionComponent } from './consultprescription/consultprescription.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import {TableModule} from 'primeng/table';
 
@@ -43,6 +41,8 @@ import { CreateExamComponent } from './create-exam/create-exam.component';
 import { CreateDiagnosticComponent } from './create-diagnostic/create-diagnostic.component';
 import { SearchDiagnosticsComponent } from './search-diagnostics/search-diagnostics.component';
 import { ConsultDiagnosticComponent } from './consult-diagnostic/consult-diagnostic.component';
+import { SearchPrescriptionsComponent } from './search-prescriptions/search-prescriptions.component';
+import { ConsultPrescriptionComponent } from './consult-prescription/consult-prescription.component';
 
 @NgModule({
   declarations: [
@@ -55,8 +55,6 @@ import { ConsultDiagnosticComponent } from './consult-diagnostic/consult-diagnos
     CreatedmpComponent,
     PosologieComponent,
     ConsultposologieComponent,
-    PrescriptionComponent,
-    ConsultprescriptionComponent,
     NavBarComponent,
     TestComponent,
     LeftbarComponent,
@@ -67,6 +65,8 @@ import { ConsultDiagnosticComponent } from './consult-diagnostic/consult-diagnos
     CreateDiagnosticComponent,
     SearchDiagnosticsComponent,
     ConsultDiagnosticComponent,
+    SearchPrescriptionsComponent,
+    ConsultPrescriptionComponent,
   ],
   imports: [
     BrowserModule,
