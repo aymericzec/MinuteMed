@@ -2,6 +2,7 @@ package fr.devsquad.minutemed.dmp.rest;
 
 import fr.devsquad.minutemed.arborescence.domain.Node;
 import fr.devsquad.minutemed.arborescence.repository.ArborescenceRepository;
+import fr.devsquad.minutemed.dmp.domain.MedicalRecord;
 import fr.devsquad.minutemed.dmp.domain.dto.DiagnosticDTO;
 import fr.devsquad.minutemed.dmp.domain.dto.DosageDTO;
 import fr.devsquad.minutemed.dmp.domain.dto.ExamDTO;
@@ -86,7 +87,12 @@ public class MedicalRecordService {
         if(medicalRecordRepository.findBySS(medicalRecord.getSs()) != null){
             return Response.status(Response.Status.CONFLICT).entity("This MedicalRecord already exist !").build();
         }
-        Long id = medicalRecordRepository.save(medicalRecord.toMedicalRecord(arborescenceRepository));
+        MedicalRecord record = medicalRecord.toMedicalRecord(arborescenceRepository);
+        //record.getCU().addMedicalRecord(record);
+        System.out.println("before : " + record.getCU().getMedicalRecords().size());
+        Long id = medicalRecordRepository.save(record);
+        arborescenceRepository.persistNode(record.getCU());
+        System.out.println("after : " + record.getCU().getMedicalRecords().size());
         return Response.status(Response.Status.CREATED).entity("{\"idMedicalRecord\":"+ id +"}").build();
     }
     
@@ -239,8 +245,8 @@ public class MedicalRecordService {
         Long id = tokenUtils.decryptIdFromToken(token);
         MedicalStaff doctor = staffRepository.findMedicalStaff(id);
         Node node = doctor.getNode();
-        System.out.println("Taille: "  + node.getMedicalRecords().size());
         List<MedicalRecordDTO> medicalRecords = node.getMedicalRecords().stream().map(MedicalRecordDTO::create).collect(Collectors.toList());
+        System.out.println("Taille: "  + medicalRecords.size());
         return Response.ok(medicalRecords).build();
     }
     

@@ -80,6 +80,7 @@ public class MedicalRecordDTO implements Serializable {
         Objects.requireNonNull(arborescenceRepository);
         NodeCU node = arborescenceRepository.findNode(this.careUnit.getId(), NodeCU.class);
         MedicalRecord record = new MedicalRecord(ss, firstName, lastName, address, email, phoneNumber, cityBorn, birthday, gender, node);
+        node.addMedicalRecord(record);
         return record;
     }
     

@@ -77,4 +77,8 @@ public class ArborescenceRepository {
         em.remove(Objects.requireNonNull(node));
     }
     
+    public <T extends Node> void persistNode(T node){
+        em.merge(Objects.requireNonNull(node));
+    }
+    
 }

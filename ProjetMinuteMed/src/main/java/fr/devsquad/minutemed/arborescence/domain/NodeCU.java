@@ -26,6 +26,7 @@ public class NodeCU extends Node {
     @ManyToOne
     private NodeHU father;
     
+    
     @OneToMany(mappedBy = "careUnit")
     private Set<MedicalRecord> medicalRecords;
 
@@ -45,6 +46,10 @@ public class NodeCU extends Node {
     
     public void setFather(NodeHU hu){
         this.father = Objects.requireNonNull(hu);
+    }
+    
+    public void addMedicalRecord(MedicalRecord record){
+        medicalRecords.add(Objects.requireNonNull(record));
     }
     
     @Override
