@@ -1,25 +1,38 @@
 <app-nav-bar></app-nav-bar>
 
+<div class="container-fluid">
+    <div class="row">
+        <app-leftbarinfo class="collapse in nopadding" id="sidebar"></app-leftbarinfo>
+        <a href="#sidebar" data-toggle="collapse" class="margin15">
+            <i class="fa fa-navicon fa-lg"></i>
+        </a>
+        <main class="col-md-9 col-xs-11 p-l-2 p-t-2 mx-auto">
 
-<p-table [columns]="cols" [value]="records" [paginator]="true" [rows]="10">
-  <ng-template pTemplate="header" let-columns>
-    <tr>
-        <th *ngFor="let col of columns">
-            {{col.header}}
-        </th>
-        <th>
-            Action
-        </th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-rowData let-columns="columns">
-    <tr>
-        <td *ngFor="let col of columns">
-            {{rowData[col.field]}}
-        </td>
-        <td>
-            <button pButton type="button" icon="fa-search" iconPos="left" class="reasonButton" routerLink="/record/{{rowData.id}}"></button>
-        </td>
-    </tr>
-  </ng-template>
-</p-table>
+            <h2 class="sub-header">Recherche de Dossiers Médicaux</h2>
+            <br/>
+            <p-table [columns]="cols" [value]="records" [paginator]="true" [rows]="10">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns">
+                            {{col.header}}
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr>
+                        <td *ngFor="let col of columns">
+                            {{rowData[col.field]}}
+                        </td>
+                        <td>
+                            <button pButton type="button" icon="fa-search" iconPos="left" class="reasonButton" routerLink="/record/{{rowData.id}}"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+        </main>
+    </div>
+</div>

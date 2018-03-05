@@ -1,40 +1,35 @@
 <app-nav-bar></app-nav-bar>
 
-<div class="container-fluid" *ngIf="me != null">
+<div class="container-fluid">
   <div class="row">
-    <div class="col-sm-9 col-md-10  main">
-      <!--<div id='calendar'></div>-->
-
-      <div id="left-menu">
-        <p id="doctor">
-          <a *ngIf="me.gender == 'M'"><img src="assets/doctor.png"/></a>
-          <a *ngIf="me.gender == 'F'"><img src="assets/nurse.png"/></a>
-        </p><br>
-        <p>
-          <a *ngIf="me.status == 'DOCTOR'">- Docteur {{me.lastName}} {{me.firstName}}</a>
-          <a *ngIf="me.status == 'NURSE'">- Infirmier {{me.lastName}} {{me.firstName}}</a>
+    <app-leftbarinfo class="collapse in nopadding" id="sidebar"></app-leftbarinfo>
+    <a href="#sidebar" data-toggle="collapse" class="margin15">
+      <i class="fa fa-navicon fa-lg"></i>
+    </a>
+    <main class="col-md-9 col-xs-11 p-l-2 p-t-2 mx-auto">
+      
+      <!-- ici mettre -->
+      <div id="text-content" >
+        <p id="title">
+          <b>Bonjour et bienvenue sur notre toute nouvelle application !</b>
         </p>
-        <p>- {{me.node.name}}</p>
-        <p>- Née le</p>
-        <p>- {{me.address}}</p>
-        <p>- {{me.phoneNumber}}</p>
-        <p>- {{me.email}}</p>
-      </div>
-
-      <div id="text-content">
-        <p id="title"><b>Bonjour et bienvenue sur notre toute nouvelle application !</b></p><br>
-        <p>- Peur de perdre un dossier médical ?<br>
-        - Perdre du temps à chercher un dossier médical ?<br>
-        - Epuisant de remplir un dossier médical à la main ?</p><br>
+        <br>
+        <p>- Peur de perdre un dossier médical ?
+          <br> - Perdre du temps à chercher un dossier médical ?
+          <br> - Epuisant de remplir un dossier médical à la main ?</p>
+        <br>
 
         <p>Rassurez-vous, aujourd'hui c'est terminé. Cette application vous permet de gérer un dossier médical de manière numérique.
-          Ainsi plus à avoir d'inquiétude concernant la perte d'un dossier médical. Cette application est sécurisée, elle garantit le secret médical.
+          Ainsi plus à avoir d'inquiétude concernant la perte d'un dossier médical. Cette application est sécurisée, elle
+          garantit le secret médical.
         </p>
       </div>
 
       <div id="image-content">
-        <img src="assets/home.jpg"/>
+        <img src="assets/home.jpg" />
       </div>
-    </div>
+      <!-- ici mettre -->
+    </main>
   </div>
 </div>
+

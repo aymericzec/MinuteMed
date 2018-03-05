@@ -1,0 +1,15 @@
+<div *ngIf="me != null" class="collapse in" id="sidebar">
+  <div class="list-group">
+    <div id="left-menu">
+      <p id="staff">
+        <a *ngIf="me.status == 'DOCTOR'"><img src="assets/doctor.png"/></a>
+        <a *ngIf="me.status == 'NURSE'"><img src="assets/nurse.png"/></a>
+        <a *ngIf="me.status == 'DATA_MANAGER'"><img src="assets/admin.png"/></a>
+      </p><br>
+      <p><a>{{me.firstName}} {{me.lastName | uppercase}}</a></p>
+      <p>{{me.node.name}}</p>
+      <p>{{me.phoneNumber}}</p>
+      <p>{{me.email}}</p>
+    </div>
+  </div>
+</div>

@@ -36,6 +36,7 @@ export class SearchDmpComponent implements OnInit {
             { field: 'ss', header: 'Num sécu' },
             { field: 'firstName', header: 'Prenom' },
             { field: 'lastName', header: 'Nom' },
+            { field: 'birthday', header: 'Date de naissance'},
             { field: 'gender', header: 'Genre' }
         ];
     }

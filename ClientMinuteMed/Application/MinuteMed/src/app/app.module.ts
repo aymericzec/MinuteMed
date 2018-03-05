@@ -42,6 +42,7 @@ import { LeftbarComponent } from './leftbar/leftbar.component';
 import {TokenInterceptor} from './token.interceptor';
 import {JwtInterceptor} from './jwt.interceptor';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { LeftbarinfoComponent } from './leftbarinfo/leftbarinfo.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     TestComponent,
     LeftbarComponent,
     PageNotFoundComponent,
+    LeftbarinfoComponent,
   ],
   imports: [
     BrowserModule,
