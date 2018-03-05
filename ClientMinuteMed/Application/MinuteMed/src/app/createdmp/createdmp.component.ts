@@ -58,7 +58,7 @@ export class CreatedmpComponent implements OnInit {
 
 
   createDMP () {
-    this.medicalService.createMedicalRecordResponse({
+      this.medicalService.createMedicalRecordResponse({
       ss: this.ss,
       firstName: this.firstName,
       lastName: this.lastName,
