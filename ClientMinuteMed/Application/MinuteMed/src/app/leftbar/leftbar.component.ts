@@ -22,6 +22,7 @@ export class LeftbarComponent implements OnInit {
 
   ngOnInit() {
     this.idMedical = this.route.snapshot.params['id'];
+    
     this.staffService.getCurrentUserResponse().subscribe(
       response => {
         this.me = response.body;

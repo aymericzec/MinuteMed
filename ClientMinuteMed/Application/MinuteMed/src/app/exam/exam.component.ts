@@ -17,6 +17,7 @@ export class ExamComponent implements OnInit {
   exams: ExamDTO[];
   examsTmp: any[][];
   id: number;
+
   constructor(private medicalService: MedicalRecordsRESTEndpointService,
      private authService: AuthService,
      private staffService: StaffRESTEndpointService,
@@ -27,6 +28,8 @@ export class ExamComponent implements OnInit {
 
       this.medicalService.getExamsResponse(this.id).subscribe(response => {
           this.exams = response.body;
+          console.log(this.id);
+          console.log(this.exams);       
           this.examsTmp = [];
 
           for (let _i = 0; _i < this.exams.length; _i++) {
