@@ -15,12 +15,11 @@ import {
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
-import { ExamComponent } from './exam/exam.component';
+import { SearchExamsComponent } from './search-exams/search-exams.component';
 import { SearchDmpComponent } from './searchdmp/searchdmp.component';
 import { DmpComponent } from './dmp/dmp.component';
 import { CreateexamComponent } from './createexam/createexam.component';
 import { CreatedmpComponent } from './createdmp/createdmp.component';
-import { ConsultexamComponent } from './consultexam/consultexam.component';
 import { DiagnosticComponent } from './diagnostic/diagnostic.component';
 import { CreatediagnosticComponent } from './creatediagnostic/creatediagnostic.component';
 import { ConsultdiagnosticComponent } from './consultdiagnostic/consultdiagnostic.component';
@@ -43,18 +42,18 @@ import {TokenInterceptor} from './token.interceptor';
 import {JwtInterceptor} from './jwt.interceptor';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LeftbarinfoComponent } from './leftbarinfo/leftbarinfo.component';
+import { ConsultExamComponent } from './consult-exam/consult-exam.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    ExamComponent,
+    SearchExamsComponent,
     SearchDmpComponent,
     DmpComponent,
     CreatedmpComponent,
     CreateexamComponent,
-    ConsultexamComponent,
     DiagnosticComponent,
     CreatediagnosticComponent,
     ConsultdiagnosticComponent,
@@ -67,6 +66,7 @@ import { LeftbarinfoComponent } from './leftbarinfo/leftbarinfo.component';
     LeftbarComponent,
     PageNotFoundComponent,
     LeftbarinfoComponent,
+    ConsultExamComponent,
   ],
   imports: [
     BrowserModule,

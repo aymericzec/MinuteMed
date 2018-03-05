@@ -18,5 +18,5 @@ export class LeftbarinfoComponent implements OnInit {
       response => {
         this.me = response.body;
     });
-
+  }
 }

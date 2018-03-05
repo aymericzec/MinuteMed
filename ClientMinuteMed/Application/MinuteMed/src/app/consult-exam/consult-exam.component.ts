@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { MedicalRecordsRESTEndpointService, StaffRESTEndpointService } from '../api/services';
+import { StaffRESTEndpointService, MedicalRecordsRESTEndpointService } from '../api/services';
 import { AuthService } from '../auth.service';
-import { ExamDTO, Doctor, MedicalRecordDTO, ResultExamDTO } from '../api/models';
 import { ActivatedRoute } from '@angular/router';
+import { ResultExamDTO, Doctor, MedicalRecordDTO, ExamDTO } from '../api/models';
 import { isNull } from 'util';
 
 @Component({
-  selector: 'app-consultexam',
-  templateUrl: './consultexam.component.html',
-  styleUrls: ['./consultexam.component.css']
+  selector: 'app-consult-exam',
+  templateUrl: './consult-exam.component.html',
+  styleUrls: ['./consult-exam.component.css']
 })
-export class ConsultexamComponent implements OnInit {
+export class ConsultExamComponent implements OnInit {
+
   cols: any[];
   exam: ExamDTO;
   record: MedicalRecordDTO;
@@ -45,4 +46,5 @@ export class ConsultexamComponent implements OnInit {
 
     });
   }
+
 }

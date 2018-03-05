@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ExamDTO } from '../api/models';
-import { MedicalRecordsRESTEndpointService, StaffRESTEndpointService } from '../api/services';
-import { AuthService } from '../auth.service';
 import { isNull } from 'util';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../auth.service';
+import { StaffRESTEndpointService, MedicalRecordsRESTEndpointService } from '../api/services';
+import { ExamDTO } from '../api/models';
 
 @Component({
-  selector: 'app-exam',
-  templateUrl: './exam.component.html',
-  styleUrls: ['./exam.component.css']
+  selector: 'app-search-exams',
+  templateUrl: './search-exams.component.html',
+  styleUrls: ['./search-exams.component.css']
 })
-export class ExamComponent implements OnInit {
-
+export class SearchExamsComponent implements OnInit {
   cols: any;
   colsDoctor: any;
   exams: ExamDTO[];
@@ -29,7 +28,7 @@ export class ExamComponent implements OnInit {
       this.medicalService.getExamsResponse(this.id).subscribe(response => {
           this.exams = response.body;
           console.log(this.id);
-          console.log(this.exams);       
+          console.log(this.exams);
           this.examsTmp = [];
 
           for (let _i = 0; _i < this.exams.length; _i++) {

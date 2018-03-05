@@ -7,10 +7,9 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuardService } from './auth.guard.service';
 import { SearchDmpComponent } from './searchdmp/searchdmp.component';
 import { DmpComponent } from './dmp/dmp.component';
-import { ExamComponent } from './exam/exam.component';
 import { CreatedmpComponent } from './createdmp/createdmp.component';
 import { CreateexamComponent } from './createexam/createexam.component';
-import { ConsultexamComponent } from './consultexam/consultexam.component';
+import { ConsultExamComponent } from './consult-exam/consult-exam.component';
 import { DiagnosticComponent } from './diagnostic/diagnostic.component';
 import { CreatediagnosticComponent } from './creatediagnostic/creatediagnostic.component';
 import { ConsultdiagnosticComponent } from './consultdiagnostic/consultdiagnostic.component';
@@ -19,6 +18,7 @@ import { ConsultposologieComponent } from './consultposologie/consultposologie.c
 import { PrescriptionComponent } from './prescription/prescription.component';
 import { ConsultprescriptionComponent } from './consultprescription/consultprescription.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { SearchExamsComponent } from './search-exams/search-exams.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', canActivate: [AuthGuardService], pathMatch: 'full' },
@@ -26,10 +26,10 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardService]},
   { path: 'searchdmp', component: SearchDmpComponent, canActivate: [AuthGuardService] },
   { path: 'record/:id', component: DmpComponent, canActivate: [AuthGuardService]},
-  { path: 'record/:id/exams', component: ExamComponent, canActivate: [AuthGuardService]},
+  { path: 'record/:id/exams', component: SearchExamsComponent, canActivate: [AuthGuardService]},
   { path: 'createdmp', component: CreatedmpComponent, canActivate: [AuthGuardService] },
   { path: 'record/:id/createexam', component: CreateexamComponent, canActivate: [AuthGuardService] },
-  { path: 'record/:id/exams/:idExam', component: ConsultexamComponent, canActivate: [AuthGuardService] },
+  { path: 'record/:id/exams/:idExam', component: ConsultExamComponent, canActivate: [AuthGuardService] },
   { path: 'record/:id/diagnostics', component: DiagnosticComponent, canActivate: [AuthGuardService] },
   { path: 'creatediagnostic', component: CreatediagnosticComponent, canActivate: [AuthGuardService]},
   { path: 'record/:id/diagnostics/:idDiagnostic', component: ConsultdiagnosticComponent, canActivate: [AuthGuardService]},
