@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { DiagnosticDTO } from '../api/models';
-import { MedicalRecordsRESTEndpointService, StaffRESTEndpointService } from '../api/services';
-import { AuthService } from '../auth.service';
+import { StaffRESTEndpointService, MedicalRecordsRESTEndpointService } from '../api/services';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../auth.service';
+import { DiagnosticDTO } from '../api/models';
 
 @Component({
-  selector: 'app-diagnostic',
-  templateUrl: './diagnostic.component.html',
-  styleUrls: ['./diagnostic.component.css']
+  selector: 'app-search-diagnostics',
+  templateUrl: './search-diagnostics.component.html',
+  styleUrls: ['./search-diagnostics.component.css']
 })
-export class DiagnosticComponent implements OnInit {
+export class SearchDiagnosticsComponent implements OnInit {
 
   cols: any;
   diagnostics: DiagnosticDTO[];
@@ -54,7 +54,6 @@ export class DiagnosticComponent implements OnInit {
         { field: 'nameDoctor', header: 'Docteur' },
       ];
   }
-
 
 
 }

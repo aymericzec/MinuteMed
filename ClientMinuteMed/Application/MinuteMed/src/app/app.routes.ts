@@ -10,8 +10,8 @@ import { DmpComponent } from './dmp/dmp.component';
 import { CreatedmpComponent } from './createdmp/createdmp.component';
 import { CreateExamComponent } from './create-exam/create-exam.component';
 import { ConsultExamComponent } from './consult-exam/consult-exam.component';
-import { DiagnosticComponent } from './diagnostic/diagnostic.component';
-import { CreatediagnosticComponent } from './creatediagnostic/creatediagnostic.component';
+import { SearchDiagnosticsComponent } from './search-diagnostics/search-diagnostics.component';
+import { CreateDiagnosticComponent } from './create-diagnostic/create-diagnostic.component';
 import { ConsultdiagnosticComponent } from './consultdiagnostic/consultdiagnostic.component';
 import { PosologieComponent } from './posologie/posologie.component';
 import { ConsultposologieComponent } from './consultposologie/consultposologie.component';
@@ -30,8 +30,8 @@ const routes: Routes = [
   { path: 'createdmp', component: CreatedmpComponent, canActivate: [AuthGuardService] },
   { path: 'record/:id/createexam', component: CreateExamComponent, canActivate: [AuthGuardService] },
   { path: 'record/:id/exams/:idExam', component: ConsultExamComponent, canActivate: [AuthGuardService] },
-  { path: 'record/:id/diagnostics', component: DiagnosticComponent, canActivate: [AuthGuardService] },
-  { path: 'creatediagnostic', component: CreatediagnosticComponent, canActivate: [AuthGuardService]},
+  { path: 'record/:id/diagnostics', component: SearchDiagnosticsComponent, canActivate: [AuthGuardService] },
+  { path: 'record/:id/creatediagnostic', component: CreateDiagnosticComponent, canActivate: [AuthGuardService]},
   { path: 'record/:id/diagnostics/:idDiagnostic', component: ConsultdiagnosticComponent, canActivate: [AuthGuardService]},
   { path: 'record/:id/posologies', component: PosologieComponent, canActivate: [AuthGuardService]},
   { path: 'record/:id/posologies/:idPosologie', component: ConsultposologieComponent, canActivate: [AuthGuardService]},

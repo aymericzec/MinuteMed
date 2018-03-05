@@ -19,8 +19,6 @@ import { SearchExamsComponent } from './search-exams/search-exams.component';
 import { SearchDmpComponent } from './searchdmp/searchdmp.component';
 import { DmpComponent } from './dmp/dmp.component';
 import { CreatedmpComponent } from './createdmp/createdmp.component';
-import { DiagnosticComponent } from './diagnostic/diagnostic.component';
-import { CreatediagnosticComponent } from './creatediagnostic/creatediagnostic.component';
 import { ConsultdiagnosticComponent } from './consultdiagnostic/consultdiagnostic.component';
 import { PosologieComponent } from './posologie/posologie.component';
 import { ConsultposologieComponent } from './consultposologie/consultposologie.component';
@@ -43,6 +41,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { LeftbarinfoComponent } from './leftbarinfo/leftbarinfo.component';
 import { ConsultExamComponent } from './consult-exam/consult-exam.component';
 import { CreateExamComponent } from './create-exam/create-exam.component';
+import { CreateDiagnosticComponent } from './create-diagnostic/create-diagnostic.component';
+import { SearchDiagnosticsComponent } from './search-diagnostics/search-diagnostics.component';
 
 @NgModule({
   declarations: [
@@ -53,8 +53,6 @@ import { CreateExamComponent } from './create-exam/create-exam.component';
     SearchDmpComponent,
     DmpComponent,
     CreatedmpComponent,
-    DiagnosticComponent,
-    CreatediagnosticComponent,
     ConsultdiagnosticComponent,
     PosologieComponent,
     ConsultposologieComponent,
@@ -67,6 +65,8 @@ import { CreateExamComponent } from './create-exam/create-exam.component';
     LeftbarinfoComponent,
     ConsultExamComponent,
     CreateExamComponent,
+    CreateDiagnosticComponent,
+    SearchDiagnosticsComponent,
   ],
   imports: [
     BrowserModule,
