@@ -52,7 +52,7 @@ export class CreateExamComponent implements OnInit {
 
     this.medicalService.createExamResponse(this.idDmp, exam).subscribe( response => {
       if (response.status === 201) {
-        this.router.navigate(['/record/' + 1 + '/exams/' + JSON.parse(response.body)['idExam']]);
+        this.router.navigate(['/record/' + this.idDmp + '/exams/' + JSON.parse(response.body)['idExam']]);
       }
     });
   }

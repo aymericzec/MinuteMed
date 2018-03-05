@@ -19,7 +19,6 @@ import { SearchExamsComponent } from './search-exams/search-exams.component';
 import { SearchDmpComponent } from './searchdmp/searchdmp.component';
 import { DmpComponent } from './dmp/dmp.component';
 import { CreatedmpComponent } from './createdmp/createdmp.component';
-import { ConsultdiagnosticComponent } from './consultdiagnostic/consultdiagnostic.component';
 import { PosologieComponent } from './posologie/posologie.component';
 import { ConsultposologieComponent } from './consultposologie/consultposologie.component';
 import { PrescriptionComponent } from './prescription/prescription.component';
@@ -43,6 +42,7 @@ import { ConsultExamComponent } from './consult-exam/consult-exam.component';
 import { CreateExamComponent } from './create-exam/create-exam.component';
 import { CreateDiagnosticComponent } from './create-diagnostic/create-diagnostic.component';
 import { SearchDiagnosticsComponent } from './search-diagnostics/search-diagnostics.component';
+import { ConsultDiagnosticComponent } from './consult-diagnostic/consult-diagnostic.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +53,6 @@ import { SearchDiagnosticsComponent } from './search-diagnostics/search-diagnost
     SearchDmpComponent,
     DmpComponent,
     CreatedmpComponent,
-    ConsultdiagnosticComponent,
     PosologieComponent,
     ConsultposologieComponent,
     PrescriptionComponent,
@@ -67,6 +66,7 @@ import { SearchDiagnosticsComponent } from './search-diagnostics/search-diagnost
     CreateExamComponent,
     CreateDiagnosticComponent,
     SearchDiagnosticsComponent,
+    ConsultDiagnosticComponent,
   ],
   imports: [
     BrowserModule,

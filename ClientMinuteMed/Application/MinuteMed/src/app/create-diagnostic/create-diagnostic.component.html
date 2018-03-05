@@ -8,32 +8,32 @@
         <i class="fa fa-navicon fa-lg"></i>
       </a>
       <!-- ici mettre -->
-      <h2 class="sub-header">Création d'un diagnostique</h2>
+      <h2 class="sub-header">Création d'un Diagnostic</h2>
       <br>
       <div class="container">
         <form>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Médecin observeur:</label>
+          <div class="form-group row" *ngIf="me != null && md != null">
+            <label class="col-sm-2 col-form-label">Médecin Observeur:</label>
             <div class="col-sm-5">
-              <input class="form-control" disabled="disabled" value="Zecchini Aymeric">
+              <input class="form-control" disabled="disabled" value="{{me.lastName}} {{me.firstName}}">
             </div>
           </div>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">Date de Création:</label>
             <div class="col-sm-5">
-              <input class="form-control" disabled="disabled" value="18/02/2018">
+              <input class="form-control" disabled="disabled" value="{{today | date:'dd/MM/yyyy'}}">
             </div>
           </div>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">Motif:</label>
             <div class="col-sm-5">
-              <input class="form-control">
+              <input class="form-control" [(ngModel)]="title" name="title">
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Diagnostique:</label>
+            <label class="col-sm-2 col-form-label">Diagnostic:</label>
             <div class="col-sm-5">
-              <textarea class="form-control" rows="5"></textarea>
+              <textarea class="form-control" rows="5" [(ngModel)]="diagnostic" name="diagnostic"></textarea>
             </div>
           </div>
           <div class="form-group row">
@@ -74,7 +74,7 @@
           </div>
           <div class="form-group row">
             <div class="col-sm-10">
-              <button type="submit" class="btn btn-primary">Créer</button>
+              <button type="submit" class="btn btn-primary" (click)="onSubmitCreate()">Créer</button>
               <button type="submit" class="btn btn-primary">Enregistrer en Brouillon</button>
             </div>
           </div>

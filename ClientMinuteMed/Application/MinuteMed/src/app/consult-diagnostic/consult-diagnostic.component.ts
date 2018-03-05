@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { MedicalRecordsRESTEndpointService, StaffRESTEndpointService } from '../api/services';
-import { AuthService } from '../auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { StaffRESTEndpointService } from '../api/services';
+import { AuthService } from '../auth.service';
+import { MedicalRecordsRESTEndpointService } from '../../../afterGenSwagger/medical-records-restendpoint.service';
 import { DiagnosticDTO } from '../api/models';
 
 @Component({
-  selector: 'app-consultdiagnostic',
-  templateUrl: './consultdiagnostic.component.html',
-  styleUrls: ['./consultdiagnostic.component.css']
+  selector: 'app-consult-diagnostic',
+  templateUrl: './consult-diagnostic.component.html',
+  styleUrls: ['./consult-diagnostic.component.css']
 })
-export class ConsultdiagnosticComponent implements OnInit {
+export class ConsultDiagnosticComponent implements OnInit {
 
   diagnostic: DiagnosticDTO;
 
@@ -27,7 +28,5 @@ export class ConsultdiagnosticComponent implements OnInit {
       this.diagnostic = d;
     });
   }
-
-
 
 }
