@@ -8,7 +8,7 @@
         <i class="fa fa-navicon fa-lg"></i>
       </a>
       <!-- ici mettre -->
-      <h2 class="sub-header">Diagnostiques de Vieira Noro Kévin </h2>
+      <h2 class="sub-header">Diagnostics de Vieira Noro Kévin </h2>
       <br>
       <p-table [columns]="cols" [value]="diagnosticsTmp" [paginator]="true" [rows]="10">
           <ng-template pTemplate="header" let-columns>
@@ -24,7 +24,7 @@
                     {{rowData[col.field]}}
                 </td>
                 <td>
-                    <button pButton type="button" icon="fa-search" iconPos="left" class="reasonButton" routerLink="/dmp/{{this.id}}/diagnostics/{{rowData.identifiant}}"></button>
+                    <button pButton type="button" icon="fa-search" iconPos="left" class="reasonButton" routerLink="/record/{{this.id}}/diagnostics/{{rowData.identifiant}}"></button>
                 </td>
             </tr>
           </ng-template>

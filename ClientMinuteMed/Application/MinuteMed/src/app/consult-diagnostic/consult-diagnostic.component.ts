@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { StaffRESTEndpointService, MedicalRecordsRESTEndpointService } from '../api/services';
 import { AuthService } from '../auth.service';
-import { DiagnosticDTO } from '../api/models';
+import { DiagnosticDTO, Doctor } from '../api/models';
 
 @Component({
   selector: 'app-consult-diagnostic',
@@ -12,6 +12,7 @@ import { DiagnosticDTO } from '../api/models';
 export class ConsultDiagnosticComponent implements OnInit {
 
   diagnostic: DiagnosticDTO;
+  doctorCreate: Doctor;
 
 
   constructor(private medicalService: MedicalRecordsRESTEndpointService,
@@ -25,6 +26,10 @@ export class ConsultDiagnosticComponent implements OnInit {
 
     this.medicalService.getDiagnostic({'idRecord': idDmp, 'idDiagnostic': idDiag}).subscribe(d => {
       this.diagnostic = d;
+
+      this.staffService.getDoctor(d.creatorId).subscribe(response => {
+        this.doctorCreate = response;
+      });
     });
   }
 

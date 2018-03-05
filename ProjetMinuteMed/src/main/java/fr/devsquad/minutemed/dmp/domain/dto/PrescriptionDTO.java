@@ -70,8 +70,14 @@ public class PrescriptionDTO implements Serializable {
         Objects.requireNonNull(diagnosticRepository);
         MedicalStaff prescriptor = staffRepository.findMedicalStaff(prescriptorId);
         MedicalRecord record = medicalRecordRepository.find(medicalRecordId);
-        Diagnostic diagnostic = diagnosticRepository.find(id);
-        return new Prescription(title, prescriptor, record, creationDate, diagnostic, body);
+        Diagnostic diagnostic = diagnosticRepository.find(diagnosticId);
+        
+        Prescription prescription = new Prescription(title, prescriptor, record, creationDate, diagnostic, body);
+        
+        if (!this.draft) {
+            prescription.setDraft();
+        }
+        return prescription;
     }
     
     

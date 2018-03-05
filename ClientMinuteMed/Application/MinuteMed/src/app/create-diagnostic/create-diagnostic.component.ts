@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MedicalStaff, MedicalRecordDTO, DiagnosticDTO } from '../api/models';
+import { MedicalStaff, MedicalRecordDTO, DiagnosticDTO, PrescriptionDTO } from '../api/models';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MedicalRecordsRESTEndpointService, StaffRESTEndpointService } from '../api/services';
 import { AuthService } from '../auth.service';
@@ -17,6 +17,7 @@ export class CreateDiagnosticComponent implements OnInit {
   today = Date.now();
   title: string;
   diagnostic: string;
+  prescription: string;
 
   constructor(private authService: AuthService,
     private staffService: StaffRESTEndpointService,
@@ -50,6 +51,26 @@ export class CreateDiagnosticComponent implements OnInit {
 
     this.medicalService.createDiagnosticResponse(this.idDmp, diagnostic).subscribe( response => {
       if (response.status === 201) {
+        if (this.prescription !== undefined) {
+          const prescription: PrescriptionDTO = {
+            title: this.diagnostic,
+            body: this.prescription,
+            medicalRecordId: this.idDmp,
+            draft: false,
+            creationDate: moment().locale('fr').format('L'),
+            prescriptorId: this.me.idMedicalStaff,
+            diagnosticId: JSON.parse(response.body)['idDiagnostic']
+          };
+
+          this.medicalService.createPrescriptionResponse(this.idDmp, prescription).subscribe(responsePrescription => {
+            if (responsePrescription.status === 201) {
+              console.log('Prescription ' + JSON.parse(responsePrescription.body)['idPrescription'] + ' crée');
+            } else {
+              console.log('Prescription non crée');
+            }
+          });
+        }
+
         this.router.navigate(['/record/' + this.idDmp + '/diagnostics/' + JSON.parse(response.body)['idDiagnostic']]);
       }
     });

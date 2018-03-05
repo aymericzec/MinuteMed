@@ -64,7 +64,14 @@ public class DiagnosticDTO implements Serializable {
         Objects.requireNonNull(medicalRecordRepository);
         MedicalRecord record = medicalRecordRepository.find(medicalRecordId);
         MedicalStaff creator = staffRepository.findMedicalStaff(creatorId);
-        return new Diagnostic(title, creator, record, creationDate, body);
+        Diagnostic d = new Diagnostic(title, creator, record, creationDate, body);
+        
+        //Si ce n'est pas un brouillon, on passe le diagnostic en crée
+        if (!this.draft) {
+            d.setDraft();
+        }
+        
+        return d;
     }
     
 

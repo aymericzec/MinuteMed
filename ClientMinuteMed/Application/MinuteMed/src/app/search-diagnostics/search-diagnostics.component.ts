@@ -15,6 +15,7 @@ export class SearchDiagnosticsComponent implements OnInit {
   diagnostics: DiagnosticDTO[];
   diagnosticsTmp: any[][];
   id: number;
+  test: string;
   constructor(private medicalService: MedicalRecordsRESTEndpointService,
     private authService: AuthService,
     private staffService: StaffRESTEndpointService,
@@ -28,22 +29,23 @@ export class SearchDiagnosticsComponent implements OnInit {
           this.diagnosticsTmp = [];
 
           for (let _i = 0; _i < this.diagnostics.length; _i++) {
-            let tat: any;
-            tat = [];
+              this.staffService.getMedicalStaff(this.diagnostics[_i].creatorId).subscribe(responseDoctor => {
+              let tat: any;
+              tat = [];
+              tat.push('nameDoctor');
+              tat['nameDoctor'] = responseDoctor.firstname + ' ' + responseDoctor.lastname;
 
-            // tat.push('nameDoctor');
-            // tat['nameDoctor'] = this.diagnostics[_i].creator.firstName + ' ' + this.diagnostics[_i].creator.lastName;
+              tat.push('dateExam');
+              tat['dateExam'] = this.diagnostics[_i].creationDate;
 
-            tat.push('dateExam');
-            tat['dateExam'] = this.diagnostics[_i].creationDate;
+              tat.push('title');
+              tat['title'] = this.diagnostics[_i].title;
 
-            tat.push('title');
-            tat['title'] = this.diagnostics[_i].title;
+              tat.push('identifiant');
+              tat['identifiant'] = this.diagnostics[_i].id;
 
-            tat.push('identifiant');
-            tat['identifiant'] = this.diagnostics[_i].id;
-
-            this.diagnosticsTmp.push(tat);
+              this.diagnosticsTmp.push(tat);
+            });
           }
       });
 

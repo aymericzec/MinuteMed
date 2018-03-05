@@ -3,7 +3,7 @@
 <div class="container-fluid" >
   <div class="row">
     <app-leftbar class="collapse in col-md-2 nopadding" id="sidebar"></app-leftbar>
-    <div class="col-sm-9 col-md-10  main">
+    <div class="col-sm-9 col-md-10  main" *ngIf="diagnostic != null && doctorCreate != null">
       <h2 class="sub-header">Consultation Diagnostic 554547</h2>
       <div class="row">
         <div class="col-lg-6">
@@ -14,7 +14,7 @@
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Médecin Demandeur:</label>
                     <div class="col-sm-3">
-                      <input  class="form-control" disabled="disabled" value="{{diagnostic.creator.lastName}} {{diagnostic.creator.firstName}}">
+                      <input  class="form-control" disabled="disabled" value="{{doctorCreate.lastName}} {{doctorCreate.firstName}}">
                     </div>
                   </div>
                   <div class="form-group row">
@@ -22,12 +22,6 @@
                       <div class="col-sm-3">
                         <input  class="form-control" type="datetime" disabled="disabled" value="{{diagnostic.creationDate}}">
                       </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Patient:</label>
-                        <div class="col-sm-3">
-                            <input  class="form-control" value="{{diagnostic.medicalRecord.lastName}} {{diagnostic.medicalRecord.firstName}}" disabled="disabled">
-                        </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Motif:</label>
