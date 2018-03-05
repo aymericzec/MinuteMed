@@ -239,6 +239,7 @@ public class MedicalRecordService {
         Long id = tokenUtils.decryptIdFromToken(token);
         MedicalStaff doctor = staffRepository.findMedicalStaff(id);
         Node node = doctor.getNode();
+        System.out.println("Taille: "  + node.getMedicalRecords().size());
         List<MedicalRecordDTO> medicalRecords = node.getMedicalRecords().stream().map(MedicalRecordDTO::create).collect(Collectors.toList());
         return Response.ok(medicalRecords).build();
     }

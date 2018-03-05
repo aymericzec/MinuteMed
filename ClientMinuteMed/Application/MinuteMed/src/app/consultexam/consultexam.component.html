@@ -8,24 +8,24 @@
             <div class="col-lg-6">
               <img class="img-circle" src="assets/examen.jpg" alt="Generic placeholder image" width="140" height="140">
               <h2>Demande:</h2>
-              <div class="container" *ngIf="exam != null">
-                  <form>
+              <div class="container">
+                  <form *ngIf="exam !== null && record !== null">
                       <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Médecin Demandeur:</label>
                         <div class="col-sm-3">
-                          <input  class="form-control" disabled="disabled" placeholder="{{doctorCreate.lastName}} {{doctorCreate.firstName}}">
+                          <input  class="form-control" disabled="disabled" value="{{doctorCreate.lastName}} {{doctorCreate.firstName}}">
                         </div>
                       </div>
                       <div class="form-group row">
                           <label class="col-sm-2 col-form-label">Date de Création:</label>
                           <div class="col-sm-3">
-                            <input  class="form-control" disabled="disabled" placeholder="{{exam.dateExam}}">
+                            <input  class="form-control" disabled="disabled" value="{{exam.dateExam}}">
                           </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Patient:</label>
                             <div class="col-sm-3">
-                                <input  class="form-control" placeholder="{{exam.medicalRecord.lastName}} {{exam.medicalRecord.firstName}}" disabled="disabled">
+                                <input  class="form-control" value="{{record.lastName}} {{record.firstName}}" disabled="disabled">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -54,24 +54,24 @@
             <div class="col-lg-6">
               <img class="img-circle" src="assets/resultatexamen.jpg" alt="Generic placeholder image" width="140" height="140">
               <h2>Résultat</h2>
-              <div class="container" *ngIf="exam.resultExam != null">
+              <div class="container" *ngIf="resultExam != undefined">
                   <form>
                       <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Médecin Examinateur:</label>
                         <div class="col-sm-3">
-                          <input  class="form-control" disabled="disabled" placeholder="{{exam.resultExam.examinator.lastName}} {{exam.resultExam.examinator.firstName}}">
+                          <input  class="form-control" disabled="disabled" placeholder="{{resultExam.examDate}}">
                         </div>
                       </div>
                       <div class="form-group row">
                           <label class="col-sm-2 col-form-label">Date d'examen':</label>
                           <div class="col-sm-3">
-                            <input  class="form-control" disabled="disabled" placeholder="{{exam.resultExam.examDate}}">
+                            <input  class="form-control" disabled="disabled" placeholder="{{resultExam.examDate}}">
                           </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Résultat:</label>
                             <div class="col-sm-3">
-                              <textarea  class="form-control" rows="5" disabled="disabled">{{exam.resultExam.body}}</textarea>
+                              <textarea  class="form-control" rows="5" disabled="disabled">{{resultExam.examDate}}</textarea>
                             </div>
                         </div>
 
@@ -96,7 +96,7 @@
 
               </div> <!-- /container -->
 
-              <div class="container" *ngIf="exam.resultExam == null">
+              <div class="container" *ngIf="resultExam == undefined">
                     <div class="form-group row">
                       <div class="col-sm-3">
                         <p>En attente de résultat</p>

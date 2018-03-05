@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MedicalRecordsRESTEndpointService, StaffRESTEndpointService } from '../api/services';
 import { AuthService } from '../auth.service';
-import { ExamDTO, Doctor } from '../api/models';
+import { ExamDTO, Doctor, MedicalRecordDTO, ResultExamDTO } from '../api/models';
 import { ActivatedRoute } from '@angular/router';
 import { isNull } from 'util';
 
@@ -13,7 +13,9 @@ import { isNull } from 'util';
 export class ConsultexamComponent implements OnInit {
   cols: any[];
   exam: ExamDTO;
+  record: MedicalRecordDTO;
   doctorCreate: Doctor;
+  resultExam: ResultExamDTO;
 
   constructor(private medicalService: MedicalRecordsRESTEndpointService,
     private authService: AuthService, private route: ActivatedRoute,
@@ -29,6 +31,17 @@ export class ConsultexamComponent implements OnInit {
       this.staffService.getDoctor(e.doctorId).subscribe(response => {
         this.doctorCreate = response;
       });
+
+      this.medicalService.getMedicalRecord(idDmp).subscribe(responseMR => {
+        this.record = responseMR;
+      });
+
+      if (!isNull(this.exam.resultExam)) {
+        /*this.medicalService.get(idDmp).subscribe(responseMR => {
+          this.record = responseMR;
+        });*/
+      }
+
 
     });
   }
