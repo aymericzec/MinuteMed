@@ -28,7 +28,6 @@ export class ConsultExamComponent implements OnInit {
 
     this.medicalService.getExam({'idRecord': idDmp, 'idExam': idExam}).subscribe(e => {
       this.exam = e;
-      console.log(this.exam.description);
       this.staffService.getDoctor(e.doctorId).subscribe(response => {
         this.doctorCreate = response;
       });
