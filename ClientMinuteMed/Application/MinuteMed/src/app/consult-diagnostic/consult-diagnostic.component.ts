@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { StaffRESTEndpointService } from '../api/services';
+import { StaffRESTEndpointService, MedicalRecordsRESTEndpointService } from '../api/services';
 import { AuthService } from '../auth.service';
-import { MedicalRecordsRESTEndpointService } from '../../../afterGenSwagger/medical-records-restendpoint.service';
 import { DiagnosticDTO } from '../api/models';
 
 @Component({
