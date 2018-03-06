@@ -25,33 +25,35 @@ export class SearchDosagesComponent implements OnInit {
   ngOnInit() {
       this.id = this.route.snapshot.params['id'];
 
-      this.medicalService.getAllDosagesResponse(this.id).subscribe(response => {
-          this.dosages = response.body;
+      this.medicalService.getAllDosages(this.id).subscribe(response => {
+          this.dosages = response;
           this.dosagesTmp = [];
 
           for (let _i = 0; _i < this.dosages.length; _i++) {
-            let tat: any;
-            tat = [];
+            this.staffService.getMedicalStaff(this.dosages[_i].creatorId).subscribe(responseDoctor => {
+              let tat: any;
+              tat = [];
 
-            // tat.push('nameDoctor');
-            // tat['nameDoctor'] = this.dosages[_i].creator.firstName + ' ' + this.dosages[_i].creator.lastName;
+              tat.push('nameDoctor');
+              tat['nameDoctor'] = responseDoctor.firstname + ' ' + responseDoctor.lastname;
 
-            tat.push('dateExam');
-            tat['dateExam'] = this.dosages[_i].creationDate;
+              tat.push('dateExam');
+              tat['dateExam'] = this.dosages[_i].creationDate;
 
-            tat.push('title');
-            tat['title'] = this.dosages[_i].title;
+              tat.push('title');
+              tat['title'] = this.dosages[_i].title;
 
-            // tat.push('idDiagnostic');
-            // tat['idDiagnostic'] = this.dosages[_i].diagnostic.idDiagnostic;
+              tat.push('idDiagnostic');
+              tat['idDiagnostic'] = this.dosages[_i].diagnosticId;
 
-            tat.push('id');
-            tat['id'] = this.dosages[_i].id;
+              tat.push('id');
+              tat['id'] = this.dosages[_i].id;
 
-            tat.push('endDosage');
-            tat['endDosage'] = this.dosages[_i].endDosage;
+              tat.push('endDosage');
+              tat['endDosage'] = this.dosages[_i].endDosage;
 
-            this.dosagesTmp.push(tat);
+              this.dosagesTmp.push(tat);
+            });
           }
       });
 
