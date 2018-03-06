@@ -19,7 +19,6 @@ import { SearchExamsComponent } from './search-exams/search-exams.component';
 import { SearchDmpComponent } from './searchdmp/searchdmp.component';
 import { DmpComponent } from './dmp/dmp.component';
 import { CreatedmpComponent } from './createdmp/createdmp.component';
-import { ConsultposologieComponent } from './consultposologie/consultposologie.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import {TableModule} from 'primeng/table';
 
@@ -43,6 +42,7 @@ import { ConsultDiagnosticComponent } from './consult-diagnostic/consult-diagnos
 import { SearchPrescriptionsComponent } from './search-prescriptions/search-prescriptions.component';
 import { ConsultPrescriptionComponent } from './consult-prescription/consult-prescription.component';
 import { SearchDosagesComponent } from './search-dosages/search-dosages.component';
+import { ConsultDosageComponent } from './consult-dosage/consult-dosage.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +53,6 @@ import { SearchDosagesComponent } from './search-dosages/search-dosages.componen
     SearchDmpComponent,
     DmpComponent,
     CreatedmpComponent,
-    ConsultposologieComponent,
     NavBarComponent,
     TestComponent,
     LeftbarComponent,
@@ -67,6 +66,7 @@ import { SearchDosagesComponent } from './search-dosages/search-dosages.componen
     SearchPrescriptionsComponent,
     ConsultPrescriptionComponent,
     SearchDosagesComponent,
+    ConsultDosageComponent,
   ],
   imports: [
     BrowserModule,
