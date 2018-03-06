@@ -392,10 +392,10 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param idRecord undefined
    */
-   createDosageResponse(idRecord: number): Observable<HttpResponse<void>> {
+   createDosageResponse(idRecord: number, dosage: DosageDTO): Observable<HttpResponse<string>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
-    let __body: any = null;
+    let __body: DosageDTO = dosage;
 
     let req = new HttpRequest<any>(
       "POST",
@@ -411,9 +411,9 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: void = null;
+        let _body: string = _resp.body;
 
-        return _resp.clone({body: _body}) as HttpResponse<void>;
+        return _resp.clone({body: _body}) as HttpResponse<string>;
       })
     );
   }
@@ -421,8 +421,8 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
   /**
    * @param idRecord undefined
    */
-   createDosage(idRecord: number): Observable<void> {
-    return this.createDosageResponse(idRecord).pipe(
+   createDosage(idRecord: number, dosage: DosageDTO): Observable<string> {
+    return this.createDosageResponse(idRecord, dosage).pipe(
       map(_r => _r.body)
     );
   }

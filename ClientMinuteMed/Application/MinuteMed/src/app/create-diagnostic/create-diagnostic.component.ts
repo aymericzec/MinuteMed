@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MedicalStaff, MedicalRecordDTO, DiagnosticDTO, PrescriptionDTO } from '../api/models';
+import { MedicalStaff, MedicalRecordDTO, DiagnosticDTO, PrescriptionDTO, DosageDTO } from '../api/models';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MedicalRecordsRESTEndpointService, StaffRESTEndpointService } from '../api/services';
 import { AuthService } from '../auth.service';
 import * as moment from 'moment';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-create-diagnostic',
@@ -18,6 +19,12 @@ export class CreateDiagnosticComponent implements OnInit {
   title: string;
   diagnostic: string;
   prescription: string;
+  checked: boolean;
+  myvar: boolean;
+  showDosage = false;
+  beginDosage: string;
+  endDosage: string;
+  descriptionDosage: string;
 
   constructor(private authService: AuthService,
     private staffService: StaffRESTEndpointService,
@@ -51,6 +58,8 @@ export class CreateDiagnosticComponent implements OnInit {
 
     this.medicalService.createDiagnosticResponse(this.idDmp, diagnostic).subscribe( response => {
       if (response.status === 201) {
+
+        // Prescription
         if (this.prescription !== undefined) {
           const prescription: PrescriptionDTO = {
             title: this.diagnostic,
@@ -69,11 +78,33 @@ export class CreateDiagnosticComponent implements OnInit {
               console.log('Prescription non crée');
             }
           });
+          }
+        }
+
+        // Posologie
+        if (this.showDosage) {
+          const dosage: DosageDTO = {
+            beginDosage: this.beginDosage,
+            endDosage: this.endDosage,
+            body: this.descriptionDosage,
+            creationDate: moment().locale('fr').format('L'),
+            creatorId: this.me.idMedicalStaff,
+            diagnosticId: JSON.parse(response.body)['idDiagnostic'],
+            draft: false,
+            medicalRecordId: this.idDmp,
+            title: this.diagnostic,
+          };
+
+          this.medicalService.createDosageResponse(this.idDmp, dosage).subscribe(responseDosage => {
+            if (responseDosage.status === 201) {
+              console.log('Dosage ' + JSON.parse(responseDosage.body)['idDosage'] + ' crée');
+            } else {
+              console.log('Dosage non crée');
+            }
+          });
         }
 
         this.router.navigate(['/record/' + this.idDmp + '/diagnostics/' + JSON.parse(response.body)['idDiagnostic']]);
-      }
     });
   }
-
 }

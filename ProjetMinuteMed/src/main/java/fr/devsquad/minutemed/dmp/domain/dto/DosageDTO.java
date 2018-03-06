@@ -11,7 +11,6 @@ import fr.devsquad.minutemed.dmp.domain.DosageReport;
 import fr.devsquad.minutemed.dmp.domain.MedicalRecord;
 import fr.devsquad.minutemed.dmp.repository.DiagnosticRepository;
 import fr.devsquad.minutemed.dmp.repository.MedicalRecordRepository;
-import fr.devsquad.minutemed.staff.domain.Doctor;
 import fr.devsquad.minutemed.staff.domain.MedicalStaff;
 import fr.devsquad.minutemed.staff.repository.StaffRepository;
 import java.io.Serializable;
