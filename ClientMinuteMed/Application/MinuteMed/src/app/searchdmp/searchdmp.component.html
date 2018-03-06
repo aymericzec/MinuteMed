@@ -9,11 +9,18 @@
         <main class="col-md-9 col-xs-11 p-l-2 p-t-2 mx-auto">
             <h2 class="sub-header">Recherche de Dossiers Médicaux</h2>
             <br/>
-            <p-table [columns]="cols" [value]="records" [paginator]="true" [rows]="10">
+            <p-table #dt [columns]="cols" [value]="records" [paginator]="true" [rows]="15">
+            <ng-template pTemplate="caption">
+                    <div style="text-align: right">        
+                        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                        <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                    </div>
+                </ng-template>
                 <ng-template pTemplate="header" let-columns>
                     <tr>
                         <th *ngFor="let col of columns">
                             {{col.header}}
+                            <p-sortIcon [field]="col.field"></p-sortIcon>
                         </th>
                         <th>
                             Action
@@ -22,7 +29,7 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-rowData let-columns="columns">
                     <tr>
-                        <td *ngFor="let col of columns">
+                        <td *ngFor="let col of columns" [pSelectableRow]="rowData">
                             {{rowData[col.field]}}
                         </td>
                         <td>
