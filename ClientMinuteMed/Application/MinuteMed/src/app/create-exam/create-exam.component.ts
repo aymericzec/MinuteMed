@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ExamDTO, MedicalRecordDTO, MedicalStaff } from '../api/models';
+import { ExamDTO, MedicalRecordDTO, MedicalStaff, ResultExamDTO } from '../api/models';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MedicalRecordsRESTEndpointService, StaffRESTEndpointService } from '../api/services';
 import { AuthService } from '../auth.service';
@@ -56,6 +56,4 @@ export class CreateExamComponent implements OnInit {
       }
     });
   }
-
-
 }

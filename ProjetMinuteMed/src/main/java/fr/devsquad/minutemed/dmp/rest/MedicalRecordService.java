@@ -2,12 +2,15 @@ package fr.devsquad.minutemed.dmp.rest;
 
 import fr.devsquad.minutemed.arborescence.domain.Node;
 import fr.devsquad.minutemed.arborescence.repository.ArborescenceRepository;
+import fr.devsquad.minutemed.dmp.domain.Exam;
 import fr.devsquad.minutemed.dmp.domain.MedicalRecord;
+import fr.devsquad.minutemed.dmp.domain.ResultExam;
 import fr.devsquad.minutemed.dmp.domain.dto.DiagnosticDTO;
 import fr.devsquad.minutemed.dmp.domain.dto.DosageDTO;
 import fr.devsquad.minutemed.dmp.domain.dto.ExamDTO;
 import fr.devsquad.minutemed.dmp.domain.dto.MedicalRecordDTO;
 import fr.devsquad.minutemed.dmp.domain.dto.PrescriptionDTO;
+import fr.devsquad.minutemed.dmp.domain.dto.ResultExamDTO;
 import fr.devsquad.minutemed.dmp.repository.DiagnosticRepository;
 import fr.devsquad.minutemed.dmp.repository.DosageRepository;
 import fr.devsquad.minutemed.dmp.repository.ExamRepository;
@@ -105,6 +108,30 @@ public class MedicalRecordService {
     public Response createExam(@PathParam("idRecord") Long idRecord, @NotNull ExamDTO exam) {
         Long id = examRepository.save(exam.toExam(staffRepository, medicalRecordRepository));
         return Response.status(Response.Status.CREATED).entity("{\"idExam\":"+ id +"}").build();
+    }
+    
+    @POST
+    @Path("{idRecord}/resultExam")
+    @ApiOperation(value = "Create a ResultExam in the Medical Record associated")
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "The ResultExam is created !"),
+        @ApiResponse(code = 400, message = "Invalid input")}
+    )
+    @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
+    public Response createResultExam(@PathParam("idRecord") Long idRecord, @NotNull ResultExamDTO resultExam) {
+        //On teste que l'examen et que le resultat n'existe pas déjà
+        Exam exam = examRepository.find(resultExam.getIdExam());
+        
+        if (exam == null || exam.getResultExam() != null) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Bad Request: IdExam not exist or already create").build();
+        }
+ 
+        Long id = resultExamRepository.save(resultExam.toResultExam(staffRepository));
+        exam.setResultExam(resultExamRepository.find(id));
+        examRepository.update(exam);
+
+        
+        return Response.status(Response.Status.CREATED).entity("{\"idResultExam\":"+ id +"}").build();
     }
     
     @POST

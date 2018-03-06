@@ -4,105 +4,105 @@
         <app-leftbar class="collapse in col-md-2 nopadding" id="sidebar"></app-leftbar>
         <div class="col-sm-9 col-md-10  main">
           <h2 class="sub-header">Consultation examen 554547</h2>
-          <div class="row">
+          <div class="row" *ngIf="exam != null && record != null && doctorCreate != null">
             <div class="col-lg-6">
               <img class="img-circle" src="assets/examen.jpg" alt="Generic placeholder image" width="140" height="140">
               <h2>Demande:</h2>
-              <div class="container" *ngIf="exam != null && record != null && doctorCreate != null">
-                  <form>
-                      <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Médecin Demandeur:</label>
+              <div class="container">
+                <form>
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Médecin Demandeur:</label>
+                    <div class="col-sm-3">
+                      <input  class="form-control" disabled="disabled" value="{{doctorCreate.lastName}} {{doctorCreate.firstName}}">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Date de Création:</label>
+                      <div class="col-sm-3">
+                        <input  class="form-control" disabled="disabled" value="{{exam.dateExam}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Patient:</label>
                         <div class="col-sm-3">
-                          <input  class="form-control" disabled="disabled" value="{{doctorCreate.lastName}} {{doctorCreate.firstName}}">
+                            <input  class="form-control" value="{{record.lastName}} {{record.firstName}}" disabled="disabled">
                         </div>
-                      </div>
-                      <div class="form-group row">
-                          <label class="col-sm-2 col-form-label">Date de Création:</label>
-                          <div class="col-sm-3">
-                            <input  class="form-control" disabled="disabled" value="{{exam.dateExam}}">
-                          </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Motif:</label>
+                        <div class="col-sm-3">
+                            <input  class="form-control" placeholder="{{exam.title}}" disabled="disabled">
                         </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Patient:</label>
-                            <div class="col-sm-3">
-                                <input  class="form-control" value="{{record.lastName}} {{record.firstName}}" disabled="disabled">
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Description:</label>
+                        <div class="col-sm-3">
+                          <textarea  class="form-control" rows="5" disabled="disabled">{{exam.description}}</textarea>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Motif:</label>
-                            <div class="col-sm-3">
-                                <input  class="form-control" placeholder="{{exam.title}}" disabled="disabled">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Description:</label>
-                            <div class="col-sm-3">
-                              <textarea  class="form-control" rows="5" disabled="disabled">{{exam.description}}</textarea>
-                            </div>
-                        </div>
+                    </div>
 
-                      <div class="form-group row">
-                        <div class="col-sm-10">
-                          <button type="submit" class="btn btn-primary">Créer</button>
-                          <button type="submit" class="btn btn-primary">Enregistrer en Brouillon</button>
-                        </div>
-                      </div>
-                    </form>
-
+                  <div class="form-group row">
+                    <div class="col-sm-10">
+                      <button type="submit" class="btn btn-primary">Créer</button>
+                      <button type="submit" class="btn btn-primary">Enregistrer en Brouillon</button>
+                    </div>
+                  </div>
+                </form>
               </div> <!-- /container -->
             </div><!-- /.col-lg-4 -->
             <div class="col-lg-6">
               <img class="img-circle" src="assets/resultatexamen.jpg" alt="Generic placeholder image" width="140" height="140">
               <h2>Résultat</h2>
-              <div class="container" *ngIf="resultExam != undefined">
-                  <form>
-                      <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Médecin Examinateur:</label>
-                        <div class="col-sm-3">
-                          <input  class="form-control" disabled="disabled" placeholder="{{resultExam.examDate}}">
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                          <label class="col-sm-2 col-form-label">Date d'examen':</label>
-                          <div class="col-sm-3">
-                            <input  class="form-control" disabled="disabled" placeholder="{{resultExam.examDate}}">
-                          </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Résultat:</label>
-                            <div class="col-sm-3">
-                              <textarea  class="form-control" rows="5" disabled="disabled">{{resultExam.examDate}}</textarea>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Fichier(s) joints:</label>
-                            <div class="col-sm-3">
-                              <ul>
-                                <li>fichier1.jpg</li>
-                                <li>fichier1.jpg</li>
-                                <li>fichier1.jpg</li>
-                              </ul>
-                            </div>
-                        </div>
-
-                      <div class="form-group row">
-                        <div class="col-sm-10">
-                          <button type="submit" class="btn btn-primary">Valider Résultat</button>
-                        </div>
-                      </div>
-                    </form>
-
-
-              </div> <!-- /container -->
-
-              <div class="container" *ngIf="resultExam == null">
-                    <div class="form-group row">
+              <div class="container">
+                <form *ngIf="resultExam != null && resultExamDoctor != null">
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Médecin Examinateur:</label>
+                    <div class="col-sm-3">
+                      <input  class="form-control" disabled="disabled" value="{{resultExamDoctor.lastname}} {{resultExamDoctor.firstname}}">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Date d'examen':</label>
                       <div class="col-sm-3">
-                        <p>En attente de résultat</p>
+                        <input  class="form-control" disabled="disabled" value="{{resultExam.examDate}}">
                       </div>
                     </div>
-              </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Résultat:</label>
+                        <div class="col-sm-3">
+                          <textarea  class="form-control" rows="5" disabled="disabled">{{resultExam.body}}</textarea>
+                        </div>
+                    </div>
+                </form>
+
+                <form *ngIf="resultExam == null">
+                  <p>En attente de résultat</p>
+                  <div class="form-group row">
+                    <label class="col-sm-6 col-form-label">Médecin Examinateur:</label>
+                    <div class="col-sm-6">
+                      <input  class="form-control" disabled="disabled" value="{{doctorCreate.lastName}} {{doctorCreate.firstName}}">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Date d'examen:</label>
+                      <div class="col-sm-3">
+                        <input  class="form-control" disabled="disabled" value="{{today | date:'dd/MM/yyyy'}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Résultat:</label>
+                        <div class="col-sm-3">
+                          <textarea  class="form-control" rows="5" [(ngModel)]="bodyResultExam" name="bodyResultExam"></textarea>
+                        </div>
+                    </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-10">
+                      <button type="submit" class="btn btn-primary" (click)="onSubmitCreateReport()">Valider Résultat</button>
+                    </div>
+                  </div>
+                </form>
+              </div> <!-- /container -->
             </div><!-- /.col-lg-4 -->
           </div><!-- /.row -->
 

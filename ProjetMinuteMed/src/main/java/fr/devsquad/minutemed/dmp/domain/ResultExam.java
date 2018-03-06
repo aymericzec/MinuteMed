@@ -26,16 +26,20 @@ public class ResultExam implements Serializable {
     @NotNull
     private String body;
     
+    @NotNull
+    private long idExam;
+    
     @ElementCollection
     private final List<String> files = new ArrayList<>();
     
     
     public ResultExam() { }
 
-    public ResultExam(MedicalStaff examinator, String examDate, String body) {
+    public ResultExam(MedicalStaff examinator, String examDate, String body, long idExam) {
         this.examinator = Objects.requireNonNull(examinator);
         this.examDate = Objects.requireNonNull(examDate);
         this.body = Objects.requireNonNull(body);
+        this.idExam = idExam;
     }
 
     public long getIdResultExam() {
@@ -60,5 +64,9 @@ public class ResultExam implements Serializable {
     
     public void addFiles (String file) {
         files.add(Objects.requireNonNull(file));
-    } 
+    }
+
+    public long getIdExam() {
+        return idExam;
+    }
 }
