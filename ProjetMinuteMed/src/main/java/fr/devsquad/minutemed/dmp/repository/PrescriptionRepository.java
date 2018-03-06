@@ -1,6 +1,5 @@
 package fr.devsquad.minutemed.dmp.repository;
 
-import fr.devsquad.minutemed.dmp.domain.Exam;
 import fr.devsquad.minutemed.dmp.domain.Prescription;
 
 import javax.ejb.NoSuchEntityException;

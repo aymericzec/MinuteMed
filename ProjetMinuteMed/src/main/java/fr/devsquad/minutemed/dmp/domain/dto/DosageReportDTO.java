@@ -43,7 +43,7 @@ public class DosageReportDTO implements Serializable {
         Objects.requireNonNull(dosageReport);
         return new DosageReportDTO(dosageReport.getIdReportDosage(),
                 dosageReport.getSupervisor().getIdMedicalStaff(),
-                dosageReport.getDosage().getId(),
+                dosageReport.getDosage().getIdDosage(),
                 dosageReport.getCreationDate(),
                 dosageReport.getBody());
     }

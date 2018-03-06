@@ -70,7 +70,7 @@ public class Dosage implements Serializable {
         return title;
     }
 
-    public long getId() {
+    public Long getIdDosage() {
         return idDosage;
     }
 

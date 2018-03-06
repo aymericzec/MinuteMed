@@ -92,7 +92,7 @@ export class CreateDiagnosticComponent implements OnInit {
             diagnosticId: JSON.parse(response.body)['idDiagnostic'],
             draft: false,
             medicalRecordId: this.idDmp,
-            title: this.diagnostic,
+            title: this.diagnostic
           };
 
           this.medicalService.createDosageResponse(this.idDmp, dosage).subscribe(responseDosage => {

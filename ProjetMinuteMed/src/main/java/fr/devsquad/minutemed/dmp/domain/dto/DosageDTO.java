@@ -66,7 +66,7 @@ public class DosageDTO implements Serializable {
     
         public static DosageDTO create(Dosage dosage){
         Objects.requireNonNull(dosage);
-        return new DosageDTO(dosage.getId(),
+        return new DosageDTO(dosage.getIdDosage(),
                 dosage.getMedicalRecord().getIdMedicalRecord(),
                 dosage.getCreator().getIdMedicalStaff(),
                 dosage.getDiagnostic().getIdDiagnostic(),

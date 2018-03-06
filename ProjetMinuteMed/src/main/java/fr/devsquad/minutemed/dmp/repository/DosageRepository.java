@@ -1,7 +1,6 @@
 package fr.devsquad.minutemed.dmp.repository;
 
 import fr.devsquad.minutemed.dmp.domain.Dosage;
-import fr.devsquad.minutemed.dmp.domain.Exam;
 import java.util.List;
 import javax.ejb.NoSuchEntityException;
 import javax.ejb.Stateless;
@@ -29,7 +28,7 @@ public class DosageRepository {
 
     public Long save(Dosage dosage) {
         em.persist(dosage);
-        return dosage.getId();
+        return dosage.getIdDosage();
     }
 
     public void update(Dosage dosage) {
