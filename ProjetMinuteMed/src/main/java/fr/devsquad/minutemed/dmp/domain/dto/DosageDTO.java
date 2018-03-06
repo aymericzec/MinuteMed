@@ -64,7 +64,7 @@ public class DosageDTO implements Serializable {
         this.draft = draft;
     }
     
-        public static DosageDTO create(Dosage dosage){
+    public static DosageDTO create(Dosage dosage){
         Objects.requireNonNull(dosage);
         return new DosageDTO(dosage.getIdDosage(),
                 dosage.getMedicalRecord().getIdMedicalRecord(),
@@ -91,6 +91,11 @@ public class DosageDTO implements Serializable {
             List<DosageReport> rs = reports.stream().map(dto -> dto.toDosageReport(staffRepository, dosage)).collect(Collectors.toList());
             rs.stream().forEach(dosage::addReport);
         }
+        
+        if (!this.draft) {
+            dosage.setDraft();
+        }
+        
         return dosage;
     }
     
