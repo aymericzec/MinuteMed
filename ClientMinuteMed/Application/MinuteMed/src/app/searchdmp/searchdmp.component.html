@@ -2,7 +2,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <app-leftbarinfo class="collapse in nopadding" id="sidebar"></app-leftbarinfo>
+        <app-leftbarinfo class="collapse in" id="sidebar"></app-leftbarinfo>
         <a href="#sidebar" data-toggle="collapse" class="margin15">
             <i class="fa fa-navicon fa-lg"></i>
         </a>
@@ -10,10 +10,11 @@
             <h2 class="sub-header">Recherche de Dossiers Médicaux</h2>
             <br/>
             <p-table #dt [columns]="cols" [value]="records" [paginator]="true" [rows]="15">
-            <ng-template pTemplate="caption">
-                    <div style="text-align: right">        
+                <ng-template pTemplate="caption">
+                    <div style="text-align: right">
                         <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-                        <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                        <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            style="width:auto">
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header" let-columns>

@@ -24,11 +24,6 @@ tr {
   font-size: 16px;
 }
 
-.nopadding {
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
 /* change transition animation to width when entire sidebar is toggled */
 #sidebar.collapse {
   -webkit-transition-timing-function: ease;

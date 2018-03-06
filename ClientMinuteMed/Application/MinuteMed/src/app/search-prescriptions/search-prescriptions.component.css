@@ -24,9 +24,14 @@ tr {
   font-size: 16px;
 }
 
-.nopadding {
+/*.nopadding {
   padding: 0 !important;
   margin: 0 !important;
+}*/
+
+/* à mettre pour left bar info */
+.margin15 {
+  margin-left: 15px;
 }
 
 /* change transition animation to width when entire sidebar is toggled */

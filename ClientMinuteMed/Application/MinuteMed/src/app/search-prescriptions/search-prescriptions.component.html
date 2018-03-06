@@ -3,10 +3,10 @@
 <div class="container-fluid">
   <div class="row">
     <app-leftbar class="collapse in col-md-2 nopadding" id="sidebar"></app-leftbar>
-    <main class="col-md-9 col-xs-11 p-l-2 p-t-2">
-      <a href="#sidebar" data-toggle="collapse">
-        <i class="fa fa-navicon fa-lg"></i>
-      </a>
+    <a href="#sidebar" data-toggle="collapse" class="margin15">
+            <i class="fa fa-navicon fa-lg"></i>
+          </a>
+    <main class="col-md-9 col-xs-11 p-l-2 p-t-2 mx-auto">
       <!-- ici mettre -->
       <h2 class="sub-header">Ordonnances de {{me.firstName}} {{me.lastName | uppercase}} </h2>
       <p-table #dt [columns]="cols" [value]="prescriptionsTmp" [paginator]="true" [rows]="15">
