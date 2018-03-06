@@ -88,11 +88,8 @@ public class MedicalRecordService {
             return Response.status(Response.Status.CONFLICT).entity("This MedicalRecord already exist !").build();
         }
         MedicalRecord record = medicalRecord.toMedicalRecord(arborescenceRepository);
-        //record.getCU().addMedicalRecord(record);
-        System.out.println("before : " + record.getCU().getMedicalRecords().size());
         Long id = medicalRecordRepository.save(record);
         arborescenceRepository.persistNode(record.getCU());
-        System.out.println("after : " + record.getCU().getMedicalRecords().size());
         return Response.status(Response.Status.CREATED).entity("{\"idMedicalRecord\":"+ id +"}").build();
     }
     
