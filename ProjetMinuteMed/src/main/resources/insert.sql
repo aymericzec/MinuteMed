@@ -48,4 +48,4 @@ INSERT INTO ROOT.MEDICALSTAFF VALUES (7,'NURSE', '16 Avenue du 8 Mai 1945, 95400
 INSERT INTO ROOT.MEDICALSTAFF VALUES (8,'NURSE', '15 Avenue Julia, 95400 Villiers-le-Bel','caroline.dubois@gmail.com' ,'Caroline' ,'DUBOIS' ,'01.43.94.25.94' ,'NURSE',112220,NULL) 
 INSERT INTO ROOT.MEDICALRECORD VALUES (1000, '39 rue Gambetta, Villiers-le-Bel', '19/04/1983', 'Créteil', 'nicole.holt@gmail.com', 'Nicole', 'F', 'Holt', '0167828989', '2830494380999', 111111)
 INSERT INTO ROOT.MEDICALRECORD VALUES (1001, '5 Avenue de la Republique, Paris', '15/01/1975', 'Paris', 'marc.holt@gmail.com', 'Marc', 'H', 'Holt', '0167828989', '1750175214512', 111111)
-INSERT INTO ROOT.MEDICALRECORD VALUES (1002, '10 Boulevard Einstein, Champs-sur-Marne', '23/06/1965', 'Créteil', 'pierre.durand@gmail.com', 'Pierre', 'H', 'Durand', '0164789545', '1650694548256', 111112)
+INSERT INTO ROOT.MEDICALRECORD VALUES (1002, '10 Boulevard Einstein, Champs-sur-Marne', '23/06/1965', 'Créteil', 'pierre.durand@gmail.com', 'Pierre', 'H', 'Durand', '0164789546', '1650694548256', 111112)
