@@ -6,12 +6,12 @@
       <h2 class="sub-header">Consultation Posologie 554547</h2>
       <img class="img-circle" src="assets/posologie.png" alt="Generic placeholder image" width="140" height="140">
       <h2>Posologie:</h2>
-      <div class="container">
+      <div class="container" *ngIf="dosage != null && doctorCreator != null">
           <form>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Médecin Demandeur:</label>
                 <div class="col-sm-3">
-                  <input  class="form-control" disabled="disabled" value="{{dosage.creator.lastName}} {{dosage.creator.firstName}} ">
+                  <input  class="form-control" disabled="disabled" value="{{doctorCreator.lastname}} {{doctorCreator.firstname}} ">
                 </div>
               </div>
               <div class="form-group row">
@@ -19,12 +19,6 @@
                   <div class="col-sm-3">
                     <input  class="form-control" disabled="disabled" value="{{dosage.creationDate}}">
                   </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Patient:</label>
-                    <div class="col-sm-3">
-                        <input  class="form-control" value="{{dosage.medicalRecord.lastName}} {{dosage.medicalRecord.firstName}}" disabled="disabled">
-                    </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Motif:</label>
@@ -41,7 +35,7 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Diagnostic:</label>
                     <div class="col-sm-3">
-                        <input  class="form-control" value="{{dosage.diagnostic.idDiagnostic}}" disabled="disabled">
+                        <input  class="form-control" value="{{dosage.diagnosticId}}" disabled="disabled">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -59,7 +53,7 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Dernière administration:</label>
                     <div class="col-sm-3">
-                        <input  class="form-control" value="{{dosage.lastReport}}" disabled="disabled">
+                        <input  class="form-control" value="{{dosage.reports}}" disabled="disabled">
                     </div>
                 </div>
 
