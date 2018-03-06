@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { StaffRESTEndpointService, MedicalRecordsRESTEndpointService } from '../api//services';
+import { DosageDTO } from '../api/models';
 import { AuthService } from '../auth.service';
-import { PrescriptionDTO, DosageDTO } from '../api/models';
+import { MedicalRecordsRESTEndpointService, StaffRESTEndpointService } from '../api/services';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-posologie',
-  templateUrl: './posologie.component.html',
-  styleUrls: ['./posologie.component.css']
+  selector: 'app-search-dosages',
+  templateUrl: './search-dosages.component.html',
+  styleUrls: ['./search-dosages.component.css']
 })
-export class PosologieComponent implements OnInit {
+export class SearchDosagesComponent implements OnInit {
+
 
   cols: any;
   colsDoctor: any;
@@ -63,5 +64,4 @@ export class PosologieComponent implements OnInit {
         { field: 'endDosage', header: 'Fin du Dosage' },
       ];
   }
-
 }

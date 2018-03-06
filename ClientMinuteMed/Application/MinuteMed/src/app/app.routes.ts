@@ -13,7 +13,7 @@ import { ConsultExamComponent } from './consult-exam/consult-exam.component';
 import { SearchDiagnosticsComponent } from './search-diagnostics/search-diagnostics.component';
 import { CreateDiagnosticComponent } from './create-diagnostic/create-diagnostic.component';
 import { ConsultDiagnosticComponent } from './consult-diagnostic/consult-diagnostic.component';
-import { PosologieComponent } from './posologie/posologie.component';
+import { SearchDosagesComponent } from './search-dosages/search-dosages.component';
 import { ConsultposologieComponent } from './consultposologie/consultposologie.component';
 import { SearchPrescriptionsComponent } from './search-prescriptions/search-prescriptions.component';
 import { ConsultPrescriptionComponent } from './consult-prescription/consult-prescription.component';
@@ -33,7 +33,7 @@ const routes: Routes = [
   { path: 'record/:id/diagnostics', component: SearchDiagnosticsComponent, canActivate: [AuthGuardService] },
   { path: 'record/:id/creatediagnostic', component: CreateDiagnosticComponent, canActivate: [AuthGuardService]},
   { path: 'record/:id/diagnostics/:idDiagnostic', component: ConsultDiagnosticComponent, canActivate: [AuthGuardService]},
-  { path: 'record/:id/posologies', component: PosologieComponent, canActivate: [AuthGuardService]},
+  { path: 'record/:id/posologies', component: SearchDosagesComponent, canActivate: [AuthGuardService]},
   { path: 'record/:id/posologies/:idPosologie', component: ConsultposologieComponent, canActivate: [AuthGuardService]},
   { path: 'record/:id/prescriptions', component: SearchPrescriptionsComponent, canActivate: [AuthGuardService]},
   { path: 'record/:id/prescriptions/:idPrescription', component: ConsultPrescriptionComponent, canActivate: [AuthGuardService]},
