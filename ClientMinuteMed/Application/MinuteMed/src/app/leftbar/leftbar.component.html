@@ -1,12 +1,5 @@
 <div *ngIf="me != null" class="collapse in" id="sidebar">
     <div class="list-group">
-        <p id="staff">
-            <a *ngIf="me.status == 'DOCTOR'"><img src="assets/doctor.png"/></a>
-            <a *ngIf="me.status == 'NURSE'"><img src="assets/nurse.png"/></a>
-            <a *ngIf="me.status == 'DATA_MANAGER'"><img src="assets/admin.png"/></a>
-          </p>
-         <br>
-
         <a href="#menu1" class="list-group-item collapsed" data-toggle="collapse" data-parent="#sidebar" aria-expanded="false">
             <i class="fa"></i>
             <span class="hidden-sm-down">Examens</span>
@@ -34,7 +27,7 @@
         </div>
 
         <a href="#menu4" class="list-group-item collapsed" data-toggle="collapse" data-parent="#sidebar" aria-expanded="false">
-            <i class="fa"></i>
+            <i class="fa "></i>
             <span class="hidden-sm-down">Ordonnances</span>
         </a>
         <div class="collapse" id="menu4">

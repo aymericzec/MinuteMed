@@ -7,22 +7,9 @@
         <a href="#sidebar" data-toggle="collapse"><i class="fa fa-navicon fa-lg"></i></a>
         <hr>
     <h2 *ngIf="record != null" class="sub-header">Dossier Médical de {{record.firstName | uppercase}} {{record.lastName | uppercase}}</h2>
-      <div class="col-lg-5">
-        <img class="img-circle" src="assets/history.png" alt="Generic placeholder image" width="140" height="140">
-        <h2>Historique</h2>
-        <ul>
-          <li>Visite le 17/02/2018: Chute à cheval</li>
-          <li>Visite le 15/02/2016: Scanner des sinus</li>
-        </ul>
-        <h2>Examens en attente</h2>
-        <ul>
-          <li>Radiologie du fémur</li>
-        </ul>
-        <h2>Epidemiologique</h2>
-        <textarea class="form-control">Rien de grave à signaler</textarea>
-      </div>
+    <br/>
       <!-- /.col-lg-4 -->
-      <div *ngIf="record != null" class="col-lg-6">
+      <div *ngIf="record != null" class="col-lg-6 mx-auto">
         <h2>Données sociodémographique</h2>
         <div class="container">
           <form>

@@ -38,7 +38,7 @@ public class Dosage implements Serializable {
     
     @NotNull
     @OneToMany(mappedBy = "dosage")
-    private List<DosageReport> reports;
+    private List<DosageReport> reports = new ArrayList<>();
     
     @NotNull
     private String beginDosage;
@@ -59,6 +59,7 @@ public class Dosage implements Serializable {
         this.creator = Objects.requireNonNull(creator);
         this.creationDate = Objects.requireNonNull(creationDate);
         this.diagnostic = Objects.requireNonNull(diagnostic);
+        this.medicalRecord = Objects.requireNonNull(medicalRecord);
         this.body = Objects.requireNonNull(body);
         this.reports = new ArrayList();
         this.beginDosage = Objects.requireNonNull(beginDosage);
