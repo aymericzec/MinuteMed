@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PrescriptionDTO } from '../api/models';
+import { PrescriptionDTO, MedicalRecordDTO } from '../api/models';
 import { MedicalRecordsRESTEndpointService, StaffRESTEndpointService } from '../api/services';
 import { AuthService } from '../auth.service';
 import { ActivatedRoute } from '@angular/router';
@@ -16,50 +16,55 @@ export class SearchPrescriptionsComponent implements OnInit {
   prescriptions: PrescriptionDTO[];
   prescriptionsTmp: any[][];
   id: number;
+  me: MedicalRecordDTO;
 
   constructor(private medicalService: MedicalRecordsRESTEndpointService,
-     private authService: AuthService,
-     private staffService: StaffRESTEndpointService,
-     private route: ActivatedRoute) { }
+    private authService: AuthService,
+    private staffService: StaffRESTEndpointService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
-      this.id = this.route.snapshot.params['id'];
+    this.id = this.route.snapshot.params['id'];
 
-      this.medicalService.getPrescriptions(this.id).subscribe(response => {
-          this.prescriptions = response;
-          this.prescriptionsTmp = [];
+    this.medicalService.getMedicalRecord(this.id).subscribe(dmp => {
+      this.me = dmp;
+    });
 
-          for (let _i = 0; _i < this.prescriptions.length; _i++) {
-            this.staffService.getMedicalStaff(this.prescriptions[_i].prescriptorId).subscribe(responseDoctor => {
-              let tat: any;
-              tat = [];
+    this.medicalService.getPrescriptions(this.id).subscribe(response => {
+      this.prescriptions = response;
+      this.prescriptionsTmp = [];
 
-              tat.push('nameDoctor');
-              tat['nameDoctor'] = responseDoctor.firstname + ' ' + responseDoctor.lastname;
+      for (let _i = 0; _i < this.prescriptions.length; _i++) {
+        this.staffService.getMedicalStaff(this.prescriptions[_i].prescriptorId).subscribe(responseDoctor => {
+          let tat: any;
+          tat = [];
 
-              tat.push('dateExam');
-              tat['dateExam'] = this.prescriptions[_i].creationDate;
+          tat.push('nameDoctor');
+          tat['nameDoctor'] = responseDoctor.firstname + ' ' + responseDoctor.lastname;
 
-              tat.push('title');
-              tat['title'] = this.prescriptions[_i].title;
+          tat.push('dateExam');
+          tat['dateExam'] = this.prescriptions[_i].creationDate;
 
-              tat.push('idDiagnostic');
-              tat['idDiagnostic'] = this.prescriptions[_i].diagnosticId;
+          tat.push('title');
+          tat['title'] = this.prescriptions[_i].title;
 
-              tat.push('id');
-              tat['id'] = this.prescriptions[_i].id;
+          tat.push('idDiagnostic');
+          tat['idDiagnostic'] = this.prescriptions[_i].diagnosticId;
 
-              this.prescriptionsTmp.push(tat);
-            });
-          }
-      });
+          tat.push('id');
+          tat['id'] = this.prescriptions[_i].id;
 
-      this.cols = [
-        { field: 'dateExam', header: 'Date de Création ' },
-        { field: 'id', header: 'Identifiant' },
-        { field: 'title', header: 'Titre' },
-        { field: 'nameDoctor', header: 'Prescripteur' },
-        { field: 'idDiagnostic', header: 'Diagnostic rattaché' },
-      ];
+          this.prescriptionsTmp.push(tat);
+        });
+      }
+    });
+
+    this.cols = [
+      { field: 'dateExam', header: 'Date de Création ' },
+      { field: 'id', header: 'Identifiant' },
+      { field: 'title', header: 'Titre' },
+      { field: 'nameDoctor', header: 'Prescripteur' },
+      { field: 'idDiagnostic', header: 'Diagnostic rattaché' },
+    ];
   }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StaffRESTEndpointService, MedicalRecordsRESTEndpointService } from '../api/services';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { DiagnosticDTO } from '../api/models';
+import { DiagnosticDTO, MedicalStaff, MedicalRecordDTO } from '../api/models';
 
 @Component({
   selector: 'app-search-diagnostics',
@@ -16,6 +16,8 @@ export class SearchDiagnosticsComponent implements OnInit {
   diagnosticsTmp: any[][];
   id: number;
   test: string;
+  me: MedicalRecordDTO;
+
   constructor(private medicalService: MedicalRecordsRESTEndpointService,
     private authService: AuthService,
     private staffService: StaffRESTEndpointService,
@@ -24,8 +26,12 @@ export class SearchDiagnosticsComponent implements OnInit {
   ngOnInit() {
       this.id = this.route.snapshot.params['id'];
 
-      this.medicalService.getDiagnosticsResponse(this.id).subscribe(response => {
-          this.diagnostics = response.body;
+      this.medicalService.getMedicalRecord(this.id).subscribe(dmp => {
+          this.me = dmp;
+      });
+
+      this.medicalService.getDiagnostics(this.id).subscribe(response => {
+          this.diagnostics = response;
           this.diagnosticsTmp = [];
 
           for (let _i = 0; _i < this.diagnostics.length; _i++) {

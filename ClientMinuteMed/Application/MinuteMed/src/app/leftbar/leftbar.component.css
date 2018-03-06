@@ -5,9 +5,8 @@
     border-left: 0;
     border-right: 0;
     border-color: #FFF;
-    white-space: nowrap;
+    /*white-space: nowrap;*/
 }
-
 
 .list-group-item {
     font-size: large;
@@ -37,7 +36,7 @@
 
 /* open state */
 #sidebar .list-group .list-group-item[aria-expanded="true"] {
-  background-color: #2991e8;
+  background-color: #02499A;
 }
 #sidebar .list-group .list-group-item[aria-expanded="true"]::after {
   content: " \f0da";

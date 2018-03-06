@@ -8,13 +8,16 @@
         <i class="fa fa-navicon fa-lg"></i>
       </a>
       <!-- ici mettre -->
-      <h2 class="sub-header">Diagnostiques de Vieira Noro Kévin </h2>
+      <h2 class="sub-header">Ordonnances de {{me.firstName}} {{me.lastName | uppercase}} </h2>
       <p-table [columns]="cols" [value]="prescriptionsTmp" [paginator]="true" [rows]="10">
           <ng-template pTemplate="header" let-columns>
             <tr>
                 <th *ngFor="let col of columns">
                     {{col.header}}
                 </th>
+                <th>
+                  Action
+              </th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-rowData let-columns="columns">

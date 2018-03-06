@@ -8,7 +8,8 @@
         <i class="fa fa-navicon fa-lg"></i>
       </a>
       <!-- ici mettre -->
-      <h2 class="sub-header">Diagnostics de Vieira Noro Kévin </h2>
+
+      <h2 class="sub-header">Diagnostics de {{me.firstName}} {{me.lastName | uppercase}} </h2>
       <br>
       <p-table [columns]="cols" [value]="diagnosticsTmp" [paginator]="true" [rows]="10">
           <ng-template pTemplate="header" let-columns>
