@@ -14,6 +14,7 @@ import { DiagnosticDTO } from '../models/diagnostic-dto';
 import { DosageDTO } from '../models/dosage-dto';
 import { ExamDTO } from '../models/exam-dto';
 import { PrescriptionDTO } from '../models/prescription-dto';
+import { ResultExamDTO } from '../models';
 
 @Injectable()
 export class MedicalRecordsRESTEndpointService extends BaseService {
@@ -599,6 +600,44 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
    */
    createExam(idRecord: number, exam:ExamDTO): Observable<string> {
     return this.createExamResponse(idRecord, exam).pipe(
+      map(_r => _r.body)
+    );
+  }
+
+    /**
+   * @param idRecord undefined
+   */
+  createResultExamResponse(idRecord: number, resultExam:ResultExamDTO): Observable<HttpResponse<string>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: ResultExamDTO = resultExam;
+
+    let req = new HttpRequest<any>(
+      "POST",
+      this.rootUrl + `/records/${idRecord}/resultExam`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      filter(_r => _r instanceof HttpResponse),
+      map(_r => {
+        let _resp = _r as HttpResponse<any>;
+        let _body: string = _resp.body;
+
+        return _resp.clone({body: _body}) as HttpResponse<string>;
+      })
+    );
+  }
+
+  /**
+   * @param idRecord undefined
+   */
+   createResultExam(idRecord: number, resultExam:ResultExamDTO): Observable<string> {
+    return this.createResultExamResponse(idRecord, resultExam).pipe(
       map(_r => _r.body)
     );
   }

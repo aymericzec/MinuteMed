@@ -3,7 +3,7 @@ import { isNull } from 'util';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { StaffRESTEndpointService, MedicalRecordsRESTEndpointService } from '../api/services';
-import { ExamDTO } from '../api/models';
+import { ExamDTO, MedicalStaffDTO } from '../api/models';
 
 @Component({
   selector: 'app-search-exams',
@@ -16,6 +16,7 @@ export class SearchExamsComponent implements OnInit {
   exams: ExamDTO[];
   examsTmp: any[][];
   id: number;
+  examResultDoctor: MedicalStaffDTO;
 
   constructor(private medicalService: MedicalRecordsRESTEndpointService,
      private authService: AuthService,
@@ -25,8 +26,8 @@ export class SearchExamsComponent implements OnInit {
   ngOnInit() {
       this.id = this.route.snapshot.params['id'];
 
-      this.medicalService.getExamsResponse(this.id).subscribe(response => {
-          this.exams = response.body;
+      this.medicalService.getExams(this.id).subscribe(response => {
+          this.exams = response;
           console.log(this.id);
           console.log(this.exams);
           this.examsTmp = [];
@@ -55,11 +56,12 @@ export class SearchExamsComponent implements OnInit {
               if (isNull(this.exams[_i].resultExam)) {
                 tat['examinator'] = 'Pas encore réalisé';
                 tat['dateExaminator'] = '??/??/????';
-              }/* else {
-
-                tat['examinator'] = this.exams[_i].resultExam.examinator.lastName + ' ' + this.exams[_i].resultExam.examinator.firstName;
-                tat['dateExaminator'] = this.exams[_i].resultExam.examDate;
-              }*/
+              } else {
+                this.staffService.getMedicalStaff(this.exams[_i].resultExam.examinatorId).subscribe(responseDoctorResult => {
+                  tat['examinator'] = responseDoctorResult.lastname + ' ' + responseDoctorResult.firstname;
+                  tat['dateExaminator'] = this.exams[_i].resultExam.examDate;
+                });
+              }
             this.examsTmp.push(tat);
             });
           }

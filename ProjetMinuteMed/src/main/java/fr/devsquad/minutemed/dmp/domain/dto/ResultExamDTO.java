@@ -6,7 +6,6 @@
 package fr.devsquad.minutemed.dmp.domain.dto;
 
 import fr.devsquad.minutemed.dmp.domain.ResultExam;
-import fr.devsquad.minutemed.staff.domain.Doctor;
 import fr.devsquad.minutemed.staff.domain.MedicalStaff;
 import fr.devsquad.minutemed.staff.repository.StaffRepository;
 import java.io.Serializable;
@@ -28,16 +27,19 @@ public class ResultExamDTO implements Serializable {
 
     private String body;
     
+    private long idExam;
+    
     private final List<String> files = new ArrayList<>();
 
     public ResultExamDTO() {
     }
 
-    public ResultExamDTO(long id, long examinatorId, String examDate, String body) {
+    public ResultExamDTO(long id, long examinatorId, String examDate, String body, long idExam) {
         this.id = id;
         this.examinatorId = examinatorId;
         this.examDate = Objects.requireNonNull(examDate);
         this.body = Objects.requireNonNull(body);
+        this.idExam = idExam;
     }
 
     public static ResultExamDTO create(ResultExam resultExam){
@@ -45,13 +47,14 @@ public class ResultExamDTO implements Serializable {
         return new ResultExamDTO(resultExam.getIdResultExam(),
                 resultExam.getExaminator().getIdMedicalStaff(),
                 resultExam.getExamDate(),
-                resultExam.getBody());
+                resultExam.getBody(),
+                resultExam.getIdExam());
     }
     
     public ResultExam toResultExam(StaffRepository staffRepository){
         Objects.requireNonNull(staffRepository);
         MedicalStaff examinator = staffRepository.findMedicalStaff(examinatorId);
-        return new ResultExam(examinator, examDate, body);
+        return new ResultExam(examinator, examDate, body, idExam);
     }
    
     public long getId() {
@@ -85,6 +88,16 @@ public class ResultExamDTO implements Serializable {
     public void setBody(String body) {
         this.body = body;
     }
+
+    public long getIdExam() {
+        return idExam;
+    }
+
+    public void setIdExam(long idExam) {
+        this.idExam = idExam;
+    }
+    
+    
     
     
     

@@ -9,4 +9,6 @@ export interface ResultExamDTO {
   examDate?: string;
 
   body?: string;
+
+  idExam?: number;
 }
