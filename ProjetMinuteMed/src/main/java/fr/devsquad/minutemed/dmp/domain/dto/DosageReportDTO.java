@@ -20,7 +20,7 @@ public class DosageReportDTO implements Serializable {
     
     private long id;
     
-    private long supervisorId;
+    private MedicalStaffDTO supervisor;
     
     private long dosageId;
     
@@ -31,9 +31,9 @@ public class DosageReportDTO implements Serializable {
     public DosageReportDTO() {
     }
 
-    public DosageReportDTO(long id, long supervisorId, long dosageId, String creationDate, String body) {
+    public DosageReportDTO(long id, MedicalStaffDTO supervisor, long dosageId, String creationDate, String body) {
         this.id = id;
-        this.supervisorId = supervisorId;
+        this.supervisor = supervisor;
         this.dosageId = dosageId;
         this.creationDate = Objects.requireNonNull(creationDate);
         this.body = Objects.requireNonNull(body);
@@ -42,7 +42,7 @@ public class DosageReportDTO implements Serializable {
     public static DosageReportDTO create(DosageReport dosageReport){
         Objects.requireNonNull(dosageReport);
         return new DosageReportDTO(dosageReport.getIdReportDosage(),
-                dosageReport.getSupervisor().getIdMedicalStaff(),
+                MedicalStaffDTO.create(dosageReport.getSupervisor()),
                 dosageReport.getDosage().getIdDosage(),
                 dosageReport.getCreationDate(),
                 dosageReport.getBody());
@@ -51,7 +51,7 @@ public class DosageReportDTO implements Serializable {
     public DosageReport toDosageReport(StaffRepository repository, Dosage dosage){
         Objects.requireNonNull(repository);
         Objects.requireNonNull(dosage);
-        MedicalStaff supervisor = repository.findMedicalStaff(supervisorId);
+        MedicalStaff supervisor = repository.findMedicalStaff(this.supervisor.getId());
         return new DosageReport(supervisor, dosage, creationDate, body);
     }
     
@@ -64,12 +64,12 @@ public class DosageReportDTO implements Serializable {
         this.id = id;
     }
 
-    public long getSupervisorId() {
-        return supervisorId;
+    public MedicalStaffDTO getSupervisor() {
+        return supervisor;
     }
 
-    public void setSupervisorId(long supervisorId) {
-        this.supervisorId = supervisorId;
+    public void setSupervisor(MedicalStaffDTO supervisor) {
+        this.supervisor = supervisor;
     }
 
     public long getDosageId() {

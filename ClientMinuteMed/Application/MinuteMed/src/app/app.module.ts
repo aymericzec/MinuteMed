@@ -21,7 +21,7 @@ import { DmpComponent } from './dmp/dmp.component';
 import { CreatedmpComponent } from './createdmp/createdmp.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import {TableModule} from 'primeng/table';
-
+import {DataViewModule} from 'primeng/dataview';
 
 import { AuthenticationRESTEndpointService, StaffRESTEndpointService, ArborescenceRESTEndpointService,
   MedicalRecordsRESTEndpointService, SpecializationsRESTEndpointService } from './api/services';
@@ -77,6 +77,7 @@ import { ConsultDosageComponent } from './consult-dosage/consult-dosage.componen
     HttpClientModule,
     TableModule,
     TreeModule,
+    DataViewModule
   ],
   providers: [ApiConfiguration, AuthService, AuthGuardService, AuthenticationRESTEndpointService,
     StaffRESTEndpointService, ArborescenceRESTEndpointService, MedicalRecordsRESTEndpointService,

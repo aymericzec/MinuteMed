@@ -2,11 +2,12 @@ package fr.devsquad.minutemed.dmp.rest;
 
 import fr.devsquad.minutemed.arborescence.domain.Node;
 import fr.devsquad.minutemed.arborescence.repository.ArborescenceRepository;
+import fr.devsquad.minutemed.dmp.domain.DosageReport;
 import fr.devsquad.minutemed.dmp.domain.Exam;
 import fr.devsquad.minutemed.dmp.domain.MedicalRecord;
-import fr.devsquad.minutemed.dmp.domain.ResultExam;
 import fr.devsquad.minutemed.dmp.domain.dto.DiagnosticDTO;
 import fr.devsquad.minutemed.dmp.domain.dto.DosageDTO;
+import fr.devsquad.minutemed.dmp.domain.dto.DosageReportDTO;
 import fr.devsquad.minutemed.dmp.domain.dto.ExamDTO;
 import fr.devsquad.minutemed.dmp.domain.dto.MedicalRecordDTO;
 import fr.devsquad.minutemed.dmp.domain.dto.PrescriptionDTO;
@@ -398,6 +399,10 @@ public class MedicalRecordService {
     @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
     public Response getDosage(@PathParam("idRecord") Long idRecord, @PathParam("idDosage") Long idDosage) {
         DosageDTO dosage = DosageDTO.create(dosageRepository.find(idDosage));
+        List<DosageReportDTO> reportsDosage = reportDosageRepository.listOfDosage(idDosage)
+                .stream().map(DosageReportDTO::create).collect(Collectors.toList());
+        System.out.println(reportsDosage.size());
+        dosage.setReports(reportsDosage);
         return Response.ok(dosage).build();
     }  
 

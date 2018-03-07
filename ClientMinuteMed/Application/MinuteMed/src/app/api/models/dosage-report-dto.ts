@@ -1,10 +1,12 @@
+import { MedicalStaffDTO } from '../models';
+
 /* tslint:disable */
 
 export interface DosageReportDTO {
 
   id?: number;
 
-  supervisorId?: number;
+  supervisor?: MedicalStaffDTO;
 
   dosageId?: number;
 

@@ -2223,9 +2223,8 @@
           "type" : "integer",
           "format" : "int64"
         },
-        "supervisorId" : {
-          "type" : "integer",
-          "format" : "int64"
+        "supervisor" : {
+          "$ref" : "#/definitions/MedicalStaffDTO"
         },
         "dosageId" : {
           "type" : "integer",

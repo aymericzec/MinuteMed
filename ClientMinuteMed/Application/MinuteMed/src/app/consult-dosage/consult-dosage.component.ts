@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DosageDTO, Doctor, MedicalStaffDTO } from '../api/models';
+import { DosageDTO, Doctor, MedicalStaffDTO, DosageReportDTO } from '../api/models';
 import { MedicalRecordsRESTEndpointService, StaffRESTEndpointService } from '../api/services';
 import { AuthService } from '../auth.service';
 import { ActivatedRoute } from '@angular/router';
@@ -15,6 +15,7 @@ export class ConsultDosageComponent implements OnInit {
   cols: any[];
   dosage: DosageDTO;
   doctorCreator: MedicalStaffDTO;
+  reportsDosage: DosageReportDTO[];
 
   constructor(private medicalService: MedicalRecordsRESTEndpointService,
     private authService: AuthService, private route: ActivatedRoute,
@@ -27,10 +28,16 @@ export class ConsultDosageComponent implements OnInit {
     this.medicalService.getDosage({'idRecord': idDmp, 'idDosage': idDosage}).subscribe(e => {
       this.dosage = e;
 
+      this.reportsDosage = this.dosage.reports;
+
       this.staffService.getMedicalStaff(this.dosage.creatorId).subscribe(responseDoctor => {
         this.doctorCreator = responseDoctor;
       });
     });
+  }
+
+  addRapport() {
+    console.log('à faire');
   }
 
 }
