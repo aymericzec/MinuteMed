@@ -2,6 +2,7 @@ package fr.devsquad.minutemed.dmp.rest;
 
 import fr.devsquad.minutemed.arborescence.domain.Node;
 import fr.devsquad.minutemed.arborescence.repository.ArborescenceRepository;
+import fr.devsquad.minutemed.dmp.domain.Dosage;
 import fr.devsquad.minutemed.dmp.domain.DosageReport;
 import fr.devsquad.minutemed.dmp.domain.Exam;
 import fr.devsquad.minutemed.dmp.domain.MedicalRecord;
@@ -172,6 +173,26 @@ public class MedicalRecordService {
     public Response createDosage(@PathParam("idRecord") Long idRecord, @NotNull DosageDTO dosage) {
         Long id = dosageRepository.save(dosage.toDosage(staffRepository, medicalRecordRepository, diagnosticRepository));
         return Response.status(Response.Status.CREATED).entity("{\"idDosage\":"+ id +"}").build();
+    }
+    
+    @POST
+    @Path("{idRecord}/reportDosage")
+    @ApiOperation(value = "Create a ResultExam in the Medical Record associated")
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "The ResultExam is created !"),
+        @ApiResponse(code = 400, message = "Invalid input")}
+    )
+    @JWTNeeded(groups = {StaffEnum.DOCTOR, StaffEnum.NURSE})
+    public Response createReportDosage(@PathParam("idRecord") Long idRecord, @NotNull DosageReportDTO dosageReport) {
+        //On teste que l'examen et que le resultat n'existe pas déjà
+        Dosage dosage = dosageRepository.find(dosageReport.getDosageId());
+        
+        if (dosage == null) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Bad Request: IdExam not exist or already create").build();
+        }
+ 
+        Long id = reportDosageRepository.save(dosageReport.toDosageReport(staffRepository, dosage));
+        return Response.status(Response.Status.CREATED).entity("{\"idReportDosage\":"+ id +"}").build();
     }
     
     

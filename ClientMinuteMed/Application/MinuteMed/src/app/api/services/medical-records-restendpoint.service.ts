@@ -14,7 +14,7 @@ import { DiagnosticDTO } from '../models/diagnostic-dto';
 import { DosageDTO } from '../models/dosage-dto';
 import { ExamDTO } from '../models/exam-dto';
 import { PrescriptionDTO } from '../models/prescription-dto';
-import { ResultExamDTO } from '../models';
+import { ResultExamDTO, DosageReportDTO } from '../models';
 
 @Injectable()
 export class MedicalRecordsRESTEndpointService extends BaseService {
@@ -424,6 +424,41 @@ export class MedicalRecordsRESTEndpointService extends BaseService {
    */
    createDosage(idRecord: number, dosage: DosageDTO): Observable<string> {
     return this.createDosageResponse(idRecord, dosage).pipe(
+      map(_r => _r.body)
+    );
+  }
+
+  createReportDosageResponse(idRecord: number, reportDosage:DosageReportDTO): Observable<HttpResponse<string>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: DosageReportDTO = reportDosage;
+
+    let req = new HttpRequest<any>(
+      "POST",
+      this.rootUrl + `/records/${idRecord}/reportDosage`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      filter(_r => _r instanceof HttpResponse),
+      map(_r => {
+        let _resp = _r as HttpResponse<any>;
+        let _body: string = _resp.body;
+
+        return _resp.clone({body: _body}) as HttpResponse<string>;
+      })
+    );
+  }
+
+  /**
+   * @param idRecord undefined
+   */
+   createReportDosage(idRecord: number, reportDosage:DosageReportDTO): Observable<string> {
+    return this.createResultExamResponse(idRecord, reportDosage).pipe(
       map(_r => _r.body)
     );
   }
