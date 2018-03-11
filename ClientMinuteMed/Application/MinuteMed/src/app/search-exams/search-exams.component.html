@@ -3,12 +3,12 @@
 <div class="container-fluid" *ngIf="examsTmp != undefined">
   <div class="row">
     <app-leftbar class="collapse in col-md-2" id="sidebar"></app-leftbar>
+    <a href="#sidebar" data-toggle="collapse" class="margin15">
+      <i class="fa fa-navicon fa-lg"></i>
+    </a>
     <main class="col-md-9 col-xs-11 p-l-2 p-t-2 mx-auto">
-      <a href="#sidebar" data-toggle="collapse">
-        <i class="fa fa-navicon fa-lg"></i>
-      </a>
       <!-- ici mettre -->
-      <h2 class="sub-header">Examens de Vieira Noro Kévin </h2>
+      <h2 *ngIf="record != null" class="sub-header">Examens de {{record.firstName}} {{record.lastName | uppercase}} </h2>
       <br>
       <p-table #dt [columns]="cols" [value]="examsTmp" [paginator]="true" [rows]="15">
         <ng-template pTemplate="caption">
@@ -20,7 +20,7 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
           <tr>
-            <th *ngFor="let col of columns">
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
               {{col.header}}
               <p-sortIcon [field]="col.field"></p-sortIcon>
             </th>
@@ -30,12 +30,12 @@
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-columns="columns">
-          <tr>
+          <tr [pSelectableRow]="rowData">
             <td *ngFor="let col of columns" [pSelectableRow]="rowData">
               {{rowData[col.field]}}
             </td>
             <td>
-              <button pButton type="button" icon="fa-search" iconPos="left" class="reasonButton" routerLink="/record/{{this.id}}/exams/{{rowData.identifiant}}"></button>
+              <button pButton type="button" icon="fa-search" iconPos="left" class="reasonButton" (click)="visitExam(rowData)"></button>
             </td>
           </tr>
         </ng-template>

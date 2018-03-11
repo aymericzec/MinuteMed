@@ -16,7 +16,7 @@ export class SearchPrescriptionsComponent implements OnInit {
   prescriptions: PrescriptionDTO[];
   prescriptionsTmp: any[][];
   id: number;
-  me: MedicalRecordDTO;
+  record: MedicalRecordDTO;
 
   constructor(private medicalService: MedicalRecordsRESTEndpointService,
     private authService: AuthService,
@@ -27,7 +27,7 @@ export class SearchPrescriptionsComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
 
     this.medicalService.getMedicalRecord(this.id).subscribe(dmp => {
-      this.me = dmp;
+      this.record = dmp;
     });
 
     this.medicalService.getPrescriptions(this.id).subscribe(response => {

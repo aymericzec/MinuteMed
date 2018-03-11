@@ -19,26 +19,30 @@ export class SearchDmpComponent implements OnInit {
     cols: any[];
 
     constructor(private recordService: MedicalRecordsRESTEndpointService,
-                private authService: AuthService) { }
+                private authService: AuthService, private router: Router) { }
 
     ngOnInit() {
         this.loading = true;
 
         setTimeout(() => {
-            this.recordService.getAllMedicalRecordResponse(this.authService.jwt).subscribe(response => {
-                this.records = response.body;
+            this.recordService.getAllMedicalRecord(this.authService.jwt).subscribe(response => {
+                this.records = response;
             });
             this.loading = false;
         }, 1000);
 
         this.cols = [
-            { field: 'id', header: 'Identifiant' },
+            
             { field: 'ss', header: 'Num sécu' },
             { field: 'firstName', header: 'Prenom' },
             { field: 'lastName', header: 'Nom' },
             { field: 'birthday', header: 'Date de naissance'},
             { field: 'gender', header: 'Genre' }
         ];
+    }
+
+    visitRecord(rowData: any){
+        this.router.navigate(['/record/'+rowData.id]);
     }
 
 }

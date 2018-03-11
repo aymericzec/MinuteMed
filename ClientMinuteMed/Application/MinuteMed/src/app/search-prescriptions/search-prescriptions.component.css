@@ -24,10 +24,11 @@ tr {
   font-size: 16px;
 }
 
-/*.nopadding {
-  padding: 0 !important;
-  margin: 0 !important;
-}*/
+/* à mettre pour left bar info */
+.margin15 {
+  margin-left: 15px;
+}
+
 
 /* à mettre pour left bar info */
 .margin15 {

@@ -8,8 +8,7 @@
         <i class="fa fa-navicon fa-lg"></i>
       </a>
       <!-- ici mettre -->
-      <h2 class="sub-header">
-        Posologies de Vieira Noro Kévin </h2>
+      <h2 *ngIf="record != null" class="sub-header">Posologies de {{record.firstName}} {{record.lastName | uppercase}} </h2>
       <br>
       <p-table #dt [columns]="cols" [value]="dosagesTmp" [paginator]="true" [rows]="15">
         <ng-template pTemplate="caption">
@@ -21,14 +20,14 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
           <tr>
-            <th *ngFor="let col of columns">
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
               {{col.header}}
               <p-sortIcon [field]="col.field"></p-sortIcon>
             </th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-columns="columns">
-          <tr>
+          <tr [pSelectableRow]="rowData">
             <td *ngFor="let col of columns" [pSelectableRow]="rowData">
               {{rowData[col.field]}}
             </td>

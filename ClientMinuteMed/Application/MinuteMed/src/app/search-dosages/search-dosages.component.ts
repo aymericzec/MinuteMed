@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DosageDTO } from '../api/models';
+import { DosageDTO, MedicalStaffDTO, MedicalRecordDTO } from '../api/models';
 import { AuthService } from '../auth.service';
 import { MedicalRecordsRESTEndpointService, StaffRESTEndpointService } from '../api/services';
 import { ActivatedRoute } from '@angular/router';
@@ -17,6 +17,8 @@ export class SearchDosagesComponent implements OnInit {
   dosages: DosageDTO[];
   dosagesTmp: any[][];
   id: number;
+  record: MedicalRecordDTO;
+
   constructor(private medicalService: MedicalRecordsRESTEndpointService,
      private authService: AuthService,
      private staffService: StaffRESTEndpointService,
@@ -24,6 +26,10 @@ export class SearchDosagesComponent implements OnInit {
 
   ngOnInit() {
       this.id = this.route.snapshot.params['id'];
+
+      this.medicalService.getMedicalRecord(this.id).subscribe(dmp => {
+        this.record = dmp;
+      });
 
       this.medicalService.getAllDosages(this.id).subscribe(response => {
           this.dosages = response;
