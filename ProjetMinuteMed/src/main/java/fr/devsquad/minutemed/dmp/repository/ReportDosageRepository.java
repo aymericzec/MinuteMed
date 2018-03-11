@@ -16,6 +16,10 @@ public class ReportDosageRepository {
     public List<DosageReport> list() {
         return em.createNamedQuery(DosageReport.FIND_ALL_REPORT_DOSAGE, DosageReport.class).getResultList();
     }
+    
+    public List<DosageReport> listOfDosage(long idDosage) {
+        return em.createNamedQuery(DosageReport.FIND_REPORT_DOSAGE_WITH_ID_DOSAGE, DosageReport.class).setParameter("idDosage", idDosage).getResultList();
+    }
 
     public DosageReport find(Long id) {
         return em.find(DosageReport.class, id);

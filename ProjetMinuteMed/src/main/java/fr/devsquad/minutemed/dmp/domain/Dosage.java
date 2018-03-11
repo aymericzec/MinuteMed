@@ -11,7 +11,8 @@ import javax.validation.constraints.*;
 @NamedQuery(name = FIND_ALL_DOSAGE, query = "SELECT u FROM Dosage u")
 public class Dosage implements Serializable {
     public static final String FIND_ALL_DOSAGE = "Dosage.findAllDosage";
-    
+    public static final String FIND_ALL_REPORT_DOSAGE_WITH_REPORT_DOSAGE = "DosageReport.findAllDosageReportWithIdDosage";
+
     @Id @GeneratedValue
     private Long idDosage;
     

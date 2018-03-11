@@ -7,7 +7,6 @@
       <img class="img-circle" src="assets/posologie.png" alt="Generic placeholder image" width="140" height="140">
       <h2>Posologie:</h2>
       <div class="container" *ngIf="dosage != null && doctorCreator != null">
-          <form>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Médecin Demandeur:</label>
                 <div class="col-sm-3">
@@ -53,59 +52,36 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Dernière administration:</label>
                     <div class="col-sm-3">
-                        <input  class="form-control" value="{{dosage.reports}}" disabled="disabled">
+                        <input  class="form-control" value="{{lastAdministration}}" disabled="disabled">
                     </div>
                 </div>
-
-              <div class="form-group row">
-                <div class="col-sm-10">
-                  <button type="submit" class="btn btn-primary">Valider Administration</button>
-                  <button type="submit" class="btn btn-primary">Date</button>
-                </div>
-              </div>
-            </form>
 
       </div> <!-- /container -->
     </div><!-- /.col-lg-4 -->
     <div class="col-lg-4">
       <img class="img-circle" src="assets/rapportPosologie.jpg" alt="Generic placeholder image" width="140" height="140">
-      <h2>Rapport</h2>
+
       <div class="container">
-          <form>
-              <div class="form-group row">
-                  <label class="col-sm-2 col-form-label">ListView Rapport:</label>
-                  <div class="col-sm-3">
-
+        <br>
+        <p-dataView [value]="reportsDosage" [paginator]="true" [rows]="4">
+          <p-header><h2>Rapport</h2></p-header>
+          <p-footer>
+            <input  class="form-control" placeholder="Saisir un Rapport" [(ngModel)]="bodyReport" name="bodyReport">
+            <button _ngcontent-c2="" icon="fa-search" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all" (click)="addRapport()">
+              Valider Administration</button>
+          </p-footer>
+          <ng-template let-report pTemplate="listItem">
+              <div _ngcontent-c2="" class="ui-g ng-star-inserted" style="border-bottom: 1px solid #d9d9d9">
+                  <div _ngcontent-c2="" class="ui-g-12 ui-md-12">
+                      <div _ngcontent-c2="" class="ui-g-6">{{report.supervisor.firstname}} {{report.supervisor.lastname}}</div>
+                      <div _ngcontent-c2="" class="ui-g-6">{{report.creationDate}}</div>
                   </div>
-                </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Rapporteur:</label>
-                <div class="col-sm-3">
-                  <input  class="form-control" disabled="disabled" value="Sadaoui Enzo">
-                </div>
+                  <div _ngcontent-c2="" class="ui-g-12 ui-md-12" style="text-align:center">
+                      <textarea class="ui-g-12 ui-sm-12" disabled="true">{{report.body}}</textarea>
+                  </div>
               </div>
-              <div class="form-group row">
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Patient:</label>
-                    <div class="col-sm-3">
-                        <input  class="form-control" value="Kévin Vieira Noro" disabled="disabled">
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Rapport:</label>
-                    <div class="col-sm-3">
-                      <textarea  class="form-control" rows="5"></textarea>
-                    </div>
-                </div>
-
-              <div class="form-group row">
-                <div class="col-sm-10">
-                  <button type="submit" class="btn btn-primary">Ajouter rapport</button>
-                </div>
-              </div>
-            </form>
+            </ng-template>
+        </p-dataView>
       </div> <!-- /container -->
     </div><!-- /.col-lg-4 -->
   </div><!-- /.row -->

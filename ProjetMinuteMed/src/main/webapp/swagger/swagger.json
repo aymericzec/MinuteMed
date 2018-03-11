@@ -1731,6 +1731,31 @@
         }
       }
     },
+    "/records/{idRecord}/reportDosage" : {
+      "post" : {
+        "tags" : [ "MedicalRecords REST Endpoint" ],
+        "summary" : "Create a ResultExam in the Medical Record associated",
+        "description" : "",
+        "operationId" : "createReportDosage",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idRecord",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The ResultExam is created !"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
     "/records/{idRecord}/resultExam" : {
       "post" : {
         "tags" : [ "MedicalRecords REST Endpoint" ],
@@ -2223,9 +2248,8 @@
           "type" : "integer",
           "format" : "int64"
         },
-        "supervisorId" : {
-          "type" : "integer",
-          "format" : "int64"
+        "supervisor" : {
+          "$ref" : "#/definitions/MedicalStaffDTO"
         },
         "dosageId" : {
           "type" : "integer",
