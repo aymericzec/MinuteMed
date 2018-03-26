@@ -32,3 +32,15 @@ li {
           transition-property: width;
 
 }
+
+.form-group {
+  font-size: 18px;
+}
+
+.form-control {
+  font-size: 18px;
+}
+
+.btn {
+  font-size: 20px;
+}
